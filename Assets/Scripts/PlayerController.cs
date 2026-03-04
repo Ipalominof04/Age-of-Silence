@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour
     private InputAction moveAction;
     Vector2 inputMoviment;
     [SerializeField] private float vel;
-
+    [SerializeField] private float gravity = -9.81f;
+    private Vector3 verticalVelocity = Vector3.zero;
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -36,6 +37,9 @@ public class PlayerController : MonoBehaviour
         inputMoviment = moveAction.ReadValue<Vector2>();
         //statemachine
         UpdateState();
+        ApplyGravity();
+
+
     }
 
     #region State Machine
@@ -87,6 +91,20 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
+
+    private void ApplyGravity()
+    {
+        if (characterController.isGrounded)
+        {
+            verticalVelocity.y = -2f; // pequeño valor para mantenerlo pegado al suelo
+        }
+        else
+        {
+            verticalVelocity.y += gravity * Time.deltaTime;
+        }
+
+        characterController.Move(verticalVelocity * Time.deltaTime);
+    }
 
     private void Move()
     {
