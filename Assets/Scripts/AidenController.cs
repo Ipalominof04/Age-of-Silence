@@ -9,7 +9,7 @@ public class AidenController : MonoBehaviour
     [Header("Maquina de estados")]
     [SerializeField] private AidenState currentState;
 
-    [SerializeField] private PlayerController player;
+    [SerializeField] private Transform player;
 
     private NavMeshAgent agent;
 
@@ -37,7 +37,6 @@ public class AidenController : MonoBehaviour
             case AidenState.IDLE:
                 break;
             case AidenState.WALK:
-                FollowPlayer();
                 break;
             case AidenState.RUN:
                 break;
@@ -55,6 +54,7 @@ public class AidenController : MonoBehaviour
             case AidenState.IDLE:
                 break;
             case AidenState.WALK:
+                FollowPlayer();
                 break;
             case AidenState.RUN:
                 break;
@@ -95,11 +95,15 @@ public class AidenController : MonoBehaviour
 
     private void FollowPlayer()
     {
+        /*
         Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
 
-        // Punto detrás del jugador
+        // Punto detrï¿½s del jugador
         Vector3 targetPosition = player.transform.position - directionToPlayer * followDistance;
 
         agent.SetDestination(targetPosition);
+        */
+        agent.stoppingDistance = 1f;
+        agent.SetDestination(player.transform.position);
     }
 }
