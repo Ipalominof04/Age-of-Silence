@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     private CharacterController characterController;
-    public enum PlayerState { NONE, IDLE, WALK };
+    public enum PlayerState { NONE, IDLE, WALK, RUN };
 
     [Header("Maquina de estados")]
     [SerializeField] private PlayerState currentState;
@@ -12,9 +12,11 @@ public class PlayerController : MonoBehaviour
     [Header("Movimiento")]
     [SerializeField] private InputActionAsset myInputActionAsset;
     private InputActionAsset inputInstance;
-    private InputAction moveAction;
+    private InputAction walkAction;
+    private InputAction runAction;
     Vector2 inputMoviment;
-    [SerializeField] private float vel;
+    [SerializeField] private float walkVelocity;
+    [SerializeField] private float sprintVelocity;
     [SerializeField] private float gravity = -9.81f;
     private Vector3 verticalVelocity = Vector3.zero;
     private void Awake()
@@ -24,7 +26,8 @@ public class PlayerController : MonoBehaviour
         inputInstance = Instantiate(myInputActionAsset);
 
         inputInstance.FindActionMap("Player").Enable();
-        moveAction = inputInstance.FindActionMap("Player").FindAction("Move");
+        walkAction = inputInstance.FindActionMap("Player").FindAction("Move");
+        runAction = inputInstance.FindActionMap("Player").FindAction("Sprint");
     }
     void Start()
     {
@@ -34,7 +37,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //movimiento pj
-        inputMoviment = moveAction.ReadValue<Vector2>();
+        inputMoviment = walkAction.ReadValue<Vector2>();
         //statemachine
         UpdateState();
         ApplyGravity();
@@ -52,6 +55,8 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.WALK:
                 break;
+            case PlayerState.RUN:
+                break;
         }
     }
 
@@ -60,13 +65,18 @@ public class PlayerController : MonoBehaviour
         switch (currentState)
         {
             case PlayerState.IDLE:
-                if (inputMoviment.magnitude > 0.01f)
-                    ChangeState(PlayerState.WALK);
+                if (inputMoviment.magnitude > 0.01f) ChangeState(PlayerState.WALK);
                 break;
             case PlayerState.WALK:
                 Move();
-                if (inputMoviment.magnitude < 0.01f)
-                    ChangeState(PlayerState.IDLE);
+                if (inputMoviment.magnitude < 0.01f) ChangeState(PlayerState.IDLE);
+                if (runAction.IsPressed() && characterController.isGrounded) ChangeState(PlayerState.RUN);
+                break;
+            case PlayerState.RUN:
+                Sprint();
+                if (!runAction.IsPressed()) ChangeState(PlayerState.WALK);
+                if (inputMoviment.magnitude < 0.01f) ChangeState(PlayerState.IDLE);
+
                 break;
         }
     }
@@ -86,6 +96,8 @@ public class PlayerController : MonoBehaviour
             case PlayerState.IDLE:
                 break;
             case PlayerState.WALK:
+                break;
+            case PlayerState.RUN:
                 break;
         }
     }
@@ -113,7 +125,16 @@ public class PlayerController : MonoBehaviour
         if (movement.magnitude > 0.01f)
             transform.rotation = Quaternion.LookRotation(movement);
 
-        characterController.Move(movement * vel * Time.deltaTime);
+        characterController.Move(movement * walkVelocity * Time.deltaTime);
+    }
+    private void Sprint()
+    {
+        Vector3 movement = new Vector3(inputMoviment.x, 0f, inputMoviment.y).normalized;
+
+        if (movement.magnitude > 0.01f)
+            transform.rotation = Quaternion.LookRotation(movement);
+
+        characterController.Move(movement * sprintVelocity * Time.deltaTime);
     }
 
 }
