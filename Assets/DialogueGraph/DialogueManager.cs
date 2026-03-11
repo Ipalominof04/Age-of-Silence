@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
+    public static DialogueManager Instance { get; private set; }
 
     public RuntimeDialogueGraph RuntimeGraph;
 
@@ -26,18 +27,17 @@ public class DialogueManager : MonoBehaviour
     private void Start()
     {
         foreach (var node in RuntimeGraph.AllNodes)
-        {
             _nodeLookup[node.NodeID] = node;
-        }
 
+        // YA NO arranca solo aquí
+        DialoguePanel.SetActive(false);
+    }
+
+
+    public void StartDialogue()
+    {
         if (!string.IsNullOrEmpty(RuntimeGraph.EntryNodeID))
-        {
             ShowNode(RuntimeGraph.EntryNodeID);
-        }
-        else
-        {
-            EndDialogue();
-        }
     }
     private void Update()
     {
