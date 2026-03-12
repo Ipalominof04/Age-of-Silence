@@ -15,24 +15,33 @@ public class AidenController : MonoBehaviour
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
 
-    private bool isInDialogue = false;
+
     [SerializeField] private LayerMask playerLayer;
 
 
     [Header("UI")]
     [SerializeField] private GameObject canvasWorld;
 
+    public GameEvent OnDialogueStarted;
+    public GameEvent OnDialogueEnded;
+    public GameEvent OnAidenStopped;
+    private bool InDialogue;
+
 
     private void OnEnable()
     {
         PlayerController.OnPlayerStateChanged += HandlePlayerStateChanged;
         PlayerController.OnPlayerEnteredDialogueTrigger += HandleDialogueTrigger;
+        OnDialogueStarted.Subscribe(() => InDialogue = true);
+        OnDialogueEnded.Subscribe(() => InDialogue = false);
     }
 
     private void OnDisable()
     {
         PlayerController.OnPlayerStateChanged -= HandlePlayerStateChanged;
         PlayerController.OnPlayerEnteredDialogueTrigger -= HandleDialogueTrigger;
+        OnDialogueStarted.Unsubscribe(() => InDialogue = true);
+        OnDialogueEnded.Unsubscribe(() => InDialogue = false);
     }
 
     void Start()
@@ -51,17 +60,11 @@ public class AidenController : MonoBehaviour
 
     private void HandleDialogueTrigger()
     {
-        isInDialogue = true;
         agent.isStopped = true;
         ChangeState(AidenState.IDLE);
         MostrarUI();
+        OnAidenStopped.Raise();
 
-    }
-
-    public void EndDialogue()
-    {
-        isInDialogue = false;
-        agent.isStopped = false;
     }
 
     private void HandlePlayerStateChanged(PlayerController.PlayerState playerState)
@@ -115,7 +118,7 @@ public class AidenController : MonoBehaviour
 
     private void FollowPlayer()
     {
-        if (isInDialogue) return;
+        if (InDialogue) return;
 
         agent.stoppingDistance = 1f;
         agent.acceleration = 8f;

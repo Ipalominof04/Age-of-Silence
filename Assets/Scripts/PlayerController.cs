@@ -26,10 +26,16 @@ public class PlayerController : MonoBehaviour
     private float gravity = -9.81f;
     private Vector3 verticalVelocity = Vector3.zero;
 
-    private bool InDialogue = false;
 
     [SerializeField] private GameObject aiden;
     [SerializeField] private float interactRange;
+
+
+    public GameEvent OnDialogueStarted;
+    public GameEvent OnDialogueEnded;
+    public GameEvent OnAidenStopped;
+    private bool InDialogue;
+    private bool canInteract = false;
 
     private void Awake()
     {
@@ -52,6 +58,19 @@ public class PlayerController : MonoBehaviour
         UpdateState();
         ApplyGravity();
     }
+    private void OnEnable()
+    {
+        OnDialogueStarted.Subscribe(() => InDialogue = true);
+        OnDialogueEnded.Subscribe(() => InDialogue = false);
+        OnAidenStopped.Subscribe(() => canInteract = true);
+    }
+
+    private void OnDisable()
+    {
+        OnDialogueStarted.Unsubscribe(() => InDialogue = true);
+        OnDialogueEnded.Unsubscribe(() => InDialogue = false);
+        OnAidenStopped.Unsubscribe(() => canInteract = true);
+    }
 
     #region State Machine
     private void InitState(PlayerState state)
@@ -73,23 +92,23 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateState()
     {
+        if (InDialogue) return;
+
         switch (currentState)
         {
             case PlayerState.IDLE:
                 if (inputMoviment.magnitude > 0.01f) ChangeState(PlayerState.WALK);
-                if (interactAction.triggered) ChangeState(PlayerState.INTERACT);
+                if (interactAction.triggered && canInteract) ChangeState(PlayerState.INTERACT);
                 break;
             case PlayerState.WALK:
                 Move();
                 if (inputMoviment.magnitude < 0.01f) ChangeState(PlayerState.IDLE);
                 if (runAction.IsPressed() && characterController.isGrounded) ChangeState(PlayerState.RUN);
-                if (interactAction.triggered) ChangeState(PlayerState.INTERACT);
                 break;
             case PlayerState.RUN:
                 Sprint();
                 if (!runAction.IsPressed()) ChangeState(PlayerState.WALK);
                 if (inputMoviment.magnitude < 0.01f) ChangeState(PlayerState.IDLE);
-                if (interactAction.triggered) ChangeState(PlayerState.INTERACT);
                 break;
             case PlayerState.INTERACT:
                 Interact();
@@ -151,22 +170,23 @@ public class PlayerController : MonoBehaviour
         {
             OnPlayerEnteredDialogueTrigger?.Invoke();
         }
-        if (other.gameObject.layer == LayerMask.NameToLayer("Aiden") && InDialogue)
-        {
-
-        }
-        {
-
-        }
 
     }
 
     private void Interact()
     {
+        if (aiden == null)
+        {
+            Debug.LogError("Aiden no está asignado en el Inspector");
+            ChangeState(PlayerState.IDLE);
+            return;
+        }
+
         float distance = Vector3.Distance(transform.position, aiden.transform.position);
         print("AAAAAAAA" + distance);
         if (distance <= interactRange)
         {
+            print("empieza dialogo");
             DialogueManager.Instance.StartDialogue();
         }
         else

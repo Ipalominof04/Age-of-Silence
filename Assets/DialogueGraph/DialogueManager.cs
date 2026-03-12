@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -23,19 +24,36 @@ public class DialogueManager : MonoBehaviour
     private Dictionary<string, RuntimeDialogueNode> _nodeLookup = new Dictionary<string, RuntimeDialogueNode>();
     private RuntimeDialogueNode _currentNode;
 
-    // Unity Message | 0 references
+    public GameEvent OnDialogueStarted;
+    public GameEvent OnDialogueEnded;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Start()
     {
         foreach (var node in RuntimeGraph.AllNodes)
             _nodeLookup[node.NodeID] = node;
 
-        // YA NO arranca solo aquí
         DialoguePanel.SetActive(false);
     }
 
 
+
+
     public void StartDialogue()
     {
+        OnDialogueStarted.Raise();
         if (!string.IsNullOrEmpty(RuntimeGraph.EntryNodeID))
             ShowNode(RuntimeGraph.EntryNodeID);
     }
@@ -109,6 +127,7 @@ public class DialogueManager : MonoBehaviour
 
     private void EndDialogue()
     {
+        OnDialogueEnded.Raise();
         DialoguePanel.SetActive(false);
         _currentNode = null;
 
