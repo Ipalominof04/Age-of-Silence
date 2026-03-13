@@ -33,7 +33,12 @@ public class AidenController : MonoBehaviour
         PlayerController.OnPlayerStateChanged += HandlePlayerStateChanged;
         PlayerController.OnPlayerEnteredDialogueTrigger += HandleDialogueTrigger;
         OnDialogueStarted.Subscribe(() => InDialogue = true);
-        OnDialogueEnded.Subscribe(() => InDialogue = false);
+        OnDialogueEnded.Subscribe(() => {
+            InDialogue = false;
+            agent.isStopped = false;
+            OcultarUI();
+            ChangeState(AidenState.WALK);
+        });
     }
 
     private void OnDisable()
@@ -41,7 +46,12 @@ public class AidenController : MonoBehaviour
         PlayerController.OnPlayerStateChanged -= HandlePlayerStateChanged;
         PlayerController.OnPlayerEnteredDialogueTrigger -= HandleDialogueTrigger;
         OnDialogueStarted.Unsubscribe(() => InDialogue = true);
-        OnDialogueEnded.Unsubscribe(() => InDialogue = false);
+        OnDialogueEnded.Unsubscribe(() => {
+            InDialogue = false;
+            agent.isStopped = false;
+            OcultarUI();
+            ChangeState(AidenState.WALK);
+        });
     }
 
     void Start()
