@@ -1,7 +1,7 @@
 using System;
-using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,9 +20,9 @@ public class PlayerController : MonoBehaviour
     private InputAction walkAction;
     private InputAction runAction;
     private InputAction interactAction;
+    private InputAction crouchAction;
     Vector2 inputMoviment;
-    [SerializeField] private float walkVelocity;
-    [SerializeField] private float sprintVelocity;
+    [SerializeField] private float Velocity;
     private float gravity = -9.81f;
     private Vector3 verticalVelocity = Vector3.zero;
 
@@ -37,6 +37,19 @@ public class PlayerController : MonoBehaviour
     private bool InDialogue;
     private bool canInteract = false;
 
+    [Header("Crouch")]
+    [SerializeField] private Vector3 standCenter = new Vector3(0, 1.0f, 0);
+    [SerializeField] private Vector3 crouchCenter = new Vector3(0, 0.5f, 0);
+    [SerializeField] private float standRadius;
+    [SerializeField] private float crouchRadius;
+    [SerializeField] private float standHeight;
+    [SerializeField] private float crouchHeight;
+    [SerializeField] private CapsuleCollider standCollider;
+    [SerializeField] private CapsuleCollider crouchCollider;
+
+
+
+
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -45,6 +58,7 @@ public class PlayerController : MonoBehaviour
         walkAction = inputInstance.FindActionMap("Player").FindAction("Move");
         runAction = inputInstance.FindActionMap("Player").FindAction("Sprint");
         interactAction = inputInstance.FindActionMap("Player").FindAction("Interact");
+        crouchAction = inputInstance.FindActionMap("Player").FindAction("Crouch");
     }
 
     void Start()
@@ -84,6 +98,14 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.RUN:
                 break;
+            case PlayerState.CROUCH:
+                characterController.center = standCenter;
+                characterController.radius = standRadius;
+                characterController.height = standHeight;
+                standCollider.enabled = true;
+                crouchCollider.enabled = false;
+
+                break;
             case PlayerState.INTERACT:
                 break;
 
@@ -99,16 +121,23 @@ public class PlayerController : MonoBehaviour
             case PlayerState.IDLE:
                 if (inputMoviment.magnitude > 0.01f) ChangeState(PlayerState.WALK);
                 if (interactAction.triggered && canInteract) ChangeState(PlayerState.INTERACT);
+                if (crouchAction.IsPressed()) ChangeState(PlayerState.CROUCH);
                 break;
             case PlayerState.WALK:
-                Move();
+                Move(2);
                 if (inputMoviment.magnitude < 0.01f) ChangeState(PlayerState.IDLE);
                 if (runAction.IsPressed() && characterController.isGrounded) ChangeState(PlayerState.RUN);
+                if (crouchAction.IsPressed()) ChangeState(PlayerState.CROUCH);
                 break;
             case PlayerState.RUN:
-                Sprint();
+                Move(3);
                 if (!runAction.IsPressed()) ChangeState(PlayerState.WALK);
                 if (inputMoviment.magnitude < 0.01f) ChangeState(PlayerState.IDLE);
+                break;
+            case PlayerState.CROUCH:
+                Crouch();
+                Move(1);
+                if (!crouchAction.IsPressed()) ChangeState(PlayerState.IDLE);
                 break;
             case PlayerState.INTERACT:
                 Interact();
@@ -129,10 +158,21 @@ public class PlayerController : MonoBehaviour
     {
         switch (currentState)
         {
-            case PlayerState.IDLE: break;
-            case PlayerState.WALK: break;
-            case PlayerState.RUN: break;
-            case PlayerState.INTERACT: break;
+            case PlayerState.IDLE:
+                break;
+            case PlayerState.WALK:
+                break;
+            case PlayerState.RUN:
+                break;
+            case PlayerState.CROUCH:
+                characterController.center = standCenter;
+                characterController.radius = standRadius;
+                characterController.height = standHeight;
+                standCollider.enabled = true;
+                crouchCollider.enabled = false;
+                break;
+            case PlayerState.INTERACT:
+                break;
 
         }
     }
@@ -148,21 +188,30 @@ public class PlayerController : MonoBehaviour
         characterController.Move(verticalVelocity * Time.deltaTime);
     }
 
-    private void Move()
+    private void Move(float velocity)
     {
         Vector3 movement = new Vector3(inputMoviment.x, 0f, inputMoviment.y).normalized;
         if (movement.magnitude > 0.01f)
             transform.rotation = Quaternion.LookRotation(movement);
-        characterController.Move(movement * walkVelocity * Time.deltaTime);
+        characterController.Move(movement * velocity * Time.deltaTime);
+    }
+    private void Crouch()
+    {
+        Velocity = 1.5f;
+
+        characterController.center = crouchCenter;
+        characterController.radius = crouchRadius;
+        characterController.height = crouchHeight;
+
+        standCollider.enabled = false;
+        crouchCollider.enabled = true;
+
+
+       // float volume = soundEmitter.EmitSound(ESound.CROUCH);
+
+
     }
 
-    private void Sprint()
-    {
-        Vector3 movement = new Vector3(inputMoviment.x, 0f, inputMoviment.y).normalized;
-        if (movement.magnitude > 0.01f)
-            transform.rotation = Quaternion.LookRotation(movement);
-        characterController.Move(movement * sprintVelocity * Time.deltaTime);
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -172,6 +221,7 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
 
     private void Interact()
     {
@@ -194,7 +244,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Muy lejos de Aiden");
         }
 
-            ChangeState(PlayerState.IDLE);
+        ChangeState(PlayerState.IDLE);
     }
 
 }

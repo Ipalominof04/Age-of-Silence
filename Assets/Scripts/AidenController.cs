@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem;
 
 public class AidenController : MonoBehaviour
 {
@@ -12,8 +11,8 @@ public class AidenController : MonoBehaviour
     private NavMeshAgent agent;
 
     [Header("Movimiento")]
-    [SerializeField] private float walkSpeed;
-    [SerializeField] private float runSpeed;
+    [SerializeField] private float Velocity;
+
 
 
     [SerializeField] private LayerMask playerLayer;
@@ -27,13 +26,20 @@ public class AidenController : MonoBehaviour
     public GameEvent OnAidenStopped;
     private bool InDialogue;
 
+    [Header("Crouch")]
+
+
+    [SerializeField] private CapsuleCollider standCollider;
+    [SerializeField] private CapsuleCollider crouchCollider;
+
 
     private void OnEnable()
     {
         PlayerController.OnPlayerStateChanged += HandlePlayerStateChanged;
         PlayerController.OnPlayerEnteredDialogueTrigger += HandleDialogueTrigger;
         OnDialogueStarted.Subscribe(() => InDialogue = true);
-        OnDialogueEnded.Subscribe(() => {
+        OnDialogueEnded.Subscribe(() =>
+        {
             InDialogue = false;
             agent.isStopped = false;
             OcultarUI();
@@ -46,7 +52,8 @@ public class AidenController : MonoBehaviour
         PlayerController.OnPlayerStateChanged -= HandlePlayerStateChanged;
         PlayerController.OnPlayerEnteredDialogueTrigger -= HandleDialogueTrigger;
         OnDialogueStarted.Unsubscribe(() => InDialogue = true);
-        OnDialogueEnded.Unsubscribe(() => {
+        OnDialogueEnded.Unsubscribe(() =>
+        {
             InDialogue = false;
             agent.isStopped = false;
             OcultarUI();
@@ -92,17 +99,44 @@ public class AidenController : MonoBehaviour
     private void InitState(AidenState state)
     {
         currentState = state;
+        currentState = state;
+        switch (currentState)
+        {
+            case AidenState.IDLE:
+                break;
+            case AidenState.WALK:
+                break;
+            case AidenState.RUN:
+                break;
+            case AidenState.CROUCH:
+                standCollider.enabled = true;
+                crouchCollider.enabled = false;
+
+                break;
+            case AidenState.SCARED:
+                break;
+
+        }
     }
 
     private void UpdateState()
     {
         switch (currentState)
         {
-            case AidenState.IDLE: break;
-            case AidenState.WALK: FollowPlayer(); break;
-            case AidenState.RUN: FollowPlayer(); break;
-            case AidenState.CROUCH: break;
-            case AidenState.SCARED: break;
+            case AidenState.IDLE:
+                break;
+            case AidenState.WALK:
+                FollowPlayer();
+                break;
+            case AidenState.RUN:
+                FollowPlayer();
+                break;
+            case AidenState.CROUCH:
+                Crouch();
+                FollowPlayer();
+                break;
+            case AidenState.SCARED:
+                break;
         }
     }
 
@@ -117,14 +151,34 @@ public class AidenController : MonoBehaviour
     {
         switch (currentState)
         {
-            case AidenState.IDLE: break;
-            case AidenState.WALK: break;
-            case AidenState.RUN: break;
-            case AidenState.CROUCH: break;
-            case AidenState.SCARED: break;
+            case AidenState.IDLE:
+                break;
+            case AidenState.WALK:
+                break;
+            case AidenState.RUN:
+                break;
+            case AidenState.CROUCH:
+                standCollider.enabled = true;
+                crouchCollider.enabled = false;
+                break;
+            case AidenState.SCARED:
+                break;
         }
     }
     #endregion
+
+    private void Crouch()
+    {
+        Velocity = 1.5f;
+
+        standCollider.enabled = false;
+        crouchCollider.enabled = true;
+
+
+        // float volume = soundEmitter.EmitSound(ESound.CROUCH);
+
+
+    }
 
     private void FollowPlayer()
     {
@@ -137,15 +191,14 @@ public class AidenController : MonoBehaviour
 
         switch (currentState)
         {
-            case AidenState.WALK: agent.speed = walkSpeed; break;
-            case AidenState.RUN: agent.speed = runSpeed; break;
+            case AidenState.WALK:
+                agent.speed = Velocity * 2;
+                break;
+            case AidenState.RUN:
+                agent.speed = Velocity * 3;
+                break;
         }
     }
-
-    private void CheckInteractInput()
-    {
-    }
-
     public void MostrarUI()
     {
         if (canvasWorld != null)
