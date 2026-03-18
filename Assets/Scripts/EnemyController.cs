@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour, ISoundListener
     private NavMeshAgent agent;
 
     [Header("Config Areas y Layers")]
+    [SerializeField] private Transform headTransform;
     [SerializeField] private float radiusChase;
     [SerializeField] private float radiusLook;
     [SerializeField] private float radiusAttack;
@@ -82,14 +83,14 @@ public class EnemyController : MonoBehaviour, ISoundListener
 
             case EnemyState.PATROL:
                 agent.isStopped = false;
-                agent.speed = 2f;
+                agent.speed = 1f;
                 agent.stoppingDistance = 0.2f;
                 agent.SetDestination(destination[currentIndex].position);
                 break;
 
             case EnemyState.CHASE:
                 agent.isStopped = false;
-                agent.speed = 3f;
+                agent.speed = 2f;
                 agent.stoppingDistance = radiusAttack;
                 chaseTimer = chaseFromLook ? 2f : 0f;
                 break;
@@ -220,16 +221,22 @@ public class EnemyController : MonoBehaviour, ISoundListener
         Collider hit = Physics.OverlapSphere(transform.position, radius, playerLayer).FirstOrDefault();
         if (hit == null) return false;
 
-        Vector3 directionToPlayer = (hit.transform.position - transform.position).normalized;
-        float angle = Vector3.Angle(transform.forward, directionToPlayer);
+        float angle = Vector3.Angle(transform.forward,
+                      (hit.transform.position - transform.position).normalized);
 
         if (angle <= 45f)
         {
-            Vector3 origin = transform.position + Vector3.up;
-            Vector3 direction = (hit.transform.position - origin).normalized;
-            float distance = Vector3.Distance(origin, hit.transform.position);
+            Vector3 origin = headTransform != null ? headTransform.position : transform.position + Vector3.up;
+            Vector3 targetPoint = hit.bounds.max;
+            Vector3 direction = (targetPoint - origin).normalized;
+            float distance = Vector3.Distance(origin, targetPoint);
 
-            if (!Physics.Raycast(origin, direction, distance, obstacleLayer))
+            bool blocked = Physics.Raycast(origin, direction, distance, obstacleLayer);
+
+            // Rojo = bloqueado, Verde = ve al jugador
+            Debug.DrawRay(origin, direction * distance, blocked ? Color.red : Color.green);
+
+            if (!blocked)
             {
                 playerTransform = hit.transform;
                 return true;

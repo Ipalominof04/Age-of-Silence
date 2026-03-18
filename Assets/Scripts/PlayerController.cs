@@ -22,7 +22,6 @@ public class PlayerController : MonoBehaviour
     private InputAction interactAction;
     private InputAction crouchAction;
     Vector2 inputMoviment;
-    [SerializeField] private float Velocity;
     private float gravity = -9.81f;
     private Vector3 verticalVelocity = Vector3.zero;
 
@@ -48,11 +47,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CapsuleCollider crouchCollider;
 
 
+    private SoundEmitter soundEmitter;
+
+
 
 
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
+        soundEmitter = GetComponent<SoundEmitter>();
         inputInstance = Instantiate(myInputActionAsset);
         inputInstance.FindActionMap("Player").Enable();
         walkAction = inputInstance.FindActionMap("Player").FindAction("Move");
@@ -197,8 +200,6 @@ public class PlayerController : MonoBehaviour
     }
     private void Crouch()
     {
-        Velocity = 1.5f;
-
         characterController.center = crouchCenter;
         characterController.radius = crouchRadius;
         characterController.height = crouchHeight;
@@ -207,7 +208,7 @@ public class PlayerController : MonoBehaviour
         crouchCollider.enabled = true;
 
 
-       // float volume = soundEmitter.EmitSound(ESound.CROUCH);
+        float volume = soundEmitter.EmitSound(ESound.CROUCH);
 
 
     }
@@ -215,9 +216,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("TriggerDialogue"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("TriggerAction"))
         {
-            OnPlayerEnteredDialogueTrigger?.Invoke();
+            if(other.tag == "TriggerDialogue")
+            {
+                OnPlayerEnteredDialogueTrigger?.Invoke();
+            }
+     
         }
 
     }
