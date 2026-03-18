@@ -43,17 +43,14 @@ public class SoundManager : MonoBehaviour
     public void EmitSound(Vector3 position, float volume, float radius, bool shouldEmmit = true)
     {
         if (!shouldEmmit) return;
-
         foreach (var listener in listeners)
         {
             if (listener == null) continue;
-
-
             float distance = Vector3.Distance(listener.GetPosition(), position);
             if (distance < radius)
             {
-                //Invoke, Broadcast
-                listener.OnHearSound(position, volume);
+                float attenuatedVolume = volume * (1f - (distance / radius));
+                listener.OnHearSound(position, attenuatedVolume);
             }
         }
     }
