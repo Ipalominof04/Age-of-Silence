@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: c6669c57e1f6ff245a46f6bd31fe455f, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: c485ae0ee169ed04a8149fe0a337d2bf, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 607aaab4cf6d03e4893aaa7006439d39, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -1550,7 +1550,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 5012
   m_UseColorTemperature: 1
-  m_BoundingSphereOverride: {x: 7.66e-42, y: 2.524355e-29, z: 0, w: 89}
+  m_BoundingSphereOverride: {x: 2.7107432e-20, y: 6.520425e-39, z: 9.612e-42, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -1895,7 +1895,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 5489
   m_UseColorTemperature: 1
-  m_BoundingSphereOverride: {x: 3.514e-42, y: 2.524355e-29, z: 0, w: 5.8290084e-10}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 217913220}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -2013,6 +2013,8 @@ Transform:
   m_Children:
   - {fileID: 1618414382}
   - {fileID: 1795954577}
+  - {fileID: 663173629}
+  - {fileID: 1382801008}
   m_Father: {fileID: 1633367660}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &380520075
@@ -3375,6 +3377,51 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!1 &663173627
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 663173629}
+  - component: {fileID: 663173628}
+  m_Layer: 9
+  m_Name: SpawnRellano1
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &663173628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663173627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  doorID: spawncomedor2
+--- !u!4 &663173629
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663173627}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.415, y: 0.18, z: -2.985}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 351299443}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1001 &664270149
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3501,7 +3548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a83d2f7ae04ab6f4f99b0d85377be998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.ProbeVolumePerSceneData
-  serializedBakingSet: {fileID: 11400000, guid: bf152278153915c44bd4a9223cbceae7, type: 2}
+  serializedBakingSet: {fileID: 11400000, guid: 82c9d2f0f3020d640b2cdfa7019f6532, type: 2}
   sceneGUID: 9b68366305dd4994a9521b7aad4b44df
   obsoleteAsset: {fileID: 0}
   obsoleteCellSharedDataAsset: {fileID: 0}
@@ -6201,6 +6248,51 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 177f892ae41632f42a86f4ff996fd257, type: 2}
   m_BuildHeightMesh: 0
+--- !u!1 &1382801006
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1382801008}
+  - component: {fileID: 1382801007}
+  m_Layer: 9
+  m_Name: SpawnPasillo2
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1382801007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382801006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  doorID: spawnpasillo2_comedor2
+--- !u!4 &1382801008
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382801006}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 5.86541, y: 0.18, z: -2.07892}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 351299443}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1001 &1408145813
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6528,6 +6620,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   Valor: 0
+  fadeDuration: 1
+  lastDoorID: 
 --- !u!4 &1498683892
 Transform:
   m_ObjectHideFlags: 0
@@ -6860,7 +6954,7 @@ Transform:
   m_GameObject: {fileID: 1618414381}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.227, y: 0.592, z: -1.753}
+  m_LocalPosition: {x: -0.251, y: 0.592, z: -1.753}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6879,6 +6973,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: Rellano1
+  miDoorID: comedor2_rellano1
+  targetDoorID: spawnrellano1_comedor2
 --- !u!65 &1618414384
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7359,7 +7455,7 @@ Transform:
   m_GameObject: {fileID: 1795954576}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.721, y: 0.592, z: -0.83}
+  m_LocalPosition: {x: 6.777, y: 0.592, z: -0.83}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7378,6 +7474,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: PasilloCasa2
+  miDoorID: comedor2_pasillo2
+  targetDoorID: spawncomedor2_pasillo2
 --- !u!65 &1795954579
 BoxCollider:
   m_ObjectHideFlags: 0
