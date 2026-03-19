@@ -3388,6 +3388,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 365655412}
+  - {fileID: 1342021639}
   - {fileID: 1750240129}
   - {fileID: 1411568838}
   - {fileID: 366374705}
@@ -3442,7 +3443,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1075083039853645334, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.333
+      value: -6.132
       objectReference: {fileID: 0}
     - target: {fileID: 1075083039853645334, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3523,6 +3524,105 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1420317532}
   m_SourcePrefab: {fileID: 100100000, guid: 89437555278a3b747b73449b8a201440, type: 3}
+--- !u!1 &1268208249
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1268208250}
+  - component: {fileID: 1268208252}
+  - component: {fileID: 1268208251}
+  m_Layer: 9
+  m_Name: TriggerPasilloCasa3
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1268208250
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268208249}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.095, y: 0.7, z: 0.361}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1342021639}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1268208251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268208249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d732863fd212e48a7d7f450ce4ffed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
+  nombreEscena: PasilloCasa3
+--- !u!65 &1268208252
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268208249}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.24901843, y: 1.8093668, z: 0.8628371}
+  m_Center: {x: -0.15778911, y: 0.4046834, z: -0.94618547}
+--- !u!1 &1342021638
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1342021639}
+  m_Layer: 0
+  m_Name: Triggers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1342021639
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342021638}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.99696016, y: -0.046, z: -28.740309}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1268208250}
+  m_Father: {fileID: 1201405639}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1376681459
 GameObject:
   m_ObjectHideFlags: 0
@@ -4423,6 +4523,51 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.4982908, y: 2.3881166, z: 4.8260427}
   m_Center: {x: 0.0000076293945, y: 1.1662048, z: 0.0000004768371}
+--- !u!1 &1629711266
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1629711268}
+  - component: {fileID: 1629711267}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1629711267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629711266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b281e153f59edd4bb25243815c47b13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  Valor: 0
+--- !u!4 &1629711268
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629711266}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.57878, y: 0.85624, z: 4.59823}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1750240128
 GameObject:
   m_ObjectHideFlags: 0
@@ -5305,9 +5450,10 @@ MeshFilter:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1629711268}
   - {fileID: 810564907}
-  - {fileID: 919250873}
   - {fileID: 1376681461}
+  - {fileID: 919250873}
   - {fileID: 562328620}
   - {fileID: 1201405639}
   - {fileID: 1241363238}

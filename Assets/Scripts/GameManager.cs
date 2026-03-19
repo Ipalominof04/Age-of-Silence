@@ -1,9 +1,9 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-
 
     [Header("Valor")]
     public int Valor = 0;
@@ -20,9 +20,6 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-
-
     public void SumValor(int amount)
     {
         Valor += amount;
@@ -34,4 +31,10 @@ public class GameManager : MonoBehaviour
         Valor -= amount;
         Debug.Log($"Valor bajó a: {Valor}");
     }
+
+    public void ChangeScene(string s)
+    {
+        SceneManager.LoadScene(s);
+    }
+
 }
