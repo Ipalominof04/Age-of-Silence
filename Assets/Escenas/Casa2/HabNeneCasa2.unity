@@ -2717,11 +2717,12 @@ Transform:
   m_GameObject: {fileID: 395396312}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.5029798, y: -0.046, z: 6.27538}
+  m_LocalPosition: {x: 1.426, y: -0.046, z: 6.27538}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1744099268}
+  - {fileID: 1843599555}
   m_Father: {fileID: 798350563}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &413557473
@@ -6004,6 +6005,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   Valor: 0
+  fadeDuration: 1
+  lastDoorID: 
 --- !u!4 &1379289228
 Transform:
   m_ObjectHideFlags: 0
@@ -6358,7 +6361,7 @@ PrefabInstance:
     - target: {fileID: 1814191409664832870, guid: 80e5bbfa6aa12b34ca98423c9e7a0f86, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 9eaf7873583253a4eb7f91ae48b41745, type: 2}
+      objectReference: {fileID: 2100000, guid: d5099de0a4714c64ca1a0e843c638fc1, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6929,7 +6932,7 @@ Transform:
   m_GameObject: {fileID: 1744099267}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.291, y: 0.592, z: -5.019}
+  m_LocalPosition: {x: -0.26, y: 0.592, z: -5.019}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6948,6 +6951,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: PasilloCasa2
+  miDoorID: hab2_pasillo2
+  targetDoorID: spawnhab2_pasillo2
 --- !u!65 &1744099270
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7308,6 +7313,51 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.37610787, y: 0.8190927, z: 0.26817268}
   m_Center: {x: 0.0022278577, y: 0.41011706, z: -0.00000023842165}
+--- !u!1 &1843599553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1843599555}
+  - component: {fileID: 1843599554}
+  m_Layer: 9
+  m_Name: SpawnPasillo2
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1843599554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843599553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  doorID: spawnpasillo2_hab2
+--- !u!4 &1843599555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843599553}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.383, y: 0.18, z: -6.12492}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 395396313}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1001 &1844987133
 PrefabInstance:
   m_ObjectHideFlags: 0
