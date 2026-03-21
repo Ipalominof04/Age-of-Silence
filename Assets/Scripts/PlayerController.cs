@@ -1,7 +1,6 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public static event Action OnPlayerEnteredDialogueTrigger;
 
     private CharacterController characterController;
-    public enum PlayerState { NONE, IDLE, WALK, RUN, CROUCH, INTERACT };
+    public enum PlayerState { NONE, IDLE, WALK, RUN, CROUCH, INTERACT, DIALOGUE }
 
     [Header("Maquina de estados")]
     [SerializeField] private PlayerState currentState;
@@ -50,6 +49,10 @@ public class PlayerController : MonoBehaviour
     private SoundEmitter soundEmitter;
 
 
+    [SerializeField] ObjetoAgarrado objetoMano;
+    private GameObject objectInRange = null;
+    private DoorTrigger doorInRange = null;
+
 
 
     private void Awake()
@@ -78,14 +81,14 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         OnDialogueStarted.Subscribe(() => InDialogue = true);
-        OnDialogueEnded.Subscribe(() => InDialogue = false);
+        OnDialogueEnded.Subscribe(() => { InDialogue = false; canInteract = false; });
         OnAidenStopped.Subscribe(() => canInteract = true);
     }
 
     private void OnDisable()
     {
         OnDialogueStarted.Unsubscribe(() => InDialogue = true);
-        OnDialogueEnded.Unsubscribe(() => InDialogue = false);
+        OnDialogueEnded.Unsubscribe(() => { InDialogue = false; canInteract = false; });
         OnAidenStopped.Unsubscribe(() => canInteract = true);
     }
 
@@ -123,8 +126,15 @@ public class PlayerController : MonoBehaviour
         {
             case PlayerState.IDLE:
                 if (inputMoviment.magnitude > 0.01f) ChangeState(PlayerState.WALK);
-                if (interactAction.triggered && canInteract) ChangeState(PlayerState.INTERACT);
                 if (crouchAction.IsPressed()) ChangeState(PlayerState.CROUCH);
+
+                // Interact → solo para objetos
+                if (interactAction.triggered && (objectInRange != null || doorInRange != null))
+                    ChangeState(PlayerState.INTERACT);
+
+                // Dialogue → solo para Aiden
+                if (interactAction.triggered && canInteract && objectInRange == null)
+                    ChangeState(PlayerState.DIALOGUE);
                 break;
             case PlayerState.WALK:
                 Move(2);
@@ -144,6 +154,9 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.INTERACT:
                 Interact();
+                break;
+            case PlayerState.DIALOGUE:
+                Dialogue();
                 break;
 
         }
@@ -218,30 +231,70 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("TriggerAction"))
         {
-            if(other.tag == "TriggerDialogue")
+            if (other.tag == "TriggerDialogue")
             {
                 OnPlayerEnteredDialogueTrigger?.Invoke();
             }
-     
+            if (other.tag == "TriggerPuerta")
+            {
+                DoorTrigger door = other.GetComponent<DoorTrigger>();
+                if (door != null)
+                    doorInRange = door;
+            }
+
         }
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("Objetos"))
+        {
+            if (other.tag == "madera")
+            {
+                objectInRange = other.gameObject;
+                print("objeto" + other.gameObject.name + "en rango");
+            }
+        }
+
+
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject == objectInRange)
+            objectInRange = null;
+
+        if (other.gameObject == doorInRange)
+            doorInRange = null;
 
     }
 
-
     private void Interact()
+    {
+        if (objectInRange != null)
+        {
+            objetoMano.GuardarObjeto(objectInRange);
+            objectInRange.SetActive(false);
+            objectInRange = null;
+            Debug.Log("Objeto recogido: " + objetoMano.objeto.name);
+        }
+        else if (doorInRange != null)
+        {
+            Debug.Log("Intento abrir puerta con: " + objetoMano.objeto.name);
+            doorInRange.TryOpen(objetoMano);
+        }
+        ChangeState(PlayerState.IDLE);
+    }
+
+    private void Dialogue()
     {
         if (aiden == null)
         {
-            Debug.LogError("Aiden no est� asignado en el Inspector");
+            Debug.LogError("Aiden no está asignado en el Inspector");
             ChangeState(PlayerState.IDLE);
             return;
         }
 
         float distance = Vector3.Distance(transform.position, aiden.transform.position);
-        print("AAAAAAAA" + distance);
         if (distance <= interactRange)
         {
-            print("empieza dialogo");
+            Debug.Log("Empieza diálogo");
             DialogueManager.Instance.StartDialogue();
         }
         else
