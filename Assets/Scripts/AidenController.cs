@@ -12,60 +12,26 @@ public class AidenController : MonoBehaviour
 
     [Header("Movimiento")]
     [SerializeField] private float Velocity;
-
-
-
     [SerializeField] private LayerMask playerLayer;
-
 
     [Header("UI")]
     [SerializeField] private GameObject canvasWorld;
+
+    [Header("Crouch")]
+    [SerializeField] private CapsuleCollider standCollider;
+    [SerializeField] private CapsuleCollider crouchCollider;
 
     public GameEvent OnDialogueStarted;
     public GameEvent OnDialogueEnded;
     public GameEvent OnAidenStopped;
     private bool InDialogue;
 
-    [Header("Crouch")]
-
-
-    [SerializeField] private CapsuleCollider standCollider;
-    [SerializeField] private CapsuleCollider crouchCollider;
-
-
-    private void OnEnable()
-    {
-        PlayerController.OnPlayerStateChanged += HandlePlayerStateChanged;
-        PlayerController.OnPlayerEnteredDialogueTrigger += HandleDialogueTrigger;
-        OnDialogueStarted.Subscribe(() => InDialogue = true);
-        OnDialogueEnded.Subscribe(() =>
-        {
-            InDialogue = false;
-            agent.isStopped = false;
-            OcultarUI();
-            ChangeState(AidenState.WALK);
-        });
-    }
-
-    private void OnDisable()
-    {
-        PlayerController.OnPlayerStateChanged -= HandlePlayerStateChanged;
-        PlayerController.OnPlayerEnteredDialogueTrigger -= HandleDialogueTrigger;
-        OnDialogueStarted.Unsubscribe(() => InDialogue = true);
-        OnDialogueEnded.Unsubscribe(() =>
-        {
-            InDialogue = false;
-            agent.isStopped = false;
-            OcultarUI();
-            ChangeState(AidenState.WALK);
-        });
-    }
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         InitState(AidenState.WALK);
-        if (canvasWorld != null) canvasWorld.SetActive(false);
+        SetUI(false);
 
     }
 
@@ -74,16 +40,21 @@ public class AidenController : MonoBehaviour
         UpdateState();
     }
 
-
-    private void HandleDialogueTrigger()
+    private void OnEnable()
     {
-        agent.isStopped = true;
-        ChangeState(AidenState.IDLE);
-        MostrarUI();
-        OnAidenStopped.Raise();
-
+        PlayerController.OnPlayerStateChanged += HandlePlayerStateChanged;
+        PlayerController.OnPlayerEnteredDialogueTrigger += HandleDialogueTrigger;
+        OnDialogueStarted.Subscribe(HandleDialogueStarted);
+        OnDialogueEnded.Subscribe(HandleDialogueEnded);
     }
 
+    private void OnDisable()
+    {
+        PlayerController.OnPlayerStateChanged -= HandlePlayerStateChanged;
+        PlayerController.OnPlayerEnteredDialogueTrigger -= HandleDialogueTrigger;
+        OnDialogueStarted.Unsubscribe(HandleDialogueStarted);
+        OnDialogueEnded.Unsubscribe(HandleDialogueEnded);
+    }
     private void HandlePlayerStateChanged(PlayerController.PlayerState playerState)
     {
         switch (playerState)
@@ -93,6 +64,34 @@ public class AidenController : MonoBehaviour
             case PlayerController.PlayerState.CROUCH: ChangeState(AidenState.CROUCH); break;
             case PlayerController.PlayerState.IDLE: ChangeState(AidenState.IDLE); break;
         }
+    }
+
+    private void HandleDialogueTrigger()
+    {
+        agent.isStopped = true;
+        ChangeState(AidenState.IDLE);
+        SetUI(true);
+        OnAidenStopped.Raise();
+    }
+
+    private void HandleDialogueStarted()
+    {
+        InDialogue = true;
+    }
+
+    private void HandleDialogueEnded()
+    {
+        if (agent == null) return;
+        InDialogue = false;
+        agent.isStopped = false;
+        SetUI(false);
+        ChangeState(AidenState.WALK);
+    }
+
+    private void SetUI(bool active)
+    {
+        if (canvasWorld != null)
+            canvasWorld.SetActive(active);
     }
 
     #region State Machine
@@ -111,11 +110,9 @@ public class AidenController : MonoBehaviour
             case AidenState.CROUCH:
                 standCollider.enabled = true;
                 crouchCollider.enabled = false;
-
                 break;
             case AidenState.SCARED:
                 break;
-
         }
     }
 
@@ -173,11 +170,6 @@ public class AidenController : MonoBehaviour
 
         standCollider.enabled = false;
         crouchCollider.enabled = true;
-
-
-        // float volume = soundEmitter.EmitSound(ESound.CROUCH);
-
-
     }
 
     private void FollowPlayer()
@@ -199,18 +191,5 @@ public class AidenController : MonoBehaviour
                 break;
         }
     }
-    public void MostrarUI()
-    {
-        if (canvasWorld != null)
-            canvasWorld.SetActive(true);
-    }
-
-    public void OcultarUI()
-    {
-        if (canvasWorld != null)
-            canvasWorld.SetActive(false);
-    }
-
-
-
+  
 }
