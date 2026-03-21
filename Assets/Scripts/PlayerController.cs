@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] ObjetoAgarrado objetoMano;
     private GameObject objectInRange = null;
-    private DoorTrigger doorInRange = null;
+    private TriggerPuzle doorInRange = null;
 
 
 
@@ -220,65 +220,29 @@ public class PlayerController : MonoBehaviour
         standCollider.enabled = false;
         crouchCollider.enabled = true;
 
-
         float volume = soundEmitter.EmitSound(ESound.CROUCH);
-
-
     }
-
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("TriggerAction"))
-        {
-            if (other.tag == "TriggerDialogue")
-            {
-                OnPlayerEnteredDialogueTrigger?.Invoke();
-            }
-            if (other.tag == "TriggerPuerta")
-            {
-                DoorTrigger door = other.GetComponent<DoorTrigger>();
-                if (door != null)
-                    doorInRange = door;
-            }
-
-        }
-
-        if (other.gameObject.layer == LayerMask.NameToLayer("Objetos"))
-        {
-            if (other.tag == "madera")
-            {
-                objectInRange = other.gameObject;
-                print("objeto" + other.gameObject.name + "en rango");
-            }
-        }
-
-
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject == objectInRange)
-            objectInRange = null;
-
-        if (other.gameObject == doorInRange)
-            doorInRange = null;
-
-    }
-
     private void Interact()
     {
         if (objectInRange != null)
         {
-            objetoMano.GuardarObjeto(objectInRange);
-            objectInRange.SetActive(false);
-            objectInRange = null;
-            Debug.Log("Objeto recogido: " + objetoMano.objeto.name);
+            if (objetoMano.nombreObjeto != null)
+            {
+                objetoMano.GuardarObjeto(objectInRange);
+                objectInRange.SetActive(false);
+                objectInRange = null;
+                Debug.Log("Objeto recogido: " + objetoMano.nombreObjeto);
+            }
+            else
+            {
+                Debug.Log("Mano ocupada");
+            }
         }
         else if (doorInRange != null)
         {
-            Debug.Log("Intento abrir puerta con: " + objetoMano.objeto.name);
             doorInRange.TryOpen(objetoMano);
         }
+
         ChangeState(PlayerState.IDLE);
     }
 
@@ -305,4 +269,44 @@ public class PlayerController : MonoBehaviour
         ChangeState(PlayerState.IDLE);
     }
 
-}
+    private void OnTriggerEnter(Collider other)
+    {
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("TriggerAction"))
+        {
+            if (other.tag == "TriggerDialogue")
+            {
+                OnPlayerEnteredDialogueTrigger?.Invoke();
+            }
+            if (other.tag == "TriggerPuzle")
+            {
+                TriggerPuzle door = other.GetComponent<TriggerPuzle>();
+                if (door != null)
+                {
+                    doorInRange = door;
+                    DialogueManager.Instance.StartWarning(door.RuntimeGraph);
+                }
+            }
+        }
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("Objetos"))
+        {
+            if (other.tag == "Rama" || other.tag == "Palanca" || other.tag == "Cizallas")
+            {
+                objectInRange = other.gameObject;
+                print("objeto " + other.gameObject.name + " en rango");
+            }
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject == objectInRange)
+        {
+            objectInRange = null;
+        }
+        if (other.gameObject == doorInRange?.gameObject)
+        {
+            doorInRange = null;
+        }
+     }
+  }

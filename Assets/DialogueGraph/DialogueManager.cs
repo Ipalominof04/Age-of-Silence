@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -26,7 +25,8 @@ public class DialogueManager : MonoBehaviour
     private Dictionary<string, RuntimeDialogueNode> _nodeLookup = new Dictionary<string, RuntimeDialogueNode>();
     private RuntimeDialogueNode _currentNode;
     private Coroutine _typewriterCoroutine;
-    private bool _isTyping = false; // ? para saber si está escribiendo
+    private bool _isTyping = false; // ? para saber si estï¿½ escribiendo
+    private bool _isWarning = false;
 
     [Header("Events")]
     public GameEvent OnDialogueStarted;
@@ -37,7 +37,6 @@ public class DialogueManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -58,12 +57,22 @@ public class DialogueManager : MonoBehaviour
         if (!string.IsNullOrEmpty(RuntimeGraph.EntryNodeID))
             ShowNode(RuntimeGraph.EntryNodeID);
     }
+    public void StartWarning(RuntimeDialogueGraph graph)
+    {
+        _isWarning = true;
+        _nodeLookup.Clear();
+        foreach (var node in graph.AllNodes)
+            _nodeLookup[node.NodeID] = node;
+
+        if (!string.IsNullOrEmpty(graph.EntryNodeID))
+            ShowNode(graph.EntryNodeID);
+    }
 
     private void Update()
     {
         if (Mouse.current.leftButton.wasPressedThisFrame && _currentNode != null && _currentNode.Choices.Count == 0)
         {
-            // Si está escribiendo, completa el texto al instante
+            // Si estï¿½ escribiendo, completa el texto al instante
             if (_isTyping)
             {
                 SkipTypewriter();
@@ -112,7 +121,7 @@ public class DialogueManager : MonoBehaviour
 
         _isTyping = false;
 
-        // Mostrar botones de elección solo cuando termina de escribir
+        // Mostrar botones de eleccion solo cuando termina de escribir
         if (choices.Count > 0)
             SpawnChoiceButtons(choices);
     }
@@ -161,7 +170,14 @@ public class DialogueManager : MonoBehaviour
         if (_typewriterCoroutine != null)
             StopCoroutine(_typewriterCoroutine);
 
-        OnDialogueEnded.Raise();
+        _nodeLookup.Clear();
+        foreach (var node in RuntimeGraph.AllNodes)
+            _nodeLookup[node.NodeID] = node;
+
+        if (!_isWarning)
+            OnDialogueEnded.Raise();
+
+        _isWarning = false;
         DialoguePanel.SetActive(false);
         _currentNode = null;
         _isTyping = false;
