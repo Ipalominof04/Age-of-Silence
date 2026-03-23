@@ -3,7 +3,7 @@ using UnityEngine;
 public class SpawnPoint : MonoBehaviour
 {
     [SerializeField] private string doorID;
-    [SerializeField] private float aidenOffset = 1.5f;
+    [SerializeField] private float aidenOffset = 1f;
     private void Start()
     {
         if (GameManager.Instance.lastDoorID == doorID)
