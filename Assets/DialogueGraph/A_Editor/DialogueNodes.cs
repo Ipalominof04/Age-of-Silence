@@ -50,6 +50,7 @@ public class ChoiceNode : Node
         {
             context.AddInputPort<string>($"Choice Text {i}").Build();
             context.AddInputPort<int>($"Choice Value {i}").Build();
+            context.AddInputPort<GameEvent>($"Choice Event {i}").Build();
             context.AddOutputPort($"Choice {i}").Build();
         }
     }

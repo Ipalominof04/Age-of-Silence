@@ -156,6 +156,8 @@ public class DialogueManager : MonoBehaviour
                     else if (choice.ValueChange < 0)
                         GameManager.Instance.RestValor(Mathf.Abs(choice.ValueChange));
 
+                    choice.OnChoiceSelected?.Raise();
+
                     if (!string.IsNullOrEmpty(choice.DestinationNodeID))
                         ShowNode(choice.DestinationNodeID);
                     else
