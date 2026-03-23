@@ -4,28 +4,36 @@ using UnityEngine.Events;
 public class TriggerPuzle : MonoBehaviour
 {
     [SerializeField] private string objetoRequerido;
-    public RuntimeDialogueGraph RuntimeGraph;
+    [SerializeField] private bool requiereObjeto = false;
+
+    [Header("Dialogos")]
+    public RuntimeDialogueGraph graphInfo;
+    public RuntimeDialogueGraph grapSinObjeto;
+    public RuntimeDialogueGraph graphObjetoIncorrecto;
 
     [Header("Acción al resolver el puzzle")]
     public UnityEvent OnPuzzleSolved;
 
     public void TryOpen(ObjetoAgarrado objetoMano)
     {
-        if (objetoMano.nombreObjeto == null)
+        if (!requiereObjeto)
         {
-            Debug.Log("No tengo ningún objeto en la mano");
-            return; //si no tengo ningun objeto, no hago nada
+            OnPuzzleSolved?.Invoke();
+            return;
         }
 
+        if (string.IsNullOrEmpty(objetoMano.nombreObjeto))
+        {
+            DialogueManager.Instance.StartInfo(grapSinObjeto);
+            return;
+        }
         if (objetoMano.nombreObjeto == objetoRequerido)
         {
-            Debug.Log("Abierto");
             OnPuzzleSolved?.Invoke();
         }
-
         else
-            Debug.Log("Necesitas el objeto correcto");
+            DialogueManager.Instance.StartInfo(graphObjetoIncorrecto);
 
-        objetoMano.UsarObjeto(); //independientemente de si el objeto es correcto o no, se usa
+        objetoMano.UsarObjeto();
     }
 }

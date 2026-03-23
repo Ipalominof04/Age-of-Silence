@@ -5410,7 +5410,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   objetoRequerido: Cizallas
-  RuntimeGraph: {fileID: 3965311268370046156, guid: e0c3e9be133fb944ebaa66dbe2f3844f, type: 3}
+  requiereObjeto: 1
+  graphInfo: {fileID: 3965311268370046156, guid: e0c3e9be133fb944ebaa66dbe2f3844f, type: 3}
+  grapSinObjeto: {fileID: 3965311268370046156, guid: 2528a99c4d3ed0644893199ff4a0e08c, type: 3}
+  graphObjetoIncorrecto: {fileID: 3965311268370046156, guid: f6265653a4f9cde4d83477e5222b8e1a, type: 3}
   OnPuzzleSolved:
     m_PersistentCalls:
       m_Calls:
@@ -10754,6 +10757,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1498683892}
+  - {fileID: 1690361426}
   - {fileID: 1117378892}
   - {fileID: 1450741315}
   - {fileID: 256990277}
@@ -10766,4 +10770,3 @@ SceneRoots:
   - {fileID: 675093283}
   - {fileID: 207528484}
   - {fileID: 653672575}
-  - {fileID: 1690361426}

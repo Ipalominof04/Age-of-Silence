@@ -315,7 +315,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25e558ae593bc264786ad206b29daaac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
-  RuntimeGraph: {fileID: 3965311268370046156, guid: 2340472cdb7fc6c49867cde4ad394a37, type: 3}
   DialoguePanel: {fileID: 666749437}
   SpeakerNameText: {fileID: 1526672660}
   DialogueText: {fileID: 890409674}
@@ -3041,7 +3040,7 @@ Transform:
   m_GameObject: {fileID: 752498402}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.369, y: 0.163, z: -8.13}
+  m_LocalPosition: {x: 6.369, y: 0.326, z: -8.072}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3060,7 +3059,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   objetoRequerido: 
-  RuntimeGraph: {fileID: 3965311268370046156, guid: e330e96ab991e6a4c95b742760e38317, type: 3}
+  requiereObjeto: 0
+  graphInfo: {fileID: 3965311268370046156, guid: e330e96ab991e6a4c95b742760e38317, type: 3}
+  grapSinObjeto: {fileID: 0}
+  graphObjetoIncorrecto: {fileID: 0}
+  OnPuzzleSolved:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 848339278}
+        m_TargetAssemblyTypeName: LevelManagerHabCasa1, Assembly-CSharp
+        m_MethodName: CambiarEscena
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &752498405
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3297,7 +3314,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01a582e5dea841945809b727d0a3832c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerDialogueScript
+  graphDialogue: {fileID: 3965311268370046156, guid: 2340472cdb7fc6c49867cde4ad394a37, type: 3}
   onDialogueFinished: {fileID: 11400000, guid: 24d173763f19212419ab012c1f7833f5, type: 2}
+--- !u!1 &848339277
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 848339279}
+  - component: {fileID: 848339278}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &848339278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848339277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cabdf821faf1274685adc9aff4aed6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelManagerHabCasa1
+  scene: 
+--- !u!4 &848339279
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848339277}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.21761, y: 0.57915, z: -1.31442}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &863669294
 GameObject:
   m_ObjectHideFlags: 0
@@ -8483,6 +8546,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1479145399}
+  - {fileID: 848339279}
   - {fileID: 1876960078}
   - {fileID: 549265799}
   - {fileID: 1359859611}

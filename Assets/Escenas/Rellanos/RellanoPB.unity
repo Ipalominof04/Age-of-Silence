@@ -12043,10 +12043,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2038852928}
   - component: {fileID: 2038852930}
-  - component: {fileID: 2038852929}
+  - component: {fileID: 2038852931}
   m_Layer: 9
   m_Name: TriggerPuzle
-  m_TagString: TriggerPuzle
+  m_TagString: TriggerInfo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12066,20 +12066,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 765456591}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2038852929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2038852927}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6dc3275631d30cd4ca1db364c4f76272, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
-  objetoRequerido: 
-  RuntimeGraph: {fileID: 3965311268370046156, guid: 200ca5665d818494bb12c3d664579a5c, type: 3}
 --- !u!65 &2038852930
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12101,6 +12087,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.396234, y: 2.2972069, z: 1.5757729}
   m_Center: {x: -0.25505376, y: 0.6486033, z: -0.27371758}
+--- !u!114 &2038852931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038852927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d44380ea550f8cb4d966d49b572c4759, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TriggerInfo
+  graphInfo: {fileID: 3965311268370046156, guid: 200ca5665d818494bb12c3d664579a5c, type: 3}
 --- !u!1 &2039370784
 GameObject:
   m_ObjectHideFlags: 0
