@@ -226,7 +226,7 @@ public class PlayerController : MonoBehaviour
     {
         if (objectInRange != null)
         {
-            if (objetoMano.nombreObjeto != null)
+            if (objetoMano.nombreObjeto == null)
             {
                 objetoMano.GuardarObjeto(objectInRange);
                 objectInRange.SetActive(false);

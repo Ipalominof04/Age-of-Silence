@@ -25,4 +25,5 @@ public class ChoiceData
     public string ChoiceText;
     public string DestinationNodeID;
     public int ValueChange;
+    public GameEvent OnChoiceSelected;
 }

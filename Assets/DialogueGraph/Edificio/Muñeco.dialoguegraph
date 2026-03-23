@@ -621,6 +621,8 @@ MonoBehaviour:
           - Choice Value 0
           - Choice Text 1
           - Choice Value 1
+          - Choice Event 0
+          - Choice Event 1
           m_ValueList:
           - rid: 4020160251933229219
           - rid: 4020160251933229220
@@ -629,6 +631,8 @@ MonoBehaviour:
           - rid: 4020160251933229224
           - rid: 4020160251933229225
           - rid: 4020160251933229226
+          - rid: 4923510235807350897
+          - rid: 4923510235807350898
         m_InputPortInfos:
           expandedPortsById:
             m_KeyList: []
@@ -1008,3 +1012,11 @@ MonoBehaviour:
     - rid: 4020160251933229247
       type: {class: EndNode, ns: , asm: Assembly-CSharp}
       data: 
+    - rid: 4923510235807350897
+      type: {class: 'Constant`1[[GameEvent, Assembly-CSharp]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: {fileID: 11400000, guid: 55debbf8f33bce346ad4dac49fd47e4e, type: 2}
+    - rid: 4923510235807350898
+      type: {class: 'Constant`1[[GameEvent, Assembly-CSharp]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: {fileID: 0}
