@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance { get; private set; }
-    public RuntimeDialogueGraph RuntimeGraph;
 
     [Header("UI Components")]
     public GameObject DialoguePanel;
@@ -20,13 +19,12 @@ public class DialogueManager : MonoBehaviour
     public Transform ChoiceButtonContainer;
 
     [Header("Typewriter Settings")]
-    [SerializeField] private float charDelay = 0.05f; // ? velocidad entre caracteres
-
+    [SerializeField] private float charDelay = 0.05f; //velocidad entre caracteres
     private Dictionary<string, RuntimeDialogueNode> _nodeLookup = new Dictionary<string, RuntimeDialogueNode>();
     private RuntimeDialogueNode _currentNode;
     private Coroutine _typewriterCoroutine;
-    private bool _isTyping = false; // ? para saber si est� escribiendo
-    private bool _isWarning = false;
+    private bool _isTyping = false; //para saber si estA escribiendo
+    private bool _isInfo = false;
 
     [Header("Events")]
     public GameEvent OnDialogueStarted;
@@ -46,20 +44,21 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
-        foreach (var node in RuntimeGraph.AllNodes)
-            _nodeLookup[node.NodeID] = node;
         DialoguePanel.SetActive(false);
     }
+    public void StartDialogue(RuntimeDialogueGraph graph)
+    {
+        _nodeLookup.Clear();
+        foreach (var node in graph.AllNodes)
+            _nodeLookup[node.NodeID] = node;
 
-    public void StartDialogue()
-    {
         OnDialogueStarted.Raise();
-        if (!string.IsNullOrEmpty(RuntimeGraph.EntryNodeID))
-            ShowNode(RuntimeGraph.EntryNodeID);
+        if (!string.IsNullOrEmpty(graph.EntryNodeID))
+            ShowNode(graph.EntryNodeID);
     }
-    public void StartWarning(RuntimeDialogueGraph graph)
+    public void StartInfo(RuntimeDialogueGraph graph)
     {
-        _isWarning = true;
+        _isInfo = true;
         _nodeLookup.Clear();
         foreach (var node in graph.AllNodes)
             _nodeLookup[node.NodeID] = node;
@@ -172,17 +171,14 @@ public class DialogueManager : MonoBehaviour
         if (_typewriterCoroutine != null)
             StopCoroutine(_typewriterCoroutine);
 
-        _nodeLookup.Clear();
-        foreach (var node in RuntimeGraph.AllNodes)
-            _nodeLookup[node.NodeID] = node;
-
-        if (!_isWarning)
+        if (!_isInfo)
             OnDialogueEnded.Raise();
 
-        _isWarning = false;
-        DialoguePanel.SetActive(false);
+        _isInfo = false;
+        _nodeLookup.Clear();
         _currentNode = null;
         _isTyping = false;
+        DialoguePanel.SetActive(false);
 
         foreach (Transform child in ChoiceButtonContainer)
             Destroy(child.gameObject);

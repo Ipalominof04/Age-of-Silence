@@ -4,10 +4,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public static event Action<PlayerState> OnPlayerStateChanged;
-    public static event Action OnPlayerEnteredDialogueTrigger;
-
     private CharacterController characterController;
+    private SoundEmitter soundEmitter;
+
     public enum PlayerState { NONE, IDLE, WALK, RUN, CROUCH, INTERACT, DIALOGUE }
 
     [Header("Maquina de estados")]
@@ -20,20 +19,13 @@ public class PlayerController : MonoBehaviour
     private InputAction runAction;
     private InputAction interactAction;
     private InputAction crouchAction;
-    Vector2 inputMoviment;
+    private Vector2 inputMoviment;
     private float gravity = -9.81f;
     private Vector3 verticalVelocity = Vector3.zero;
 
-
+    [Header("Aiden")]
     [SerializeField] private GameObject aiden;
     [SerializeField] private float interactRange;
-
-
-    public GameEvent OnDialogueStarted;
-    public GameEvent OnDialogueEnded;
-    public GameEvent OnAidenStopped;
-    private bool InDialogue;
-    private bool canInteract = false;
 
     [Header("Crouch")]
     [SerializeField] private Vector3 standCenter = new Vector3(0, 1.0f, 0);
@@ -45,15 +37,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CapsuleCollider standCollider;
     [SerializeField] private CapsuleCollider crouchCollider;
 
+    [Header("Objetos")]
+    [SerializeField] private ObjetoAgarrado objetoMano;
 
-    private SoundEmitter soundEmitter;
+    [Header("Eventos")]
+    [SerializeField] private GameEvent OnDialogueStarted;
+    [SerializeField] private GameEvent OnDialogueEnded;
+    [SerializeField] private GameEvent OnAidenStopped;
+    public static event Action<PlayerState> OnPlayerStateChanged;
+    public static event Action OnPlayerEnteredDialogueTrigger;
 
-
-    [SerializeField] ObjetoAgarrado objetoMano;
+    private bool InDialogue;
+    private bool canInteract = false;
     private GameObject objectInRange = null;
-    private TriggerPuzle doorInRange = null;
-
-
+    private TriggerPuzle puzleInRange = null;
+    private TriggerDialogue dialogueActivo = null;
 
     private void Awake()
     {
@@ -88,7 +86,7 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         OnDialogueStarted.Unsubscribe(() => InDialogue = true);
-        OnDialogueEnded.Unsubscribe(() => { InDialogue = false; canInteract = false; });
+        OnDialogueEnded.Unsubscribe(() => { InDialogue = false; canInteract = false; dialogueActivo = null; });
         OnAidenStopped.Unsubscribe(() => canInteract = true);
     }
 
@@ -110,7 +108,6 @@ public class PlayerController : MonoBehaviour
                 characterController.height = standHeight;
                 standCollider.enabled = true;
                 crouchCollider.enabled = false;
-
                 break;
             case PlayerState.INTERACT:
                 break;
@@ -129,7 +126,7 @@ public class PlayerController : MonoBehaviour
                 if (crouchAction.IsPressed()) ChangeState(PlayerState.CROUCH);
 
                 // Interact → solo para objetos
-                if (interactAction.triggered && (objectInRange != null || doorInRange != null))
+                if (interactAction.triggered && (objectInRange != null || puzleInRange != null))
                     ChangeState(PlayerState.INTERACT);
 
                 // Dialogue → solo para Aiden
@@ -226,7 +223,7 @@ public class PlayerController : MonoBehaviour
     {
         if (objectInRange != null)
         {
-            if (objetoMano.nombreObjeto == null)
+            if (string.IsNullOrEmpty(objetoMano.nombreObjeto))
             {
                 objetoMano.GuardarObjeto(objectInRange);
                 objectInRange.SetActive(false);
@@ -238,9 +235,9 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Mano ocupada");
             }
         }
-        else if (doorInRange != null)
+        else if (puzleInRange != null)
         {
-            doorInRange.TryOpen(objetoMano);
+            puzleInRange.TryOpen(objetoMano);
         }
 
         ChangeState(PlayerState.IDLE);
@@ -259,7 +256,7 @@ public class PlayerController : MonoBehaviour
         if (distance <= interactRange)
         {
             Debug.Log("Empieza diálogo");
-            DialogueManager.Instance.StartDialogue();
+            DialogueManager.Instance.StartDialogue(dialogueActivo.graphDialogue);
         }
         else
         {
@@ -277,15 +274,33 @@ public class PlayerController : MonoBehaviour
             if (other.tag == "TriggerDialogue")
             {
                 OnPlayerEnteredDialogueTrigger?.Invoke();
+
+                TriggerDialogue dialogue = other.GetComponent<TriggerDialogue>();
+                if (dialogue != null)
+                {
+                    dialogueActivo = dialogue;
+                }    
             }
+
             if (other.tag == "TriggerPuzle")
             {
-                TriggerPuzle door = other.GetComponent<TriggerPuzle>();
-                if (door != null)
+                //esto te da info cuando te acercas aunque no interactues,
+                //en el script del trigger te da info cuando interactuas
+                TriggerPuzle puzle = other.GetComponent<TriggerPuzle>();
+                if (puzle != null)
                 {
-                    doorInRange = door;
-                    DialogueManager.Instance.StartWarning(door.RuntimeGraph);
+                    puzleInRange = puzle;
+                    DialogueManager.Instance.StartInfo(puzle.graphInfo);
                 }
+            }
+
+            if (other.tag == "TriggerInfo")
+            {
+                //esto te da info cuando te acercas aunque no interactues,
+                //en el script del trigger te da info cuando interactuas
+                TriggerInfo info = other.GetComponent<TriggerInfo>();
+                if (info != null)
+                    DialogueManager.Instance.StartInfo(info.graphInfo);
             }
         }
 
@@ -304,9 +319,9 @@ public class PlayerController : MonoBehaviour
         {
             objectInRange = null;
         }
-        if (other.gameObject == doorInRange?.gameObject)
+        if (other.gameObject == puzleInRange?.gameObject)
         {
-            doorInRange = null;
+            puzleInRange = null;
         }
-     }
-  }
+    }
+}
