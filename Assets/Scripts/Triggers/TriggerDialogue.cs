@@ -1,7 +1,8 @@
 using UnityEngine;
 
-public class TriggerDialogueScript : MonoBehaviour
+public class TriggerDialogue : MonoBehaviour
 {
+    public RuntimeDialogueGraph graphDialogue;
     [SerializeField] public GameEvent onDialogueFinished;
 
     private void OnEnable()
