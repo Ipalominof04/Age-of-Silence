@@ -290,7 +290,12 @@ public class PlayerController : MonoBehaviour
                 if (puzle != null)
                 {
                     puzleInRange = puzle;
-                    DialogueManager.Instance.StartInfo(puzle.graphInfo);
+                    //para que la info solo salga la primera vez q el player entra al trigger
+                    if (!puzle.infoMostrada)
+                    {
+                        puzle.infoMostrada = true;
+                        DialogueManager.Instance.StartInfo(puzle.graphInfo);
+                    }
                 }
             }
 

@@ -5,6 +5,7 @@ public class TriggerPuzle : MonoBehaviour
 {
     [SerializeField] private string objetoRequerido;
     [SerializeField] private bool requiereObjeto = false;
+    public bool infoMostrada = false;
 
     [Header("Dialogos")]
     public RuntimeDialogueGraph graphInfo;
