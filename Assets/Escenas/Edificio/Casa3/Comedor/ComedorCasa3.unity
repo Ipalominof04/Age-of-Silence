@@ -1229,6 +1229,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 5986958801767457440, guid: 87a7b985b15a4244091de35d7df9169a, type: 3}
+      propertyPath: m_TagString
+      value: Aiden
+      objectReference: {fileID: 0}
     - target: {fileID: 6073252102561887968, guid: 87a7b985b15a4244091de35d7df9169a, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -1473,7 +1477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
   doorID: spawncomedor_rellano2
-  aidenOffset: 1.5
+  aidenOffset: 1
 --- !u!1001 &275905576
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4804,7 +4808,7 @@ GameObject:
   - component: {fileID: 1067956462}
   - component: {fileID: 1067956461}
   m_Layer: 9
-  m_Name: TriggerRellano2
+  m_Name: TriggerRellano3
   m_TagString: TriggerCambioEscena
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8361,8 +8365,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
-  doorID: spawnpasillo3
-  aidenOffset: 1.5
+  doorID: spawnpasillo3_comedor3
+  aidenOffset: 1
 --- !u!1001 &1730691273
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9079,7 +9083,7 @@ GameObject:
   - component: {fileID: 1859278716}
   - component: {fileID: 1859278715}
   m_Layer: 9
-  m_Name: TriggerPasilloCasa2
+  m_Name: TriggerPasilloCasa3
   m_TagString: TriggerCambioEscena
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9113,8 +9117,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: PasilloCasa3
-  miDoorID: comedor_pasillo3
-  targetDoorID: spawncomedor3
+  miDoorID: comedor3_pasillo3
+  targetDoorID: spawncomedor3_pasillo3
 --- !u!65 &1859278716
 BoxCollider:
   m_ObjectHideFlags: 0

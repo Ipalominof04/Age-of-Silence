@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
             fadeImage.color = c;
             fadeImage.gameObject.SetActive(false);
         }
+        MoverPlayerSpawn();
     }
 
     public void SumValor(int amount)
@@ -116,5 +117,34 @@ public class GameManager : MonoBehaviour
         }
 
         fadeImage.gameObject.SetActive(false);
+    }
+
+    private void MoverPlayerSpawn()
+    {
+        if (string.IsNullOrEmpty(lastDoorID)) return;
+
+        SpawnPoint[] spawnPoints = FindObjectsByType<SpawnPoint>(FindObjectsSortMode.None);
+
+        foreach (SpawnPoint spawn in spawnPoints)
+        {
+            if (spawn.GetDoorID() == lastDoorID)
+            {
+                GameObject player = GameObject.FindGameObjectWithTag("Player");
+                GameObject aiden = GameObject.FindGameObjectWithTag("Aiden");
+
+                if (player != null)
+                {
+                    player.transform.position = spawn.transform.position;
+                    player.transform.rotation = Quaternion.Euler(0f, spawn.transform.eulerAngles.y, 0f);
+                }
+
+                if (aiden != null)
+                {
+                    aiden.transform.position = spawn.transform.position + (-spawn.transform.right * spawn.AidenOffset);
+                    aiden.transform.rotation = Quaternion.Euler(0f, spawn.transform.eulerAngles.y, 0f);
+                }
+                return;
+            }
+        }
     }
 }
