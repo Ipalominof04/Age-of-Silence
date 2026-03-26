@@ -165,8 +165,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: ComedorCasa3
-  miDoorID: comedorcasa3
-  targetDoorID: spawnpasillo3
+  miDoorID: pasillo3_comedor3
+  targetDoorID: spawnpasillo3_comedor3
 --- !u!65 &26848072
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -494,7 +494,7 @@ Transform:
   m_GameObject: {fileID: 189363690}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 1.665, y: 0.175, z: 0.029}
+  m_LocalPosition: {x: 1.665, y: 0.175, z: -0.461}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -512,8 +512,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
-  doorID: spawnhab3
-  aidenOffset: 1.5
+  doorID: spawnhab3_pasillo3
+  aidenOffset: 1
 --- !u!1 &273886339
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,8 +558,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
-  doorID: spawncomedor3
-  aidenOffset: 1.5
+  doorID: spawncomedor3_pasillo3
+  aidenOffset: 1
 --- !u!1001 &344932369
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1986,6 +1986,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 5986958801767457440, guid: 87a7b985b15a4244091de35d7df9169a, type: 3}
+      propertyPath: m_TagString
+      value: Aiden
+      objectReference: {fileID: 0}
     - target: {fileID: 6073252102561887968, guid: 87a7b985b15a4244091de35d7df9169a, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -2900,7 +2904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
-  doorID: spawntrastero3
+  doorID: spawntrastero_pasillo3
   aidenOffset: 1.5
 --- !u!1 &859564916
 GameObject:
@@ -7004,8 +7008,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: Trastero
-  miDoorID: trasterocasa3
-  targetDoorID: spawnpasillo3
+  miDoorID: pasillo3_trastero
+  targetDoorID: spawnpasillo3_trastero
 --- !u!65 &1652169911
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8086,8 +8090,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: HabitacionCasa3
-  miDoorID: habcasa3
-  targetDoorID: spawnpasillo3
+  miDoorID: pasillo3_hab3
+  targetDoorID: spawnpasillo3_hab3
 --- !u!65 &1883191855
 BoxCollider:
   m_ObjectHideFlags: 0
