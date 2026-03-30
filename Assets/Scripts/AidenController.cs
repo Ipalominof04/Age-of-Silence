@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -21,16 +22,20 @@ public class AidenController : MonoBehaviour
     [SerializeField] private CapsuleCollider standCollider;
     [SerializeField] private CapsuleCollider crouchCollider;
 
-    public GameEvent OnDialogueStarted;
-    public GameEvent OnDialogueEnded;
-    public GameEvent OnAidenStopped;
+    [Header("Eventos")]
+    [SerializeField] GameEvent OnDialogueStarted;
+    [SerializeField] GameEvent OnDialogueEnded;
+    [SerializeField] GameEvent OnAidenStopped;
+    [SerializeField] GameEventString OnAidenScared;
     private bool InDialogue;
+
+    private int scaredNum;
 
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        InitState(AidenState.WALK);
+        InitState(AidenState.IDLE);
         SetUI(false);
 
     }
@@ -46,6 +51,7 @@ public class AidenController : MonoBehaviour
         PlayerController.OnPlayerEnteredDialogueTrigger += HandleDialogueTrigger;
         OnDialogueStarted.Subscribe(HandleDialogueStarted);
         OnDialogueEnded.Subscribe(HandleDialogueEnded);
+        OnAidenScared.Subscribe(Scared);
     }
 
     private void OnDisable()
@@ -54,9 +60,13 @@ public class AidenController : MonoBehaviour
         PlayerController.OnPlayerEnteredDialogueTrigger -= HandleDialogueTrigger;
         OnDialogueStarted.Unsubscribe(HandleDialogueStarted);
         OnDialogueEnded.Unsubscribe(HandleDialogueEnded);
+        OnAidenScared.Unsubscribe(Scared);
     }
     private void HandlePlayerStateChanged(PlayerController.PlayerState playerState)
     {
+        //si el niño esta asustado, que ignore lo que hace el player y no le siga hasta que se indique dependiendo el caso 
+        if (currentState == AidenState.SCARED) return;
+
         switch (playerState)
         {
             case PlayerController.PlayerState.WALK: ChangeState(AidenState.WALK); break;
@@ -112,6 +122,22 @@ public class AidenController : MonoBehaviour
                 crouchCollider.enabled = false;
                 break;
             case AidenState.SCARED:
+                if (scaredNum == 0)
+                {
+                    print("Aiden ha GRITADO");
+                    ChangeState(AidenState.WALK);
+                }
+                if (scaredNum == 1)
+                {
+                    print("Aiden ha SALIDO CORRIENDO");
+                    Vector3 randomDirection = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)).normalized;
+                    Vector3 targetPos = transform.position + randomDirection * 7;
+
+                    if (NavMesh.SamplePosition(targetPos, out NavMeshHit hit, 5f, NavMesh.AllAreas))
+                        agent.speed = 2.5f;
+                        agent.stoppingDistance = 0f;
+                        agent.SetDestination(hit.position);
+                }
                 break;
         }
     }
@@ -164,14 +190,6 @@ public class AidenController : MonoBehaviour
     }
     #endregion
 
-    private void Crouch()
-    {
-        Velocity = 1.5f;
-
-        standCollider.enabled = false;
-        crouchCollider.enabled = true;
-    }
-
     private void FollowPlayer()
     {
         if (InDialogue) return;
@@ -191,5 +209,44 @@ public class AidenController : MonoBehaviour
                 break;
         }
     }
-  
+    private void Crouch()
+    {
+        Velocity = 1.5f;
+
+        standCollider.enabled = false;
+        crouchCollider.enabled = true;
+    }
+
+    private void Scared(ScareType type)
+    {
+        int confianza = GameManager.Instance.Confianza;
+
+        if (type == ScareType.Body)
+        {
+            if (confianza <= 20)
+            {
+                //se va a asustar SI o SI porque tiene poca confianza
+                scaredNum = UnityEngine.Random.Range(0, 2);
+            }
+            else if (confianza <= 60)
+            {
+                scaredNum = UnityEngine.Random.Range(0, 10);
+            }
+            else
+            {
+                scaredNum = UnityEngine.Random.Range(0, 20);
+            }
+
+            if (scaredNum == 0 || scaredNum == 1)
+                ChangeState(AidenState.SCARED);
+            else
+                print("Aiden no se ha asustado por probabilidad");
+        }
+
+        if (type == ScareType.Shoot)
+        {
+            print("me ha asustao un TIRO");
+        }
+    }
+
 }

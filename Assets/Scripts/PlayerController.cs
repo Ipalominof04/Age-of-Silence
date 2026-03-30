@@ -114,7 +114,6 @@ public class PlayerController : MonoBehaviour
 
         }
     }
-
     private void UpdateState()
     {
         if (InDialogue) return;

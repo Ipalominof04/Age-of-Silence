@@ -7,8 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    [Header("Valor")]
-    public int Valor = 0;
+    [Header("Confianza")]
+    [SerializeField] public int Confianza = 0;
     [Header("Fade")]
     private Image fadeImage;        // la UI Image negra
     public float fadeDuration = 1f;
@@ -59,14 +59,14 @@ public class GameManager : MonoBehaviour
 
     public void SumValor(int amount)
     {
-        Valor += amount;
-        Debug.Log($"Valor subió a: {Valor}");
+        Confianza += amount;
+        Debug.Log($"Valor subió a: {Confianza}");
     }
 
     public void RestValor(int amount)
     {
-        Valor -= amount;
-        Debug.Log($"Valor bajó a: {Valor}");
+        Confianza -= amount;
+        Debug.Log($"Valor bajó a: {Confianza}");
     }
 
     public void ChangeScene(string sceneName)
