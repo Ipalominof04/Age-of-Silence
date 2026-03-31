@@ -1,7 +1,9 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class EnemyController : MonoBehaviour, ISoundListener
 {
@@ -10,6 +12,9 @@ public class EnemyController : MonoBehaviour, ISoundListener
     [Header("Maquina de estados")]
     [SerializeField] private EnemyState currentState;
     private NavMeshAgent agent;
+
+    [Header("Eventos")]
+    [SerializeField] private GameEventString OnAidenScared;
 
     [Header("Config Areas y Layers")]
     [SerializeField] private Transform headTransform;
@@ -28,6 +33,8 @@ public class EnemyController : MonoBehaviour, ISoundListener
     private bool chaseFromLook = false;
 
     [SerializeField] private float searchDuration = 5f;
+
+    private bool hasShot = false;
 
     private void OnEnable()
     {
@@ -275,7 +282,19 @@ public class EnemyController : MonoBehaviour, ISoundListener
 
     private void Shoot()
     {
+        if (hasShot) return;
+        StartCoroutine(ShootCooldown());
+
         print("pium pium");
+        if (SceneManager.GetActiveScene().name != "Escena2")
+            OnAidenScared?.Raise(ScareType.Shoot);
+    }
+
+    private IEnumerator ShootCooldown()
+    {
+        hasShot = true;
+        yield return new WaitForSeconds(1f); // ajusta el tiempo entre disparos
+        hasShot = false;
     }
 
     private void OnDrawGizmos()

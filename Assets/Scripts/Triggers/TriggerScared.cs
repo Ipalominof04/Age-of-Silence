@@ -8,7 +8,7 @@ public class TriggerScared : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Aiden"))
         {
             OnAidenScared?.Raise(ScareType.Body);
-            //gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
 }

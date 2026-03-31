@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LevelManagerScene2 : MonoBehaviour
+public class LevelManagerEscena2 : MonoBehaviour
 {
     [SerializeField] string scene;
     public void CambiarEscena()
