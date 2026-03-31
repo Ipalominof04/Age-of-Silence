@@ -28,8 +28,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float interactRange;
 
     [Header("Crouch")]
-    [SerializeField] private Vector3 standCenter = new Vector3(0, 1.0f, 0);
-    [SerializeField] private Vector3 crouchCenter = new Vector3(0, 0.5f, 0);
+    [SerializeField] private Vector3 standCenter;
+    [SerializeField] private Vector3 crouchCenter;
     [SerializeField] private float standRadius;
     [SerializeField] private float crouchRadius;
     [SerializeField] private float standHeight;
@@ -103,18 +103,17 @@ public class PlayerController : MonoBehaviour
             case PlayerState.RUN:
                 break;
             case PlayerState.CROUCH:
-                characterController.center = standCenter;
-                characterController.radius = standRadius;
-                characterController.height = standHeight;
-                standCollider.enabled = true;
-                crouchCollider.enabled = false;
+                characterController.center = crouchCenter;
+                characterController.radius = crouchRadius;
+                characterController.height = crouchHeight;
+                standCollider.enabled = false;
+                crouchCollider.enabled = true;
                 break;
             case PlayerState.INTERACT:
                 break;
 
         }
     }
-
     private void UpdateState()
     {
         if (InDialogue) return;
@@ -210,12 +209,6 @@ public class PlayerController : MonoBehaviour
     }
     private void Crouch()
     {
-        characterController.center = crouchCenter;
-        characterController.radius = crouchRadius;
-        characterController.height = crouchHeight;
-
-        standCollider.enabled = false;
-        crouchCollider.enabled = true;
 
         float volume = soundEmitter.EmitSound(ESound.CROUCH);
     }
