@@ -525,7 +525,7 @@ Light:
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
-  m_Intensity: 1341.862
+  m_Intensity: 1350
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -568,7 +568,7 @@ Light:
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 0.5, y: 0.5}
   m_BounceIntensity: 0.05
-  m_ColorTemperature: 8853
+  m_ColorTemperature: 10600
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -817,7 +817,7 @@ GameObject:
   m_Component:
   - component: {fileID: 184453524}
   m_Layer: 0
-  m_Name: PuntosLuz
+  m_Name: Luces
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -831,7 +831,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 184453523}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -9.488987, y: 3.15942, z: -15.016584}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -845,7 +845,7 @@ Transform:
   - {fileID: 493735752}
   - {fileID: 482302860}
   - {fileID: 1089098102}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1212587341}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &185694891 stripped
 Transform:
@@ -10497,6 +10497,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 490830642}
+  - {fileID: 184453524}
   - {fileID: 1764489201}
   - {fileID: 1933307562}
   - {fileID: 975332093}
@@ -20524,12 +20525,11 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1823688467}
-  - {fileID: 1113497522}
   - {fileID: 157207114}
   - {fileID: 432432461}
+  - {fileID: 1113497522}
   - {fileID: 2013410475}
   - {fileID: 1212587341}
-  - {fileID: 184453524}
   - {fileID: 748395432}
   - {fileID: 1332841190}
   - {fileID: 1304857994}
