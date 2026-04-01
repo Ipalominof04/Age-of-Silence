@@ -125,11 +125,14 @@ public class AidenController : MonoBehaviour
                 if (scaredNum == 0)
                 {
                     print("Aiden ha GRITADO");
-                    ChangeState(AidenState.WALK);
+                    SetUI(true);
+                    StartCoroutine(GritoUIRoutine());
+                    ChangeState(AidenState.WALK);         
                 }
                else if (scaredNum == 1)
                 {
                     print("Aiden ha SALIDO CORRIENDO");
+                    SetUI(true);
                     Vector3 randomDirection = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)).normalized;
                     Vector3 targetPos = transform.position + randomDirection * 7;
 
@@ -172,6 +175,7 @@ public class AidenController : MonoBehaviour
                     //si la corrutina esta activa, parala y ponla a null
                     if (scaredCoroutine != null) StopCoroutine(scaredCoroutine);
                     scaredCoroutine = null;
+                    SetUI(false);
                     GameManager.Instance.SumValor(10);
                     ChangeState(AidenState.WALK);
                 }
@@ -270,8 +274,15 @@ public class AidenController : MonoBehaviour
     {
         yield return new WaitForSeconds(20f);
         scaredCoroutine = null;
+        SetUI(false);
         GameManager.Instance.RestValor(10);
         ChangeState(AidenState.WALK);
     }
+
+    private IEnumerator GritoUIRoutine()
+{
+    yield return new WaitForSeconds(2f);
+    SetUI(false);
+}
 
 }
