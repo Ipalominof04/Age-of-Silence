@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     private bool InDialogue;
     private bool canInteract = false;
     private GameObject objectInRange = null;
+    private GameObject objectLanzableInRange = null;
     private TriggerPuzle puzleInRange = null;
     private TriggerDialogue dialogueActivo = null;
 
@@ -307,6 +308,19 @@ public class PlayerController : MonoBehaviour
             if (other.tag == "Rama" || other.tag == "Palanca" || other.tag == "Cizallas")
             {
                 objectInRange = other.gameObject;
+                print("objeto " + other.gameObject.name + " en rango");
+            }
+
+            if(other.tag == "Botella")
+            {
+                objectLanzableInRange = other.gameObject;
+
+                ObjetoLanzable lanzable = other.GetComponent<ObjetoLanzable>();
+
+                if (lanzable != null)
+                    lanzable.MostrarUI();
+
+
                 print("objeto " + other.gameObject.name + " en rango");
             }
         }
