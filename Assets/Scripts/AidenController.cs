@@ -73,7 +73,6 @@ public class AidenController : MonoBehaviour
             case PlayerController.PlayerState.IDLE: ChangeState(AidenState.IDLE); break;
         }
     }
-
     private void HandleDialogueTrigger()
     {
         agent.isStopped = true;
