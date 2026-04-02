@@ -9051,7 +9051,7 @@ Transform:
   m_GameObject: {fileID: 422570983}
   serializedVersion: 2
   m_LocalRotation: {x: 0.106546976, y: 0, z: 0, w: 0.9943077}
-  m_LocalPosition: {x: -8.69153, y: 0.4417801, z: 14.444878}
+  m_LocalPosition: {x: 13.00847, y: 0.4417801, z: 8.53771}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16845,13 +16845,14 @@ GameObject:
   - component: {fileID: 1089450946}
   - component: {fileID: 1089450945}
   - component: {fileID: 1089450944}
+  - component: {fileID: 1089450947}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1089450943
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16859,17 +16860,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1089450942}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0.039}
+  m_LocalRotation: {x: -0.5, y: 0.5, z: -0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: -0.719}
   m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1523042343}
   m_Father: {fileID: 4197954850319449559}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: -90}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0, y: 1.165}
+  m_AnchoredPosition: {x: -0, y: 0}
   m_SizeDelta: {x: 1151, y: 588}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1089450944
@@ -16935,6 +16936,19 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1089450947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1089450942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4acf82a54dde76a459ee43d44cfb99d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CanvasLookAtCamera
+  _camera: {fileID: 422570988}
 --- !u!1001 &1089907921
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19542,7 +19556,7 @@ Transform:
   m_GameObject: {fileID: 1309213979}
   serializedVersion: 2
   m_LocalRotation: {x: 0.106546976, y: -0, z: -0, w: 0.9943077}
-  m_LocalPosition: {x: -8.69153, y: 0.4417801, z: 14.444878}
+  m_LocalPosition: {x: 13.00847, y: 0.4417801, z: 6.6348777}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -30005,7 +30019,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.ProbeVolume
   mode: 1
-  size: {x: 105.55006, y: 15.848267, z: 33.576607}
+  size: {x: 105.550064, y: 15.848267, z: 33.576607}
   overrideRendererFilters: 0
   minRendererVolumeSize: 0.1
   objectLayerMask:
@@ -30045,7 +30059,7 @@ Transform:
   m_GameObject: {fileID: 1731411915}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.00000004470348, w: 1}
-  m_LocalPosition: {x: 34.883232, y: 6.0570326, z: 6.810437}
+  m_LocalPosition: {x: 34.88324, y: 6.0570326, z: 6.810437}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -31932,7 +31946,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1075083039853645334, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.33
+      value: 11.37
       objectReference: {fileID: 0}
     - target: {fileID: 1075083039853645334, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_LocalPosition.y
@@ -31940,7 +31954,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1075083039853645334, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.99
+      value: 3.18
       objectReference: {fileID: 0}
     - target: {fileID: 1075083039853645334, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_LocalRotation.w
@@ -35133,7 +35147,7 @@ GameObject:
   - component: {fileID: 4197954850319449560}
   m_Layer: 12
   m_Name: Botella1
-  m_TagString: botella
+  m_TagString: Botella
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35229,7 +35243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef17538c2ef984e4284b50fbcb438f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjetoLanzable
-  canvasWorld: {fileID: 0}
+  canvasWorld: {fileID: 1089450942}
   hand: {fileID: 7482905}
 --- !u!135 &4197954850319449561
 SphereCollider:
