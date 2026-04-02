@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -29,12 +29,14 @@ public class EnemyController : MonoBehaviour, ISoundListener
     [SerializeField] private Transform[] destination;
     [SerializeField] int currentIndex = 0;
 
-    private float chaseTimer = 0f;
-    private bool chaseFromLook = false;
+    [Header("UI")]
+    [SerializeField] private GameObject canvasWorld;
+    [SerializeField] private TextMeshProUGUI stateText;
 
-    [SerializeField] private float searchDuration = 5f;
-
+    private float searchDuration = 5f;
     private bool hasShot = false;
+    private Coroutine lookCoroutine;
+    private Coroutine searchCoroutine;
 
     private void OnEnable()
     {
@@ -55,6 +57,21 @@ public class EnemyController : MonoBehaviour, ISoundListener
     {
         return transform.position;
     }
+    
+    private void SetUI(bool active, string text = "", string hexColor = "#FFFFFF") //asi se pone un valor por defecto
+    {
+        if (canvasWorld != null)
+        {
+            canvasWorld.SetActive(active);
+            if (stateText != null)
+            {
+                stateText.text = text;
+                //para poder ponerle un color especifico con los colorutility
+                ColorUtility.TryParseHtmlString(hexColor, out Color color);
+                stateText.color = color;
+            }
+        }
+    }
 
     private void Awake()
     {
@@ -64,6 +81,8 @@ public class EnemyController : MonoBehaviour, ISoundListener
     void Start()
     {
         InitState(EnemyState.PATROL);
+        SetUI(false);
+
     }
 
     void Update()
@@ -86,10 +105,12 @@ public class EnemyController : MonoBehaviour, ISoundListener
         {
             case EnemyState.IDLE:
                 agent.isStopped = true;
+                SetUI(false);
                 break;
 
             case EnemyState.PATROL:
                 agent.isStopped = false;
+                SetUI(false);
                 agent.speed = 1f;
                 agent.stoppingDistance = 0.2f;
                 agent.SetDestination(destination[currentIndex].position);
@@ -97,9 +118,9 @@ public class EnemyController : MonoBehaviour, ISoundListener
 
             case EnemyState.CHASE:
                 agent.isStopped = false;
+                SetUI(true, "!" , "#F11200");
                 agent.speed = 2f;
                 agent.stoppingDistance = radiusAttack;
-                chaseTimer = chaseFromLook ? 2f : 0f;
                 break;
 
             case EnemyState.ATTACK:
@@ -108,10 +129,14 @@ public class EnemyController : MonoBehaviour, ISoundListener
 
             case EnemyState.SEARCHING:
                 agent.isStopped = true;
+                SetUI(true, "?", "#FFC300");
+                searchCoroutine = StartCoroutine(SearchRoutine());
                 break;
 
             case EnemyState.LOOK:
                 agent.isStopped = true;
+                SetUI(true, "?", "#FFC300");
+                lookCoroutine = StartCoroutine(LookRoutine());
                 break;
         }
     }
@@ -138,21 +163,11 @@ public class EnemyController : MonoBehaviour, ISoundListener
                 break;
 
             case EnemyState.CHASE:
-                if (chaseTimer > 0f)
-                    chaseTimer -= Time.deltaTime;
-
                 MoveToPlayer();
-
                 if (PlayerInAttackArea())
-                {
-                    chaseFromLook = false;
                     ChangeState(EnemyState.ATTACK);
-                }
-                else if (!PlayerInArea(radiusChase) && chaseTimer <= 0f)
-                {
-                    chaseFromLook = false;
+                else if (!PlayerInArea(radiusChase) && !PlayerInArea(radiusLook))
                     ChangeState(EnemyState.SEARCHING);
-                }
                 break;
 
             case EnemyState.ATTACK:
@@ -163,26 +178,19 @@ public class EnemyController : MonoBehaviour, ISoundListener
                 break;
 
             case EnemyState.SEARCHING:
-                StartCoroutine(SearchRoutine());
+                //la corrutina se inicia en el init
                 if (PlayerInArea(radiusChase))
-                {
                     ChangeState(EnemyState.CHASE);
-                }
                 else if (PlayerInArea(radiusLook))
-                {
-                    chaseFromLook = true;
                     ChangeState(EnemyState.CHASE);
-                }
-
                 break;
 
             case EnemyState.LOOK:
+                //la corrutina se inicia en el init
                 if (PlayerInAttackArea())
                     ChangeState(EnemyState.ATTACK);
                 else if (PlayerInArea(radiusChase))
                     ChangeState(EnemyState.CHASE);
-                else if (!PlayerInArea(radiusLook))
-                    ChangeState(EnemyState.PATROL);
                 break;
         }
     }
@@ -200,8 +208,12 @@ public class EnemyController : MonoBehaviour, ISoundListener
             case EnemyState.ATTACK:
                 break;
             case EnemyState.SEARCHING:
+                if (searchCoroutine != null) 
+                    StopCoroutine(searchCoroutine);
                 break;
             case EnemyState.LOOK:
+                if (lookCoroutine != null) 
+                    StopCoroutine(lookCoroutine);
                 break;
         }
     }
@@ -211,7 +223,20 @@ public class EnemyController : MonoBehaviour, ISoundListener
 
         if (currentState == EnemyState.SEARCHING)
             ChangeState(EnemyState.PATROL);
+    }
 
+    private IEnumerator LookRoutine()
+    {
+        yield return new WaitForSeconds(searchDuration);
+
+        if (currentState == EnemyState.LOOK)
+        {
+            //si sigo viéndole, perseguir; si no, patrullar
+            if (PlayerInArea(radiusLook))
+                ChangeState(EnemyState.CHASE);
+            else
+                ChangeState(EnemyState.PATROL);
+        }
     }
 
     private void Patrol()
