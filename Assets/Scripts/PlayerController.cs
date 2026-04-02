@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController characterController;
     private SoundEmitter soundEmitter;
 
-    public enum PlayerState { NONE, IDLE, WALK, RUN, CROUCH, INTERACT, DIALOGUE }
+    public enum PlayerState { NONE, IDLE, WALK, RUN, CROUCH, INTERACT, DIALOGUE, THROW }
 
     [Header("Maquina de estados")]
     [SerializeField] private PlayerState currentState;
@@ -112,6 +112,8 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.INTERACT:
                 break;
+            case PlayerState.THROW:
+                break;
 
         }
     }
@@ -132,6 +134,9 @@ public class PlayerController : MonoBehaviour
                 // Dialogue → solo para Aiden
                 if (interactAction.triggered && canInteract && objectInRange == null)
                     ChangeState(PlayerState.DIALOGUE);
+
+                if (interactAction.triggered && (objectLanzableInRange != null))
+                    ChangeState(PlayerState.THROW);
                 break;
             case PlayerState.WALK:
                 Move(2);
@@ -155,9 +160,14 @@ public class PlayerController : MonoBehaviour
             case PlayerState.DIALOGUE:
                 Dialogue();
                 break;
+            case PlayerState.THROW:
+                ThrowObject();
+                break;
 
         }
     }
+
+
 
     private void ChangeState(PlayerState newState)
     {
@@ -186,11 +196,15 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.INTERACT:
                 break;
-
+            case PlayerState.THROW:
+                break;
         }
     }
     #endregion
+    private void ThrowObject()
+    {
 
+    }
     private void ApplyGravity()
     {
         if (characterController.isGrounded)
@@ -334,6 +348,15 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject == puzleInRange?.gameObject)
         {
             puzleInRange = null;
+        }
+        if(other.gameObject == objectLanzableInRange?.gameObject)
+        {
+            objectLanzableInRange = null;
+
+            ObjetoLanzable lanzable = other.GetComponent<ObjetoLanzable>();
+
+            if (lanzable != null)
+                lanzable.OcultarUI();
         }
     }
 }
