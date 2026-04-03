@@ -8,6 +8,9 @@ public class ObjetoLanzable : MonoBehaviour
     [Header("Hand")]
     [SerializeField] public GameObject hand;
 
+    [Header("Lanzamiento")]
+    [SerializeField] public float fuerzaLanzamiento = 15f;
+
     private SphereCollider collider;
 
 
@@ -43,8 +46,16 @@ public class ObjetoLanzable : MonoBehaviour
         transform.rotation = hand.transform.rotation;
     }
 
-    public void lanzar()
+    public void Lanzar(Vector3 direccion)
     {
+        transform.SetParent(null);
+        collider.enabled = true;
 
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.AddForce(direccion * fuerzaLanzamiento, ForceMode.Impulse);
+        }
     }
 }

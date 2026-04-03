@@ -47,6 +47,12 @@ public class PlayerController : MonoBehaviour
     public static event Action<PlayerState> OnPlayerStateChanged;
     public static event Action OnPlayerEnteredDialogueTrigger;
 
+    [Header("Lanzamiento")]
+    [SerializeField] private ParabolaRenderer parabolaRenderer;
+    [SerializeField] private Transform puntoLanzamiento;
+    private ObjetoLanzable objetoLanzableEnMano;
+    private InputAction throwAction;
+
     private bool InDialogue;
     private bool canInteract = false;
     private GameObject objectInRange = null;
@@ -64,6 +70,7 @@ public class PlayerController : MonoBehaviour
         runAction = inputInstance.FindActionMap("Player").FindAction("Sprint");
         interactAction = inputInstance.FindActionMap("Player").FindAction("Interact");
         crouchAction = inputInstance.FindActionMap("Player").FindAction("Crouch");
+        throwAction = inputInstance.FindActionMap("Player").FindAction("Throw");
     }
 
     void Start()
@@ -77,6 +84,7 @@ public class PlayerController : MonoBehaviour
         UpdateState();
         ApplyGravity();
     }
+
     private void OnEnable()
     {
         OnDialogueStarted.Subscribe(() => InDialogue = true);
@@ -113,10 +121,23 @@ public class PlayerController : MonoBehaviour
             case PlayerState.INTERACT:
                 break;
             case PlayerState.THROW:
+                if (objetoLanzableEnMano == null)
+                {
+                    if (objectLanzableInRange != null)
+                    {
+                        objetoLanzableEnMano = objectLanzableInRange.GetComponent<ObjetoLanzable>();
+                        objetoLanzableEnMano?.Recoger();
+                        objectLanzableInRange = null;
+                    }
+                    else
+                    {
+                        ChangeState(PlayerState.IDLE);
+                    }
+                }
                 break;
-
         }
     }
+
     private void UpdateState()
     {
         if (InDialogue) return;
@@ -127,47 +148,54 @@ public class PlayerController : MonoBehaviour
                 if (inputMoviment.magnitude > 0.01f) ChangeState(PlayerState.WALK);
                 if (crouchAction.IsPressed()) ChangeState(PlayerState.CROUCH);
 
-                // Interact → solo para objetos
                 if (interactAction.triggered && (objectInRange != null || puzleInRange != null))
                     ChangeState(PlayerState.INTERACT);
 
-                // Dialogue → solo para Aiden
                 if (interactAction.triggered && canInteract && objectInRange == null)
                     ChangeState(PlayerState.DIALOGUE);
 
-                if (interactAction.triggered && (objectLanzableInRange != null))
+                if (interactAction.triggered && objectLanzableInRange != null)
+                    ChangeState(PlayerState.THROW);
+
+                if (objetoLanzableEnMano != null && throwAction.IsPressed())
                     ChangeState(PlayerState.THROW);
                 break;
+
             case PlayerState.WALK:
                 Move(2);
                 if (inputMoviment.magnitude < 0.01f) ChangeState(PlayerState.IDLE);
                 if (runAction.IsPressed() && characterController.isGrounded) ChangeState(PlayerState.RUN);
                 if (crouchAction.IsPressed()) ChangeState(PlayerState.CROUCH);
+
+                if (objetoLanzableEnMano != null && throwAction.IsPressed())
+                    ChangeState(PlayerState.THROW);
                 break;
+
             case PlayerState.RUN:
                 Move(3);
                 if (!runAction.IsPressed()) ChangeState(PlayerState.WALK);
                 if (inputMoviment.magnitude < 0.01f) ChangeState(PlayerState.IDLE);
                 break;
+
             case PlayerState.CROUCH:
                 Crouch();
                 Move(1);
                 if (!crouchAction.IsPressed()) ChangeState(PlayerState.IDLE);
                 break;
+
             case PlayerState.INTERACT:
                 Interact();
                 break;
+
             case PlayerState.DIALOGUE:
                 Dialogue();
                 break;
+
             case PlayerState.THROW:
                 ThrowObject();
                 break;
-
         }
     }
-
-
 
     private void ChangeState(PlayerState newState)
     {
@@ -197,14 +225,38 @@ public class PlayerController : MonoBehaviour
             case PlayerState.INTERACT:
                 break;
             case PlayerState.THROW:
+                parabolaRenderer.OcultarParabola();
                 break;
         }
     }
     #endregion
+
     private void ThrowObject()
     {
+        if (objetoLanzableEnMano == null)
+        {
+            ChangeState(PlayerState.IDLE);
+            return;
+        }
 
+        if (throwAction.IsPressed())
+        {
+            parabolaRenderer.MostrarParabola(puntoLanzamiento.position, transform.forward, objetoLanzableEnMano.fuerzaLanzamiento);
+        }
+        else if (throwAction.WasReleasedThisFrame())
+        {
+            Vector3 velocidad = parabolaRenderer.CalcularVelocidadInicial(transform.forward, objetoLanzableEnMano.fuerzaLanzamiento);
+            objetoLanzableEnMano.Lanzar(velocidad);
+            objetoLanzableEnMano = null;
+            ChangeState(PlayerState.IDLE);
+        }
+        else
+        {
+            parabolaRenderer.OcultarParabola();
+            ChangeState(PlayerState.IDLE);
+        }
     }
+
     private void ApplyGravity()
     {
         if (characterController.isGrounded)
@@ -222,11 +274,12 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(movement);
         characterController.Move(movement * velocity * Time.deltaTime);
     }
+
     private void Crouch()
     {
-
         float volume = soundEmitter.EmitSound(ESound.CROUCH);
     }
+
     private void Interact()
     {
         if (objectInRange != null)
@@ -276,7 +329,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.gameObject.layer == LayerMask.NameToLayer("TriggerAction"))
         {
             if (other.tag == "TriggerDialogue")
@@ -285,20 +337,15 @@ public class PlayerController : MonoBehaviour
 
                 TriggerDialogue dialogue = other.GetComponent<TriggerDialogue>();
                 if (dialogue != null)
-                {
                     dialogueActivo = dialogue;
-                }    
             }
 
             if (other.tag == "TriggerPuzle")
             {
-                //esto te da info cuando te acercas aunque no interactues,
-                //en el script del trigger te da info cuando interactuas
                 TriggerPuzle puzle = other.GetComponent<TriggerPuzle>();
                 if (puzle != null)
                 {
                     puzleInRange = puzle;
-                    //para que la info solo salga la primera vez q el player entra al trigger
                     if (!puzle.infoMostrada)
                     {
                         puzle.infoMostrada = true;
@@ -309,8 +356,6 @@ public class PlayerController : MonoBehaviour
 
             if (other.tag == "TriggerInfo")
             {
-                //esto te da info cuando te acercas aunque no interactues,
-                //en el script del trigger te da info cuando interactuas
                 TriggerInfo info = other.GetComponent<TriggerInfo>();
                 if (info != null)
                     DialogueManager.Instance.StartInfo(info.graphInfo);
@@ -325,36 +370,32 @@ public class PlayerController : MonoBehaviour
                 print("objeto " + other.gameObject.name + " en rango");
             }
 
-            if(other.tag == "Botella")
+            if (other.tag == "Botella")
             {
                 objectLanzableInRange = other.gameObject;
 
                 ObjetoLanzable lanzable = other.GetComponent<ObjetoLanzable>();
-
                 if (lanzable != null)
                     lanzable.MostrarUI();
-
 
                 print("objeto " + other.gameObject.name + " en rango");
             }
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject == objectInRange)
-        {
             objectInRange = null;
-        }
+
         if (other.gameObject == puzleInRange?.gameObject)
-        {
             puzleInRange = null;
-        }
-        if(other.gameObject == objectLanzableInRange?.gameObject)
+
+        if (other.gameObject == objectLanzableInRange?.gameObject)
         {
             objectLanzableInRange = null;
 
             ObjetoLanzable lanzable = other.GetComponent<ObjetoLanzable>();
-
             if (lanzable != null)
                 lanzable.OcultarUI();
         }
