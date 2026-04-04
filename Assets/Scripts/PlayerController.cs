@@ -50,8 +50,10 @@ public class PlayerController : MonoBehaviour
     [Header("Lanzamiento")]
     [SerializeField] private ParabolaRenderer parabolaRenderer;
     [SerializeField] private Transform puntoLanzamiento;
+    [SerializeField] private float velocidadRotacion = 100f;
     private ObjetoLanzable objetoLanzableEnMano;
     private InputAction throwAction;
+    private InputAction lookAction;
 
     private bool InDialogue;
     private bool canInteract = false;
@@ -71,6 +73,7 @@ public class PlayerController : MonoBehaviour
         interactAction = inputInstance.FindActionMap("Player").FindAction("Interact");
         crouchAction = inputInstance.FindActionMap("Player").FindAction("Crouch");
         throwAction = inputInstance.FindActionMap("Player").FindAction("Throw");
+        lookAction = inputInstance.FindActionMap("Player").FindAction("Look");
     }
 
     void Start()
@@ -241,6 +244,10 @@ public class PlayerController : MonoBehaviour
 
         if (throwAction.IsPressed())
         {
+            Vector2 lookInput = lookAction.ReadValue<Vector2>();
+            if (lookInput.x != 0)
+                transform.Rotate(Vector3.up, lookInput.x * Time.deltaTime * velocidadRotacion);
+
             parabolaRenderer.MostrarParabola(puntoLanzamiento.position, transform.forward, objetoLanzableEnMano.fuerzaLanzamiento);
         }
         else if (throwAction.WasReleasedThisFrame())
