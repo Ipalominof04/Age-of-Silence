@@ -13,6 +13,8 @@ public class SoundManager : MonoBehaviour
 
     private List<ISoundListener> listeners = new List<ISoundListener>();
 
+
+
     private void Awake()
     {
         if (Instance == null)
@@ -24,6 +26,12 @@ public class SoundManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+
+    private void Start()
+    {
+     //   SceneManager.LoadScene("Escena2");
     }
 
     // Suscribirse
@@ -40,19 +48,24 @@ public class SoundManager : MonoBehaviour
             listeners.Remove(listener);
     }
 
-    public void EmitSound(Vector3 position, float volume, float radius, bool shouldEmmit = true)
+    public void EmitSound(Vector3 position, float volume, bool shouldEmmit = true)
     {
         if (!shouldEmmit) return;
         foreach (var listener in listeners)
         {
             if (listener == null) continue;
+
             float distance = Vector3.Distance(listener.GetPosition(), position);
-            if (distance < radius)
+            float listenRadius = listener.GetListenRadius();
+
+            if (distance < listenRadius)
             {
-                float attenuatedVolume = volume * (1f - (distance / radius));
+                // Atenuació per distància
+                float attenuatedVolume = volume * (1f - (distance / listenRadius));
+
+                // El filtre de nivell mínim el fa el listener
                 listener.OnHearSound(position, attenuatedVolume);
             }
         }
     }
-
 }

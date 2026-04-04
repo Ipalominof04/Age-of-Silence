@@ -29,10 +29,13 @@ public class AidenController : MonoBehaviour
     private int scaredNum;
     private Coroutine scaredCoroutine;
 
+    private SoundEmitter emitter;
+
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        emitter = GetComponent<SoundEmitter>();
         InitState(AidenState.IDLE);
         SetUI(false);
 
@@ -124,6 +127,7 @@ public class AidenController : MonoBehaviour
                 if (scaredNum == 0)
                 {
                     print("Aiden ha GRITADO");
+                    emitter.EmitSound(ESound.A_SCARE);
                     SetUI(true);
                     StartCoroutine(GritoUIRoutine());
                     ChangeState(AidenState.WALK);         
@@ -131,6 +135,7 @@ public class AidenController : MonoBehaviour
                else if (scaredNum == 1)
                 {
                     print("Aiden ha SALIDO CORRIENDO");
+                    emitter.EmitSound(ESound.A_RUN);
                     SetUI(true);
                     Vector3 randomDirection = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)).normalized;
                     Vector3 targetPos = transform.position + randomDirection * 7;

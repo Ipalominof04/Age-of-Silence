@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum ESound
 {
-    NONE, WALK, RUN, CROUCH, SHOOT
+    NONE, WALK, RUN, CROUCH, SHOOT, BOTTLE, ROCK, A_SCARE, A_RUN
 }
 
 [Serializable]
@@ -20,10 +20,6 @@ public struct SoundData
     public RandomClips clip;
     public float volume;
 
-    //  public AudioClip getRandomClip()
-    //  {
-    //      return clip.clips[UnityEngine.Random.Range(0, clip.clips.Count)];
-    //  }
 }
 
 [CreateAssetMenu(menuName = "Add Sound registry", fileName = "SoundRegistry")]
