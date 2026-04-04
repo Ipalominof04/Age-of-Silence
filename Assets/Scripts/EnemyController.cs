@@ -33,6 +33,13 @@ public class EnemyController : MonoBehaviour, ISoundListener
     [SerializeField] private GameObject canvasWorld;
     [SerializeField] private TextMeshProUGUI stateText;
 
+    [Header("Detecció de so")]
+    [SerializeField] private float listenRadius = 15f;
+    [SerializeField][Range(0f, 1f)] private float minDetectionLevel = 0.2f;
+
+    public float GetListenRadius() => listenRadius;
+    public float GetMinDetectionLevel() => minDetectionLevel;
+
     private float searchDuration = 5f;
     private bool hasShot = false;
     private Coroutine lookCoroutine;
@@ -50,7 +57,10 @@ public class EnemyController : MonoBehaviour, ISoundListener
 
     public void OnHearSound(Vector3 soundPosition, float volume)
     {
+        if (volume < minDetectionLevel) return; // filtre nivell mínim
+
         agent.SetDestination(soundPosition);
+        ChangeState(EnemyState.SEARCHING);
     }
 
     public Vector3 GetPosition()
@@ -128,7 +138,7 @@ public class EnemyController : MonoBehaviour, ISoundListener
                 break;
 
             case EnemyState.SEARCHING:
-                agent.isStopped = true;
+                agent.isStopped = false;
                 SetUI(true, "?", "#FFC300");
                 searchCoroutine = StartCoroutine(SearchRoutine());
                 break;
@@ -219,12 +229,16 @@ public class EnemyController : MonoBehaviour, ISoundListener
     }
     private IEnumerator SearchRoutine()
     {
+        // Espera hasta que llegue al destino
+        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
+            yield return null;
+
+        // Una vez llegado, espera el tiempo de búsqueda
         yield return new WaitForSeconds(searchDuration);
 
         if (currentState == EnemyState.SEARCHING)
             ChangeState(EnemyState.PATROL);
     }
-
     private IEnumerator LookRoutine()
     {
         yield return new WaitForSeconds(searchDuration);

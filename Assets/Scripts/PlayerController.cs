@@ -50,10 +50,9 @@ public class PlayerController : MonoBehaviour
     [Header("Lanzamiento")]
     [SerializeField] private ParabolaRenderer parabolaRenderer;
     [SerializeField] private Transform puntoLanzamiento;
-    [SerializeField] private float velocidadRotacion = 100f;
+    [SerializeField] private Camera camara;
     private ObjetoLanzable objetoLanzableEnMano;
     private InputAction throwAction;
-    private InputAction lookAction;
 
     private bool InDialogue;
     private bool canInteract = false;
@@ -73,7 +72,7 @@ public class PlayerController : MonoBehaviour
         interactAction = inputInstance.FindActionMap("Player").FindAction("Interact");
         crouchAction = inputInstance.FindActionMap("Player").FindAction("Crouch");
         throwAction = inputInstance.FindActionMap("Player").FindAction("Throw");
-        lookAction = inputInstance.FindActionMap("Player").FindAction("Look");
+     //   lookAction = inputInstance.FindActionMap("Player").FindAction("Look");
     }
 
     void Start()
@@ -165,7 +164,7 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case PlayerState.WALK:
-                Move(2);
+                Walk();
                 if (inputMoviment.magnitude < 0.01f) ChangeState(PlayerState.IDLE);
                 if (runAction.IsPressed() && characterController.isGrounded) ChangeState(PlayerState.RUN);
                 if (crouchAction.IsPressed()) ChangeState(PlayerState.CROUCH);
@@ -175,14 +174,13 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case PlayerState.RUN:
-                Move(3);
+                Run();
                 if (!runAction.IsPressed()) ChangeState(PlayerState.WALK);
                 if (inputMoviment.magnitude < 0.01f) ChangeState(PlayerState.IDLE);
                 break;
 
             case PlayerState.CROUCH:
                 Crouch();
-                Move(1);
                 if (!crouchAction.IsPressed()) ChangeState(PlayerState.IDLE);
                 break;
 
@@ -244,16 +242,21 @@ public class PlayerController : MonoBehaviour
 
         if (throwAction.IsPressed())
         {
-            Vector2 lookInput = lookAction.ReadValue<Vector2>();
-            if (lookInput.x != 0)
-                transform.Rotate(Vector3.up, lookInput.x * Time.deltaTime * velocidadRotacion);
+            Vector3 puntoObjetivo = parabolaRenderer.ObtenerPuntoObjetivo(puntoLanzamiento.position, camara);
 
-            parabolaRenderer.MostrarParabola(puntoLanzamiento.position, transform.forward, objetoLanzableEnMano.fuerzaLanzamiento);
+            // Rotar player hacia el punto objetivo
+            Vector3 direccion = puntoObjetivo - transform.position;
+            direccion.y = 0;
+            if (direccion.magnitude > 0.01f)
+                transform.rotation = Quaternion.LookRotation(direccion);
+
+            parabolaRenderer.MostrarParabola(puntoLanzamiento.position, puntoObjetivo);
         }
         else if (throwAction.WasReleasedThisFrame())
         {
-            Vector3 velocidad = parabolaRenderer.CalcularVelocidadInicial(transform.forward, objetoLanzableEnMano.fuerzaLanzamiento);
-            objetoLanzableEnMano.Lanzar(velocidad);
+            Vector3 puntoObjetivo = parabolaRenderer.ObtenerPuntoObjetivo(puntoLanzamiento.position, camara);
+            Vector3 velocidad = parabolaRenderer.CalcularVelocidadInicial(puntoLanzamiento.position, puntoObjetivo);
+            objetoLanzableEnMano.Lanzar(velocidad, GetComponent<CapsuleCollider>());
             objetoLanzableEnMano = null;
             ChangeState(PlayerState.IDLE);
         }
@@ -273,7 +276,6 @@ public class PlayerController : MonoBehaviour
 
         characterController.Move(verticalVelocity * Time.deltaTime);
     }
-
     private void Move(float velocity)
     {
         Vector3 movement = new Vector3(inputMoviment.x, 0f, inputMoviment.y).normalized;
@@ -282,9 +284,22 @@ public class PlayerController : MonoBehaviour
         characterController.Move(movement * velocity * Time.deltaTime);
     }
 
+    private void Walk()
+    {
+        Move(2f);
+        soundEmitter.EmitSound(ESound.WALK);
+    }
+
+    private void Run()
+    {
+        Move(3f);
+        soundEmitter.EmitSound(ESound.WALK);
+    }
+
     private void Crouch()
     {
-        float volume = soundEmitter.EmitSound(ESound.CROUCH);
+        Move(1f);
+        soundEmitter.EmitSound(ESound.CROUCH);
     }
 
     private void Interact()
