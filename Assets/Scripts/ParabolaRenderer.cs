@@ -5,27 +5,40 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(LineRenderer))]
 public class ParabolaRenderer : MonoBehaviour
 {
-    [Header("SimulaciÛn")]
+    [Header("Simulaci√≥n")]
     [SerializeField] private float distanciaMaxima;
     [SerializeField] private float altura = 3f;
     [SerializeField] private float paso = 0.02f;
     [SerializeField] private LayerMask capasColision;
+    [SerializeField] private float dragObjeto = 0f;
 
-    [Header("Lanzamiento")]
-
+    [Header("Indicador de ca√≠da")]
+    [SerializeField] private int segmentosCirculo = 32;
+    [SerializeField] private float radioCirculo = 0.4f;
 
     private LineRenderer lineRenderer;
+    private LineRenderer circuloRenderer;
+    private GameObject circuloObj;
 
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.enabled = false;
+
+        circuloObj = new GameObject("IndicadorCaida");
+        circuloObj.transform.SetParent(transform);
+        circuloRenderer = circuloObj.AddComponent<LineRenderer>();
+        circuloRenderer.material = lineRenderer.material;
+        circuloRenderer.startWidth = 0.05f;
+        circuloRenderer.endWidth = 0.05f;
+        circuloRenderer.loop = true;
+        circuloRenderer.useWorldSpace = true;
+        circuloRenderer.enabled = false;
     }
 
     public Vector3 ObtenerPuntoObjetivo(Vector3 origen, Camera camara)
     {
         Ray ray = camara.ScreenPointToRay(Mouse.current.position.ReadValue());
-
         Plane suelo = new Plane(Vector3.up, new Vector3(0, origen.y, 0));
 
         Vector3 puntoObjetivo;
@@ -53,11 +66,13 @@ public class ParabolaRenderer : MonoBehaviour
         if (distanciaHorizontal < 0.01f)
             return Vector3.zero;
 
-        float alturaMaxima = Mathf.Max(altura, desplazamiento.y + 0.1f);
-        float tiempoSubida = Mathf.Sqrt(2 * alturaMaxima / gravedad);
-        float tiempoTotal = tiempoSubida + Mathf.Sqrt(2 * (alturaMaxima - desplazamiento.y) / gravedad);
+        float alturaMaxima = Mathf.Max(altura, desplazamiento.y + altura);
+        float tiempoSubida = Mathf.Sqrt(2f * alturaMaxima / gravedad);
+        float tiempoBajada = Mathf.Sqrt(2f * (alturaMaxima - desplazamiento.y) / gravedad);
+        float tiempoTotal = tiempoSubida + tiempoBajada;
 
-        Vector3 velocidadHorizontal = desplazamientoHorizontal / tiempoTotal;
+        float compensacionDrag = 1f + (dragObjeto * tiempoTotal * 0.5f);
+        Vector3 velocidadHorizontal = (desplazamientoHorizontal / tiempoTotal) * compensacionDrag;
         float velocidadVertical = gravedad * tiempoSubida;
 
         return velocidadHorizontal + Vector3.up * velocidadVertical;
@@ -71,24 +86,29 @@ public class ParabolaRenderer : MonoBehaviour
 
         List<Vector3> posiciones = new List<Vector3>();
         Vector3 puntoAnterior = origen;
+        Vector3 ultimoPunto = origen;
+
+        Vector3 velocidad = velocidadInicial;
+        Vector3 posicion = origen;
         float t = 0;
 
         while (t < 10f)
         {
             t += paso;
-            Vector3 pos = origen
-                + velocidadInicial * t
-                + 0.5f * Physics.gravity * t * t;
 
-            // Comprobar distancia horizontal ANTES de aÒadir el punto
+            // Orden correcto: primero mover, luego aplicar gravedad (igual que Unity internamente)
+            posicion += velocidad * paso;
+            velocidad += Physics.gravity * paso;
+            velocidad *= Mathf.Clamp01(1f - dragObjeto * paso);
+
             float distanciaHorizontal = Vector3.Distance(
-                new Vector3(pos.x, 0, pos.z),
+                new Vector3(posicion.x, 0, posicion.z),
                 new Vector3(origen.x, 0, origen.z));
 
             if (distanciaHorizontal >= distanciaMaxima)
-                break; // simplemente para, no aÒade el punto
+                break;
 
-            Vector3 direccion = pos - puntoAnterior;
+            Vector3 direccion = posicion - puntoAnterior;
             float distSegmento = direccion.magnitude;
 
             if (distSegmento > 0.001f && capasColision != 0)
@@ -96,27 +116,48 @@ public class ParabolaRenderer : MonoBehaviour
                 if (Physics.Raycast(puntoAnterior, direccion.normalized, out RaycastHit hit, distSegmento, capasColision))
                 {
                     posiciones.Add(hit.point);
+                    ultimoPunto = hit.point;
                     break;
                 }
             }
 
-            posiciones.Add(pos);
-            puntoAnterior = pos;
+            posiciones.Add(posicion);
+            ultimoPunto = posicion;
+            puntoAnterior = posicion;
 
-            if (Vector3.Distance(new Vector3(pos.x, 0, pos.z),
-                new Vector3(destino.x, 0, destino.z)) < 0.3f && pos.y <= destino.y + 0.5f)
+            if (Vector3.Distance(new Vector3(posicion.x, 0, posicion.z),
+                new Vector3(destino.x, 0, destino.z)) < 0.3f && posicion.y <= destino.y + 0.5f)
                 break;
 
-            if (pos.y < origen.y - 50f)
+            if (posicion.y < origen.y - 50f)
                 break;
         }
 
         lineRenderer.positionCount = posiciones.Count;
         lineRenderer.SetPositions(posiciones.ToArray());
+
+        MostrarCirculo(ultimoPunto);
+    }
+
+    private void MostrarCirculo(Vector3 centro)
+    {
+        circuloRenderer.enabled = true;
+        circuloRenderer.positionCount = segmentosCirculo;
+
+        Vector3 centroElevado = centro + Vector3.up * 0.05f;
+
+        for (int i = 0; i < segmentosCirculo; i++)
+        {
+            float angulo = 2f * Mathf.PI * i / segmentosCirculo;
+            float x = Mathf.Cos(angulo) * radioCirculo;
+            float z = Mathf.Sin(angulo) * radioCirculo;
+            circuloRenderer.SetPosition(i, centroElevado + new Vector3(x, 0, z));
+        }
     }
 
     public void OcultarParabola()
     {
         lineRenderer.enabled = false;
+        circuloRenderer.enabled = false;
     }
 }
