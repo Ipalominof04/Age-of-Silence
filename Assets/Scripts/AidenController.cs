@@ -128,6 +128,7 @@ public class AidenController : MonoBehaviour
                 {
                     print("Aiden ha GRITADO");
                     emitter.EmitSound(ESound.A_SCARE);
+                    print("pichilla");
                     SetUI(true);
                     StartCoroutine(GritoUIRoutine());
                     ChangeState(AidenState.WALK);         
@@ -136,6 +137,7 @@ public class AidenController : MonoBehaviour
                 {
                     print("Aiden ha SALIDO CORRIENDO");
                     emitter.EmitSound(ESound.A_RUN);
+                    print("pichote");
                     SetUI(true);
                     Vector3 randomDirection = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)).normalized;
                     Vector3 targetPos = transform.position + randomDirection * 7;
