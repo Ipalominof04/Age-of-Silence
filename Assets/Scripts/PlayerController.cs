@@ -72,7 +72,6 @@ public class PlayerController : MonoBehaviour
         interactAction = inputInstance.FindActionMap("Player").FindAction("Interact");
         crouchAction = inputInstance.FindActionMap("Player").FindAction("Crouch");
         throwAction = inputInstance.FindActionMap("Player").FindAction("Throw");
-     //   lookAction = inputInstance.FindActionMap("Player").FindAction("Look");
     }
 
     void Start()
@@ -392,13 +391,9 @@ public class PlayerController : MonoBehaviour
                 print("objeto " + other.gameObject.name + " en rango");
             }
 
-            if (other.tag == "Botella")
+            if (other.tag == "Botella" || other.tag == "Roca")
             {
                 objectLanzableInRange = other.gameObject;
-
-                ObjetoLanzable lanzable = other.GetComponent<ObjetoLanzable>();
-                if (lanzable != null)
-                    lanzable.MostrarUI();
 
                 print("objeto " + other.gameObject.name + " en rango");
             }
@@ -416,10 +411,6 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject == objectLanzableInRange?.gameObject)
         {
             objectLanzableInRange = null;
-
-            ObjetoLanzable lanzable = other.GetComponent<ObjetoLanzable>();
-            if (lanzable != null)
-                lanzable.OcultarUI();
         }
     }
 }
