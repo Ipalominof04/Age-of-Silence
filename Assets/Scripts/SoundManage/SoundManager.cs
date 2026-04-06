@@ -31,7 +31,7 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
-     //   SceneManager.LoadScene("Escena2");
+        SceneManager.LoadScene("Escena3");
     }
 
     // Suscribirse

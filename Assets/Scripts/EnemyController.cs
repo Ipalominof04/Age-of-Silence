@@ -336,6 +336,27 @@ public class EnemyController : MonoBehaviour, ISoundListener
         hasShot = false;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        int objectLayer = LayerMask.NameToLayer("Objetos");
+
+        if (collision.gameObject.layer == objectLayer)
+        {
+            string tag = collision.gameObject.tag;
+            if (tag == "Botella" || tag == "Piedra")
+            {
+                // Dirección desde la que viene el objeto
+                Vector3 hitDirection = (transform.position - collision.transform.position).normalized;
+                hitDirection.y = 0;
+
+                if (hitDirection != Vector3.zero)
+                    transform.rotation = Quaternion.LookRotation(hitDirection);
+
+                ChangeState(EnemyState.LOOK);
+            }
+        }
+    }
+
     private void OnDrawGizmos()
     {
         Vector3 origin = transform.position;
