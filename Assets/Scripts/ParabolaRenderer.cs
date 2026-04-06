@@ -96,11 +96,11 @@ public class ParabolaRenderer : MonoBehaviour
         {
             t += paso;
 
-            // Orden correcto: primero mover, luego aplicar gravedad (igual que Unity internamente)
             posicion += velocidad * paso;
             velocidad += Physics.gravity * paso;
             velocidad *= Mathf.Clamp01(1f - dragObjeto * paso);
 
+            // Límite de distancia horizontal
             float distanciaHorizontal = Vector3.Distance(
                 new Vector3(posicion.x, 0, posicion.z),
                 new Vector3(origen.x, 0, origen.z));
@@ -108,6 +108,7 @@ public class ParabolaRenderer : MonoBehaviour
             if (distanciaHorizontal >= distanciaMaxima)
                 break;
 
+            // Colisión con obstáculos
             Vector3 direccion = posicion - puntoAnterior;
             float distSegmento = direccion.magnitude;
 
@@ -125,10 +126,6 @@ public class ParabolaRenderer : MonoBehaviour
             ultimoPunto = posicion;
             puntoAnterior = posicion;
 
-            if (Vector3.Distance(new Vector3(posicion.x, 0, posicion.z),
-                new Vector3(destino.x, 0, destino.z)) < 0.3f && posicion.y <= destino.y + 0.5f)
-                break;
-
             if (posicion.y < origen.y - 50f)
                 break;
         }
@@ -136,7 +133,11 @@ public class ParabolaRenderer : MonoBehaviour
         lineRenderer.positionCount = posiciones.Count;
         lineRenderer.SetPositions(posiciones.ToArray());
 
-        MostrarCirculo(ultimoPunto);
+        // Raycast hacia abajo desde el último punto para encontrar el suelo real
+        if (Physics.Raycast(ultimoPunto + Vector3.up * 0.5f, Vector3.down, out RaycastHit hitSuelo, 100f, capasColision))
+            MostrarCirculo(hitSuelo.point);
+        else
+            MostrarCirculo(ultimoPunto);
     }
 
     private void MostrarCirculo(Vector3 centro)
