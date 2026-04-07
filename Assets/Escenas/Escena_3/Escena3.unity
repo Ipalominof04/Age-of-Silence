@@ -16408,13 +16408,29 @@ PrefabInstance:
       propertyPath: _camera
       value: 
       objectReference: {fileID: 422570988}
+    - target: {fileID: 6432587523467976214, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6432587523467976214, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 837cebec1db562244bb9fd4064b3e219, type: 2}
+    - target: {fileID: 6432587523467976214, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: d96994cbeec0d2f41903dc9a89fbf942, type: 2}
+    - target: {fileID: 6432587523467976214, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 40aec9883e7a6e2429f437555c78be75, type: 2}
     - target: {fileID: 6630787418489709627, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
       propertyPath: m_Name
       value: Enemy3
       objectReference: {fileID: 0}
     - target: {fileID: 6630787418489709627, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8346064789273925734, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
       propertyPath: destination.Array.size
@@ -24209,7 +24225,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1577439199
 Transform:
   m_ObjectHideFlags: 0
