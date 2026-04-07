@@ -11703,6 +11703,14 @@ PrefabInstance:
       propertyPath: aiden
       value: 
       objectReference: {fileID: 2032695422}
+    - target: {fileID: 1337398149008683969, guid: 89437555278a3b747b73449b8a201440, type: 3}
+      propertyPath: camara
+      value: 
+      objectReference: {fileID: 531124727}
+    - target: {fileID: 1337398149008683969, guid: 89437555278a3b747b73449b8a201440, type: 3}
+      propertyPath: huesoMano
+      value: 
+      objectReference: {fileID: 1786157575}
     - target: {fileID: 7366088206330199277, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_Name
       value: Player
@@ -28131,7 +28139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2059554365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30257,6 +30265,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: e47e8f0bb92aaff4c93eedb0398a1c96, type: 2}
+  - {fileID: 2100000, guid: 2f5eaec4bc5f02e478c4e29b76f71181, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -30425,6 +30434,7 @@ GameObject:
   - component: {fileID: 7871879855860618590}
   - component: {fileID: 5393762370511233428}
   - component: {fileID: 8270636125666611706}
+  - component: {fileID: 8270636125666611707}
   m_Layer: 12
   m_Name: Arma
   m_TagString: Arma
@@ -30775,6 +30785,27 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -8719869389123340411, guid: 1cc03cbb51606e04faa898feb8fab8e3, type: 3}
+--- !u!135 &8270636125666611707
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5898169857406353473}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.3
+  m_Center: {x: 0.059666008, y: 0.017855184, z: -0.000040811425}
 --- !u!4 &8295388338137103401
 Transform:
   m_ObjectHideFlags: 0

@@ -1,13 +1,15 @@
 ﻿using System;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR;
 
 public class PlayerController : MonoBehaviour
 {
     private CharacterController characterController;
     private SoundEmitter soundEmitter;
 
-    public enum PlayerState { NONE, IDLE, WALK, RUN, CROUCH, INTERACT, DIALOGUE, THROW }
+    public enum PlayerState { NONE, IDLE, WALK, RUN, CROUCH, SHOOT, INTERACT, DIALOGUE, THROW }
 
     [Header("Maquina de estados")]
     [SerializeField] private PlayerState currentState;
@@ -49,7 +51,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Lanzamiento")]
     [SerializeField] private ParabolaRenderer parabolaRenderer;
-    [SerializeField] private Transform puntoLanzamiento;
+    [SerializeField] private Transform huesoMano;
     [SerializeField] private Camera camara;
     private ObjetoLanzable objetoLanzableEnMano;
     private InputAction throwAction;
@@ -57,6 +59,7 @@ public class PlayerController : MonoBehaviour
     private bool InDialogue;
     private bool canInteract = false;
     private GameObject objectInRange = null;
+    private GameObject armaEnMano = null;
     private GameObject objectLanzableInRange = null;
     private TriggerPuzle puzleInRange = null;
     private TriggerDialogue dialogueActivo = null;
@@ -119,6 +122,8 @@ public class PlayerController : MonoBehaviour
                 standCollider.enabled = false;
                 crouchCollider.enabled = true;
                 break;
+            case PlayerState.SHOOT:
+                break;
             case PlayerState.INTERACT:
                 break;
             case PlayerState.THROW:
@@ -151,6 +156,8 @@ public class PlayerController : MonoBehaviour
 
                 if (interactAction.triggered && (objectInRange != null || puzleInRange != null))
                     ChangeState(PlayerState.INTERACT);
+                if (interactAction.triggered && armaEnMano != null)
+                    ChangeState(PlayerState.INTERACT);
 
                 if (interactAction.triggered && canInteract && objectInRange == null)
                     ChangeState(PlayerState.DIALOGUE);
@@ -160,6 +167,7 @@ public class PlayerController : MonoBehaviour
 
                 if (objetoLanzableEnMano != null && throwAction.IsPressed())
                     ChangeState(PlayerState.THROW);
+
                 break;
 
             case PlayerState.WALK:
@@ -241,7 +249,7 @@ public class PlayerController : MonoBehaviour
 
         if (throwAction.IsPressed())
         {
-            Vector3 puntoObjetivo = parabolaRenderer.ObtenerPuntoObjetivo(puntoLanzamiento.position, camara);
+            Vector3 puntoObjetivo = parabolaRenderer.ObtenerPuntoObjetivo(huesoMano.position, camara);
 
             // Rotar player hacia el punto objetivo
             Vector3 direccion = puntoObjetivo - transform.position;
@@ -249,12 +257,12 @@ public class PlayerController : MonoBehaviour
             if (direccion.magnitude > 0.01f)
                 transform.rotation = Quaternion.LookRotation(direccion);
 
-            parabolaRenderer.MostrarParabola(puntoLanzamiento.position, puntoObjetivo);
+            parabolaRenderer.MostrarParabola(huesoMano.position, puntoObjetivo);
         }
         else if (throwAction.WasReleasedThisFrame())
         {
-            Vector3 puntoObjetivo = parabolaRenderer.ObtenerPuntoObjetivo(puntoLanzamiento.position, camara);
-            Vector3 velocidad = parabolaRenderer.CalcularVelocidadInicial(puntoLanzamiento.position, puntoObjetivo);
+            Vector3 puntoObjetivo = parabolaRenderer.ObtenerPuntoObjetivo(huesoMano.position, camara);
+            Vector3 velocidad = parabolaRenderer.CalcularVelocidadInicial(huesoMano.position, puntoObjetivo);
             objetoLanzableEnMano.Lanzar(velocidad, GetComponent<CapsuleCollider>());
             objetoLanzableEnMano = null;
             ChangeState(PlayerState.IDLE);
@@ -321,8 +329,29 @@ public class PlayerController : MonoBehaviour
         {
             puzleInRange.TryOpen(objetoMano);
         }
+        else if (armaEnMano != null)
+        {
+            GameObject arma = armaEnMano;
+            arma.transform.SetParent(huesoMano.transform);
+            arma.transform.position = huesoMano.transform.position;
+            arma.transform.rotation = huesoMano.transform.rotation;
+            MeshRenderer meshArma = arma.GetComponent<MeshRenderer>();
 
-        ChangeState(PlayerState.IDLE);
+            // Crear array sin el material en índice 1
+            Material[] materials = meshArma.materials;
+            Material[] newMaterials = new Material[materials.Length - 1];
+
+            for (int i = 0, j = 0; i < materials.Length; i++)
+            {
+                if (i == 1) continue; // salta el material 1
+                newMaterials[j++] = materials[i];
+            }
+
+            meshArma.materials = newMaterials;
+
+        }
+
+            ChangeState(PlayerState.IDLE);
     }
 
     private void Dialogue()
@@ -346,6 +375,10 @@ public class PlayerController : MonoBehaviour
         }
 
         ChangeState(PlayerState.IDLE);
+    }
+    private void Shoot()
+    {
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -396,6 +429,12 @@ public class PlayerController : MonoBehaviour
                 objectLanzableInRange = other.gameObject;
 
                 print("objeto " + other.gameObject.name + " en rango");
+            }
+            if(other.tag == "Arma")
+            {
+                armaEnMano = other.gameObject;
+                print("objeto " + other.gameObject.name + " en rango");
+
             }
         }
     }
