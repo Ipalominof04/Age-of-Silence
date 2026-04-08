@@ -830,7 +830,6 @@ GameObject:
   - component: {fileID: 248783194}
   - component: {fileID: 248783197}
   - component: {fileID: 248783196}
-  - component: {fileID: 248783195}
   m_Layer: 0
   m_Name: Area Light
   m_TagString: Untagged
@@ -853,21 +852,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1540120368}
   m_LocalEulerAnglesHint: {x: 4.594, y: -88.868, z: -89.13}
---- !u!114 &248783195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 248783193}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 488b6d829bdf54b4f9aedb46c305a8ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FlickeringLight
-  minIntensity: 0
-  maxIntensity: 50
-  flickerSpeed: 3.5
 --- !u!114 &248783196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1421,7 +1405,7 @@ Transform:
   m_GameObject: {fileID: 348826041}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.389, y: -0.05699992, z: -0.098}
+  m_LocalPosition: {x: -0.554, y: -0.05699992, z: -0.098}
   m_LocalScale: {x: 0.5736, y: 0.5544, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1583,6 +1567,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LED_Light_5 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7021181300720344508, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a96bcb6f90397644083ea619343cc34c, type: 2}
     - target: {fileID: 7459738304939980660, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.0801282
@@ -2440,7 +2428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlickeringLight
   minIntensity: 0
-  maxIntensity: 50
+  maxIntensity: 70
   flickerSpeed: 3.5
 --- !u!1 &487706007
 GameObject:
@@ -2682,51 +2670,6 @@ Light:
   m_LightUnit: 0
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
---- !u!1 &489587807
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 489587809}
-  - component: {fileID: 489587808}
-  m_Layer: 0
-  m_Name: SoundManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &489587808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 489587807}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb8bf4a6d47164543bc73f17efea5a1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SoundManager
-  soundRegistry: {fileID: 11400000, guid: b713b3fb488779d43be3b7e77f39b5bd, type: 2}
---- !u!4 &489587809
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 489587807}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 29.06495, y: 0, z: 0.10048}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &508713287
 GameObject:
   m_ObjectHideFlags: 0
@@ -2881,7 +2824,7 @@ Transform:
   m_GameObject: {fileID: 515445745}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.48, y: -1.11, z: -0.003}
+  m_LocalPosition: {x: 1.48, y: -1.11, z: 0.276}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4468,7 +4411,6 @@ GameObject:
   - component: {fileID: 936911500}
   - component: {fileID: 936911503}
   - component: {fileID: 936911502}
-  - component: {fileID: 936911501}
   m_Layer: 0
   m_Name: Area Light
   m_TagString: Untagged
@@ -4491,21 +4433,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1475539994}
   m_LocalEulerAnglesHint: {x: 4.594, y: -88.868, z: -89.13}
---- !u!114 &936911501
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 936911499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 488b6d829bdf54b4f9aedb46c305a8ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FlickeringLight
-  minIntensity: 0
-  maxIntensity: 50
-  flickerSpeed: 3.5
 --- !u!114 &936911502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5683,7 +5610,7 @@ Transform:
   m_GameObject: {fileID: 1264459870}
   serializedVersion: 2
   m_LocalRotation: {x: 0.12282203, y: -0, z: -0, w: 0.9924287}
-  m_LocalPosition: {x: -1.2577438, y: -0.34494495, z: -1.0220499}
+  m_LocalPosition: {x: -1.2577438, y: -0.5269449, z: -0.50804996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7143,7 +7070,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7021181300720344508, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -7624,7 +7551,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7021181300720344508, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -8392,7 +8319,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7021181300720344508, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -9315,7 +9242,6 @@ GameObject:
   - component: {fileID: 2001361494}
   - component: {fileID: 2001361497}
   - component: {fileID: 2001361496}
-  - component: {fileID: 2001361495}
   m_Layer: 0
   m_Name: Area Light
   m_TagString: Untagged
@@ -9338,21 +9264,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1750322940}
   m_LocalEulerAnglesHint: {x: 4.594, y: -88.868, z: -89.13}
---- !u!114 &2001361495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2001361493}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 488b6d829bdf54b4f9aedb46c305a8ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FlickeringLight
-  minIntensity: 0
-  maxIntensity: 50
-  flickerSpeed: 3.5
 --- !u!114 &2001361496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10250,7 +10161,7 @@ Transform:
   m_GameObject: {fileID: 2127275806}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.06, y: -3.02, z: 0.28}
+  m_LocalPosition: {x: 0.06, y: -3.202, z: 0.794}
   m_LocalScale: {x: 4.0317, y: 4.0317, z: 4.0317}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10492,7 +10403,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 433339789}
-  - {fileID: 489587809}
   - {fileID: 472199330}
   - {fileID: 2038996569}
   - {fileID: 678118026}

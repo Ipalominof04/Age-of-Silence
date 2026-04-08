@@ -1726,7 +1726,7 @@ GameObject:
   - component: {fileID: 8346064789273925734}
   m_Layer: 11
   m_Name: N_Enemy
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1826,6 +1826,8 @@ MonoBehaviour:
   currentIndex: 0
   canvasWorld: {fileID: 2763708108248123121}
   stateText: {fileID: 3804765012919029533}
+  listenRadius: 15
+  minDetectionLevel: 0.2
 --- !u!1 &6706483303658749984
 GameObject:
   m_ObjectHideFlags: 0
