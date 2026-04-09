@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private float vidaMaxima = 6;
     private float vidaActual;
 
-
     [Header("Aiden")]
     [SerializeField] private GameObject aiden;
     [SerializeField] private float interactRange;
@@ -77,6 +76,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private GameObject objectLanzableInRange = null;
     private TriggerPuzle puzleInRange = null;
     private TriggerDialogue dialogueActivo = null;
+    private bool escaleraInRange = false;
 
     private void Awake()
     {
@@ -192,7 +192,10 @@ public class PlayerController : MonoBehaviour, IDamageable
                 break;
 
             case PlayerState.WALK:
-                Walk();
+                if (escaleraInRange)
+                    ClimbLadder();
+                else
+                    Walk();
                 if (inputMoviment.magnitude < 0.01f) ChangeState(PlayerState.IDLE);
                 if (runAction.IsPressed() && characterController.isGrounded) ChangeState(PlayerState.RUN);
                 if (crouchAction.IsPressed()) ChangeState(PlayerState.CROUCH);
@@ -201,7 +204,10 @@ public class PlayerController : MonoBehaviour, IDamageable
                 break;
 
             case PlayerState.RUN:
-                Run();
+                if (escaleraInRange)
+                    ClimbLadder();
+                else
+                    Run();
                 if (!runAction.IsPressed()) ChangeState(PlayerState.WALK);
                 if (inputMoviment.magnitude < 0.01f) ChangeState(PlayerState.IDLE);
                 break;
@@ -298,9 +304,13 @@ public class PlayerController : MonoBehaviour, IDamageable
             ChangeState(PlayerState.IDLE);
         }
     }
-
     private void ApplyGravity()
     {
+        if (escaleraInRange)
+        {
+            verticalVelocity.y = 0;
+            return;
+        }
         if (characterController.isGrounded)
             verticalVelocity.y = -2f;
         else
@@ -319,19 +329,25 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void Walk()
     {
         Move(2f);
-        soundEmitter.EmitSound(ESound.WALK);
+        //soundEmitter.EmitSound(ESound.WALK);
     }
 
     private void Run()
     {
         Move(3f);
-        soundEmitter.EmitSound(ESound.WALK);
+       // soundEmitter.EmitSound(ESound.WALK);
     }
 
     private void Crouch()
     {
         Move(1f);
-        soundEmitter.EmitSound(ESound.CROUCH);
+       // soundEmitter.EmitSound(ESound.CROUCH);
+    }
+
+    private void ClimbLadder()
+    {
+        Vector3 movement = new Vector3(0, inputMoviment.y, 0);
+        characterController.Move(movement * 2f * Time.deltaTime);
     }
 
     private void Interact()
@@ -462,8 +478,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             {
                 OnPlayerEnteredDialogueTrigger?.Invoke();
 
-                TriggerDialogue dialogue = other.GetComponent<TriggerDialogue>();
-                if (dialogue != null)
+                if (other.TryGetComponent<TriggerDialogue>(out TriggerDialogue dialogue))
                     dialogueActivo = dialogue;
             }
 
@@ -487,6 +502,9 @@ public class PlayerController : MonoBehaviour, IDamageable
                 if (info != null)
                     DialogueManager.Instance.StartInfo(info.graphInfo);
             }
+
+            if (other.tag == "TriggerEscalera")
+                escaleraInRange = true;
         }
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Objetos"))
@@ -508,7 +526,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 armaEnMano = other.gameObject;
                 print("objeto " + other.gameObject.name + " en rango");
 
-            }
+            } 
         }
     }
 
@@ -525,5 +543,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             objectLanzableInRange = null;
         }
+
+        if (other.tag == "TriggerEscalera")
+            escaleraInRange = false;
     }
 }
