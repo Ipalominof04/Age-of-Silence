@@ -12,5 +12,6 @@ public class ArmaController : MonoBehaviour
     public void Soltar()
     {
         ShootUI.SetActive(false);
+        Destroy(gameObject);
     }
 }
