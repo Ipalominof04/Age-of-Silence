@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 3143869052763091028}
   - component: {fileID: 2846352654522019086}
   - component: {fileID: 4568693212939525869}
-  - component: {fileID: 5291484220289194722}
   - component: {fileID: 1487947118343278492}
+  - component: {fileID: 5628319264522147720}
   m_Layer: 13
-  m_Name: bullet
-  m_TagString: BalaPlayer
+  m_Name: BulletEnemys
+  m_TagString: BalaEnemigos
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,18 +113,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5291484220289194722
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 769116550249096355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 943d68c8aac97804ea8362afeed4d24b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
 --- !u!54 &1487947118343278492
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -152,3 +140,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5628319264522147720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769116550249096355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2012234a6a7efc74eba51da1106fccef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
