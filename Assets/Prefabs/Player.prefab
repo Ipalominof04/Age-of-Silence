@@ -56,13 +56,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 427672363292807608}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.40870276, y: 0.87573576, z: 0.25699988, w: -0.00000023841858}
-  m_LocalPosition: {x: -7.989579, y: -9.687606, z: 3.2806869}
+  m_LocalRotation: {x: -0.34665266, y: 0.9164165, z: -0.07077187, w: 0.18709381}
+  m_LocalPosition: {x: -0.000000078143785, y: -0.14599997, z: -0.00000012479722}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2442034774360333127}
-  m_LocalEulerAnglesHint: {x: -10.756, y: -35.617, z: 56.061}
+  m_LocalEulerAnglesHint: {x: 0, y: 156.922, z: -41.44}
 --- !u!1 &496951439072514880
 GameObject:
   m_ObjectHideFlags: 0
@@ -1930,9 +1930,12 @@ MonoBehaviour:
   OnDialogueStarted: {fileID: 11400000, guid: dcef17d5a629fe8478bd188922dbae88, type: 2}
   OnDialogueEnded: {fileID: 11400000, guid: 24d173763f19212419ab012c1f7833f5, type: 2}
   OnAidenStopped: {fileID: 11400000, guid: e583d7700758c2b40b133794e92abb2f, type: 2}
+  onShoot: {fileID: 0}
   parabolaRenderer: {fileID: 637834156667624345}
   huesoMano: {fileID: 5351020909305053578}
   camara: {fileID: 0}
+  bala: {fileID: 0}
+  shootingPoint: {fileID: 0}
 --- !u!82 &8629209207164204235
 AudioSource:
   m_ObjectHideFlags: 0
