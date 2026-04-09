@@ -3,15 +3,19 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
-public class EnemyController : MonoBehaviour, ISoundListener
+public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 {
     public enum EnemyState { NONE, IDLE, PATROL, CHASE, ATTACK, SEARCHING, LOOK };
 
     [Header("Maquina de estados")]
     [SerializeField] private EnemyState currentState;
     private NavMeshAgent agent;
+
+    [Header("Config de valores")]
+    [SerializeField] float vida;
 
     [Header("Eventos")]
     [SerializeField] private GameEventString OnAidenScared;
@@ -338,9 +342,7 @@ public class EnemyController : MonoBehaviour, ISoundListener
 
     private void OnCollisionEnter(Collision collision)
     {
-        int objectLayer = LayerMask.NameToLayer("Objetos");
-
-        if (collision.gameObject.layer == objectLayer)
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Objetos"))
         {
             string tag = collision.gameObject.tag;
             if (tag == "Botella" || tag == "Piedra")
@@ -354,6 +356,15 @@ public class EnemyController : MonoBehaviour, ISoundListener
 
                 ChangeState(EnemyState.LOOK);
             }
+        }
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Balas"))
+        {
+            string tag = collision.gameObject.tag;
+            if(tag == "BalaPlayer")
+            {
+                TakeDamage(1);
+            }
+
         }
     }
 
@@ -391,5 +402,20 @@ public class EnemyController : MonoBehaviour, ISoundListener
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, radiusAttack);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        this.vida -= damage;
+        if (this.vida <= 0)
+        {
+            Die();
+        }
+
+
+    }
+    public void Die()
+    {
+        Destroy(this.gameObject);
     }
 }
