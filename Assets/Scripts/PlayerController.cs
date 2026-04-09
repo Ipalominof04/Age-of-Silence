@@ -1,10 +1,8 @@
 ﻿using System;
-using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.XR;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamageable
 {
     private CharacterController characterController;
     private SoundEmitter soundEmitter;
@@ -21,9 +19,15 @@ public class PlayerController : MonoBehaviour
     private InputAction runAction;
     private InputAction interactAction;
     private InputAction crouchAction;
+    private InputAction shootAction;
     private Vector2 inputMoviment;
     private float gravity = -9.81f;
     private Vector3 verticalVelocity = Vector3.zero;
+
+    [Header("Vida")]
+    [SerializeField] private float vidaMaxima = 100f;
+    private float vidaActual;
+
 
     [Header("Aiden")]
     [SerializeField] private GameObject aiden;
@@ -46,6 +50,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameEvent OnDialogueStarted;
     [SerializeField] private GameEvent OnDialogueEnded;
     [SerializeField] private GameEvent OnAidenStopped;
+    [SerializeField] private GameEvent onShoot;
+    [SerializeField] private GameEvent onArmaSobrecalentada;
+    [SerializeField] private GameEvent onArmaEnfriada;
+    [SerializeField] private GameEventFloat onVidaCambiada;
     public static event Action<PlayerState> OnPlayerStateChanged;
     public static event Action OnPlayerEnteredDialogueTrigger;
 
@@ -56,10 +64,16 @@ public class PlayerController : MonoBehaviour
     private ObjetoLanzable objetoLanzableEnMano;
     private InputAction throwAction;
 
+    [Header("Disparo")]
+    [SerializeField] private GameObject bala;
+    [SerializeField] private GameObject shootingPoint;
+    private bool armaSobrecalentada;
+
     private bool InDialogue;
     private bool canInteract = false;
     private GameObject objectInRange = null;
     private GameObject armaEnMano = null;
+    private bool armaEquipada = false;
     private GameObject objectLanzableInRange = null;
     private TriggerPuzle puzleInRange = null;
     private TriggerDialogue dialogueActivo = null;
@@ -75,11 +89,13 @@ public class PlayerController : MonoBehaviour
         interactAction = inputInstance.FindActionMap("Player").FindAction("Interact");
         crouchAction = inputInstance.FindActionMap("Player").FindAction("Crouch");
         throwAction = inputInstance.FindActionMap("Player").FindAction("Throw");
+        shootAction = inputInstance.FindActionMap("Player").FindAction("Attack");
     }
 
     void Start()
     {
         InitState(PlayerState.IDLE);
+        vidaActual = vidaMaxima;
     }
 
     void Update()
@@ -94,6 +110,8 @@ public class PlayerController : MonoBehaviour
         OnDialogueStarted.Subscribe(() => InDialogue = true);
         OnDialogueEnded.Subscribe(() => { InDialogue = false; canInteract = false; });
         OnAidenStopped.Subscribe(() => canInteract = true);
+        onArmaSobrecalentada.Subscribe(() => armaSobrecalentada = true);
+        onArmaEnfriada.Subscribe(() =>  armaSobrecalentada = false);
     }
 
     private void OnDisable()
@@ -101,6 +119,8 @@ public class PlayerController : MonoBehaviour
         OnDialogueStarted.Unsubscribe(() => InDialogue = true);
         OnDialogueEnded.Unsubscribe(() => { InDialogue = false; canInteract = false; dialogueActivo = null; });
         OnAidenStopped.Unsubscribe(() => canInteract = true);
+        onArmaSobrecalentada.Subscribe(() => armaSobrecalentada = true);
+        onArmaEnfriada.Subscribe(() => armaSobrecalentada = false);
     }
 
     #region State Machine
@@ -153,6 +173,7 @@ public class PlayerController : MonoBehaviour
             case PlayerState.IDLE:
                 if (inputMoviment.magnitude > 0.01f) ChangeState(PlayerState.WALK);
                 if (crouchAction.IsPressed()) ChangeState(PlayerState.CROUCH);
+                if (armaEquipada && shootAction.triggered) ChangeState(PlayerState.SHOOT);
 
                 if (interactAction.triggered && (objectInRange != null || puzleInRange != null))
                     ChangeState(PlayerState.INTERACT);
@@ -175,7 +196,6 @@ public class PlayerController : MonoBehaviour
                 if (inputMoviment.magnitude < 0.01f) ChangeState(PlayerState.IDLE);
                 if (runAction.IsPressed() && characterController.isGrounded) ChangeState(PlayerState.RUN);
                 if (crouchAction.IsPressed()) ChangeState(PlayerState.CROUCH);
-
                 if (objetoLanzableEnMano != null && throwAction.IsPressed())
                     ChangeState(PlayerState.THROW);
                 break;
@@ -190,7 +210,10 @@ public class PlayerController : MonoBehaviour
                 Crouch();
                 if (!crouchAction.IsPressed()) ChangeState(PlayerState.IDLE);
                 break;
-
+            case PlayerState.SHOOT:
+                Shoot();
+                if (!shootAction.IsPressed()) ChangeState(PlayerState.IDLE);
+                break;
             case PlayerState.INTERACT:
                 Interact();
                 break;
@@ -229,6 +252,8 @@ public class PlayerController : MonoBehaviour
                 characterController.height = standHeight;
                 standCollider.enabled = true;
                 crouchCollider.enabled = false;
+                break;
+            case PlayerState.SHOOT:
                 break;
             case PlayerState.INTERACT:
                 break;
@@ -349,9 +374,11 @@ public class PlayerController : MonoBehaviour
 
             meshArma.materials = newMaterials;
 
+            armaEquipada = true;
+
         }
 
-            ChangeState(PlayerState.IDLE);
+        ChangeState(PlayerState.IDLE);
     }
 
     private void Dialogue()
@@ -378,9 +405,36 @@ public class PlayerController : MonoBehaviour
     }
     private void Shoot()
     {
+        /*
+        if (!armaEquipada) return;
+
+        Ray ray = camara.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
+        {
+            // Rotar player hacia el punto de impacto
+            Vector3 direccion = hit.point - transform.position;
+            direccion.y = 0;
+            if (direccion.magnitude > 0.01f)
+                transform.rotation = Quaternion.LookRotation(direccion);
+
+            Debug.Log("Disparo a: " + hit.collider.gameObject.name);
+            // hit.collider.GetComponent<IDamageable>()?.TakeDamage();
+        }
+         */
+        if(!armaSobrecalentada)
+        {
+        GameObject go = Instantiate(bala, shootingPoint.transform.position, shootingPoint.transform.rotation);
+
+        Rigidbody rb = go.GetComponent<Rigidbody>();
+        if (rb != null)
+            rb.linearVelocity = this.gameObject.transform.forward * 20f;
+
+        onShoot.Raise();
+        }
+        ChangeState(PlayerState.IDLE);
 
     }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("TriggerAction"))
@@ -430,13 +484,29 @@ public class PlayerController : MonoBehaviour
 
                 print("objeto " + other.gameObject.name + " en rango");
             }
-            if(other.tag == "Arma")
+            if (other.tag == "Arma")
             {
                 armaEnMano = other.gameObject;
                 print("objeto " + other.gameObject.name + " en rango");
 
             }
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        vidaActual -= damage;
+        vidaActual = Mathf.Clamp(vidaActual, 0f, vidaMaxima);
+
+        onVidaCambiada.Raise(vidaActual / vidaMaxima); // Manda el porcentaje
+
+        if (vidaActual <= 0f)
+            Die();
+    }
+
+    public void Die()
+    {
+        print("player muerto");
     }
 
     private void OnTriggerExit(Collider other)
