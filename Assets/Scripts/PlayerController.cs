@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private Vector3 verticalVelocity = Vector3.zero;
 
     [Header("Vida")]
-    [SerializeField] private float vidaMaxima = 100f;
+    [SerializeField] private float vidaMaxima = 6;
     private float vidaActual;
 
 
@@ -119,8 +119,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         OnDialogueStarted.Unsubscribe(() => InDialogue = true);
         OnDialogueEnded.Unsubscribe(() => { InDialogue = false; canInteract = false; dialogueActivo = null; });
         OnAidenStopped.Unsubscribe(() => canInteract = true);
-        onArmaSobrecalentada.Subscribe(() => armaSobrecalentada = true);
-        onArmaEnfriada.Subscribe(() => armaSobrecalentada = false);
+        onArmaSobrecalentada.Unsubscribe(() => armaSobrecalentada = true);
+        onArmaEnfriada.Unsubscribe(() => armaSobrecalentada = false);
     }
 
     #region State Machine
@@ -361,6 +361,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             arma.transform.position = huesoMano.transform.position;
             arma.transform.rotation = huesoMano.transform.rotation;
             MeshRenderer meshArma = arma.GetComponent<MeshRenderer>();
+            ArmaController arma_ctrl = arma.GetComponent<ArmaController>();
 
             // Crear array sin el material en índice 1
             Material[] materials = meshArma.materials;
@@ -375,6 +376,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             meshArma.materials = newMaterials;
 
             armaEquipada = true;
+            arma_ctrl?.Equipar();
 
         }
 
@@ -435,6 +437,23 @@ public class PlayerController : MonoBehaviour, IDamageable
         ChangeState(PlayerState.IDLE);
 
     }
+
+    public void TakeDamage(float damage)
+    {
+
+        vidaActual -= damage;
+        vidaActual = Mathf.Clamp(vidaActual, 0f, vidaMaxima);
+        print(this.vidaActual);
+        onVidaCambiada.Raise(vidaActual / vidaMaxima); // Manda el porcentaje
+
+        if (vidaActual <= 0f)
+            Die();
+    }
+
+    public void Die()
+    {
+        print("player muerto");
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("TriggerAction"))
@@ -493,21 +512,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    public void TakeDamage(float damage)
-    {
-        vidaActual -= damage;
-        vidaActual = Mathf.Clamp(vidaActual, 0f, vidaMaxima);
-
-        onVidaCambiada.Raise(vidaActual / vidaMaxima); // Manda el porcentaje
-
-        if (vidaActual <= 0f)
-            Die();
-    }
-
-    public void Die()
-    {
-        print("player muerto");
-    }
 
     private void OnTriggerExit(Collider other)
     {
