@@ -17,6 +17,10 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     [Header("Config de valores")]
     [SerializeField] float vida;
 
+    [Header("Disparo")]
+    [SerializeField] private GameObject bala;
+    [SerializeField] private GameObject shootingPoint;
+
     [Header("Eventos")]
     [SerializeField] private GameEventString OnAidenScared;
 
@@ -328,7 +332,14 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         if (hasShot) return;
         StartCoroutine(ShootCooldown());
 
-        print("pium pium");
+        if (shootingPoint != null && bala != null)
+        {
+            GameObject go = Instantiate(bala, shootingPoint.transform.position, shootingPoint.transform.rotation);
+            Rigidbody rb = go.GetComponent<Rigidbody>();
+            if (rb != null)
+                rb.linearVelocity = this.transform.forward * 20f;
+        }
+
         if (SceneManager.GetActiveScene().name != "Escena2")
             OnAidenScared?.Raise(ScareType.Shoot);
     }
@@ -356,15 +367,6 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
                 ChangeState(EnemyState.LOOK);
             }
-        }
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Balas"))
-        {
-            string tag = collision.gameObject.tag;
-            if(tag == "BalaPlayer")
-            {
-                TakeDamage(1);
-            }
-
         }
     }
 

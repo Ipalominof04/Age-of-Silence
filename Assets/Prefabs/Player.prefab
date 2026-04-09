@@ -1916,6 +1916,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   myInputActionAsset: {fileID: -944628639613478452, guid: 35845fe01580c41289b024647b1d1c53, type: 3}
+  vidaMaxima: 6
   aiden: {fileID: 0}
   interactRange: 2
   standCenter: {x: 0, y: 0.9, z: 0}
@@ -1930,11 +1931,14 @@ MonoBehaviour:
   OnDialogueStarted: {fileID: 11400000, guid: dcef17d5a629fe8478bd188922dbae88, type: 2}
   OnDialogueEnded: {fileID: 11400000, guid: 24d173763f19212419ab012c1f7833f5, type: 2}
   OnAidenStopped: {fileID: 11400000, guid: e583d7700758c2b40b133794e92abb2f, type: 2}
-  onShoot: {fileID: 0}
+  onShoot: {fileID: 11400000, guid: 07e473aafd09beb40b0b1c09f73e8e65, type: 2}
+  onArmaSobrecalentada: {fileID: 11400000, guid: 610d165f1559f4f438c0223d6fa89cd3, type: 2}
+  onArmaEnfriada: {fileID: 11400000, guid: 741bb83822b2d004db97056d4089e9af, type: 2}
+  onVidaCambiada: {fileID: 11400000, guid: 1d019ec753f8402428ded6c67cc504f3, type: 2}
   parabolaRenderer: {fileID: 637834156667624345}
   huesoMano: {fileID: 5351020909305053578}
   camara: {fileID: 0}
-  bala: {fileID: 0}
+  bala: {fileID: 769116550249096355, guid: 203d41e5626b77640abcbd98c8d547c8, type: 3}
   shootingPoint: {fileID: 0}
 --- !u!82 &8629209207164204235
 AudioSource:
