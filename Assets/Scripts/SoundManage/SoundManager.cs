@@ -28,13 +28,6 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-
-    private void Start()
-    {
-        SceneManager.LoadScene("Escena4");
-
-    }
-
     // Suscribirse
     public void Subscribe(ISoundListener listener)
     {

@@ -95,7 +95,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     void Start()
     {
         InitState(PlayerState.IDLE);
-        vidaActual = vidaMaxima;
+
+        float vidaGuardada = GameManager.Instance.datos.PlayerHealth;
+        vidaActual = vidaGuardada > 0f ? vidaGuardada : vidaMaxima;
+        onVidaCambiada.Raise(vidaActual / vidaMaxima);
     }
 
     void Update()
@@ -443,7 +446,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         vidaActual -= damage;
         vidaActual = Mathf.Clamp(vidaActual, 0f, vidaMaxima);
-        print(this.vidaActual);
+        GameManager.Instance.datos.PlayerHealth = vidaActual;
         onVidaCambiada.Raise(vidaActual / vidaMaxima); // Manda el porcentaje
 
         if (vidaActual <= 0f)
