@@ -230,7 +230,7 @@ public class AidenController : MonoBehaviour
         //si se ha asustado y a huido, que no se vuelva a asustar mientras esta esperando a que el player vaya a consolarlo
         if (scaredCoroutine != null) return;
 
-        int confianza = GameManager.Instance.Confianza;
+        float confianza = GameManager.Instance.confianza;
 
         if (type == ScareType.Body)
         {
