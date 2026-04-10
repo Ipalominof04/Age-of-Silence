@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private TriggerPuzle puzleInRange = null;
     private TriggerDialogue dialogueActivo = null;
     private bool escaleraInRange = false;
+    private Vector3 direccionEscalera;
 
     private void Awake()
     {
@@ -346,8 +347,12 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void ClimbLadder()
     {
-        Vector3 movement = new Vector3(0, inputMoviment.y, 0);
-        characterController.Move(movement * 2f * Time.deltaTime);
+        transform.rotation = Quaternion.LookRotation(direccionEscalera);
+
+        Vector3 verticalMovement = new Vector3(0, inputMoviment.y, 0);
+        Vector3 horizontalMovement = new Vector3(inputMoviment.x, 0, 0);
+
+        characterController.Move((verticalMovement + horizontalMovement) * 2f * Time.deltaTime);
     }
 
     private void Interact()
@@ -504,7 +509,16 @@ public class PlayerController : MonoBehaviour, IDamageable
             }
 
             if (other.tag == "TriggerEscalera")
+            {
                 escaleraInRange = true;
+                direccionEscalera = (other.transform.position - transform.position).normalized;
+                direccionEscalera.y = 0;
+                // Fuerza al player a mirar hacia la escalera
+                transform.rotation = Quaternion.LookRotation(direccionEscalera);
+            }
+                
+                
+
         }
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Objetos"))
