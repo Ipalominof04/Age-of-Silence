@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            LimpiarSOEscenas();
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
@@ -99,6 +100,11 @@ public class GameManager : MonoBehaviour
     {
         foreach (var obj in FindObjectsByType<ObjetoGuardable>(FindObjectsSortMode.None))
             obj.Restaurar();
+    }
+    private void LimpiarSOEscenas()
+    {
+        foreach (SOEscena soEscena in datos.escenas)
+            soEscena.objetos.Clear();
     }
     private IEnumerator FadeAndLoadScene(string sceneName)
     {

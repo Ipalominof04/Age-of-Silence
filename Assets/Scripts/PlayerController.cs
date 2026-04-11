@@ -157,6 +157,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                     if (objectLanzableInRange != null)
                     {
                         objetoLanzableEnMano = objectLanzableInRange.GetComponent<ObjetoLanzable>();
+                        objetoLanzableEnMano.hand = huesoMano.gameObject;
                         objetoLanzableEnMano?.Recoger();
                         objectLanzableInRange = null;
                     }
@@ -366,6 +367,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             if (string.IsNullOrEmpty(objetoMano.nombreObjeto))
             {
                 objetoMano.GuardarObjeto(objectInRange);
+                GameManager.Instance.datos.objetoMano = objetoMano;
                 objectInRange.SetActive(false);
                 objectInRange = null;
                 Debug.Log("Objeto recogido: " + objetoMano.nombreObjeto);
