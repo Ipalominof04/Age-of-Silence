@@ -221,7 +221,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5183130
 Transform:
   m_ObjectHideFlags: 0
@@ -252,6 +252,7 @@ MonoBehaviour:
   nombreEscena: Almacen
   miDoorID: 
   targetDoorID: 
+  onPuzzleResuelto: {fileID: 11400000, guid: be854dd361129f6438d7b3aaefe47c8d, type: 2}
 --- !u!65 &5183132
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7632,6 +7633,7 @@ MonoBehaviour:
   nombreEscena: Electricidad
   miDoorID: 
   targetDoorID: 
+  onPuzzleResuelto: {fileID: 0}
 --- !u!65 &903884103
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7651,8 +7653,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.9316368, y: 2.0373547, z: 0.43195462}
-  m_Center: {x: 0.27706718, y: 0.9235977, z: 0.2840227}
+  m_Size: {x: 0.9316368, y: 2.0373547, z: 0.6651249}
+  m_Center: {x: 0.27706718, y: 0.9235977, z: 0.16743755}
 --- !u!1001 &918047702
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9023,9 +9025,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b281e153f59edd4bb25243815c47b13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  Confianza: 0
+  confianza: 0
   fadeDuration: 1
   lastDoorID: 
+  ruta: Assets/savegame.json
+  datos: {fileID: 11400000, guid: d5cd9530358ab5f488bbf0ac0b7995f6, type: 2}
 --- !u!4 &972049777
 Transform:
   m_ObjectHideFlags: 0
@@ -9958,7 +9962,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1052058537
 Transform:
   m_ObjectHideFlags: 0
@@ -9989,6 +9993,7 @@ MonoBehaviour:
   nombreEscena: Comedor
   miDoorID: 
   targetDoorID: 
+  onPuzzleResuelto: {fileID: 11400000, guid: b9d59c3410e77d04ea7cae096f7b4f36, type: 2}
 --- !u!65 &1052058539
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14766,6 +14771,7 @@ MonoBehaviour:
   nombreEscena: Piezas
   miDoorID: 
   targetDoorID: 
+  onPuzzleResuelto: {fileID: 0}
 --- !u!65 &1659236473
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16790,7 +16796,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2018186364
 Transform:
   m_ObjectHideFlags: 0
@@ -16821,6 +16827,7 @@ MonoBehaviour:
   nombreEscena: Pasillo
   miDoorID: 
   targetDoorID: 
+  onPuzzleResuelto: {fileID: 11400000, guid: 9ed8b196a5b04fa48a614492b78ebd53, type: 2}
 --- !u!65 &2018186366
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16890,6 +16897,7 @@ MonoBehaviour:
   nombreEscena: ZonaComun
   miDoorID: 
   targetDoorID: 
+  onPuzzleResuelto: {fileID: 0}
 --- !u!65 &2020501001
 BoxCollider:
   m_ObjectHideFlags: 0
