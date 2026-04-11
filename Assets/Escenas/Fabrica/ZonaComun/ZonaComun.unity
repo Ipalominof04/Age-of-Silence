@@ -188,6 +188,7 @@ MonoBehaviour:
   nombreEscena: Entrada
   miDoorID: 
   targetDoorID: 
+  onPuzzleResuelto: {fileID: 0}
 --- !u!1001 &1029011
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3240,6 +3241,7 @@ MonoBehaviour:
   nombreEscena: Oficina1
   miDoorID: 
   targetDoorID: 
+  onPuzzleResuelto: {fileID: 0}
 --- !u!1 &664442159
 GameObject:
   m_ObjectHideFlags: 0
@@ -7649,6 +7651,7 @@ MonoBehaviour:
   nombreEscena: Oficina2
   miDoorID: 
   targetDoorID: 
+  onPuzzleResuelto: {fileID: 0}
 --- !u!1001 &1871150716
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7963,9 +7966,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b281e153f59edd4bb25243815c47b13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  Confianza: 0
+  confianza: 0
   fadeDuration: 1
   lastDoorID: 
+  ruta: Assets/savegame.json
+  datos: {fileID: 11400000, guid: d5cd9530358ab5f488bbf0ac0b7995f6, type: 2}
 --- !u!4 &1961721552
 Transform:
   m_ObjectHideFlags: 0
