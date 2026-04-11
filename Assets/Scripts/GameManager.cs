@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -52,6 +53,7 @@ public class GameManager : MonoBehaviour
             fadeImage.color = c;
             fadeImage.gameObject.SetActive(false);
         }
+        RestaurarEscena();
         MoverPlayerSpawn();
     }
 
@@ -71,6 +73,7 @@ public class GameManager : MonoBehaviour
 
     public void ChangeScene(string sceneName)
     {
+        GuardarEscena();
         datos.NameScene = sceneName;
         StartCoroutine(FadeAndLoadScene(sceneName));
         GuardarPartida();
@@ -81,6 +84,22 @@ public class GameManager : MonoBehaviour
             StartCoroutine(FadeAndLoadScene(sceneName));
     }
 
+    public void GuardarEscena()
+    {
+        var objetos = FindObjectsByType<ObjetoGuardable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (var obj in objetos)
+        {
+            if (string.IsNullOrEmpty(obj.id))
+                Debug.LogWarning($"ObjetoGuardable sin ID en: {obj.gameObject.name}", obj.gameObject);
+            obj.Guardar();
+        }
+    }
+
+    public void RestaurarEscena()
+    {
+        foreach (var obj in FindObjectsByType<ObjetoGuardable>(FindObjectsSortMode.None))
+            obj.Restaurar();
+    }
     private IEnumerator FadeAndLoadScene(string sceneName)
     {
         yield return StartCoroutine(FadeOut());
@@ -175,9 +194,19 @@ public class GameManager : MonoBehaviour
 
     public void GuardarPartida()
     {
-        SaveData data = new SaveData(datos.confianza, datos.PlayerHealth, datos.objetoMano, datos.NameScene);
+        EscenaData[] escenasSave = new EscenaData[datos.escenas.Length];
+        for (int i = 0; i < datos.escenas.Length; i++)
+        {
+            escenasSave[i] = new EscenaData
+            {
+                sceneName = datos.escenas[i].sceneName,
+                objetos = datos.escenas[i].objetos.ToArray()
+            };
+        }
 
-        string jsondata = JsonUtility.ToJson(data);
+        SaveData data = new SaveData(datos.confianza, datos.PlayerHealth, datos.objetoMano, datos.NameScene, escenasSave);
+
+        string jsondata = JsonUtility.ToJson(data,true);
         try
         {
             print("Guardando datos...");
@@ -209,14 +238,28 @@ public class GameManager : MonoBehaviour
         confianza = datos.confianza;
         datos.PlayerHealth = data.playerHealth;
 
-        // Solo asigna si el campo del SO y el string guardado son válidos
         if (datos.objetoMano != null && !string.IsNullOrEmpty(data.objetoMano))
-        {
             datos.objetoMano.nombreObjeto = data.objetoMano;
+
+        // Rellena los SOEscena con los datos del JSON ANTES de cargar la escena
+        if (data.escenas != null)
+        {
+            foreach (EscenaData escenaGuardada in data.escenas)
+            {
+                foreach (SOEscena soEscena in datos.escenas)
+                {
+                    if (soEscena.sceneName == escenaGuardada.sceneName)
+                    {
+                        soEscena.objetos.Clear();
+                        foreach (var obj in escenaGuardada.objetos)
+                            soEscena.objetos.Add(obj);
+                        break;
+                    }
+                }
+            }
         }
 
         datos.NameScene = data.nameScene;
-
         IrAScene("LoadManagers");
     }
 
@@ -228,15 +271,23 @@ public class GameManager : MonoBehaviour
         public float playerHealth;
         public string objetoMano;
         public string nameScene;
+        public EscenaData[] escenas;
 
-        public SaveData(float confianza, float playerHealth, ObjetoAgarrado objetoMano, string nameScene)
+        public SaveData(float confianza, float playerHealth, ObjetoAgarrado objetoMano, string nameScene, EscenaData[] escenas)
         {
             this.confianza = confianza;
             this.playerHealth = playerHealth;
             this.objetoMano = objetoMano != null ? objetoMano.nombreObjeto : "";
             this.nameScene = nameScene;
+            this.escenas = escenas;
         }
 
+    }
+    [Serializable]
+    public struct EscenaData
+    {
+        public string sceneName;
+        public ScenePart[] objetos;
     }
 }
 
