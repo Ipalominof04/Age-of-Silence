@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "SOGeneral", menuName = "Juego/SOGeneral")]
@@ -8,6 +9,7 @@ public class SOGeneral : ScriptableObject
     public float PlayerHealth;
     public ObjetoAgarrado objetoMano;
     private string nameScene;
+    public List<string> puzzlesResueltos = new List<string>();
     public SOEscena[] escenas;
     public string NameScene { get { return nameScene; } set
         {

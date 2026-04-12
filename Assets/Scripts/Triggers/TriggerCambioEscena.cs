@@ -1,4 +1,5 @@
 using UnityEngine;
+
 public class TriggerCambioEscena : MonoBehaviour
 {
     [Header("Escena")]
@@ -6,33 +7,17 @@ public class TriggerCambioEscena : MonoBehaviour
     [Header("Spawn")]
     [SerializeField] string miDoorID;
     [SerializeField] string targetDoorID;
-
     [Header("Requiere puzzle")]
-    [SerializeField] private GameEvent onPuzzleResuelto;
+    [SerializeField] private string puzzleRequeridoID;
 
-    private void OnEnable()
+    private void Start()
     {
-        if (onPuzzleResuelto != null)
-        {
-            gameObject.SetActive(false);
-            onPuzzleResuelto.Subscribe(Activar);
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (onPuzzleResuelto != null)
-            onPuzzleResuelto.Unsubscribe(Activar);
-    }
-
-    private void Activar()
-    {
-        gameObject.SetActive(true);
+        if (!string.IsNullOrEmpty(puzzleRequeridoID))
+            gameObject.SetActive(GameManager.Instance.PuzzleResuelto(puzzleRequeridoID));
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("TriggerCambioEscena: " + other.gameObject.name + " layer: " + other.gameObject.layer);
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             GameManager.Instance.lastDoorID = targetDoorID;

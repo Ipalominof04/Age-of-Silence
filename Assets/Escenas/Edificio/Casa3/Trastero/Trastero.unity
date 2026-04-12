@@ -570,6 +570,14 @@ PrefabInstance:
       propertyPath: objetoMano
       value: 
       objectReference: {fileID: 11400000, guid: d5cd034fa04a9034f969502806a1a3bf, type: 2}
+    - target: {fileID: 1796687356054423060, guid: 89437555278a3b747b73449b8a201440, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064396060259855501, guid: 89437555278a3b747b73449b8a201440, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7366088206330199277, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_Name
       value: Player
@@ -4288,7 +4296,7 @@ MonoBehaviour:
   nombreEscena: PasilloCasa3
   miDoorID: trastero_pasillo3
   targetDoorID: spawntrastero_pasillo3
-  onPuzzleResuelto: {fileID: 0}
+  puzzleRequeridoID: 
 --- !u!65 &1268208252
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6063,6 +6071,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 235224309}
+    - target: {fileID: 7380622719863994027, guid: ec08a826fda66694a935962919dabfd7, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
