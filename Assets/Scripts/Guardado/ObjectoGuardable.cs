@@ -4,11 +4,11 @@ using UnityEngine;
 public class ObjetoGuardable : MonoBehaviour
 {
     public SOEscena soEscena;
-    public string id; // ponlo igual al nombre del GameObject, o asígnalo a mano
+    public string id; 
 
     private void Reset()
     {
-        id = gameObject.name; // se autorellena al añadir el componente
+        id = gameObject.name;
     }
 
     public void Guardar()
@@ -24,17 +24,18 @@ public class ObjetoGuardable : MonoBehaviour
         };
 
         if (idx >= 0)
-            soEscena.objetos[idx] = parte;  // actualiza
+            soEscena.objetos[idx] = parte; 
         else
-            soEscena.objetos.Add(parte);     // primera vez, lo añade solo
+            soEscena.objetos.Add(parte);     
     }
 
     public void Restaurar()
     {
         ScenePart parte = soEscena.objetos.FirstOrDefault(p => p.id == id);
 
-        if (parte.id == null) return; // nunca se guardó, deja defaults
+        if (parte.id == null) return;
 
+        Debug.Log($"{id}: restaurando active={parte.active}");
         gameObject.SetActive(parte.active);
         transform.position = parte.pos;
         transform.rotation = parte.rot;
