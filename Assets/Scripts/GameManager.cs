@@ -24,15 +24,19 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+     //   Debug.Log($"Awake — InstanceID: {gameObject.GetInstanceID()} — Escena: {gameObject.scene.name}");
+
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
             LimpiarSOEscenas();
+            SceneManager.sceneLoaded -= OnSceneLoaded;
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
+        //    Debug.Log($"DUPLICADO detectado — destruyendo InstanceID: {gameObject.GetInstanceID()}");
             Destroy(gameObject);
         }
     }
@@ -71,7 +75,16 @@ public class GameManager : MonoBehaviour
         datos.confianza = confianza;
         Debug.Log($"Valor bajó a: {confianza}");
     }
+    public void ResolverPuzzle(string puzzleID)
+    {
+        if (!datos.puzzlesResueltos.Contains(puzzleID))
+            datos.puzzlesResueltos.Add(puzzleID);
+    }
 
+    public bool PuzzleResuelto(string puzzleID)
+    {
+        return datos.puzzlesResueltos.Contains(puzzleID);
+    }
     public void ChangeScene(string sceneName)
     {
         GuardarEscena();
@@ -87,6 +100,7 @@ public class GameManager : MonoBehaviour
 
     public void GuardarEscena()
     {
+        Debug.Log("GuardarEscena llamado desde:\n" + System.Environment.StackTrace);
         var objetos = FindObjectsByType<ObjetoGuardable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (var obj in objetos)
         {
@@ -98,6 +112,7 @@ public class GameManager : MonoBehaviour
 
     public void RestaurarEscena()
     {
+        Debug.Log("RestaurarEscena llamado desde:\n" + System.Environment.StackTrace);
         foreach (var obj in FindObjectsByType<ObjetoGuardable>(FindObjectsSortMode.None))
             obj.Restaurar();
     }

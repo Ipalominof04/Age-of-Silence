@@ -441,6 +441,10 @@ PrefabInstance:
       propertyPath: aiden
       value: 
       objectReference: {fileID: 648346708}
+    - target: {fileID: 3064396060259855501, guid: 89437555278a3b747b73449b8a201440, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7366088206330199277, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_Name
       value: Player
@@ -2089,7 +2093,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &433339788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3569,7 +3573,7 @@ MonoBehaviour:
   nombreEscena: Entrada
   miDoorID: 
   targetDoorID: 
-  onPuzzleResuelto: {fileID: 0}
+  puzzleRequeridoID: 
 --- !u!65 &696390295
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7323,7 +7327,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3463235669188579180, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 936911500}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1475539996}
   m_SourcePrefab: {fileID: 100100000, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
 --- !u!4 &1475539994 stripped
 Transform:
@@ -7335,6 +7342,20 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
   m_PrefabInstance: {fileID: 1475539993}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1475539996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475539995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: 3a5484ccc47170f4cab117155ba72482, type: 2}
+  id: FusibleAzul
 --- !u!1 &1480940571
 GameObject:
   m_ObjectHideFlags: 0
@@ -7382,9 +7403,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TriggerPuzleFusible
   infoMostrada: 0
   graphInfo: {fileID: 3965311268370046156, guid: b5f608b22d3454040a96014852e6e0a0, type: 3}
-  onFusibleVerdeColocado: {fileID: 11400000, guid: b9d59c3410e77d04ea7cae096f7b4f36, type: 2}
-  onFusibleAzulColocado: {fileID: 11400000, guid: 9ed8b196a5b04fa48a614492b78ebd53, type: 2}
-  onFusibleAmarilloColocado: {fileID: 11400000, guid: be854dd361129f6438d7b3aaefe47c8d, type: 2}
   meshVerde: {fileID: 1750322941}
   meshAzul: {fileID: 1475539995}
   meshAmarillo: {fileID: 1540120369}
@@ -7899,7 +7917,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3463235669188579180, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 248783194}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1540120370}
   m_SourcePrefab: {fileID: 100100000, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
 --- !u!4 &1540120368 stripped
 Transform:
@@ -7911,6 +7932,20 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
   m_PrefabInstance: {fileID: 1540120367}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1540120370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1540120369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: 3a5484ccc47170f4cab117155ba72482, type: 2}
+  id: FusibleAmarillo
 --- !u!1001 &1585724120
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8688,7 +8723,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3463235669188579180, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2001361494}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1750322942}
   m_SourcePrefab: {fileID: 100100000, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
 --- !u!4 &1750322940 stripped
 Transform:
@@ -8700,6 +8738,20 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
   m_PrefabInstance: {fileID: 1750322939}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1750322942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750322941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: 3a5484ccc47170f4cab117155ba72482, type: 2}
+  id: FusibleVerde
 --- !u!1 &1794788452
 GameObject:
   m_ObjectHideFlags: 0
