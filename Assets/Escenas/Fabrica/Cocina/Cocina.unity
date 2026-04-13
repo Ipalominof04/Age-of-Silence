@@ -1064,7 +1064,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &153774975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5052,7 +5052,7 @@ MonoBehaviour:
   nombreEscena: Comedor
   miDoorID: 
   targetDoorID: 
-  onPuzzleResuelto: {fileID: 0}
+  puzzleRequeridoID: 
 --- !u!1 &893483680
 GameObject:
   m_ObjectHideFlags: 0
@@ -6421,51 +6421,6 @@ Transform:
   m_Children:
   - {fileID: 886266769}
   m_Father: {fileID: 1826416823}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1299016058
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1299016060}
-  - component: {fileID: 1299016059}
-  m_Layer: 0
-  m_Name: SoundManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1299016059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1299016058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb8bf4a6d47164543bc73f17efea5a1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SoundManager
-  soundRegistry: {fileID: 11400000, guid: b713b3fb488779d43be3b7e77f39b5bd, type: 2}
---- !u!4 &1299016060
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1299016058}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 29.06495, y: 0, z: 0.10048}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1309526172 stripped
 GameObject:
@@ -11570,7 +11525,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a96bcb6f90397644083ea619343cc34c, type: 2}
+  - {fileID: 2100000, guid: af2b944920c158c4fa498627fceace2d, type: 2}
   - {fileID: 2100000, guid: 2f5eaec4bc5f02e478c4e29b76f71181, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -11862,7 +11817,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 3
-  m_Color: {r: 1, g: 0.45065764, b: 0.4009434, a: 1}
+  m_Color: {r: 0, g: 0.21875906, b: 1, a: 1}
   m_Intensity: 271.06656
   m_Range: 3.13
   m_SpotAngle: 172.54404
@@ -11935,8 +11890,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2180114698010067591}
   - component: {fileID: 5823393064061480178}
+  - component: {fileID: 5823393064061480179}
   m_Layer: 12
-  m_Name: FusibleRojo
+  m_Name: FusibleAzul
   m_TagString: Fusible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11963,6 +11919,20 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0.1, z: 0.3}
+--- !u!114 &5823393064061480179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5823393064061480177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: fa715a9bc6e7ea04e822600da679f166, type: 2}
+  id: FusibleAzul
 --- !u!33 &6498832409120056568
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -12062,7 +12032,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &8816420308931893707
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12117,7 +12087,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 153774976}
-  - {fileID: 1299016060}
   - {fileID: 1713040686}
   - {fileID: 1366471885}
   - {fileID: 2130183217}

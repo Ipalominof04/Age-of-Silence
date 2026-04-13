@@ -109,11 +109,10 @@ public class GameManager : MonoBehaviour
             obj.Guardar();
         }
     }
-
     public void RestaurarEscena()
     {
         Debug.Log("RestaurarEscena llamado desde:\n" + System.Environment.StackTrace);
-        foreach (var obj in FindObjectsByType<ObjetoGuardable>(FindObjectsSortMode.None))
+        foreach (var obj in FindObjectsByType<ObjetoGuardable>(FindObjectsInactive.Include, FindObjectsSortMode.None))
             obj.Restaurar();
     }
     private void LimpiarSOEscenas()
