@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public enum PlayerState { NONE, IDLE, WALK, RUN, CROUCH, SHOOT, INTERACT, DIALOGUE, THROW }
 
+
     [Header("Maquina de estados")]
     [SerializeField] private PlayerState currentState;
 
@@ -76,6 +77,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private GameObject objectLanzableInRange = null;
     private TriggerDialogue dialogueActivo = null;
     private bool escaleraInRange = false;
+    private TriggerAyuda ayudaInRange = null;
     private Vector3 direccionEscalera;
 
     private IPuzle puzleInRange = null;
@@ -196,6 +198,8 @@ public class PlayerController : MonoBehaviour, IDamageable
                 if (objetoLanzableEnMano != null && throwAction.IsPressed())
                     ChangeState(PlayerState.THROW);
 
+                if (interactAction.triggered && ayudaInRange != null)
+                    ayudaInRange.PedirAyuda();
                 break;
 
             case PlayerState.WALK:
@@ -229,6 +233,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 break;
             case PlayerState.INTERACT:
                 Interact();
+                ChangeState(PlayerState.IDLE);
                 break;
 
             case PlayerState.DIALOGUE:
@@ -245,6 +250,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         if (newState == currentState) return;
         ExitState();
+       // currentState = newState;
         InitState(newState);
         OnPlayerStateChanged?.Invoke(currentState);
     }
@@ -407,8 +413,6 @@ public class PlayerController : MonoBehaviour, IDamageable
             arma_ctrl?.Equipar();
 
         }
-
-        ChangeState(PlayerState.IDLE);
     }
 
     private void Dialogue()
@@ -520,6 +524,13 @@ public class PlayerController : MonoBehaviour, IDamageable
                 // Fuerza al player a mirar hacia la escalera
                 transform.rotation = Quaternion.LookRotation(direccionEscalera);
             }
+
+            if (other.tag == "TriggerAyuda")
+            {
+                TriggerAyuda ayuda = other.GetComponent<TriggerAyuda>();
+                if (ayuda != null)
+                    ayudaInRange = ayuda;
+            }
         }
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Objetos"))
@@ -545,19 +556,27 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
+    public void ClearTriggerPuzle()
+    {
+        puzleInRange = null;
+    }
+    public void ClearTriggerAyuda()
+    {
+        ayudaInRange = null;
+    }
+
 
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject == objectInRange)
             objectInRange = null;
 
-        if (other.GetComponent<IPuzle>() == puzleInRange)
+        if (puzleInRange != null && other.GetComponent<IPuzle>() == puzleInRange)
         {
             puzleInRange = null;
+            print(puzleInRange);
             print("AAAAAAAA");
         }
-     
-
 
         if (other.gameObject == objectLanzableInRange?.gameObject)
         {
@@ -566,5 +585,8 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         if (other.tag == "TriggerEscalera")
             escaleraInRange = false;
+
+        if (other.tag == "TriggerAyuda")
+            ayudaInRange = null;
     }
 }

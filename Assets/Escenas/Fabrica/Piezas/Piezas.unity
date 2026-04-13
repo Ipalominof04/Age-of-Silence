@@ -13566,7 +13566,7 @@ MonoBehaviour:
   nombreEscena: Entrada
   miDoorID: 
   targetDoorID: 
-  onPuzzleResuelto: {fileID: 0}
+  puzzleRequeridoID: 
 --- !u!65 &1221010377
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17103,6 +17103,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1670748175}
   - component: {fileID: 1670748176}
+  - component: {fileID: 1670748177}
+  - component: {fileID: 1670748178}
   m_Layer: 12
   m_Name: FusibleAmarillo
   m_TagString: Fusible
@@ -17150,6 +17152,33 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: -0.15, y: 0.2, z: 0.3}
+--- !u!114 &1670748177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670748174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 0}
+  id: FusibleAmarillo
+--- !u!114 &1670748178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670748174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d200b541f8bd8c44d946b5cf2cc6c150, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectoActivable
+  puzzleRequeridoID: AidenNiega
 --- !u!1 &1686650787
 GameObject:
   m_ObjectHideFlags: 0
@@ -21442,7 +21471,7 @@ MonoBehaviour:
   fadeDuration: 1
   lastDoorID: 
   ruta: Assets/savegame.json
-  datos: {fileID: 0}
+  datos: {fileID: 11400000, guid: d5cd9530358ab5f488bbf0ac0b7995f6, type: 2}
 --- !u!4 &2087810404
 Transform:
   m_ObjectHideFlags: 0
