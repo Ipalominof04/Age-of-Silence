@@ -436,6 +436,7 @@ MonoBehaviour:
   nombreEscena: HabNeneCasa2
   miDoorID: pasillo2_hab2
   targetDoorID: spawnpasillo2_hab2
+  puzzleRequeridoID: 
 --- !u!65 &86697364
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1595,6 +1596,7 @@ MonoBehaviour:
   nombreEscena: "Ba\xF1oCasa2"
   miDoorID: "pasillo2_ba\xF1o2"
   targetDoorID: "spawnpasillo2_ba\xF1o2"
+  puzzleRequeridoID: 
 --- !u!65 &561152912
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1909,6 +1911,10 @@ PrefabInstance:
       propertyPath: aiden
       value: 
       objectReference: {fileID: 1166304319}
+    - target: {fileID: 3064396060259855501, guid: 89437555278a3b747b73449b8a201440, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7366088206330199277, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_Name
       value: Player
@@ -3272,9 +3278,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b281e153f59edd4bb25243815c47b13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  Confianza: 0
+  confianza: 0
   fadeDuration: 1
   lastDoorID: 
+  ruta: Assets/savegame.json
+  datos: {fileID: 11400000, guid: d5cd9530358ab5f488bbf0ac0b7995f6, type: 2}
 --- !u!4 &1087776185
 Transform:
   m_ObjectHideFlags: 0
@@ -7376,6 +7384,7 @@ MonoBehaviour:
   nombreEscena: ComedorCasa2
   miDoorID: pasillo2_comedor2
   targetDoorID: spawnpasillo2_comedor2
+  puzzleRequeridoID: 
 --- !u!65 &2034256085
 BoxCollider:
   m_ObjectHideFlags: 0
