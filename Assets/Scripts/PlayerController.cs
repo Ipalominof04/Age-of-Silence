@@ -535,7 +535,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Objetos"))
         {
-            if (other.tag == "Rama" || other.tag == "Palanca" || other.tag == "Cizallas" || other.tag == "Fusible")
+            if (other.tag == "Rama" || other.tag == "Palanca" || other.tag == "Cizallas" || other.tag == "Fusible" || other.tag == "Galon" || other.tag == "Cerillas")
             {
                 objectInRange = other.gameObject;
                 print("objeto " + other.gameObject.name + " en rango");

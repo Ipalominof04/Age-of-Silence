@@ -6,10 +6,13 @@ public class TriggerPuente : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) { }
+        if (other.CompareTag("Player"))
             animator.SetBool("Abierto", false);
 
-        if (other.CompareTag("Aiden"))        
+        else if (other.CompareTag("Aiden"))        
+            animator.SetBool("Abierto", false);
+
+        else if (other.CompareTag("Movible"))
             animator.SetBool("Abierto", false);
     }
 
@@ -18,7 +21,10 @@ public class TriggerPuente : MonoBehaviour
         if (other.CompareTag("Player"))
             animator.SetBool("Abierto", true);
 
-        if (other.CompareTag("Aiden"))
+        else if (other.CompareTag("Aiden"))
+            animator.SetBool("Abierto", true);
+
+        else if (other.CompareTag("Movible"))
             animator.SetBool("Abierto", true);
     }
 }
