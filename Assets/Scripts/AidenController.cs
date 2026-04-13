@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class AidenController : MonoBehaviour
 {
-    public enum AidenState { NONE, IDLE, WALK, RUN, CROUCH, SCARED };
+    public enum AidenState { NONE, IDLE, WALK, RUN, CROUCH, SCARED, HELP };
 
     [Header("Maquina de estados")]
     [SerializeField] private AidenState currentState;
@@ -28,6 +28,9 @@ public class AidenController : MonoBehaviour
 
     private int scaredNum;
     private Coroutine scaredCoroutine;
+
+    private Vector3 _destino;
+    private GameEvent _onAyudaCompletada;
 
     private SoundEmitter emitter;
 
@@ -155,6 +158,9 @@ public class AidenController : MonoBehaviour
                     scaredCoroutine = StartCoroutine(ScaredRoutine());
                 }
                 break;
+            case AidenState.HELP:
+                agent.SetDestination(_destino);
+                break;
         }
     }
 
@@ -183,6 +189,13 @@ public class AidenController : MonoBehaviour
                     scaredCoroutine = null;
                     SetUI(false);
                     GameManager.Instance.SumValor(10);
+                    ChangeState(AidenState.WALK);
+                }
+                break;
+            case AidenState.HELP:
+                if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
+                {
+                    _onAyudaCompletada?.Raise();
                     ChangeState(AidenState.WALK);
                 }
                 break;
@@ -286,9 +299,15 @@ public class AidenController : MonoBehaviour
     }
 
     private IEnumerator GritoUIRoutine()
-{
-    yield return new WaitForSeconds(2f);
-    SetUI(false);
-}
+    {
+        yield return new WaitForSeconds(2f);
+        SetUI(false);
+    }
+    public void PedirAyuda(Vector3 destino, GameEvent onLlego)
+    {
+        _destino = destino;
+        _onAyudaCompletada = onLlego;
+        ChangeState(AidenState.HELP);
+    }
 
 }
