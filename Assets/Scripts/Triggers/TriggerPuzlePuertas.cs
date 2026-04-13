@@ -15,12 +15,15 @@ public class TriggerPuzlePuertas : MonoBehaviour, IPuzle
     [Header("Acción al resolver el puzzle")]
     public UnityEvent OnPuzzleSolved;
 
+    [SerializeField] public PlayerController player;
+
     public void Interact(ObjetoAgarrado objetoMano)
     {
         if (!requiereObjeto)
         {
             OnPuzzleSolved?.Invoke();
-           // gameObject.SetActive(false);
+            gameObject.SetActive(false);
+            player.ClearTriggerPuzle();
 
             return;
         }
@@ -33,7 +36,8 @@ public class TriggerPuzlePuertas : MonoBehaviour, IPuzle
         if (objetoMano.nombreObjeto == objetoRequerido)
         {
             OnPuzzleSolved?.Invoke();
-          //  gameObject.SetActive(false);
+            gameObject.SetActive(false);
+            player.ClearTriggerPuzle();
 
 
         }
