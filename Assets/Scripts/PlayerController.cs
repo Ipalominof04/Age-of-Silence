@@ -117,6 +117,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         OnAidenStopped.Subscribe(() => canInteract = true);
         onArmaSobrecalentada.Subscribe(() => armaSobrecalentada = true);
         onArmaEnfriada.Subscribe(() =>  armaSobrecalentada = false);
+
     }
 
     private void OnDisable()
@@ -500,6 +501,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 {
                     puzleInRange = puzle;
                     puzle.OnEnterRange();
+                    print("BBBBBBBBBBB");
                 }
             }
 
@@ -550,7 +552,12 @@ public class PlayerController : MonoBehaviour, IDamageable
             objectInRange = null;
 
         if (other.GetComponent<IPuzle>() == puzleInRange)
+        {
             puzleInRange = null;
+            print("AAAAAAAA");
+        }
+     
+
 
         if (other.gameObject == objectLanzableInRange?.gameObject)
         {

@@ -4817,6 +4817,7 @@ GameObject:
   - component: {fileID: 988155187}
   - component: {fileID: 988155189}
   - component: {fileID: 988155188}
+  - component: {fileID: 988155190}
   m_Layer: 9
   m_Name: TriggerPuzle
   m_TagString: TriggerPuzle
@@ -4893,6 +4894,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0292301, y: 2.2972069, z: 1.1226237}
   m_Center: {x: 0.037377477, y: 0.6486033, z: -0.74872243}
+--- !u!114 &988155190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988155186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: 1c7a584a243e4924ab5eb2d372e6fcb8, type: 2}
+  id: TriggerPuzle
 --- !u!1001 &1059112698
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6643,7 +6658,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1498683891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6656,9 +6671,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b281e153f59edd4bb25243815c47b13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  Confianza: 0
+  confianza: 0
   fadeDuration: 1
   lastDoorID: 
+  ruta: Assets/savegame.json
+  datos: {fileID: 0}
 --- !u!4 &1498683892
 Transform:
   m_ObjectHideFlags: 0
@@ -7012,6 +7029,7 @@ MonoBehaviour:
   nombreEscena: Rellano1
   miDoorID: comedor2_rellano1
   targetDoorID: spawnrellano1_comedor2
+  puzzleRequeridoID: 
 --- !u!65 &1618414384
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7459,6 +7477,10 @@ PrefabInstance:
       propertyPath: aiden
       value: 
       objectReference: {fileID: 472918891}
+    - target: {fileID: 3064396060259855501, guid: 89437555278a3b747b73449b8a201440, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7366088206330199277, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_Name
       value: Player
@@ -7834,6 +7856,7 @@ MonoBehaviour:
   nombreEscena: PasilloCasa2
   miDoorID: comedor2_pasillo2
   targetDoorID: spawncomedor2_pasillo2
+  puzzleRequeridoID: 
 --- !u!65 &1795954579
 BoxCollider:
   m_ObjectHideFlags: 0

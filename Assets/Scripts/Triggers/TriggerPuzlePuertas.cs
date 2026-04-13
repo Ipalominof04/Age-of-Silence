@@ -20,6 +20,8 @@ public class TriggerPuzlePuertas : MonoBehaviour, IPuzle
         if (!requiereObjeto)
         {
             OnPuzzleSolved?.Invoke();
+           // gameObject.SetActive(false);
+
             return;
         }
 
@@ -31,6 +33,9 @@ public class TriggerPuzlePuertas : MonoBehaviour, IPuzle
         if (objetoMano.nombreObjeto == objetoRequerido)
         {
             OnPuzzleSolved?.Invoke();
+          //  gameObject.SetActive(false);
+
+
         }
         else
             DialogueManager.Instance.StartInfo(graphObjetoIncorrecto);
