@@ -2968,6 +2968,7 @@ GameObject:
   m_Component:
   - component: {fileID: 813714852}
   - component: {fileID: 813714853}
+  - component: {fileID: 813714854}
   m_Layer: 12
   m_Name: FusibleVerde
   m_TagString: Fusible
@@ -3015,6 +3016,20 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0.2, z: 0.3}
+--- !u!114 &813714854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813714851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: d9f87c1acd124a8408525b1e8e94cc60, type: 2}
+  id: FusibleVerde
 --- !u!1001 &841797524
 PrefabInstance:
   m_ObjectHideFlags: 0
