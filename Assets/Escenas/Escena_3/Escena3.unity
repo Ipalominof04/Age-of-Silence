@@ -15593,59 +15593,6 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: -0.02024111, y: 6.1780005, z: -0.08106021}
   m_TimeToStationary: 0.5
---- !u!1 &932850384 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1953322920661668091, guid: 057003e5f488cc74f908a70494daea53, type: 3}
-  m_PrefabInstance: {fileID: 416457575840735498}
-  m_PrefabAsset: {fileID: 0}
---- !u!135 &932850392
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 932850384}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 4.8879113
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &932850393
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 932850384}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1001 &944650659
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29521,6 +29468,7 @@ MonoBehaviour:
   nombreEscena: Escena4
   miDoorID: 
   targetDoorID: 
+  onPuzzleResuelto: {fileID: 0}
 --- !u!65 &1670308382
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33903,9 +33851,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b281e153f59edd4bb25243815c47b13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  Confianza: 0
+  confianza: 0
   fadeDuration: 1
   lastDoorID: 
+  ruta: Assets/savegame.json
+  datos: {fileID: 0}
 --- !u!4 &1985981520
 Transform:
   m_ObjectHideFlags: 0
@@ -35727,46 +35677,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1537805512406596672, guid: 057003e5f488cc74f908a70494daea53, type: 3}
-      propertyPath: m_Layer
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 1953322920661668091, guid: 057003e5f488cc74f908a70494daea53, type: 3}
       propertyPath: m_Name
       value: Roca
       objectReference: {fileID: 0}
-    - target: {fileID: 1953322920661668091, guid: 057003e5f488cc74f908a70494daea53, type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 1953322920661668091, guid: 057003e5f488cc74f908a70494daea53, type: 3}
-      propertyPath: m_TagString
-      value: Roca
-      objectReference: {fileID: 0}
-    - target: {fileID: 2166686339600358225, guid: 057003e5f488cc74f908a70494daea53, type: 3}
-      propertyPath: _camera
-      value: 
-      objectReference: {fileID: 422570988}
-    - target: {fileID: 5189095701719909549, guid: 057003e5f488cc74f908a70494daea53, type: 3}
-      propertyPath: hand
-      value: 
-      objectReference: {fileID: 2113705544}
-    - target: {fileID: 5189095701719909549, guid: 057003e5f488cc74f908a70494daea53, type: 3}
-      propertyPath: canvasWorld
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5189095701719909549, guid: 057003e5f488cc74f908a70494daea53, type: 3}
-      propertyPath: capasColision.m_Bits
-      value: 2120
-      objectReference: {fileID: 0}
-    - target: {fileID: 6196040922601124491, guid: 057003e5f488cc74f908a70494daea53, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6196040922601124491, guid: 057003e5f488cc74f908a70494daea53, type: 3}
-      propertyPath: 'm_Materials.Array.data[1]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 508f4baf1b36d17498fdcce3d1aa1a0f, type: 2}
     - target: {fileID: 6357746898875310754, guid: 057003e5f488cc74f908a70494daea53, type: 3}
       propertyPath: m_LocalPosition.x
       value: 31.14
@@ -35807,29 +35721,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8579604915463633142, guid: 057003e5f488cc74f908a70494daea53, type: 3}
-      propertyPath: m_Layer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8579604915463633142, guid: 057003e5f488cc74f908a70494daea53, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8883910290154408640, guid: 057003e5f488cc74f908a70494daea53, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 422570988}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 8579604915463633142, guid: 057003e5f488cc74f908a70494daea53, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1953322920661668091, guid: 057003e5f488cc74f908a70494daea53, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 932850392}
-    - targetCorrespondingSourceObject: {fileID: 1953322920661668091, guid: 057003e5f488cc74f908a70494daea53, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 932850393}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 057003e5f488cc74f908a70494daea53, type: 3}
 --- !u!1 &473567575670071467
 GameObject:
@@ -37379,14 +37274,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 395.036
       objectReference: {fileID: 0}
-    - target: {fileID: 2110187538726603360, guid: 40bdbb395fa052f47938b418e48c34bb, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2110187538726603360, guid: 40bdbb395fa052f47938b418e48c34bb, type: 3}
-      propertyPath: 'm_Materials.Array.data[1]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 2f5eaec4bc5f02e478c4e29b76f71181, type: 2}
     - target: {fileID: 5868307344748923749, guid: 40bdbb395fa052f47938b418e48c34bb, type: 3}
       propertyPath: m_Name
       value: Botella1
@@ -37395,18 +37282,6 @@ PrefabInstance:
       propertyPath: hand
       value: 
       objectReference: {fileID: 2113705544}
-    - target: {fileID: 6343426941301156424, guid: 40bdbb395fa052f47938b418e48c34bb, type: 3}
-      propertyPath: capasColision.m_Bits
-      value: 2120
-      objectReference: {fileID: 0}
-    - target: {fileID: 7175467307842155047, guid: 40bdbb395fa052f47938b418e48c34bb, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 422570988}
-    - target: {fileID: 7566198570805272955, guid: 40bdbb395fa052f47938b418e48c34bb, type: 3}
-      propertyPath: _camera
-      value: 
-      objectReference: {fileID: 422570988}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -74,10 +74,11 @@ public class PlayerController : MonoBehaviour, IDamageable
     private GameObject armaEnMano = null;
     private bool armaEquipada = false;
     private GameObject objectLanzableInRange = null;
-    private TriggerPuzle puzleInRange = null;
     private TriggerDialogue dialogueActivo = null;
     private bool escaleraInRange = false;
     private Vector3 direccionEscalera;
+
+    private IPuzle puzleInRange = null;
 
     private void Awake()
     {
@@ -156,6 +157,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                     if (objectLanzableInRange != null)
                     {
                         objetoLanzableEnMano = objectLanzableInRange.GetComponent<ObjetoLanzable>();
+                        objetoLanzableEnMano.hand = huesoMano.gameObject;
                         objetoLanzableEnMano?.Recoger();
                         objectLanzableInRange = null;
                     }
@@ -365,6 +367,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             if (string.IsNullOrEmpty(objetoMano.nombreObjeto))
             {
                 objetoMano.GuardarObjeto(objectInRange);
+                GameManager.Instance.datos.objetoMano = objetoMano;
                 objectInRange.SetActive(false);
                 objectInRange = null;
                 Debug.Log("Objeto recogido: " + objetoMano.nombreObjeto);
@@ -376,7 +379,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
         else if (puzleInRange != null)
         {
-            puzleInRange.TryOpen(objetoMano);
+            puzleInRange.Interact(objetoMano);
         }
         else if (armaEnMano != null)
         {
@@ -492,15 +495,11 @@ public class PlayerController : MonoBehaviour, IDamageable
 
             if (other.tag == "TriggerPuzle")
             {
-                TriggerPuzle puzle = other.GetComponent<TriggerPuzle>();
+                IPuzle puzle = other.GetComponent<IPuzle>();
                 if (puzle != null)
                 {
                     puzleInRange = puzle;
-                    if (!puzle.infoMostrada)
-                    {
-                        puzle.infoMostrada = true;
-                        DialogueManager.Instance.StartInfo(puzle.graphInfo);
-                    }
+                    puzle.OnEnterRange();
                 }
             }
 
@@ -519,14 +518,11 @@ public class PlayerController : MonoBehaviour, IDamageable
                 // Fuerza al player a mirar hacia la escalera
                 transform.rotation = Quaternion.LookRotation(direccionEscalera);
             }
-                
-                
-
         }
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Objetos"))
         {
-            if (other.tag == "Rama" || other.tag == "Palanca" || other.tag == "Cizallas")
+            if (other.tag == "Rama" || other.tag == "Palanca" || other.tag == "Cizallas" || other.tag == "Fusible")
             {
                 objectInRange = other.gameObject;
                 print("objeto " + other.gameObject.name + " en rango");
@@ -553,7 +549,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (other.gameObject == objectInRange)
             objectInRange = null;
 
-        if (other.gameObject == puzleInRange?.gameObject)
+        if (other.GetComponent<IPuzle>() == puzleInRange)
             puzleInRange = null;
 
         if (other.gameObject == objectLanzableInRange?.gameObject)

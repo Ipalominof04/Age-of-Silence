@@ -566,6 +566,18 @@ PrefabInstance:
       propertyPath: aiden
       value: 
       objectReference: {fileID: 1966767899}
+    - target: {fileID: 1337398149008683969, guid: 89437555278a3b747b73449b8a201440, type: 3}
+      propertyPath: objetoMano
+      value: 
+      objectReference: {fileID: 11400000, guid: d5cd034fa04a9034f969502806a1a3bf, type: 2}
+    - target: {fileID: 1796687356054423060, guid: 89437555278a3b747b73449b8a201440, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064396060259855501, guid: 89437555278a3b747b73449b8a201440, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7366088206330199277, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_Name
       value: Player
@@ -4284,6 +4296,7 @@ MonoBehaviour:
   nombreEscena: PasilloCasa3
   miDoorID: trastero_pasillo3
   targetDoorID: spawntrastero_pasillo3
+  puzzleRequeridoID: 
 --- !u!65 &1268208252
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5436,9 +5449,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b281e153f59edd4bb25243815c47b13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  Confianza: 0
+  confianza: 0
   fadeDuration: 1
   lastDoorID: 
+  ruta: Assets/savegame.json
+  datos: {fileID: 11400000, guid: d5cd9530358ab5f488bbf0ac0b7995f6, type: 2}
 --- !u!4 &1629711268
 Transform:
   m_ObjectHideFlags: 0
@@ -5602,6 +5617,7 @@ GameObject:
   - component: {fileID: 1732578623}
   - component: {fileID: 1732578625}
   - component: {fileID: 1732578624}
+  - component: {fileID: 1732578626}
   m_Layer: 9
   m_Name: TriggerInfo
   m_TagString: TriggerInfo
@@ -5658,6 +5674,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0860546, y: 0.23266256, z: 0.72434163}
   m_Center: {x: 0.26072896, y: -0.38366866, z: -0.87693775}
+--- !u!114 &1732578626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732578622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: ce4eb15ecf15d764da2b1b57a6d59ed6, type: 2}
+  id: TriggerInfo
 --- !u!1 &1750240128
 GameObject:
   m_ObjectHideFlags: 0
@@ -6041,6 +6071,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 235224309}
+    - target: {fileID: 7380622719863994027, guid: ec08a826fda66694a935962919dabfd7, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6659,6 +6693,7 @@ GameObject:
   - component: {fileID: 8191472373162023140}
   - component: {fileID: 6217505094044183598}
   - component: {fileID: 8191472373162023141}
+  - component: {fileID: 8191472373162023142}
   m_Layer: 12
   m_Name: Cizallas
   m_TagString: Cizallas
@@ -6743,6 +6778,20 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0.0000000018626451, y: -4.078121e-17, z: -7.73158e-17}
+--- !u!114 &8191472373162023142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5569263342679281147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: ce4eb15ecf15d764da2b1b57a6d59ed6, type: 2}
+  id: Cizallas
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

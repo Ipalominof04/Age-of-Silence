@@ -441,6 +441,10 @@ PrefabInstance:
       propertyPath: aiden
       value: 
       objectReference: {fileID: 648346708}
+    - target: {fileID: 3064396060259855501, guid: 89437555278a3b747b73449b8a201440, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7366088206330199277, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_Name
       value: Player
@@ -720,7 +724,7 @@ GameObject:
   - component: {fileID: 194782394}
   - component: {fileID: 194782393}
   - component: {fileID: 194782392}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1876,6 +1880,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2091346789589269747}
     m_Modifications:
+    - target: {fileID: 2740280097997325748, guid: d7561889ed225f440abef01860a852b6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5298172366410125848, guid: d7561889ed225f440abef01860a852b6, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.09572684
@@ -1972,9 +1980,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 6342021396361551136, guid: d7561889ed225f440abef01860a852b6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6559377018496127892, guid: d7561889ed225f440abef01860a852b6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7219368145949216935, guid: d7561889ed225f440abef01860a852b6, type: 3}
       propertyPath: m_Name
       value: LED_Light_7 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7219368145949216935, guid: d7561889ed225f440abef01860a852b6, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8297284783804873001, guid: d7561889ed225f440abef01860a852b6, type: 3}
       propertyPath: m_Intensity
@@ -2007,6 +2027,10 @@ PrefabInstance:
     - target: {fileID: 8297284783804873001, guid: d7561889ed225f440abef01860a852b6, type: 3}
       propertyPath: m_BoundingSphereOverride.z
       value: 500658.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005007155475067650, guid: d7561889ed225f440abef01860a852b6, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -2069,7 +2093,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &433339788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2082,9 +2106,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b281e153f59edd4bb25243815c47b13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  Confianza: 0
+  confianza: 0
   fadeDuration: 1
   lastDoorID: 
+  ruta: Assets/savegame.json
+  datos: {fileID: 11400000, guid: d5cd9530358ab5f488bbf0ac0b7995f6, type: 2}
 --- !u!4 &433339789
 Transform:
   m_ObjectHideFlags: 0
@@ -2441,7 +2467,7 @@ GameObject:
   - component: {fileID: 487706008}
   - component: {fileID: 487706010}
   - component: {fileID: 487706009}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3547,6 +3573,7 @@ MonoBehaviour:
   nombreEscena: Entrada
   miDoorID: 
   targetDoorID: 
+  puzzleRequeridoID: 
 --- !u!65 &696390295
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3706,7 +3733,7 @@ GameObject:
   - component: {fileID: 816295873}
   - component: {fileID: 816295875}
   - component: {fileID: 816295874}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4070,6 +4097,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2091346789589269747}
     m_Modifications:
+    - target: {fileID: 2740280097997325748, guid: d7561889ed225f440abef01860a852b6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5298172366410125848, guid: d7561889ed225f440abef01860a852b6, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.09572684
@@ -4166,9 +4197,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 6342021396361551136, guid: d7561889ed225f440abef01860a852b6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6559377018496127892, guid: d7561889ed225f440abef01860a852b6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7219368145949216935, guid: d7561889ed225f440abef01860a852b6, type: 3}
       propertyPath: m_Name
       value: LED_Light_7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7219368145949216935, guid: d7561889ed225f440abef01860a852b6, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8297284783804873001, guid: d7561889ed225f440abef01860a852b6, type: 3}
       propertyPath: m_Intensity
@@ -4201,6 +4244,10 @@ PrefabInstance:
     - target: {fileID: 8297284783804873001, guid: d7561889ed225f440abef01860a852b6, type: 3}
       propertyPath: m_BoundingSphereOverride.z
       value: 500658.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005007155475067650, guid: d7561889ed225f440abef01860a852b6, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -4866,6 +4913,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2091346789589269747}
     m_Modifications:
+    - target: {fileID: 2740280097997325748, guid: d7561889ed225f440abef01860a852b6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5298172366410125848, guid: d7561889ed225f440abef01860a852b6, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.09572684
@@ -4962,9 +5013,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 6342021396361551136, guid: d7561889ed225f440abef01860a852b6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6559377018496127892, guid: d7561889ed225f440abef01860a852b6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7219368145949216935, guid: d7561889ed225f440abef01860a852b6, type: 3}
       propertyPath: m_Name
       value: LED_Light_7 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7219368145949216935, guid: d7561889ed225f440abef01860a852b6, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8297284783804873001, guid: d7561889ed225f440abef01860a852b6, type: 3}
       propertyPath: m_Intensity
@@ -4997,6 +5060,10 @@ PrefabInstance:
     - target: {fileID: 8297284783804873001, guid: d7561889ed225f440abef01860a852b6, type: 3}
       propertyPath: m_BoundingSphereOverride.z
       value: 500658.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005007155475067650, guid: d7561889ed225f440abef01860a852b6, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -6160,7 +6227,7 @@ GameObject:
   - component: {fileID: 1305931215}
   - component: {fileID: 1305931217}
   - component: {fileID: 1305931216}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6910,6 +6977,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 696390293}
+  - {fileID: 1480940572}
   m_Father: {fileID: 2065010612}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1475539993
@@ -7064,12 +7132,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 4210151661186870445, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
       propertyPath: m_Name
       value: FusibleAzul
       objectReference: {fileID: 0}
     - target: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571210375594701117, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7021181300720344508, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
@@ -7232,6 +7312,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 8663792490895635605, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7784655435114375406, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
     - {fileID: 7509694995100877687, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
@@ -7243,13 +7327,106 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3463235669188579180, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 936911500}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1475539996}
   m_SourcePrefab: {fileID: 100100000, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
 --- !u!4 &1475539994 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3463235669188579180, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
   m_PrefabInstance: {fileID: 1475539993}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1475539995 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+  m_PrefabInstance: {fileID: 1475539993}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1475539996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475539995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: 3a5484ccc47170f4cab117155ba72482, type: 2}
+  id: FusibleAzul
+--- !u!1 &1480940571
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1480940572}
+  - component: {fileID: 1480940574}
+  - component: {fileID: 1480940573}
+  m_Layer: 9
+  m_Name: TriggerPuzleFusibles
+  m_TagString: TriggerPuzle
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1480940572
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480940571}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.074, y: -0.304, z: -0.14}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1459392543}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1480940573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480940571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a511dc7d2cd02e7429df099d3ba77e00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TriggerPuzleFusible
+  infoMostrada: 0
+  graphInfo: {fileID: 3965311268370046156, guid: b5f608b22d3454040a96014852e6e0a0, type: 3}
+  meshVerde: {fileID: 1750322941}
+  meshAzul: {fileID: 1475539995}
+  meshAmarillo: {fileID: 1540120369}
+--- !u!65 &1480940574
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480940571}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.045063, y: 1.9056283, z: 1}
+  m_Center: {x: 0.19394875, y: -0.45281416, z: 0}
 --- !u!1 &1536949413
 GameObject:
   m_ObjectHideFlags: 0
@@ -7545,12 +7722,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 4210151661186870445, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
       propertyPath: m_Name
       value: FusibleAmarillo
       objectReference: {fileID: 0}
     - target: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571210375594701117, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7021181300720344508, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
@@ -7713,6 +7902,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 8663792490895635605, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7784655435114375406, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
     - {fileID: 7509694995100877687, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
@@ -7724,13 +7917,35 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3463235669188579180, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 248783194}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1540120370}
   m_SourcePrefab: {fileID: 100100000, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
 --- !u!4 &1540120368 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3463235669188579180, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
   m_PrefabInstance: {fileID: 1540120367}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1540120369 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+  m_PrefabInstance: {fileID: 1540120367}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1540120370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1540120369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: 3a5484ccc47170f4cab117155ba72482, type: 2}
+  id: FusibleAmarillo
 --- !u!1001 &1585724120
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7845,7 +8060,7 @@ GameObject:
   - component: {fileID: 1614390880}
   - component: {fileID: 1614390879}
   - component: {fileID: 1614390878}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8062,7 +8277,7 @@ GameObject:
   - component: {fileID: 1710531902}
   - component: {fileID: 1710531901}
   - component: {fileID: 1710531900}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8313,12 +8528,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 4210151661186870445, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
       propertyPath: m_Name
       value: FusibleVerde
       objectReference: {fileID: 0}
     - target: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571210375594701117, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7021181300720344508, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
@@ -8481,6 +8708,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 8663792490895635605, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7784655435114375406, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
     - {fileID: 7509694995100877687, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
@@ -8492,13 +8723,35 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3463235669188579180, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2001361494}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1750322942}
   m_SourcePrefab: {fileID: 100100000, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
 --- !u!4 &1750322940 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3463235669188579180, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
   m_PrefabInstance: {fileID: 1750322939}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1750322941 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5037277085531429993, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
+  m_PrefabInstance: {fileID: 1750322939}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1750322942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750322941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: 3a5484ccc47170f4cab117155ba72482, type: 2}
+  id: FusibleVerde
 --- !u!1 &1794788452
 GameObject:
   m_ObjectHideFlags: 0
@@ -9214,7 +9467,9 @@ PrefabInstance:
       propertyPath: m_BoundingSphereOverride.z
       value: 9.47e-43
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8949290055005409332, guid: c908ed6afbf11614f9e321278879d6f7, type: 3}
+    - {fileID: 4293918907939852902, guid: c908ed6afbf11614f9e321278879d6f7, type: 3}
     m_RemovedGameObjects:
     - {fileID: 2872342308020957174, guid: c908ed6afbf11614f9e321278879d6f7, type: 3}
     - {fileID: 1949038408604777197, guid: c908ed6afbf11614f9e321278879d6f7, type: 3}
@@ -10339,7 +10594,7 @@ GameObject:
   - component: {fileID: 958941332624164764}
   - component: {fileID: 8104316161276543286}
   - component: {fileID: 8104316161276543287}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Caja Fusibles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10399,27 +10654,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6702731, y: 1.2848934, z: 0.60282636}
   m_Center: {x: 0.00000023841858, y: 0.6424467, z: 0.04628928}
---- !u!135 &8104316161276543287
-SphereCollider:
+--- !u!208 &8104316161276543287
+NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1607262247131768393}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.69837403
-  m_Center: {x: 0, y: 0.6424467, z: 0.28}
+  m_Shape: 1
+  m_Extents: {x: 0.335, y: 0.642, z: 0.30100003}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.642, z: 0.046000004}
+  m_TimeToStationary: 0.5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

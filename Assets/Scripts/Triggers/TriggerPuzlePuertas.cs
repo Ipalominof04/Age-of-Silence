@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TriggerPuzle : MonoBehaviour
+public class TriggerPuzlePuertas : MonoBehaviour, IPuzle
 {
     [SerializeField] private string objetoRequerido;
     [SerializeField] private bool requiereObjeto = false;
@@ -15,7 +15,7 @@ public class TriggerPuzle : MonoBehaviour
     [Header("Acción al resolver el puzzle")]
     public UnityEvent OnPuzzleSolved;
 
-    public void TryOpen(ObjetoAgarrado objetoMano)
+    public void Interact(ObjetoAgarrado objetoMano)
     {
         if (!requiereObjeto)
         {
@@ -36,5 +36,14 @@ public class TriggerPuzle : MonoBehaviour
             DialogueManager.Instance.StartInfo(graphObjetoIncorrecto);
 
         objetoMano.UsarObjeto();
+    }
+
+    public void OnEnterRange()
+    {
+        if (!infoMostrada && graphInfo != null)
+        {
+            infoMostrada = true;
+            DialogueManager.Instance.StartInfo(graphInfo);
+        }
     }
 }

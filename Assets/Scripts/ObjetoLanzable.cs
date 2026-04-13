@@ -4,15 +4,13 @@ using UnityEngine;
 [RequireComponent(typeof(SoundEmitter))]
 public class ObjetoLanzable : MonoBehaviour
 {
-    [Header("Hand")]
-    [SerializeField] public GameObject hand;
+    public GameObject hand;
 
     [Header("Colisión")]
     [SerializeField] private LayerMask capasColision;
 
     private SphereCollider collider;
     private SoundEmitter emitter;
-    private bool siendoLanzado = false;
     private bool yaLanzado = false;
 
     private Vector3 velocidadPendiente;
@@ -44,7 +42,6 @@ public class ObjetoLanzable : MonoBehaviour
 
     public void Lanzar(Vector3 velocidadInicial, Collider colliderJugador)
     {
-        siendoLanzado = true;
         yaLanzado = true;
         transform.SetParent(null);
         collider.enabled = true;
@@ -77,7 +74,6 @@ public class ObjetoLanzable : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         if (colliderJugador != null && collider != null)
             Physics.IgnoreCollision(collider, colliderJugador, false);
-        siendoLanzado = false;
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -2967,9 +2967,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 813714852}
-  m_Layer: 0
-  m_Name: 'Fusible '
-  m_TagString: Untagged
+  - component: {fileID: 813714853}
+  - component: {fileID: 813714854}
+  m_Layer: 12
+  m_Name: FusibleVerde
+  m_TagString: Fusible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2993,6 +2995,41 @@ Transform:
   - {fileID: 1791531686}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -0.241, y: 75.73, z: 74.032}
+--- !u!135 &813714853
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813714851}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0.2, z: 0.3}
+--- !u!114 &813714854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813714851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: d9f87c1acd124a8408525b1e8e94cc60, type: 2}
+  id: FusibleVerde
 --- !u!1001 &841797524
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4541,51 +4578,6 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
---- !u!1 &1106176211
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1106176213}
-  - component: {fileID: 1106176212}
-  m_Layer: 0
-  m_Name: SoundManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1106176212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1106176211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb8bf4a6d47164543bc73f17efea5a1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SoundManager
-  soundRegistry: {fileID: 11400000, guid: b713b3fb488779d43be3b7e77f39b5bd, type: 2}
---- !u!4 &1106176213
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1106176211}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 29.06495, y: 0, z: 0.10048}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1201192015
 GameObject:
   m_ObjectHideFlags: 0
@@ -4655,6 +4647,7 @@ MonoBehaviour:
   nombreEscena: ZonaComun
   miDoorID: 
   targetDoorID: 
+  puzzleRequeridoID: 
 --- !u!1001 &1251101467
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4875,7 +4868,7 @@ GameObject:
   - component: {fileID: 1360896303}
   - component: {fileID: 1360896305}
   - component: {fileID: 1360896304}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: glass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5538,7 +5531,7 @@ GameObject:
   - component: {fileID: 1572623226}
   - component: {fileID: 1572623228}
   - component: {fileID: 1572623227}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: ledbase_cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6419,7 +6412,7 @@ GameObject:
   - component: {fileID: 1791531686}
   - component: {fileID: 1791531688}
   - component: {fileID: 1791531687}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Area Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6980,9 +6973,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b281e153f59edd4bb25243815c47b13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  Confianza: 0
+  confianza: 0
   fadeDuration: 1
   lastDoorID: 
+  ruta: Assets/savegame.json
+  datos: {fileID: 11400000, guid: d5cd9530358ab5f488bbf0ac0b7995f6, type: 2}
 --- !u!4 &1842477730
 Transform:
   m_ObjectHideFlags: 0
@@ -7009,7 +7004,7 @@ GameObject:
   - component: {fileID: 1868822116}
   - component: {fileID: 1868822118}
   - component: {fileID: 1868822117}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: light_ON
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7827,7 +7822,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1842477730}
-  - {fileID: 1106176213}
   - {fileID: 1905011369}
   - {fileID: 1362550948}
   - {fileID: 1339897022}
