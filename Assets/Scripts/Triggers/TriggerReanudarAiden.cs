@@ -6,7 +6,7 @@ public class TriggerReanudarAiden : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerCollider"))
         {
             onAidenReanudar.Raise();
             gameObject.SetActive(false);
