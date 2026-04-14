@@ -17,10 +17,7 @@ public class TriggerPuzleFusible : MonoBehaviour, IPuzle
       [SerializeField] private RuntimeDialogueGraph graphOrdenIncorrecto;
       [SerializeField] private RuntimeDialogueGraph graphNoFusible; */
 
-    private bool verdeColocado;
-    private bool azulColocado;
-
-    public void Interact(ObjetoAgarrado objetoMano)
+     public void Interact(ObjetoAgarrado objetoMano)
     {
         if (string.IsNullOrEmpty(objetoMano.nombreObjeto))
         {
@@ -30,21 +27,19 @@ public class TriggerPuzleFusible : MonoBehaviour, IPuzle
 
         string fusible = objetoMano.nombreObjeto;
 
-        if (fusible == "FusibleVerde" && !verdeColocado)
+        if (fusible == "FusibleVerde")
         {
-            verdeColocado = true;
             meshVerde.SetActive(true);
             objetoMano.UsarObjeto();
             GameManager.Instance.ResolverPuzzle("FusibleVerde");
         }
-        else if (fusible == "FusibleAzul" && verdeColocado && !azulColocado)
+        else if (fusible == "FusibleAzul")
         {
-            azulColocado = true;
             meshAzul.SetActive(true);
             objetoMano.UsarObjeto();
             GameManager.Instance.ResolverPuzzle("FusibleAzul");
         }
-        else if (fusible == "FusibleAmarillo" && azulColocado)
+        else if (fusible == "FusibleAmarillo")
         {
             meshAmarillo.SetActive(true);
             objetoMano.UsarObjeto();

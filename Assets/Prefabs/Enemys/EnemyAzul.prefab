@@ -1335,9 +1335,9 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a88bebfc679d9cc4580f0d5c450189ee, type: 2}
-  - {fileID: 2100000, guid: 0a053c1d5d3401044b8ec8f5be4bee09, type: 2}
-  - {fileID: 2100000, guid: 039695b537a53e945bdd5e2dfd5f59a3, type: 2}
+  - {fileID: 2100000, guid: ca35291de5e97104f85d623043917674, type: 2}
+  - {fileID: 2100000, guid: fe6eb6d8bffc84a469f29590a8b59f31, type: 2}
+  - {fileID: 2100000, guid: 7572b8c1265e421419d83725535cc296, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2652,6 +2652,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   currentState: 0
+  vida: 0
+  bala: {fileID: 0}
+  shootingPoint: {fileID: 0}
   OnAidenScared: {fileID: 11400000, guid: 8c594f5565fc02f4db9991d6d6c69b3d, type: 2}
   headTransform: {fileID: 391963164876802710}
   radiusChase: 4
