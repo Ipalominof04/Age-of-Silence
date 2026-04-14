@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -224,7 +225,7 @@ public class GameManager : MonoBehaviour
             };
         }
 
-        SaveData data = new SaveData(datos.confianza, datos.PlayerHealth, datos.objetoMano, datos.NameScene, escenasSave);
+        SaveData data = new SaveData(datos.confianza, datos.PlayerHealth, datos.objetoMano, datos.NameScene,datos.puzzlesResueltos, escenasSave);
 
         string jsondata = JsonUtility.ToJson(data,true);
         try
@@ -261,6 +262,8 @@ public class GameManager : MonoBehaviour
         if (datos.objetoMano != null && !string.IsNullOrEmpty(data.objetoMano))
             datos.objetoMano.nombreObjeto = data.objetoMano;
 
+        datos.puzzlesResueltos = data.puzlesCompletados;
+
         // Rellena los SOEscena con los datos del JSON ANTES de cargar la escena
         if (data.escenas != null)
         {
@@ -291,14 +294,16 @@ public class GameManager : MonoBehaviour
         public float playerHealth;
         public string objetoMano;
         public string nameScene;
+        public List<string> puzlesCompletados;
         public EscenaData[] escenas;
 
-        public SaveData(float confianza, float playerHealth, ObjetoAgarrado objetoMano, string nameScene, EscenaData[] escenas)
+        public SaveData(float confianza, float playerHealth, ObjetoAgarrado objetoMano, string nameScene,List<string> puzlesCompletados, EscenaData[] escenas)
         {
             this.confianza = confianza;
             this.playerHealth = playerHealth;
             this.objetoMano = objetoMano != null ? objetoMano.nombreObjeto : "";
             this.nameScene = nameScene;
+            this.puzlesCompletados = puzlesCompletados;
             this.escenas = escenas;
         }
 
