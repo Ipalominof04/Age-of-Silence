@@ -7,7 +7,7 @@ public class TriggerInfo : MonoBehaviour
     //para que la info solo salga la primera vez que el player se acerca
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerCollider"))
         {
             DialogueManager.Instance.StartInfo(graphInfo);
             gameObject.SetActive(false);

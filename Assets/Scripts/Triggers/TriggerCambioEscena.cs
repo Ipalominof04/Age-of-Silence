@@ -18,7 +18,7 @@ public class TriggerCambioEscena : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerCollider"))
         {
             GameManager.Instance.lastDoorID = targetDoorID;
             GameManager.Instance.ChangeScene(nombreEscena);
