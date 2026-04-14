@@ -19837,6 +19837,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4192967270436757477, guid: 5266988b81c6ff44d833c591e20cd635, type: 3}
   m_PrefabInstance: {fileID: 1647008952}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1648255488 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4389298016054404173, guid: 2545088ce4fe56d4d9a79cb9f38478cc, type: 3}
+  m_PrefabInstance: {fileID: 9024384381933528492}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1648255489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1648255488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: 66814645e2f483940bba8054319df218, type: 2}
+  id: Comida
 --- !u!1001 &1655363326
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24161,7 +24180,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4389298016054404173, guid: 2545088ce4fe56d4d9a79cb9f38478cc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1648255489}
   m_SourcePrefab: {fileID: 100100000, guid: 2545088ce4fe56d4d9a79cb9f38478cc, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
