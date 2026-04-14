@@ -17,9 +17,9 @@ public class LuzVidaPlayer : MonoBehaviour
 
     private void ActualizarLuz(float porcentaje)
     {
-        if (porcentaje <= 0.33f)
+        if (porcentaje <= 0.34f)
             luzPlayer.color = Color.red;
-        else if (porcentaje <= 0.66f)
+        else if (porcentaje <= 0.67f)
             luzPlayer.color = Color.orange; // naranja
         else
             luzPlayer.color = Color.green; // color original
