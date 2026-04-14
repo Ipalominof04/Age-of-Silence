@@ -1,13 +1,12 @@
 {
     "confianza": 3.0,
-    "playerHealth": 5.0,
+    "playerHealth": 0.0,
     "objetoMano": "",
-    "nameScene": "Comedor",
+    "nameScene": "InteriorGasolinera",
     "puzlesCompletados": [
         "FusibleVerde",
         "FusibleAzul",
-        "AidenNiega",
-        "FusibleAmarillo"
+        "GalonUsado"
     ],
     "escenas": [
         {
@@ -40,14 +39,83 @@
         },
         {
             "sceneName": "",
+            "objetos": []
+        },
+        {
+            "sceneName": "ExteriorGasolinera",
             "objetos": [
                 {
-                    "id": "Comida",
+                    "id": "Galon",
+                    "active": true,
+                    "pos": {
+                        "x": 44.30500030517578,
+                        "y": 0.06599999964237213,
+                        "z": -1.3739999532699586
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.7071068286895752,
+                        "z": 0.0,
+                        "w": 0.7071068286895752
+                    }
+                },
+                {
+                    "id": "Cerillas",
                     "active": false,
                     "pos": {
-                        "x": 8.85200023651123,
-                        "y": 0.4668000042438507,
-                        "z": 2.302000045776367
+                        "x": 44.28099822998047,
+                        "y": 0.1679999977350235,
+                        "z": -1.4910000562667847
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.7071068286895752,
+                        "z": 0.0,
+                        "w": 0.7071068286895752
+                    }
+                }
+            ]
+        },
+        {
+            "sceneName": "InteriorGasolinera",
+            "objetos": [
+                {
+                    "id": "Galon",
+                    "active": false,
+                    "pos": {
+                        "x": 7.473001480102539,
+                        "y": -0.14000016450881959,
+                        "z": 0.4729996919631958
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.7071068286895752,
+                        "z": 0.0,
+                        "w": 0.7071068286895752
+                    }
+                },
+                {
+                    "id": "TriggerInfo",
+                    "active": false,
+                    "pos": {
+                        "x": 7.588001251220703,
+                        "y": 0.6539934873580933,
+                        "z": 0.6329995393753052
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.7071068286895752,
+                        "z": 0.0,
+                        "w": 0.7071068286895752
+                    }
+                },
+                {
+                    "id": "Cerillas",
+                    "active": false,
+                    "pos": {
+                        "x": 2.2201223373413088,
+                        "y": 1.0083873271942139,
+                        "z": 1.3070733547210694
                     },
                     "rot": {
                         "x": 0.0,

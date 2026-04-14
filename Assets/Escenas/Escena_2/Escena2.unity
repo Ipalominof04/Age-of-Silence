@@ -1320,7 +1320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b281e153f59edd4bb25243815c47b13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  Confianza: 0
+  confianza: 0
   fadeDuration: 1
   lastDoorID: 
   ruta: Assets/savegame.json
@@ -16511,6 +16511,7 @@ MonoBehaviour:
           m_StringArgument: RellanoPB
           m_BoolArgument: 0
         m_CallState: 2
+  player: {fileID: 0}
 --- !u!65 &1354316618
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17461,6 +17462,10 @@ PrefabInstance:
       propertyPath: aiden
       value: 
       objectReference: {fileID: 1909889519}
+    - target: {fileID: 1337398149008683969, guid: 89437555278a3b747b73449b8a201440, type: 3}
+      propertyPath: camara
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7366088206330199277, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_Name
       value: Player

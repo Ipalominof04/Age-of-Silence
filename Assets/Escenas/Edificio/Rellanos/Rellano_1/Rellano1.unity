@@ -391,53 +391,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 56156878}
   m_Mesh: {fileID: -4305487175580620494, guid: 4d903c085cce4014a85165ef665b3889, type: 3}
---- !u!1 &81085233
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 81085235}
-  - component: {fileID: 81085234}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &81085234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 81085233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b281e153f59edd4bb25243815c47b13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  Confianza: 0
-  fadeDuration: 1
-  lastDoorID: 
---- !u!4 &81085235
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 81085233}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.57878, y: 0.85624, z: 4.59823}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &93963071
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,6 +439,7 @@ MonoBehaviour:
   nombreEscena: ComedorCasa2
   miDoorID: rellano1_comedor2
   targetDoorID: spawncomedor2
+  puzzleRequeridoID: 
 --- !u!65 &93963074
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -555,6 +509,7 @@ MonoBehaviour:
   nombreEscena: ComedorCasa1
   miDoorID: rellano1_comedor1
   targetDoorID: spawncomedor1
+  puzzleRequeridoID: 
 --- !u!65 &105778855
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3797,6 +3752,7 @@ MonoBehaviour:
   nombreEscena: Rellano2
   miDoorID: rellano1_rellano2
   targetDoorID: spawnrellano1
+  puzzleRequeridoID: 
 --- !u!65 &1076240641
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4185,6 +4141,7 @@ MonoBehaviour:
   nombreEscena: RellanoPB
   miDoorID: rellano1_rellanopb
   targetDoorID: spawnrellano1
+  puzzleRequeridoID: 
 --- !u!65 &1195709927
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7285,7 +7242,6 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 81085235}
   - {fileID: 1746687065}
   - {fileID: 470452115}
   - {fileID: 1246686716}

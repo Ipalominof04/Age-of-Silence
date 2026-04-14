@@ -17,6 +17,12 @@ public class TriggerPuzlePuertas : MonoBehaviour, IPuzle
 
     [SerializeField] public PlayerController player;
 
+
+    private void Start()
+    {
+        player = FindAnyObjectByType<PlayerController>();
+    }
+
     public void Interact(ObjetoAgarrado objetoMano)
     {
         if (!requiereObjeto)

@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class ObjectoActivable : MonoBehaviour
 {
     [Header("Requiere puzzle")]
@@ -11,11 +10,5 @@ public class ObjectoActivable : MonoBehaviour
         {
             gameObject.SetActive(GameManager.Instance.PuzzleResuelto(puzzleRequeridoID));
         }
-}
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }
