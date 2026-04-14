@@ -29468,7 +29468,7 @@ MonoBehaviour:
   nombreEscena: Escena4
   miDoorID: 
   targetDoorID: 
-  onPuzzleResuelto: {fileID: 0}
+  puzzleRequeridoID: 
 --- !u!65 &1670308382
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32858,6 +32858,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1103476192}
     - target: {fileID: 1337398149008683969, guid: 89437555278a3b747b73449b8a201440, type: 3}
+      propertyPath: playerCollider
+      value: 
+      objectReference: {fileID: 1887075101}
+    - target: {fileID: 1337398149008683969, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: parabolaRenderer
       value: 
       objectReference: {fileID: 1887075094}
@@ -32897,7 +32901,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8559993624278471911, guid: 89437555278a3b747b73449b8a201440, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -33044,6 +33049,11 @@ MonoBehaviour:
   dragObjeto: 0
   segmentosCirculo: 32
   radioCirculo: 0.2
+--- !u!136 &1887075101 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 3064396060259855501, guid: 89437555278a3b747b73449b8a201440, type: 3}
+  m_PrefabInstance: {fileID: 1887075084}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1888391816
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35908,7 +35918,12 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1887075085}
-    m_RemovedComponents: []
+    - target: {fileID: 6828666274242469974, guid: ec08a826fda66694a935962919dabfd7, type: 3}
+      propertyPath: aidenCollider
+      value: 
+      objectReference: {fileID: 5986958801081701157}
+    m_RemovedComponents:
+    - {fileID: 7380622719863994027, guid: ec08a826fda66694a935962919dabfd7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -37523,6 +37538,11 @@ Transform:
 --- !u!1 &5986958801081701151 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4509992435902890988, guid: ec08a826fda66694a935962919dabfd7, type: 3}
+  m_PrefabInstance: {fileID: 567606767571324064}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &5986958801081701157 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 3056110241414997264, guid: ec08a826fda66694a935962919dabfd7, type: 3}
   m_PrefabInstance: {fileID: 567606767571324064}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &6013915013206031823
