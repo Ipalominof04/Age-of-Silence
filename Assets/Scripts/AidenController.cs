@@ -23,6 +23,7 @@ public class AidenController : MonoBehaviour
     [SerializeField] GameEvent OnDialogueEnded;
     [SerializeField] GameEvent OnAidenStopped;
     [SerializeField] GameEventString OnAidenScared;
+    [SerializeField] GameEvent OnAidenReanudar;
     private bool InDialogue;
 
     private int scaredNum;
@@ -30,6 +31,7 @@ public class AidenController : MonoBehaviour
 
     private Vector3 _destino;
     private GameEvent _onAyudaCompletada;
+    private bool esperarEnDestino;
 
     private SoundEmitter emitter;
 
@@ -55,6 +57,7 @@ public class AidenController : MonoBehaviour
         OnDialogueStarted.Subscribe(HandleDialogueStarted);
         OnDialogueEnded.Subscribe(HandleDialogueEnded);
         OnAidenScared.Subscribe(Scared);
+        OnAidenReanudar.Subscribe(HandleReanudar);
     }
 
     private void OnDisable()
@@ -64,11 +67,21 @@ public class AidenController : MonoBehaviour
         OnDialogueStarted.Unsubscribe(HandleDialogueStarted);
         OnDialogueEnded.Unsubscribe(HandleDialogueEnded);
         OnAidenScared.Unsubscribe(Scared);
+        OnAidenReanudar.Unsubscribe(HandleReanudar);
+    }
+
+    private void HandleReanudar()
+    {
+        esperarEnDestino = false;
+        if (currentState == AidenState.IDLE)
+            ChangeState(AidenState.RUN);
     }
     private void HandlePlayerStateChanged(PlayerController.PlayerState playerState)
     {
         //si el niño esta asustado, que ignore lo que hace el player y no le siga hasta que se indique dependiendo el caso 
         if (currentState == AidenState.SCARED) return;
+        if (currentState == AidenState.HELP) return; // para que ignore los cambios del player y se mueva hasta el waypont
+        if (esperarEnDestino && currentState == AidenState.IDLE) return;
 
         switch (playerState)
         {
@@ -198,7 +211,8 @@ public class AidenController : MonoBehaviour
                 if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
                 {
                     _onAyudaCompletada?.Raise();
-                    ChangeState(AidenState.WALK);
+                    ChangeState(esperarEnDestino ? AidenState.IDLE : AidenState.WALK);
+                    //ChangeState(AidenState.WALK);
                 }
                 break;
         }
@@ -308,10 +322,11 @@ public class AidenController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         SetUI(false);
     }
-    public void PedirAyuda(Vector3 destino, GameEvent onLlego)
+    public void PedirAyuda(Vector3 destino, GameEvent onLlego, bool esperarEnDestino2 = false)
     {
         _destino = destino;
         _onAyudaCompletada = onLlego;
+        esperarEnDestino = esperarEnDestino2;
         ChangeState(AidenState.HELP);
     }
 
