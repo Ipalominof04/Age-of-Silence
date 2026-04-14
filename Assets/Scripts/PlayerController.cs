@@ -368,11 +368,27 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             if (string.IsNullOrEmpty(objetoMano.nombreObjeto))
             {
-                objetoMano.GuardarObjeto(objectInRange);
-                GameManager.Instance.datos.objetoMano = objetoMano;
-                objectInRange.SetActive(false);
-                objectInRange = null;
-                Debug.Log("Objeto recogido: " + objetoMano.nombreObjeto);
+                //compruebar si es comida antes de guardarla
+                if (objectInRange.CompareTag("Comida"))
+                {
+                    GameManager.Instance.SumValor(3); //sumo confianza
+                    objectInRange.SetActive(false);
+                    objectInRange = null;
+                    return; //salir sin guardar en la mano
+                } else if (objectInRange.CompareTag("Pieza"))
+                {
+                    //que te sume vida
+                    objectInRange.SetActive(false);
+                    objectInRange = null;
+                    return;
+                }else
+                {
+                    objetoMano.GuardarObjeto(objectInRange);
+                    GameManager.Instance.datos.objetoMano = objetoMano;
+                    objectInRange.SetActive(false);
+                    objectInRange = null;
+                    Debug.Log("Objeto recogido: " + objetoMano.nombreObjeto);
+                }   
             }
             else
             {
@@ -545,7 +561,16 @@ public class PlayerController : MonoBehaviour, IDamageable
                 armaEnMano = other.gameObject;
                 print("objeto " + other.gameObject.name + " en rango");
 
-            } 
+            }
+            if (other.tag == "Comida")
+            {
+                objectInRange = other.gameObject;
+                print("objeto " + other.gameObject.name + " en rango");
+            }
+            if (other.tag == "Pieza")
+            {
+                //poner que sume vida
+            }
         }
     }
 
