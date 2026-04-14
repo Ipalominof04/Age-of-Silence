@@ -16,8 +16,7 @@ public class AidenController : MonoBehaviour
     [SerializeField] private GameObject canvasWorld;
 
     [Header("Crouch")]
-    [SerializeField] private CapsuleCollider standCollider;
-    [SerializeField] private CapsuleCollider crouchCollider;
+    [SerializeField] private CapsuleCollider aidenCollider;
 
     [Header("Eventos")]
     [SerializeField] GameEvent OnDialogueStarted;
@@ -123,8 +122,11 @@ public class AidenController : MonoBehaviour
                 break;
             case AidenState.CROUCH:
                 agent.speed = 1f;
-                standCollider.enabled = false;
-                crouchCollider.enabled = true;
+                aidenCollider.center = new Vector3(0, 0.3f, 0);
+                aidenCollider.radius = 0.2f;
+                aidenCollider.height = 0.6f;
+                agent.height = 0.6f;
+                agent.radius = 0.2f;
                 break;
             case AidenState.SCARED:
                 if (scaredNum == 0)
@@ -220,8 +222,11 @@ public class AidenController : MonoBehaviour
             case AidenState.RUN:
                 break;
             case AidenState.CROUCH:
-                standCollider.enabled = true;
-                crouchCollider.enabled = false;
+                aidenCollider.center = new Vector3(0, 0.5f, 0);
+                aidenCollider.radius = 0.2f;
+                aidenCollider.height = 1f;
+                agent.height = 1f;
+                agent.radius = 0.2f;
                 break;
             case AidenState.SCARED:
                 break;
