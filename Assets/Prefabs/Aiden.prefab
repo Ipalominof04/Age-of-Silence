@@ -757,7 +757,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4181924032213754221}
   - component: {fileID: 3056110241414997264}
-  - component: {fileID: 7380622719863994027}
   - component: {fileID: 1135996175876160397}
   - component: {fileID: 6828666274242469974}
   - component: {fileID: 8957471323624921122}
@@ -812,29 +811,6 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!136 &7380622719863994027
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4509992435902890988}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Height: 0.6
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!54 &1135996175876160397
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -877,8 +853,7 @@ MonoBehaviour:
   currentState: 0
   player: {fileID: 0}
   canvasWorld: {fileID: 4063795153830542703}
-  standCollider: {fileID: 3056110241414997264}
-  crouchCollider: {fileID: 7380622719863994027}
+  aidenCollider: {fileID: 3056110241414997264}
   OnDialogueStarted: {fileID: 11400000, guid: dcef17d5a629fe8478bd188922dbae88, type: 2}
   OnDialogueEnded: {fileID: 11400000, guid: 24d173763f19212419ab012c1f7833f5, type: 2}
   OnAidenStopped: {fileID: 11400000, guid: e583d7700758c2b40b133794e92abb2f, type: 2}
