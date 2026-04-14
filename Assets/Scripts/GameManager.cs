@@ -101,18 +101,19 @@ public class GameManager : MonoBehaviour
 
     public void GuardarEscena()
     {
-        Debug.Log("GuardarEscena llamado desde:\n" + System.Environment.StackTrace);
         var objetos = FindObjectsByType<ObjetoGuardable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+        Debug.Log($"Objetos encontrados: {objetos.Length}");
+
         foreach (var obj in objetos)
         {
-            if (string.IsNullOrEmpty(obj.id))
-                Debug.LogWarning($"ObjetoGuardable sin ID en: {obj.gameObject.name}", obj.gameObject);
+            Debug.Log($"Guardando: {obj.name}");
             obj.Guardar();
         }
     }
     public void RestaurarEscena()
     {
-        Debug.Log("RestaurarEscena llamado desde:\n" + System.Environment.StackTrace);
+    //    Debug.Log("RestaurarEscena llamado desde:\n" + System.Environment.StackTrace);
         foreach (var obj in FindObjectsByType<ObjetoGuardable>(FindObjectsInactive.Include, FindObjectsSortMode.None))
             obj.Restaurar();
     }

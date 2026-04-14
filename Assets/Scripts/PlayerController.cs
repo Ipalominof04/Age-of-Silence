@@ -87,10 +87,17 @@ public class PlayerController : MonoBehaviour, IDamageable
         crouchAction = inputInstance.FindActionMap("Player").FindAction("Crouch");
         throwAction = inputInstance.FindActionMap("Player").FindAction("Throw");
         shootAction = inputInstance.FindActionMap("Player").FindAction("Attack");
+        SetColliderNormal();
+
     }
 
     void Start()
     {
+        shootingPoint = GameObject.Find("shooting_point");
+        camara = Camera.main;
+        if (shootingPoint == null)
+            Debug.Log("No hay arma en la escena");
+
         InitState(PlayerState.IDLE);
 
         float vidaGuardada = GameManager.Instance.datos.PlayerHealth;
@@ -260,12 +267,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             case PlayerState.RUN:
                 break;
             case PlayerState.CROUCH:
-                characterController.center = new Vector3(0, 0.8f, 0);
-                characterController.radius = 0.2f;
-                characterController.height = 1.75f;
-                playerCollider.center = new Vector3(0, 0.9f, 0);
-                playerCollider.radius = 0.3f;
-                playerCollider.height = 1.85f;
+                SetColliderNormal();
                 break;
             case PlayerState.SHOOT:
                 break;
@@ -449,23 +451,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
     private void Shoot()
     {
-        /*
-        if (!armaEquipada) return;
+        if(shootingPoint == null) return;
 
-        Ray ray = camara.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
-        {
-            // Rotar player hacia el punto de impacto
-            Vector3 direccion = hit.point - transform.position;
-            direccion.y = 0;
-            if (direccion.magnitude > 0.01f)
-                transform.rotation = Quaternion.LookRotation(direccion);
-
-            Debug.Log("Disparo a: " + hit.collider.gameObject.name);
-            // hit.collider.GetComponent<IDamageable>()?.TakeDamage();
-        }
-         */
         if(!armaSobrecalentada)
         {
         GameObject go = Instantiate(bala, shootingPoint.transform.position, shootingPoint.transform.rotation);
@@ -485,7 +472,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         vidaActual -= damage;
         vidaActual = Mathf.Clamp(vidaActual, 0f, vidaMaxima);
         GameManager.Instance.datos.PlayerHealth = vidaActual;
-        onVidaCambiada.Raise(vidaActual / vidaMaxima); // Manda el porcentaje
+        onVidaCambiada.Raise(vidaActual / vidaMaxima);
 
         if (vidaActual <= 0f)
             Die();
@@ -494,6 +481,16 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void Die()
     {
         print("player muerto");
+    }
+
+    private void SetColliderNormal()
+    {
+        characterController.center = new Vector3(0, 0.8f, 0);
+        characterController.radius = 0.2f;
+        characterController.height = 1.75f;
+        playerCollider.center = new Vector3(0, 0.9f, 0);
+        playerCollider.radius = 0.3f;
+        playerCollider.height = 1.85f;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -514,7 +511,6 @@ public class PlayerController : MonoBehaviour, IDamageable
                 {
                     puzleInRange = puzle;
                     puzle.OnEnterRange();
-                    print("BBBBBBBBBBB");
                 }
             }
 
@@ -582,8 +578,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (puzleInRange != null && other.GetComponent<IPuzle>() == puzleInRange)
         {
             puzleInRange = null;
-            print(puzleInRange);
-            print("AAAAAAAA");
         }
 
         if (other.gameObject == objectLanzableInRange?.gameObject)

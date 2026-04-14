@@ -2735,6 +2735,7 @@ MonoBehaviour:
   nombreEscena: ComedorCasa3
   miDoorID: rellano_casa3
   targetDoorID: spawncomedor_rellano2
+  puzzleRequeridoID: 
 --- !u!65 &837865016
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3215,53 +3216,6 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 87d3d91dc7a32fe4f8619c50c5d5051b, type: 2}
   m_BuildHeightMesh: 0
---- !u!1 &1221884443
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1221884445}
-  - component: {fileID: 1221884444}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1221884444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1221884443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b281e153f59edd4bb25243815c47b13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  Confianza: 0
-  fadeDuration: 1
-  lastDoorID: 
---- !u!4 &1221884445
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1221884443}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.57878, y: 0.85624, z: 4.59823}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1241270259
 GameObject:
   m_ObjectHideFlags: 0
@@ -5719,6 +5673,7 @@ MonoBehaviour:
   nombreEscena: Rellano1
   miDoorID: rellano2_rellano1
   targetDoorID: spawnrellano2
+  puzzleRequeridoID: 
 --- !u!65 &2143669987
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5759,7 +5714,6 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1221884445}
   - {fileID: 901274891}
   - {fileID: 524034180}
   - {fileID: 1474128398}
