@@ -30,7 +30,6 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
         }
         else if (objeto == "Cerillas")
         {
-            print("HOLAAAAAAAAAAAAAAAAAAAAAa");
             meshCerilla.SetActive(true);
             objetoMano.UsarObjeto();
             GameManager.Instance.ResolverPuzzle("CerillasTiradas");
