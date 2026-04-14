@@ -34,14 +34,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private float interactRange;
 
     [Header("Crouch")]
-    [SerializeField] private Vector3 standCenter;
-    [SerializeField] private Vector3 crouchCenter;
-    [SerializeField] private float standRadius;
-    [SerializeField] private float crouchRadius;
-    [SerializeField] private float standHeight;
-    [SerializeField] private float crouchHeight;
-    [SerializeField] private CapsuleCollider standCollider;
-    [SerializeField] private CapsuleCollider crouchCollider;
+    [SerializeField] private CapsuleCollider playerCollider;
 
     [Header("Objetos")]
     [SerializeField] private ObjetoAgarrado objetoMano;
@@ -144,11 +137,12 @@ public class PlayerController : MonoBehaviour, IDamageable
             case PlayerState.RUN:
                 break;
             case PlayerState.CROUCH:
-                characterController.center = crouchCenter;
-                characterController.radius = crouchRadius;
-                characterController.height = crouchHeight;
-                standCollider.enabled = false;
-                crouchCollider.enabled = true;
+                characterController.center = new Vector3(0, 0.375f, 0);
+                characterController.radius = 0.3f;
+                characterController.height = 0.9f;
+                playerCollider.center = new Vector3(0, 0.475f, 0);
+                playerCollider.radius = 0.4f;
+                playerCollider.height = 1f;
                 break;
             case PlayerState.SHOOT:
                 break;
@@ -266,11 +260,12 @@ public class PlayerController : MonoBehaviour, IDamageable
             case PlayerState.RUN:
                 break;
             case PlayerState.CROUCH:
-                characterController.center = standCenter;
-                characterController.radius = standRadius;
-                characterController.height = standHeight;
-                standCollider.enabled = true;
-                crouchCollider.enabled = false;
+                characterController.center = new Vector3(0, 0.8f, 0);
+                characterController.radius = 0.2f;
+                characterController.height = 1.75f;
+                playerCollider.center = new Vector3(0, 0.9f, 0);
+                playerCollider.radius = 0.3f;
+                playerCollider.height = 1.85f;
                 break;
             case PlayerState.SHOOT:
                 break;
@@ -373,11 +368,27 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             if (string.IsNullOrEmpty(objetoMano.nombreObjeto))
             {
-                objetoMano.GuardarObjeto(objectInRange);
-                GameManager.Instance.datos.objetoMano = objetoMano;
-                objectInRange.SetActive(false);
-                objectInRange = null;
-                Debug.Log("Objeto recogido: " + objetoMano.nombreObjeto);
+                //compruebar si es comida antes de guardarla
+                if (objectInRange.CompareTag("Comida"))
+                {
+                    GameManager.Instance.SumValor(3); //sumo confianza
+                    objectInRange.SetActive(false);
+                    objectInRange = null;
+                    return; //salir sin guardar en la mano
+                } else if (objectInRange.CompareTag("Pieza"))
+                {
+                    //que te sume vida
+                    objectInRange.SetActive(false);
+                    objectInRange = null;
+                    return;
+                }else
+                {
+                    objetoMano.GuardarObjeto(objectInRange);
+                    GameManager.Instance.datos.objetoMano = objetoMano;
+                    objectInRange.SetActive(false);
+                    objectInRange = null;
+                    Debug.Log("Objeto recogido: " + objetoMano.nombreObjeto);
+                }   
             }
             else
             {
@@ -414,7 +425,6 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         }
     }
-
     private void Dialogue()
     {
         if (aiden == null)
@@ -469,7 +479,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         ChangeState(PlayerState.IDLE);
 
     }
-
     public void TakeDamage(float damage)
     {
 
@@ -552,19 +561,18 @@ public class PlayerController : MonoBehaviour, IDamageable
                 armaEnMano = other.gameObject;
                 print("objeto " + other.gameObject.name + " en rango");
 
-            } 
+            }
+            if (other.tag == "Comida")
+            {
+                objectInRange = other.gameObject;
+                print("objeto " + other.gameObject.name + " en rango");
+            }
+            if (other.tag == "Pieza")
+            {
+                //poner que sume vida
+            }
         }
     }
-
-    public void ClearTriggerPuzle()
-    {
-        puzleInRange = null;
-    }
-    public void ClearTriggerAyuda()
-    {
-        ayudaInRange = null;
-    }
-
 
     private void OnTriggerExit(Collider other)
     {
@@ -589,4 +597,13 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (other.tag == "TriggerAyuda")
             ayudaInRange = null;
     }
+    public void ClearTriggerPuzle()
+    {
+        puzleInRange = null;
+    }
+    public void ClearTriggerAyuda()
+    {
+        ayudaInRange = null;
+    }
+
 }
