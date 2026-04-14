@@ -6181,9 +6181,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b281e153f59edd4bb25243815c47b13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  Confianza: 0
+  confianza: 0
   fadeDuration: 1
   lastDoorID: 
+  ruta: Assets/savegame.json
+  datos: {fileID: 0}
 --- !u!4 &617698637
 Transform:
   m_ObjectHideFlags: 0
@@ -8240,7 +8242,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3837893497168610565, guid: eb8d2e576a8e775459640e6724541695, type: 3}
   m_PrefabInstance: {fileID: 857259290}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &887800778
+--- !u!1001 &895885331
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -8250,15 +8252,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 944715813647473681, guid: 4d44efa3c65ac17418fef14f408843b2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 48.082
+      value: 47.98472
       objectReference: {fileID: 0}
     - target: {fileID: 944715813647473681, guid: 4d44efa3c65ac17418fef14f408843b2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.019
+      value: 0.039179176
       objectReference: {fileID: 0}
     - target: {fileID: 944715813647473681, guid: 4d44efa3c65ac17418fef14f408843b2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.822
+      value: -3.864505
       objectReference: {fileID: 0}
     - target: {fileID: 944715813647473681, guid: 4d44efa3c65ac17418fef14f408843b2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10937,6 +10939,7 @@ MonoBehaviour:
   nombreEscena: SalidaFabrica
   miDoorID: 
   targetDoorID: 
+  puzzleRequeridoID: 
 --- !u!65 &1284835922
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17740,4 +17743,4 @@ SceneRoots:
   - {fileID: 414887211}
   - {fileID: 2095952930}
   - {fileID: 1874558767}
-  - {fileID: 887800778}
+  - {fileID: 895885331}
