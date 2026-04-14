@@ -13,7 +13,6 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
     [SerializeField] private GameObject meshGalon;
     [SerializeField] private GameObject meshCerilla;
 
-    private bool galonColocado;
     public void Interact(ObjetoAgarrado objetoMano)
     {
         if (string.IsNullOrEmpty(objetoMano.nombreObjeto))
@@ -21,21 +20,18 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
             print("no tienes nada en la mano");
             return;
         }
-        string galon = objetoMano.nombreObjeto;
+        string objeto = objetoMano.nombreObjeto;
 
-        if(galon == "Galon")
+        if (objeto == "Galon")
         {
-            galonColocado = true;
             meshGalon.SetActive(true);
             objetoMano.UsarObjeto();
             GameManager.Instance.ResolverPuzzle("GalonUsado");
         }
-        else if(galon == "Cerillas" && GameManager.Instance.PuzzleResuelto("GalonUsado"))
+        else if (objeto == "Cerillas")
         {
             print("HOLAAAAAAAAAAAAAAAAAAAAAa");
             meshCerilla.SetActive(true);
-            Debug.Log(galonColocado+"COMOOOO ESTA");
-            //galonColocado = true;
             objetoMano.UsarObjeto();
             GameManager.Instance.ResolverPuzzle("CerillasTiradas");
         }
