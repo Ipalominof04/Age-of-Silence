@@ -467,14 +467,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 48801417}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: -0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: -1.2857043, y: -7.5040054, z: -0.0916495}
-  m_LocalScale: {x: 10, y: 0.28551242, z: 0.34971827}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.901, y: 0.37899986, z: 2.2059994}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 537112274}
   - {fileID: 1863187957}
-  m_Father: {fileID: 280548866}
+  - {fileID: 1704682342}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &50886766
 GameObject:
@@ -3441,7 +3442,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1888653046}
-  - {fileID: 48801418}
   - {fileID: 1632788690}
   - {fileID: 1031755274}
   - {fileID: 1217494081}
@@ -5597,8 +5597,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: ExteriorGasolinera
-  miDoorID: 
-  targetDoorID: 
+  miDoorID: interior_gas
+  targetDoorID: spawninterior_gas
   puzzleRequeridoID: 
 --- !u!65 &537112276
 BoxCollider:
@@ -11836,7 +11836,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4981912771014037754, guid: e417b1ac7ffd3b44a854dace85f01b95, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7475076102273507941, guid: e417b1ac7ffd3b44a854dace85f01b95, type: 3}
       propertyPath: m_Name
@@ -11844,7 +11844,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7475076102273507941, guid: e417b1ac7ffd3b44a854dace85f01b95, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12568,7 +12568,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 399041082491832308, guid: 02858d4d16dfc874198537d11046e408, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4126987077432527570, guid: 02858d4d16dfc874198537d11046e408, type: 3}
       propertyPath: m_Name
@@ -12576,11 +12576,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4126987077432527570, guid: 02858d4d16dfc874198537d11046e408, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5855867541527003583, guid: 02858d4d16dfc874198537d11046e408, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7992629985860295614, guid: 02858d4d16dfc874198537d11046e408, type: 3}
       propertyPath: m_LocalScale.x
@@ -12685,7 +12685,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1490064791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13611,6 +13611,10 @@ PrefabInstance:
       value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4442862851518774849, guid: 91ec4ba84f903af469c3374d284c72fa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4442862851518774849, guid: 91ec4ba84f903af469c3374d284c72fa, type: 3}
       propertyPath: m_TagString
       value: Cerillas
       objectReference: {fileID: 0}
@@ -13621,10 +13625,13 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4442862851518774849, guid: 91ec4ba84f903af469c3374d284c72fa, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1595427905}
+      addedObject: {fileID: 1595427910}
     - targetCorrespondingSourceObject: {fileID: 4442862851518774849, guid: 91ec4ba84f903af469c3374d284c72fa, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1595427910}
+      addedObject: {fileID: 1595427911}
+    - targetCorrespondingSourceObject: {fileID: 4442862851518774849, guid: 91ec4ba84f903af469c3374d284c72fa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1595427905}
   m_SourcePrefab: {fileID: 100100000, guid: 91ec4ba84f903af469c3374d284c72fa, type: 3}
 --- !u!1 &1595427904 stripped
 GameObject:
@@ -13666,6 +13673,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.66
   m_Center: {x: 0.0000000018626451, y: -4.078121e-17, z: -7.73158e-17}
+--- !u!114 &1595427911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1595427904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d200b541f8bd8c44d946b5cf2cc6c150, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectoActivable
+  puzzleRequeridoID: GalonUsado
 --- !u!1 &1627262438
 GameObject:
   m_ObjectHideFlags: 0
@@ -14576,6 +14596,52 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1694881620}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1704682341
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1704682342}
+  - component: {fileID: 1704682343}
+  m_Layer: 9
+  m_Name: SpawnGasolinera
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1704682342
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704682341}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.392, y: -0.24499986, z: -1.625}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 48801418}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1704682343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704682341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  doorID: spawnexterior_gas
+  aidenOffset: 1
 --- !u!1 &1704778114
 GameObject:
   m_ObjectHideFlags: 0
@@ -19286,6 +19352,7 @@ SceneRoots:
   - {fileID: 1490064792}
   - {fileID: 514183909}
   - {fileID: 1551757077}
+  - {fileID: 48801418}
   - {fileID: 280548866}
   - {fileID: 105688966}
   - {fileID: 1900376823}

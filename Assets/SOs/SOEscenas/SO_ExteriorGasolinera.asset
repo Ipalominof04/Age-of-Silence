@@ -10,7 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 23e26a2fb4457ca4c915c4c2368eba84, type: 3}
-  m_Name: SO_Gasolinera
+  m_Name: SO_ExteriorGasolinera
   m_EditorClassIdentifier: Assembly-CSharp::SOEscena
-  sceneName: InteriorGasolinera
-  objetos: []
+  sceneName: ExteriorGasolinera
+  objetos:
+  - id: Galon
+    active: 0
+    pos: {x: 44.305, y: 0.066, z: -1.374}
+    rot: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
