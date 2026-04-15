@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 public class ObjectoActivable : MonoBehaviour
 {
     [Header("Requiere puzzle")]
@@ -8,7 +8,13 @@ public class ObjectoActivable : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(puzzleRequeridoID))
         {
-            gameObject.SetActive(GameManager.Instance.PuzzleResuelto(puzzleRequeridoID));
+            bool resuelto = GameManager.Instance.PuzzleResuelto(puzzleRequeridoID);
+            Debug.Log($"{gameObject.name}: puzzle '{puzzleRequeridoID}' resuelto={resuelto} → SetActive({resuelto})");
+            gameObject.SetActive(resuelto);
+        }
+        else
+        {
+            Debug.LogWarning($"{gameObject.name}: puzzleRequeridoID está vacío");
         }
     }
 }
