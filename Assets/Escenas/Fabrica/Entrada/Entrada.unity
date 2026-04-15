@@ -1917,7 +1917,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_Extents: {x: 0.00001, y: 0.5, z: 0.5}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -2589,7 +2589,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &267873368
 Transform:
   m_ObjectHideFlags: 0
@@ -5057,6 +5057,52 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3052786145037884313, guid: 54d8b5f898d226149905f2836c474e9b, type: 3}
   m_PrefabInstance: {fileID: 2130655249}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &632212953
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 632212955}
+  - component: {fileID: 632212954}
+  m_Layer: 9
+  m_Name: SpawnPasillo
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &632212954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 632212953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  doorID: spawnpasillo_entrada
+  aidenOffset: 1
+--- !u!4 &632212955
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 632212953}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 10.369362, y: 0.057550006, z: -0.91046}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1186332986}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &645456980 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5140844979117814351, guid: 1630afabe1cc030489542c43308060c8, type: 3}
@@ -7602,7 +7648,7 @@ GameObject:
   - component: {fileID: 903884103}
   - component: {fileID: 903884102}
   m_Layer: 9
-  m_Name: TriggerCambioEscena2
+  m_Name: TriggerElectricidad
   m_TagString: TriggerCambioEscena
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7617,7 +7663,7 @@ Transform:
   m_GameObject: {fileID: 903884100}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.55, y: 0, z: 0.547}
+  m_LocalPosition: {x: 8.55, y: 0, z: 0.934}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7636,8 +7682,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: Electricidad
-  miDoorID: 
-  targetDoorID: 
+  miDoorID: entrada_electricidad
+  targetDoorID: spawnentrada_electricidad
   puzzleRequeridoID: 
 --- !u!65 &903884103
 BoxCollider:
@@ -7770,8 +7816,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1426207130}
   - {fileID: 1186332986}
+  - {fileID: 1426207130}
   - {fileID: 2046095635}
   - {fileID: 803489531}
   - {fileID: 1168708890}
@@ -9869,7 +9915,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.09, y: 0.36600003, z: 0.04}
+  m_Extents: {x: 0.00001, y: 0.36, z: 0.00001}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -9950,6 +9996,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3941467194656472606, guid: 077eb31668b6a20409273c674a9ef4b7, type: 3}
   m_PrefabInstance: {fileID: 1031989129}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1044115519
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1044115521}
+  - component: {fileID: 1044115520}
+  m_Layer: 9
+  m_Name: SpawnPiezas
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1044115520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044115519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  doorID: spawnpiezas_entrada
+  aidenOffset: 1
+--- !u!4 &1044115521
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044115519}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -0.24063873, y: 0.057550006, z: 0.57254004}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1186332986}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1052058536
 GameObject:
   m_ObjectHideFlags: 0
@@ -9962,7 +10054,7 @@ GameObject:
   - component: {fileID: 1052058539}
   - component: {fileID: 1052058538}
   m_Layer: 9
-  m_Name: TriggerCambioEscena1
+  m_Name: TriggerComedor
   m_TagString: TriggerCambioEscena
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9977,7 +10069,7 @@ Transform:
   m_GameObject: {fileID: 1052058536}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.939, y: 0, z: 0.547}
+  m_LocalPosition: {x: 4.939, y: 0, z: 0.702}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9996,8 +10088,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: Comedor
-  miDoorID: 
-  targetDoorID: 
+  miDoorID: entrada_comedor
+  targetDoorID: spawnentrada_comedor
   puzzleRequeridoID: FusibleVerde
 --- !u!65 &1052058539
 BoxCollider:
@@ -10390,7 +10482,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.31800002, y: 0.531, z: 0.33200002}
+  m_Extents: {x: 0.00001, y: 0.531, z: 0.00001}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -10676,7 +10768,7 @@ Transform:
   m_GameObject: {fileID: 1186332985}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10686,6 +10778,11 @@ Transform:
   - {fileID: 5183130}
   - {fileID: 2020500999}
   - {fileID: 1659236471}
+  - {fileID: 1044115521}
+  - {fileID: 2002490779}
+  - {fileID: 1245913283}
+  - {fileID: 1399715307}
+  - {fileID: 632212955}
   m_Father: {fileID: 920224656}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1193539164 stripped
@@ -10934,7 +11031,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.49600002, y: 0.895, z: 0.115}
+  m_Extents: {x: 0.49600002, y: 0.675, z: 0.00001}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -11054,6 +11151,52 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 1.5180001, z: 0}
   m_TimeToStationary: 0.5
+--- !u!1 &1245913281
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1245913283}
+  - component: {fileID: 1245913282}
+  m_Layer: 9
+  m_Name: SpawnZonaComun
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1245913282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245913281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  doorID: spawnzonacomun_entrada
+  aidenOffset: 1
+--- !u!4 &1245913283
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245913281}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -1.4506416, y: 0.057550006, z: 1.0595399}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1186332986}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &1263954529 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2315888582983247488, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
@@ -12341,6 +12484,52 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1399715305
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1399715307}
+  - component: {fileID: 1399715306}
+  m_Layer: 9
+  m_Name: SpawnElectricidad
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1399715306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399715305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  doorID: spawnelectricidad_entrada
+  aidenOffset: 1
+--- !u!4 &1399715307
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399715305}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 8.9603615, y: 0.057550006, z: 0.22653985}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1186332986}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1426207129
 GameObject:
   m_ObjectHideFlags: 0
@@ -12547,7 +12736,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.50600004, y: 0.030000001, z: 0.51000005}
+  m_Extents: {x: 0.50600004, y: 0.00001, z: 0.405}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -14651,7 +14840,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.483, y: 1.0120001, z: 0.044000003}
+  m_Extents: {x: 0.483, y: 1.0120001, z: 0.00001}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -14740,7 +14929,7 @@ GameObject:
   - component: {fileID: 1659236473}
   - component: {fileID: 1659236472}
   m_Layer: 9
-  m_Name: TriggerCambioEscena6
+  m_Name: TriggerPiezas
   m_TagString: TriggerCambioEscena
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14774,8 +14963,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: Piezas
-  miDoorID: 
-  targetDoorID: 
+  miDoorID: entrada_piezas
+  targetDoorID: spawnentrada_piezas
   puzzleRequeridoID: 
 --- !u!65 &1659236473
 BoxCollider:
@@ -14892,7 +15081,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.31500003, y: 0.52400005, z: 0.333}
+  m_Extents: {x: 0.00001, y: 0.52400005, z: 0.00001}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -14998,7 +15187,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.238, y: 0.36600003, z: 0.238}
+  m_Extents: {x: 0.00001, y: 0.36600003, z: 0.00001}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -16501,7 +16690,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.187, y: 0.48400003, z: 0.638}
+  m_Extents: {x: 0.07, y: 0.48400003, z: 0.638}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -16694,6 +16883,52 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1998040811}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2002490777
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2002490779}
+  - component: {fileID: 2002490778}
+  m_Layer: 9
+  m_Name: SpawnComedor
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2002490778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002490777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  doorID: spawncomedor_entrada
+  aidenOffset: 1
+--- !u!4 &2002490779
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002490777}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 5.462, y: 0.057550006, z: -0.71}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1186332986}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &2003193160
 GameObject:
   m_ObjectHideFlags: 0
@@ -16796,7 +17031,7 @@ GameObject:
   - component: {fileID: 2018186366}
   - component: {fileID: 2018186365}
   m_Layer: 9
-  m_Name: TriggerCambioEscena3
+  m_Name: TriggerPasillo
   m_TagString: TriggerCambioEscena
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16811,7 +17046,7 @@ Transform:
   m_GameObject: {fileID: 2018186363}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 10.588, y: 0, z: -0.503}
+  m_LocalPosition: {x: 10.719, y: 0, z: -0.503}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16830,8 +17065,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: Pasillo
-  miDoorID: 
-  targetDoorID: 
+  miDoorID: entrada_pasillo
+  targetDoorID: spawnentrada_pasillo
   puzzleRequeridoID: FusibleAzul
 --- !u!65 &2018186366
 BoxCollider:
@@ -16866,7 +17101,7 @@ GameObject:
   - component: {fileID: 2020501001}
   - component: {fileID: 2020501000}
   m_Layer: 9
-  m_Name: TriggerCambioEscena5
+  m_Name: TriggerZonaComun
   m_TagString: TriggerCambioEscena
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16900,8 +17135,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: ZonaComun
-  miDoorID: 
-  targetDoorID: 
+  miDoorID: entrada_zonacomun
+  targetDoorID: spawnentrada_zonacomun
   puzzleRequeridoID: 
 --- !u!65 &2020501001
 BoxCollider:
@@ -18179,7 +18414,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.955, y: 0.298, z: 0.095}
+  m_Extents: {x: 0.765, y: 0.298, z: 0.045}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1

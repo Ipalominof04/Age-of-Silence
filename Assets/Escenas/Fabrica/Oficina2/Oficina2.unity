@@ -1738,6 +1738,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1201192016}
+  - {fileID: 888656089}
   m_Father: {fileID: 1870755938}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &366002459
@@ -3311,6 +3312,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 887531300}
   m_CullTransparentMesh: 1
+--- !u!1 &888656088
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 888656089}
+  - component: {fileID: 888656090}
+  m_Layer: 9
+  m_Name: SpawnZonaComun
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &888656089
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888656088}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0.17743754, y: -26.221693, z: -0.31322205}
+  m_LocalScale: {x: 0.12905091, y: 9.941346, z: 0.070607}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 361175894}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &888656090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888656088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  doorID: spawnzonacomun_oficina2
+  aidenOffset: 1
 --- !u!1001 &934426841
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4645,8 +4692,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: ZonaComun
-  miDoorID: 
-  targetDoorID: 
+  miDoorID: oficina2_zonacomun
+  targetDoorID: spawnofiicna2_zonacomun
   puzzleRequeridoID: 
 --- !u!1001 &1251101467
 PrefabInstance:

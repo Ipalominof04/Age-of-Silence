@@ -5412,6 +5412,52 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0.014, y: 0.80600005, z: 0.018000001}
   m_TimeToStationary: 0.5
+--- !u!1 &464834033
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 464834034}
+  - component: {fileID: 464834035}
+  m_Layer: 9
+  m_Name: SpawnEntrada
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &464834034
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 464834033}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0.4156705, y: -36.743217, z: -0.16101713}
+  m_LocalScale: {x: 0.08890082, y: 9.941347, z: 0.040881462}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1935720776}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &464834035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 464834033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  doorID: spawnentrada_comedor
+  aidenOffset: 1
 --- !u!1 &466921383
 GameObject:
   m_ObjectHideFlags: 0
@@ -8866,7 +8912,7 @@ GameObject:
   - component: {fileID: 795950598}
   - component: {fileID: 795950597}
   m_Layer: 9
-  m_Name: TriggerCambioEscena2
+  m_Name: TriggerCocina
   m_TagString: TriggerCambioEscena
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8921,8 +8967,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: Cocina
-  miDoorID: 
-  targetDoorID: 
+  miDoorID: comedor_cocina
+  targetDoorID: spawncomedor_cocina
   puzzleRequeridoID: 
 --- !u!1001 &800267790
 PrefabInstance:
@@ -9014,7 +9060,7 @@ GameObject:
   - component: {fileID: 802899030}
   - component: {fileID: 802899029}
   m_Layer: 9
-  m_Name: TriggerCambioEscena1
+  m_Name: TriggerEntrada
   m_TagString: TriggerCambioEscena
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9069,8 +9115,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: Entrada
-  miDoorID: 
-  targetDoorID: 
+  miDoorID: comedor_entrada
+  targetDoorID: spawncomedor_entrada
   puzzleRequeridoID: 
 --- !u!1001 &803021608
 PrefabInstance:
@@ -19549,6 +19595,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8301969671247916575, guid: 3a91f2e419e4058488ed8b7621e9abdc, type: 3}
   m_PrefabInstance: {fileID: 1609861033}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1616858847
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1616858848}
+  - component: {fileID: 1616858849}
+  m_Layer: 9
+  m_Name: SpawnCocina
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1616858848
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616858847}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0.3867, y: -36.743217, z: -0.0189}
+  m_LocalScale: {x: 0.08890082, y: 9.941347, z: 0.040881462}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1935720776}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &1616858849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616858847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  doorID: spawncocina_comedor
+  aidenOffset: 0.5
 --- !u!1001 &1625192896
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22769,6 +22861,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 802899028}
+  - {fileID: 464834034}
+  - {fileID: 1616858848}
   - {fileID: 795950596}
   - {fileID: 1385728853}
   m_Father: {fileID: 1052819148}

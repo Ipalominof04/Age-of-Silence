@@ -2836,6 +2836,8 @@ Transform:
   m_Children:
   - {fileID: 862309298}
   - {fileID: 417316908}
+  - {fileID: 2058884444}
+  - {fileID: 1877644719}
   m_Father: {fileID: 960638968}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &608719929
@@ -4665,7 +4667,7 @@ Transform:
   m_GameObject: {fileID: 862309297}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 3.0035, y: -23.158478, z: -0.8629}
+  m_LocalPosition: {x: 3.0003, y: -23.158478, z: -0.8629}
   m_LocalScale: {x: 0.12905088, y: 9.941346, z: 0.07060702}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4705,8 +4707,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: Entrada
-  miDoorID: 
-  targetDoorID: 
+  miDoorID: pasillo_entrada
+  targetDoorID: spawnpasillo_entrada
   puzzleRequeridoID: 
 --- !u!1001 &878100967
 PrefabInstance:
@@ -9786,13 +9788,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1877644717}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 55.73, y: 0.212, z: -4.27}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.6697264, y: -25.446266, z: -0.8292966}
+  m_LocalScale: {x: 0.07060701, y: 9.941346, z: 0.12905091}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 530088824}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 559736192}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1877644720
 MonoBehaviour:
@@ -10672,6 +10674,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2058884443
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2058884444}
+  - component: {fileID: 2058884445}
+  m_Layer: 9
+  m_Name: SpawnEntrada
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2058884444
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058884443}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 3.0640595, y: -26.221693, z: -0.85547715}
+  m_LocalScale: {x: 0.12905091, y: 9.941346, z: 0.070607}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 559736192}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &2058884445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058884443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  doorID: spawnentrada_pasillo
+  aidenOffset: 1
 --- !u!1 &2063858111
 GameObject:
   m_ObjectHideFlags: 0
@@ -11262,4 +11310,3 @@ SceneRoots:
   - {fileID: 1275081039}
   - {fileID: 1081473572}
   - {fileID: 352900354}
-  - {fileID: 1877644719}
