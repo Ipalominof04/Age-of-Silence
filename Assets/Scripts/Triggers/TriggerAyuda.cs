@@ -81,7 +81,7 @@ public class TriggerAyuda : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerCollider"))
         {
             MostrarUI();
         }
@@ -90,7 +90,7 @@ public class TriggerAyuda : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerCollider"))
         {
             OcultarUI();
         }

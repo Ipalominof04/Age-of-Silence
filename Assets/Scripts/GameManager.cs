@@ -1,8 +1,10 @@
+using NUnit.Framework.Constraints;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,6 +25,7 @@ public class GameManager : MonoBehaviour
     public string ruta = "Assets/savegame.json";
     public SOGeneral datos;
 
+
     private void Awake()
     {
      //   Debug.Log($"Awake — InstanceID: {gameObject.GetInstanceID()} — Escena: {gameObject.scene.name}");
@@ -32,6 +35,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
             LimpiarSOEscenas();
+            fadeImage = GameObject.Find("Fundido")?.GetComponent<Image>();
             SceneManager.sceneLoaded -= OnSceneLoaded;
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
@@ -44,21 +48,6 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Busca la imagen de fade en la escena nueva
-        fadeImage = GameObject.Find("Fundido")?.GetComponent<Image>();
-
-        if (fadeImage == null)
-        {
-            Debug.LogWarning("No se encontro Fundido en la escena");
-        }
-        else
-        {
-            // Asegura que empieza transparente
-            Color c = fadeImage.color;
-            c.a = 0f;
-            fadeImage.color = c;
-            fadeImage.gameObject.SetActive(false);
-        }
         RestaurarEscena();
         MoverPlayerSpawn();
     }
@@ -84,6 +73,8 @@ public class GameManager : MonoBehaviour
 
     public bool PuzzleResuelto(string puzzleID)
     {
+
+        Debug.Log(datos.puzzlesResueltos.Count+ " puuuuuuuuuuuuuzleeeeeeeeeeeeees");
         return datos.puzzlesResueltos.Contains(puzzleID);
     }
     public void ChangeScene(string sceneName)
@@ -144,8 +135,25 @@ public class GameManager : MonoBehaviour
         var newScene = SceneManager.GetSceneByName(sceneName);
         if (newScene.IsValid() && newScene.isLoaded) SceneManager.SetActiveScene(newScene);
 
-        yield return null;
-        yield return StartCoroutine(FadeIn());
+
+        if(sceneName == "Escena2")
+        {
+            ChapterUI.ChapterStep[] steps = new ChapterUI.ChapterStep[]
+            {
+                new ChapterUI.ChapterStep("CAPÍTUL0 1: LA CIUDAD", 1f),
+                new ChapterUI.ChapterStep("LA CIUDAD 1.1: ZONA 0", 1f)
+            };
+            yield return StartCoroutine(ChapterUI.Instance.PlaySequence(steps));
+        } 
+        else if (sceneName == "Escena4")
+        {
+            yield return StartCoroutine(ChapterUI.Instance.MostrarCapitulo("LA CIUDAD 1.2: LA FÁBRICA", 3f));
+        }
+        else if(sceneName == "SalidaFabrica")
+        {
+            yield return StartCoroutine(ChapterUI.Instance.MostrarCapitulo("LA CIUDAD 1.3: ESCAPADA", 3f));
+        }
+            yield return StartCoroutine(FadeIn());
     }
 
     private IEnumerator FadeOut()
@@ -154,15 +162,19 @@ public class GameManager : MonoBehaviour
 
         float t = 0f;
         Color c = fadeImage.color;
+
         fadeImage.gameObject.SetActive(true);
 
         while (t < fadeDuration)
         {
             t += Time.deltaTime;
-            c.a = Mathf.Clamp01(t / fadeDuration);
+            c.a = Mathf.Lerp(0f, 1f, t / fadeDuration);
             fadeImage.color = c;
             yield return null;
         }
+
+        c.a = 1f;
+        fadeImage.color = c;
     }
 
     private IEnumerator FadeIn()
@@ -171,17 +183,19 @@ public class GameManager : MonoBehaviour
 
         float t = 0f;
         Color c = fadeImage.color;
-        c.a = 1f;
-        fadeImage.color = c;
+
+        fadeImage.gameObject.SetActive(true);
 
         while (t < fadeDuration)
         {
             t += Time.deltaTime;
-            c.a = Mathf.Clamp01(1f - (t / fadeDuration));
+            c.a = Mathf.Lerp(1f, 0f, t / fadeDuration);
             fadeImage.color = c;
             yield return null;
         }
 
+        c.a = 0f;
+        fadeImage.color = c;
         fadeImage.gameObject.SetActive(false);
     }
 
@@ -206,8 +220,23 @@ public class GameManager : MonoBehaviour
 
                 if (aiden != null)
                 {
-                    aiden.transform.position = spawn.transform.position + (-spawn.transform.right * spawn.AidenOffset);
-                    aiden.transform.rotation = Quaternion.Euler(0f, spawn.transform.eulerAngles.y, 0f);
+                    NavMeshAgent agent = aiden.GetComponent<NavMeshAgent>();
+                    Vector3 targetPos = spawn.transform.position + (-spawn.transform.right * spawn.AidenOffset);
+
+                    if (agent != null)
+                    {
+                        //desactivar navmesh antes de mover a Aiden para q no lo coloque en el nodo mas cercano a la pos anterior
+                        // y poder colocar a Aiden donde quiero
+                        agent.enabled = false;
+                        aiden.transform.position = targetPos;
+                        aiden.transform.rotation = Quaternion.Euler(0f, spawn.transform.eulerAngles.y, 0f);
+                        agent.enabled = true;
+                    }
+                    else
+                    {
+                        aiden.transform.position = spawn.transform.position + (-spawn.transform.right * spawn.AidenOffset);
+                        aiden.transform.rotation = Quaternion.Euler(0f, spawn.transform.eulerAngles.y, 0f);
+                    }
                 }
                 return;
             }
