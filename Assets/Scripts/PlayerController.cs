@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         InitState(PlayerState.IDLE);
 
-        float vidaGuardada = GameManager.Instance.datos.PlayerHealth;
+        float vidaGuardada = GameManager.Instance.datos.PlayerHealth; 
         vidaActual = vidaGuardada > 0f ? vidaGuardada : vidaMaxima;
         onVidaCambiada.Raise(vidaActual / vidaMaxima);
     }
