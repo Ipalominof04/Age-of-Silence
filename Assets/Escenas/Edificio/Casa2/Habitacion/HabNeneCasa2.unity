@@ -1412,7 +1412,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 798350563}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 7449015741165371208, guid: 625b27705cf415242913c2cd454718e8, type: 3}
       propertyPath: m_LocalScale.x
@@ -1428,7 +1428,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7449015741165371208, guid: 625b27705cf415242913c2cd454718e8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.172
+      value: -1.5883899
       objectReference: {fileID: 0}
     - target: {fileID: 7449015741165371208, guid: 625b27705cf415242913c2cd454718e8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1436,7 +1436,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7449015741165371208, guid: 625b27705cf415242913c2cd454718e8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.076
+      value: -3.33646
       objectReference: {fileID: 0}
     - target: {fileID: 7449015741165371208, guid: 625b27705cf415242913c2cd454718e8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1468,7 +1468,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7794579719072261618, guid: 625b27705cf415242913c2cd454718e8, type: 3}
       propertyPath: m_Name
-      value: Prop_TeddyBear_04
+      value: Gluelo dlagon
       objectReference: {fileID: 0}
     - target: {fileID: 7794579719072261618, guid: 625b27705cf415242913c2cd454718e8, type: 3}
       propertyPath: m_Layer
@@ -1493,11 +1493,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 242112287}
   m_SourcePrefab: {fileID: 100100000, guid: 625b27705cf415242913c2cd454718e8, type: 3}
---- !u!4 &242112278 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7449015741165371208, guid: 625b27705cf415242913c2cd454718e8, type: 3}
-  m_PrefabInstance: {fileID: 242112277}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &242112279 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7794579719072261618, guid: 625b27705cf415242913c2cd454718e8, type: 3}
@@ -4032,7 +4027,6 @@ Transform:
   - {fileID: 780796233}
   - {fileID: 1844987134}
   - {fileID: 820728910}
-  - {fileID: 242112278}
   - {fileID: 339403124}
   - {fileID: 852353126}
   - {fileID: 754075965}
@@ -5891,6 +5885,10 @@ PrefabInstance:
       propertyPath: aiden
       value: 
       objectReference: {fileID: 2043946544}
+    - target: {fileID: 1337398149008683969, guid: 89437555278a3b747b73449b8a201440, type: 3}
+      propertyPath: camara
+      value: 
+      objectReference: {fileID: 802150029}
     - target: {fileID: 7366088206330199277, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_Name
       value: Player
@@ -6135,9 +6133,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b281e153f59edd4bb25243815c47b13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  Confianza: 0
+  confianza: 0
   fadeDuration: 1
   lastDoorID: 
+  ruta: Assets/savegame.json
+  datos: {fileID: 11400000, guid: d5cd9530358ab5f488bbf0ac0b7995f6, type: 2}
 --- !u!4 &1379289228
 Transform:
   m_ObjectHideFlags: 0
@@ -7395,6 +7395,7 @@ MonoBehaviour:
   nombreEscena: PasilloCasa2
   miDoorID: hab2_pasillo2
   targetDoorID: spawnhab2_pasillo2
+  puzzleRequeridoID: 
 --- !u!65 &1744099270
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9318,6 +9319,7 @@ SceneRoots:
   - {fileID: 597536798}
   - {fileID: 332974370}
   - {fileID: 798350563}
+  - {fileID: 242112277}
   - {fileID: 1258626500}
   - {fileID: 1976490742}
   - {fileID: 592040462}
