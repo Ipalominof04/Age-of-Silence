@@ -27,12 +27,13 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
             meshGalon.SetActive(true);
             objetoMano.UsarObjeto();
             GameManager.Instance.ResolverPuzzle("GalonUsado");
+
         }
         else if (objeto == "Cerillas")
         {
             meshCerilla.SetActive(true);
             objetoMano.UsarObjeto();
-            GameManager.Instance.ResolverPuzzle("CerillasTiradas");
+           // GameManager.Instance.ResolverPuzzle("CerillasTiradas");
         }
     }
 
