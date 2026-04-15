@@ -59,6 +59,8 @@ public class DialogueManager : MonoBehaviour
     public void StartInfo(RuntimeDialogueGraph graph)
     {
         _isInfo = true;
+        //bloquea al jugador igual que un dialogo normal
+        OnDialogueStarted.Raise();
         _nodeLookup.Clear();
         foreach (var node in graph.AllNodes)
             _nodeLookup[node.NodeID] = node;
@@ -171,13 +173,15 @@ public class DialogueManager : MonoBehaviour
         if (_typewriterCoroutine != null)
             StopCoroutine(_typewriterCoroutine);
 
-        if (!_isInfo)
-            OnDialogueEnded.Raise();
+        //siempre desbloquea al player sea info o dialogo normal
+        OnDialogueEnded.Raise();
 
         _isInfo = false;
+
         _nodeLookup.Clear();
         _currentNode = null;
         _isTyping = false;
+
         DialoguePanel.SetActive(false);
 
         foreach (Transform child in ChoiceButtonContainer)
