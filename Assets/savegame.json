@@ -1,10 +1,11 @@
 {
-    "confianza": 3.0,
+    "confianza": 0.0,
     "playerHealth": 0.0,
-    "objetoMano": "Palanca",
-    "nameScene": "RellanoPB",
+    "objetoMano": "",
+    "nameScene": "ExteriorGasolinera",
     "puzlesCompletados": [
-        "FusibleVerde"
+        "FusibleVerde",
+        "GalonUsado"
     ],
     "escenas": [
         {
@@ -44,7 +45,7 @@
             "objetos": [
                 {
                     "id": "Cerillas",
-                    "active": false,
+                    "active": true,
                     "pos": {
                         "x": 44.28099822998047,
                         "y": 0.1679999977350235,
@@ -93,21 +94,6 @@
                     }
                 },
                 {
-                    "id": "Cerillas",
-                    "active": false,
-                    "pos": {
-                        "x": 2.2201223373413088,
-                        "y": 1.0083873271942139,
-                        "z": 1.3070733547210694
-                    },
-                    "rot": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    }
-                },
-                {
                     "id": "Galon",
                     "active": false,
                     "pos": {
@@ -120,6 +106,21 @@
                         "y": 0.7071068286895752,
                         "z": 0.0,
                         "w": 0.7071068286895752
+                    }
+                },
+                {
+                    "id": "Cerillas",
+                    "active": false,
+                    "pos": {
+                        "x": 2.2201223373413088,
+                        "y": 1.0083873271942139,
+                        "z": 1.3070733547210694
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 1.0
                     }
                 }
             ]
