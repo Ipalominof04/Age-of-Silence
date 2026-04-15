@@ -7,7 +7,7 @@ public class TriggerPuente : MonoBehaviour
 
     private bool EsObjetoValido(Collider other)
     {
-        return other.CompareTag("Player") ||
+        return other.CompareTag("PlayerCollider") ||
                other.CompareTag("Aiden") ||
                other.CompareTag("Movible");
     }
