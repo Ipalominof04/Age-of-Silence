@@ -5,6 +5,18 @@ public class OsoSuelo : MonoBehaviour
     [SerializeField] GameEvent OntakeBear;
     [SerializeField] GameObject osoMano;
 
+    private void Start()
+    {
+        foreach (GameObject obj in Resources.FindObjectsOfTypeAll<GameObject>())
+        {
+            if (obj.name == "OsoAiden")
+            {
+                osoMano = obj;
+                break;
+            }
+        }
+    }
+
     private void OnEnable()
     {
         OntakeBear.Subscribe(CogerOso);

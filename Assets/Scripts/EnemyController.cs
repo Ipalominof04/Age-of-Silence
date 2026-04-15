@@ -129,7 +129,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             case EnemyState.PATROL:
                 agent.isStopped = false;
                 SetUI(false);
-                agent.speed = 1f;
+                agent.speed = 0.7f;
                 agent.stoppingDistance = 0.2f;
                 agent.SetDestination(destination[currentIndex].position);
                 break;
