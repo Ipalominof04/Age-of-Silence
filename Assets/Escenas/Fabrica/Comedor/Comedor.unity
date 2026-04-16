@@ -709,6 +709,7 @@ GameObject:
   - component: {fileID: 43840962}
   - component: {fileID: 43840964}
   - component: {fileID: 43840963}
+  - component: {fileID: 43840965}
   m_Layer: 9
   m_Name: TriggerAiden
   m_TagString: TriggerInfo
@@ -765,6 +766,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.4515239, y: 0.80603325, z: 14.61886}
   m_Center: {x: -0.106797844, y: -0.09698409, z: 1.3672138}
+--- !u!114 &43840965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43840961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: 66814645e2f483940bba8054319df218, type: 2}
+  id: TriggerAiden
 --- !u!1001 &48624524
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5489,9 +5504,9 @@ GameObject:
   m_Component:
   - component: {fileID: 464834034}
   - component: {fileID: 464834035}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: SpawnEntrada
-  m_TagString: TriggerCambioEscena
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19596,9 +19611,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1616858848}
   - component: {fileID: 1616858849}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: SpawnCocina
-  m_TagString: TriggerCambioEscena
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
