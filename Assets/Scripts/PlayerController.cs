@@ -75,10 +75,13 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private IPuzle puzleInRange = null;
 
+    private Animator animator;
+
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
         soundEmitter = GetComponent<SoundEmitter>();
+        animator = GetComponent<Animator>();
         inputInstance = Instantiate(myInputActionAsset);
         inputInstance.FindActionMap("Player").Enable();
         walkAction = inputInstance.FindActionMap("Player").FindAction("Move");
@@ -138,18 +141,21 @@ public class PlayerController : MonoBehaviour, IDamageable
         switch (currentState)
         {
             case PlayerState.IDLE:
+                animator.Play("idle");
                 break;
             case PlayerState.WALK:
+                animator.Play("walk");
                 break;
             case PlayerState.RUN:
                 break;
             case PlayerState.CROUCH:
+                animator.Play("crouch");
                 characterController.center = new Vector3(0, 0.375f, 0);
                 characterController.radius = 0.3f;
-                characterController.height = 0.9f;
+                characterController.height = 0.7f;
                 playerCollider.center = new Vector3(0, 0.475f, 0);
                 playerCollider.radius = 0.4f;
-                playerCollider.height = 1f;
+                playerCollider.height = 0.8f;
                 break;
             case PlayerState.SHOOT:
                 break;
@@ -227,6 +233,11 @@ public class PlayerController : MonoBehaviour, IDamageable
             case PlayerState.CROUCH:
                 Crouch();
                 if (!crouchAction.IsPressed()) ChangeState(PlayerState.IDLE);
+                if (interactAction.triggered && objectLanzableInRange != null)
+                    ChangeState(PlayerState.THROW);
+
+                if (objetoLanzableEnMano != null && throwAction.IsPressed())
+                    ChangeState(PlayerState.THROW);
                 break;
             case PlayerState.SHOOT:
                 Shoot();
@@ -338,7 +349,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void Walk()
     {
-        Move(2f);
+        Move(1.75f);
         //soundEmitter.EmitSound(ESound.WALK);
     }
 
@@ -501,10 +512,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         characterController.center = new Vector3(0, 0.8f, 0);
         characterController.radius = 0.2f;
-        characterController.height = 1.75f;
+        characterController.height = 1.5f;
         playerCollider.center = new Vector3(0, 0.9f, 0);
         playerCollider.radius = 0.3f;
-        playerCollider.height = 1.85f;
+        playerCollider.height = 1.6f;
     }
     private void OnTriggerEnter(Collider other)
     {
