@@ -4920,6 +4920,7 @@ GameObject:
   - component: {fileID: 432446333}
   - component: {fileID: 432446332}
   - component: {fileID: 432446331}
+  - component: {fileID: 432446334}
   m_Layer: 12
   m_Name: Pieza
   m_TagString: Pieza
@@ -4999,6 +5000,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &432446334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432446330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: 5a5e1434934f89f49864b6e1f95e3f50, type: 2}
+  id: Pieza
 --- !u!1001 &442130356
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20702,7 +20717,7 @@ MonoBehaviour:
   fadeDuration: 1
   lastDoorID: 
   ruta: Assets/savegame.json
-  datos: {fileID: 0}
+  datos: {fileID: 11400000, guid: d5cd9530358ab5f488bbf0ac0b7995f6, type: 2}
 --- !u!4 &1845911923
 Transform:
   m_ObjectHideFlags: 0
