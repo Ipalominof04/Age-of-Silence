@@ -35,7 +35,8 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
             LimpiarSOEscenas();
-            fadeImage = GameObject.Find("Fundido")?.GetComponent<Image>();
+            //fadeImage = GameObject.Find("Fundido")?.GetComponent<Image>();
+            fadeImage = GetComponentInChildren<Image>();
             SceneManager.sceneLoaded -= OnSceneLoaded;
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
@@ -73,8 +74,6 @@ public class GameManager : MonoBehaviour
 
     public bool PuzzleResuelto(string puzzleID)
     {
-
-        Debug.Log(datos.puzzlesResueltos.Count+ " puuuuuuuuuuuuuzleeeeeeeeeeeeees");
         return datos.puzzlesResueltos.Contains(puzzleID);
     }
     public void ChangeScene(string sceneName)
@@ -136,7 +135,7 @@ public class GameManager : MonoBehaviour
         if (newScene.IsValid() && newScene.isLoaded) SceneManager.SetActiveScene(newScene);
 
 
-        if(sceneName == "Escena2")
+        if(sceneName == "Comedor")
         {
             ChapterUI.ChapterStep[] steps = new ChapterUI.ChapterStep[]
             {
