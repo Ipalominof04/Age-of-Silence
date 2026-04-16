@@ -35,14 +35,17 @@ public class AidenController : MonoBehaviour
 
     private SoundEmitter emitter;
 
+    private Animator animator;
+
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         emitter = GetComponent<SoundEmitter>();
+        animator = GetComponent<Animator>();
+        SetColliderNormal();
         InitState(AidenState.IDLE);
         SetUI(false);
-
     }
 
     void Update()
@@ -126,8 +129,10 @@ public class AidenController : MonoBehaviour
         switch (currentState)
         {
             case AidenState.IDLE:
+                animator.Play("idle");
                 break;
             case AidenState.WALK:
+                animator.Play("walk");
                 agent.speed = 1.75f;
                 break;
             case AidenState.RUN:
@@ -236,11 +241,7 @@ public class AidenController : MonoBehaviour
             case AidenState.RUN:
                 break;
             case AidenState.CROUCH:
-                aidenCollider.center = new Vector3(0, 0.5f, 0);
-                aidenCollider.radius = 0.2f;
-                aidenCollider.height = 1f;
-                agent.height = 1f;
-                agent.radius = 0.2f;
+                SetColliderNormal();
                 break;
             case AidenState.SCARED:
                 break;
@@ -255,6 +256,15 @@ public class AidenController : MonoBehaviour
         agent.stoppingDistance = 1f;
         agent.autoBraking = false;
         agent.SetDestination(player.transform.position);
+    }
+
+    private void SetColliderNormal()
+    {
+        aidenCollider.center = new Vector3(0, 0.5f, 0);
+        aidenCollider.radius = 0.2f;
+        aidenCollider.height = 0.8f;
+        agent.height = 0.8f;
+        agent.radius = 0.2f;
     }
 
     private void Scared(ScareType type)
