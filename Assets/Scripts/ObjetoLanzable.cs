@@ -90,6 +90,7 @@ public class ObjetoLanzable : MonoBehaviour
 
             if (this.gameObject.tag == "Roca")
             {
+                if (!yaLanzado) return;
                 if ((capasColision.value & (1 << collision.gameObject.layer)) == 0) return;
                 emitter.EmitSound(ESound.ROCK);
             }
