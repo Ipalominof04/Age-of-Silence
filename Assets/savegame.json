@@ -2,14 +2,33 @@
     "confianza": -3.0,
     "playerHealth": 0.0,
     "objetoMano": "",
-    "nameScene": "Entrada",
+    "nameScene": "ZonaChill",
     "puzlesCompletados": [
-        "AidenNiega"
+        "AidenNiega",
+        "FusibleVerde",
+        "FusibleAzul",
+        "FusibleAmarillo"
     ],
     "escenas": [
         {
             "sceneName": "Cocina Fabrica",
-            "objetos": []
+            "objetos": [
+                {
+                    "id": "FusibleAzul",
+                    "active": false,
+                    "pos": {
+                        "x": 10.168999671936036,
+                        "y": 1.2359999418258668,
+                        "z": 2.875999927520752
+                    },
+                    "rot": {
+                        "x": 0.352334201335907,
+                        "y": 0.5115534663200378,
+                        "z": 0.48817312717437746,
+                        "w": 0.613074779510498
+                    }
+                }
+            ]
         },
         {
             "sceneName": "Comedor Casa2",
@@ -17,11 +36,88 @@
         },
         {
             "sceneName": "",
-            "objetos": []
+            "objetos": [
+                {
+                    "id": "Comida",
+                    "active": true,
+                    "pos": {
+                        "x": 8.85200023651123,
+                        "y": 0.4668000042438507,
+                        "z": 2.302000045776367
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 1.0
+                    }
+                },
+                {
+                    "id": "TriggerAiden",
+                    "active": false,
+                    "pos": {
+                        "x": 1.9653282165527344,
+                        "y": 0.6402914524078369,
+                        "z": 0.440216988325119
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 1.0
+                    }
+                }
+            ]
         },
         {
             "sceneName": "Electricidad",
-            "objetos": []
+            "objetos": [
+                {
+                    "id": "FusibleVerde",
+                    "active": true,
+                    "pos": {
+                        "x": 46.32143783569336,
+                        "y": 1.3899998664855958,
+                        "z": -4.26258659362793
+                    },
+                    "rot": {
+                        "x": 0.5,
+                        "y": 0.5,
+                        "z": -0.5,
+                        "w": 0.5
+                    }
+                },
+                {
+                    "id": "FusibleAzul",
+                    "active": true,
+                    "pos": {
+                        "x": 46.48099899291992,
+                        "y": 1.3899998664855958,
+                        "z": -4.26258659362793
+                    },
+                    "rot": {
+                        "x": 0.5,
+                        "y": 0.5,
+                        "z": -0.5,
+                        "w": 0.5
+                    }
+                },
+                {
+                    "id": "FusibleAmarillo",
+                    "active": true,
+                    "pos": {
+                        "x": 46.63710021972656,
+                        "y": 1.3899998664855958,
+                        "z": -4.26258659362793
+                    },
+                    "rot": {
+                        "x": 0.5,
+                        "y": 0.5,
+                        "z": -0.5,
+                        "w": 0.5
+                    }
+                }
+            ]
         },
         {
             "sceneName": "ExteriorGasolinera",
@@ -41,7 +137,23 @@
         },
         {
             "sceneName": "Oficina 2",
-            "objetos": []
+            "objetos": [
+                {
+                    "id": "FusibleVerde",
+                    "active": false,
+                    "pos": {
+                        "x": 1.8868000507354737,
+                        "y": 1.3014999628067017,
+                        "z": 2.4930999279022219
+                    },
+                    "rot": {
+                        "x": 0.36820951104164126,
+                        "y": 0.4910995364189148,
+                        "z": 0.476313054561615,
+                        "w": 0.6295783519744873
+                    }
+                }
+            ]
         },
         {
             "sceneName": "Sala Piezas Fabrica",
@@ -78,7 +190,7 @@
                 },
                 {
                     "id": "FusibleAmarillo",
-                    "active": true,
+                    "active": false,
                     "pos": {
                         "x": 54.36822509765625,
                         "y": 0.7471471428871155,
@@ -99,7 +211,23 @@
         },
         {
             "sceneName": "Almacen Fabrica",
-            "objetos": []
+            "objetos": [
+                {
+                    "id": "Pieza",
+                    "active": true,
+                    "pos": {
+                        "x": 57.551998138427737,
+                        "y": 4.885000228881836,
+                        "z": -1.9292000532150269
+                    },
+                    "rot": {
+                        "x": 0.7071068286895752,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 0.7071068286895752
+                    }
+                }
+            ]
         }
     ]
 }
