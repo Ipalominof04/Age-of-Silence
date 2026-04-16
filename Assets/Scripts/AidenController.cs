@@ -128,7 +128,7 @@ public class AidenController : MonoBehaviour
             case AidenState.IDLE:
                 break;
             case AidenState.WALK:
-                agent.speed = 2f;
+                agent.speed = 1.75f;
                 break;
             case AidenState.RUN:
                 agent.speed = 3f;
