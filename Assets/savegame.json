@@ -1,13 +1,31 @@
 {
-    "confianza": 10.0,
+    "confianza": 3.0,
     "playerHealth": 0.0,
     "objetoMano": "",
-    "nameScene": "HabNeneCasa2",
-    "puzlesCompletados": [],
+    "nameScene": "Comedor",
+    "puzlesCompletados": [
+        "AidenNiega"
+    ],
     "escenas": [
         {
             "sceneName": "Cocina Fabrica",
-            "objetos": []
+            "objetos": [
+                {
+                    "id": "FusibleAzul",
+                    "active": true,
+                    "pos": {
+                        "x": 10.168999671936036,
+                        "y": 1.2359999418258668,
+                        "z": 2.875999927520752
+                    },
+                    "rot": {
+                        "x": 0.352334201335907,
+                        "y": 0.5115534663200378,
+                        "z": 0.48817312717437746,
+                        "w": 0.613074779510498
+                    }
+                }
+            ]
         },
         {
             "sceneName": "Comedor Casa2",
@@ -15,7 +33,38 @@
         },
         {
             "sceneName": "",
-            "objetos": []
+            "objetos": [
+                {
+                    "id": "TriggerAiden",
+                    "active": false,
+                    "pos": {
+                        "x": 1.9653282165527344,
+                        "y": 0.6402914524078369,
+                        "z": 0.440216988325119
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 1.0
+                    }
+                },
+                {
+                    "id": "Comida",
+                    "active": true,
+                    "pos": {
+                        "x": 8.85200023651123,
+                        "y": 0.4668000042438507,
+                        "z": 2.302000045776367
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 1.0
+                    }
+                }
+            ]
         },
         {
             "sceneName": "Electricidad",
@@ -30,39 +79,8 @@
             "objetos": []
         },
         {
-            "sceneName": "",
-            "objetos": [
-                {
-                    "id": "TriggerDialogue",
-                    "active": false,
-                    "pos": {
-                        "x": 0.5296101570129395,
-                        "y": 0.5460000038146973,
-                        "z": -2.2533605098724367
-                    },
-                    "rot": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    }
-                },
-                {
-                    "id": "OsoNiño",
-                    "active": false,
-                    "pos": {
-                        "x": -1.5883898735046387,
-                        "y": 0.2027159035205841,
-                        "z": -3.3364601135253908
-                    },
-                    "rot": {
-                        "x": 0.0,
-                        "y": -0.583541214466095,
-                        "z": 0.0,
-                        "w": 0.8120835423469544
-                    }
-                }
-            ]
+            "sceneName": "Habitación Niño Casa 2",
+            "objetos": []
         },
         {
             "sceneName": "InteriorGasolinera",
@@ -78,6 +96,10 @@
         },
         {
             "sceneName": "Trastero",
+            "objetos": []
+        },
+        {
+            "sceneName": "Almacen Fabrica",
             "objetos": []
         }
     ]

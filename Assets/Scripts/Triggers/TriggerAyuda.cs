@@ -41,6 +41,7 @@ public class TriggerAyuda : MonoBehaviour
             else
                 DialogueManager.Instance.StartInfo(graphNoAyuda);
                 GameManager.Instance.ResolverPuzzle("AidenNiega");
+                this.gameObject.SetActive(false);
         }
         else if (tipo == PuzleHelpType.BRIDGE)
         {
