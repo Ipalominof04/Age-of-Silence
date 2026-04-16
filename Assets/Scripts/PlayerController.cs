@@ -144,6 +144,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 animator.Play("idle");
                 break;
             case PlayerState.WALK:
+                animator.Play("walk");
                 break;
             case PlayerState.RUN:
                 break;
@@ -232,6 +233,11 @@ public class PlayerController : MonoBehaviour, IDamageable
             case PlayerState.CROUCH:
                 Crouch();
                 if (!crouchAction.IsPressed()) ChangeState(PlayerState.IDLE);
+                if (interactAction.triggered && objectLanzableInRange != null)
+                    ChangeState(PlayerState.THROW);
+
+                if (objetoLanzableEnMano != null && throwAction.IsPressed())
+                    ChangeState(PlayerState.THROW);
                 break;
             case PlayerState.SHOOT:
                 Shoot();
@@ -343,7 +349,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void Walk()
     {
-        Move(2f);
+        Move(1.75f);
         //soundEmitter.EmitSound(ESound.WALK);
     }
 
