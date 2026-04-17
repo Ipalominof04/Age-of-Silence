@@ -16,6 +16,8 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
     [Header("Config de valores")]
     [SerializeField] float vida;
+    [SerializeField] float speedPatrol = 0.7f;
+    [SerializeField] float speedChase = 2f;
 
     [Header("Disparo")]
     [SerializeField] private GameObject bala;
@@ -129,7 +131,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             case EnemyState.PATROL:
                 agent.isStopped = false;
                 SetUI(false);
-                agent.speed = 0.7f;
+                agent.speed = speedPatrol;
                 agent.stoppingDistance = 0.2f;
                 agent.SetDestination(destination[currentIndex].position);
                 break;
@@ -137,7 +139,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             case EnemyState.CHASE:
                 agent.isStopped = false;
                 SetUI(true, "!" , "#F11200");
-                agent.speed = 2f;
+                agent.speed = speedChase;
                 agent.stoppingDistance = radiusAttack;
                 break;
 

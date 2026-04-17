@@ -1894,6 +1894,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   currentState: 0
   vida: 0
+  speedPatrol: 0.7
+  speedChase: 2
   bala: {fileID: 769116550249096355, guid: 52ceab2e7939f084491bfaac844b5192, type: 3}
   shootingPoint: {fileID: 604611997568827125}
   OnAidenScared: {fileID: 11400000, guid: 8c594f5565fc02f4db9991d6d6c69b3d, type: 2}
@@ -1908,7 +1910,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   destination:
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   currentIndex: 0
