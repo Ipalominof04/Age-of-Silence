@@ -211,7 +211,9 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 break;
 
             case EnemyState.LOOK:
-                //la corrutina se inicia en el init
+                // Girar hacia donde oyó el sonido
+                if (playerTransform != null) LookToPlayer();
+
                 if (PlayerInAttackArea())
                     ChangeState(EnemyState.ATTACK);
                 else if (PlayerInArea(radiusChase))
@@ -288,7 +290,19 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         if (angle <= 45f)
         {
             Vector3 origin = headTransform != null ? headTransform.position : transform.position + Vector3.up;
-            Vector3 targetPoint = hit.bounds.max;
+            PlayerController player = hit.GetComponent<PlayerController>();
+
+            Vector3 targetPoint;
+
+            if (player != null)
+            {
+                targetPoint = player.GetEyePoint().position;
+            }
+            else
+            {
+                targetPoint = hit.bounds.center;
+            }
+
             Vector3 direction = (targetPoint - origin).normalized;
             float distance = Vector3.Distance(origin, targetPoint);
 

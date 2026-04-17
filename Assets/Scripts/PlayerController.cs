@@ -35,6 +35,10 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     [Header("Crouch")]
     [SerializeField] private CapsuleCollider playerCollider;
+    [SerializeField] private Transform eyePoint;
+
+    [SerializeField] private float eyeHeightStanding = 1.6f;
+    [SerializeField] private float eyeHeightCrouch = 0.8f;
 
     [Header("Objetos")]
     [SerializeField] private ObjetoAgarrado objetoMano;
@@ -76,6 +80,12 @@ public class PlayerController : MonoBehaviour, IDamageable
     private IPuzle puzleInRange = null;
 
     private Animator animator;
+
+
+    public Transform GetEyePoint()
+    {
+        return eyePoint;
+    }
 
     private void Awake()
     {
@@ -134,6 +144,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         onArmaEnfriada.Unsubscribe(() => armaSobrecalentada = false);
     }
 
+
     #region State Machine
     private void InitState(PlayerState state)
     {
@@ -154,8 +165,10 @@ public class PlayerController : MonoBehaviour, IDamageable
                 characterController.radius = 0.3f;
                 characterController.height = 0.7f;
                 playerCollider.center = new Vector3(0, 0.475f, 0);
-                playerCollider.radius = 0.4f;
+                playerCollider.radius = 0.7f;
                 playerCollider.height = 0.8f;
+
+                eyePoint.localPosition = new Vector3(0, eyeHeightCrouch, 0);
                 break;
             case PlayerState.SHOOT:
                 break;
@@ -516,6 +529,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         playerCollider.center = new Vector3(0, 0.9f, 0);
         playerCollider.radius = 0.3f;
         playerCollider.height = 1.6f;
+        eyePoint.localPosition = new Vector3(0, eyeHeightStanding, 0);
     }
     private void OnTriggerEnter(Collider other)
     {
