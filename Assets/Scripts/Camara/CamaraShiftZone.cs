@@ -13,7 +13,7 @@ public class CamaraShiftZone : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerCollider"))
         {
             shiftedCam.Priority = 3;
             normalCam.Priority = 2;
