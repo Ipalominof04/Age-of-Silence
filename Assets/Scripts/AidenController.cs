@@ -35,14 +35,17 @@ public class AidenController : MonoBehaviour
 
     private SoundEmitter emitter;
 
+    private Animator animator;
+
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         emitter = GetComponent<SoundEmitter>();
+        animator = GetComponent<Animator>();
+        SetColliderNormal();
         InitState(AidenState.IDLE);
         SetUI(false);
-
     }
 
     void Update()
@@ -126,19 +129,22 @@ public class AidenController : MonoBehaviour
         switch (currentState)
         {
             case AidenState.IDLE:
+                animator.SetFloat("Speed", 0f);
                 break;
             case AidenState.WALK:
+                animator.SetFloat("Speed", 0.5f);
                 agent.speed = 1.75f;
                 break;
             case AidenState.RUN:
                 agent.speed = 3f;
                 break;
             case AidenState.CROUCH:
+                animator.SetFloat("Speed", 0.25f);
                 agent.speed = 1f;
                 aidenCollider.center = new Vector3(0, 0.3f, 0);
                 aidenCollider.radius = 0.2f;
                 aidenCollider.height = 0.6f;
-                agent.height = 0.6f;
+                agent.height = 0.45f;
                 agent.radius = 0.2f;
                 break;
             case AidenState.SCARED:
@@ -236,11 +242,7 @@ public class AidenController : MonoBehaviour
             case AidenState.RUN:
                 break;
             case AidenState.CROUCH:
-                aidenCollider.center = new Vector3(0, 0.5f, 0);
-                aidenCollider.radius = 0.2f;
-                aidenCollider.height = 1f;
-                agent.height = 1f;
-                agent.radius = 0.2f;
+                SetColliderNormal();
                 break;
             case AidenState.SCARED:
                 break;
@@ -255,6 +257,28 @@ public class AidenController : MonoBehaviour
         agent.stoppingDistance = 1f;
         agent.autoBraking = false;
         agent.SetDestination(player.transform.position);
+
+        // Rotar hacia el player cuando está cerca y el agente está parado
+        if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
+        {
+            Vector3 direccion = player.position - transform.position;
+            direccion.y = 0f;
+            if (direccion.sqrMagnitude > 0.01f)
+            {
+                Quaternion rotacionObjetivo = Quaternion.LookRotation(direccion);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, rotacionObjetivo, 180f * Time.deltaTime);
+            }
+        }
+    }
+
+    private void SetColliderNormal()
+    {
+        aidenCollider.center = new Vector3(0, 0.5f, 0);
+        aidenCollider.radius = 0.2f;
+        aidenCollider.height = 1f;
+        agent.height = 0.8f;
+        agent.radius = 0.2f;
+        agent.baseOffset = -0.14f;
     }
 
     private void Scared(ScareType type)
