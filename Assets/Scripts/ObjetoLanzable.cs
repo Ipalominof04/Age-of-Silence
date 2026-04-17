@@ -9,33 +9,44 @@ public class ObjetoLanzable : MonoBehaviour
     [Header("Colisión")]
     [SerializeField] private LayerMask capasColision;
 
-    private SphereCollider collider;
+    private SphereCollider objetoCollider;
     private SoundEmitter emitter;
     private bool yaLanzado = false;
     private Vector3 velocidadPendiente;
     private bool lanzarEnFixedUpdate = false;
 
-    // 👇 NUEVO: guardamos colliders del jugador
-    private Collider[] collidersJugadorIgnorados;
-
     private void Awake()
     {
-        collider = GetComponent<SphereCollider>();
+        objetoCollider = GetComponent<SphereCollider>();
         emitter = GetComponent<SoundEmitter>();
     }
 
     public void Recoger()
     {
-        collider.enabled = false;
+        objetoCollider.enabled = false;
         transform.SetParent(hand.transform);
         transform.position = hand.transform.position;
         transform.rotation = hand.transform.rotation;
 
         if (this.tag == "Botella")
-            transform.localScale = Vector3.one * 0.7f;
+        {
+            //compensar el scale del padre para que el scale MUNDIAL sea 0.7
+            Vector3 parentScale = hand.transform.lossyScale;
+            transform.localScale = new Vector3(
+                0.7f / parentScale.x,
+                0.7f / parentScale.y,
+                0.7f / parentScale.z
+                );
+        }
         else if (this.tag == "Roca")
-            transform.localScale = Vector3.one * 0.15f;
-
+        {
+            Vector3 parentScale = hand.transform.lossyScale;
+            transform.localScale = new Vector3(
+                0.1f / parentScale.x,
+                0.1f / parentScale.y,
+                0.1f / parentScale.z
+            );
+        }
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
             rb.isKinematic = true;
@@ -45,7 +56,7 @@ public class ObjetoLanzable : MonoBehaviour
     {
         yaLanzado = true;
         transform.SetParent(null);
-        collider.enabled = false;
+        objetoCollider.enabled = false;
 
         int layerObjeto = gameObject.layer;
         int layerPlayer = LayerMask.NameToLayer("Player");
@@ -64,7 +75,7 @@ public class ObjetoLanzable : MonoBehaviour
         if (!lanzarEnFixedUpdate) return;
         lanzarEnFixedUpdate = false;
 
-        collider.enabled = true;
+        objetoCollider.enabled = true;
 
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
@@ -90,10 +101,6 @@ public class ObjetoLanzable : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log($"[{this.gameObject.name}] Colisión con: '{collision.gameObject.name}' " +
-                  $"| Tag: '{collision.gameObject.tag}' " +
-                  $"| Layer: '{LayerMask.LayerToName(collision.gameObject.layer)}'");
-
         if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
         {
             if (this.gameObject.tag == "Botella")

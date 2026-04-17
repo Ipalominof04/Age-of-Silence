@@ -24,7 +24,7 @@ public class DialogueManager : MonoBehaviour
     private RuntimeDialogueNode _currentNode;
     private Coroutine _typewriterCoroutine;
     private bool _isTyping = false; //para saber si estA escribiendo
-    private bool _isInfo = false;
+    //private bool _isInfo = false;
 
     [Header("Events")]
     public GameEvent OnDialogueStarted;
@@ -58,7 +58,7 @@ public class DialogueManager : MonoBehaviour
     }
     public void StartInfo(RuntimeDialogueGraph graph)
     {
-        _isInfo = true;
+       // _isInfo = true;
         //bloquea al jugador igual que un dialogo normal
         OnDialogueStarted.Raise();
         _nodeLookup.Clear();
@@ -176,7 +176,7 @@ public class DialogueManager : MonoBehaviour
         //siempre desbloquea al player sea info o dialogo normal
         OnDialogueEnded.Raise();
 
-        _isInfo = false;
+       // _isInfo = false;
 
         _nodeLookup.Clear();
         _currentNode = null;
