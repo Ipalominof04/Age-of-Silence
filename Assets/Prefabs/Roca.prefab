@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 5189095701719909549}
   - component: {fileID: 312931010195367094}
   - component: {fileID: 6291511335519102609}
-  - component: {fileID: 8103511807501703098}
   - component: {fileID: 7403867697544021082}
   - component: {fileID: 8991428725283467144}
   m_Layer: 12
@@ -35,7 +34,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7770086, z: 0, w: 0.62949}
   m_LocalPosition: {x: 31.14, y: -0.003, z: 3.47}
-  m_LocalScale: {x: 0.16245107, y: 0.16245104, z: 0.16245107}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -243,27 +242,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54963b24924cef548bf2c749522b6377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundEmitter
---- !u!135 &8103511807501703098
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1953322920661668091}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 3.89
-  m_Center: {x: -0.013123483, y: 0.5709313, z: 0.060275853}
 --- !u!135 &7403867697544021082
 SphereCollider:
   m_ObjectHideFlags: 0
