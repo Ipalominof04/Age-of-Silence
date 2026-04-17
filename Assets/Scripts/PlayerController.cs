@@ -315,7 +315,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             Vector3 puntoObjetivo = parabolaRenderer.ObtenerPuntoObjetivo(huesoMano.position, camara);
             Vector3 velocidad = parabolaRenderer.CalcularVelocidadInicial(huesoMano.position, puntoObjetivo);
-            objetoLanzableEnMano.Lanzar(velocidad, GetComponent<CapsuleCollider>());
+            objetoLanzableEnMano.Lanzar(velocidad, playerCollider);
             objetoLanzableEnMano = null;
             ChangeState(PlayerState.IDLE);
         }
