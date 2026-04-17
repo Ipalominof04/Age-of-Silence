@@ -177,7 +177,7 @@ public class AidenController : MonoBehaviour
 
                     //si ya hay una corrutina que no se empiece otra, para q no haya bugs
                     if (scaredCoroutine != null) StopCoroutine(scaredCoroutine);
-                    scaredCoroutine = StartCoroutine(ScaredRoutine());
+                    scaredCoroutine = StartCoroutine(scaredRunRoutine());
                 }
                 break;
             case AidenState.HELP:
@@ -199,11 +199,25 @@ public class AidenController : MonoBehaviour
                 FollowPlayer();
                 break;
             case AidenState.CROUCH:
+                float speed = agent.velocity.magnitude;
+
+                if (speed < 0.1f)
+                    animator.SetFloat("Speed", 0f);      // crouch idle
+                else
+                    animator.SetFloat("Speed", 0.5f);    // crouch walk
+
                 FollowPlayer();
                 break;
             case AidenState.SCARED:
                 float distancia = Vector3.Distance(transform.position, player.position);
-                //uso el getkeydown para poder leer el input de forma sencilla, tambien puede hacerse por evento (por si queremos cambiarlo)
+
+                //cuando llegue al destination que salte la otra animacion
+                if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+                {
+                    animator.SetFloat("Speed", 0.75f);
+                }
+
+                //uso el getkeydown para poder leer el input de forma facil, tambien puede hacerse por evento (por si queremos cambiarlo)
                 if (distancia <= 2f && Input.GetKeyDown(KeyCode.E))
                 {
                     //si la corrutina esta activa, parala y ponla a null
@@ -333,7 +347,7 @@ public class AidenController : MonoBehaviour
         }
     }
 
-    private IEnumerator ScaredRoutine()
+    private IEnumerator scaredRunRoutine()
     {
         yield return new WaitForSeconds(20f);
         scaredCoroutine = null;
@@ -346,7 +360,6 @@ public class AidenController : MonoBehaviour
     {
         agent.isStopped = true;
 
-        yield return null;
         yield return new WaitUntil(() =>
             animator.GetCurrentAnimatorStateInfo(0).IsName("scaredScream"));
 
@@ -356,8 +369,7 @@ public class AidenController : MonoBehaviour
         Debug.Log("ScreamRoutine terminada correctamente");
         agent.isStopped = false;
         SetUI(false);
-        ChangeState(AidenState.WALK); // reset para que HandlePlayerStateChanged no ignore el evento
-        //HandlePlayerStateChanged(PlayerController.CurrentState);
+        ChangeState(AidenState.WALK); 
     }
     public void PedirAyuda(Vector3 destino, GameEvent onLlego, bool esperarEnDestino2 = false)
     {
