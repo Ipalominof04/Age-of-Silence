@@ -12,10 +12,11 @@ public class ObjetoLanzable : MonoBehaviour
     private SphereCollider collider;
     private SoundEmitter emitter;
     private bool yaLanzado = false;
-
     private Vector3 velocidadPendiente;
     private bool lanzarEnFixedUpdate = false;
-    private Collider colliderJugadorPendiente;
+
+    // 👇 NUEVO: guardamos colliders del jugador
+    private Collider[] collidersJugadorIgnorados;
 
     private void Awake()
     {
@@ -44,10 +45,17 @@ public class ObjetoLanzable : MonoBehaviour
     {
         yaLanzado = true;
         transform.SetParent(null);
-        collider.enabled = true;
+        collider.enabled = false;
+
+        int layerObjeto = gameObject.layer;
+        int layerPlayer = LayerMask.NameToLayer("Player");
+        int layerPlayerCollider = LayerMask.NameToLayer("PlayerCollider");
+
+        // 👇 Ignorar ambas layers inmediatamente
+        Physics.IgnoreLayerCollision(layerObjeto, layerPlayer, true);
+        Physics.IgnoreLayerCollision(layerObjeto, layerPlayerCollider, true);
 
         velocidadPendiente = velocidadInicial;
-        colliderJugadorPendiente = colliderJugador;
         lanzarEnFixedUpdate = true;
     }
 
@@ -56,8 +64,7 @@ public class ObjetoLanzable : MonoBehaviour
         if (!lanzarEnFixedUpdate) return;
         lanzarEnFixedUpdate = false;
 
-        if (colliderJugadorPendiente != null)
-            Physics.IgnoreCollision(collider, colliderJugadorPendiente, true);
+        collider.enabled = true;
 
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
@@ -66,18 +73,27 @@ public class ObjetoLanzable : MonoBehaviour
             rb.linearVelocity = velocidadPendiente;
         }
 
-        StartCoroutine(ReactivarColision(colliderJugadorPendiente));
+        StartCoroutine(ReactivarColision());
     }
 
-    private IEnumerator ReactivarColision(Collider colliderJugador)
+    private IEnumerator ReactivarColision()
     {
         yield return new WaitForSeconds(0.5f);
-        if (colliderJugador != null && collider != null)
-            Physics.IgnoreCollision(collider, colliderJugador, false);
+
+        int layerObjeto = gameObject.layer;
+        int layerPlayer = LayerMask.NameToLayer("Player");
+        int layerPlayerCollider = LayerMask.NameToLayer("PlayerCollider");
+
+        Physics.IgnoreLayerCollision(layerObjeto, layerPlayer, false);
+        Physics.IgnoreLayerCollision(layerObjeto, layerPlayerCollider, false);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log($"[{this.gameObject.name}] Colisión con: '{collision.gameObject.name}' " +
+                  $"| Tag: '{collision.gameObject.tag}' " +
+                  $"| Layer: '{LayerMask.LayerToName(collision.gameObject.layer)}'");
+
         if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
         {
             if (this.gameObject.tag == "Botella")
