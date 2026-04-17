@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 {
     public enum EnemyState { NONE, IDLE, PATROL, CHASE, ATTACK, SEARCHING, LOOK };
+    public enum EnemyType { NORMAL, FUERTE, VELOZ, VISIONS }
 
     [Header("Maquina de estados")]
     [SerializeField] private EnemyState currentState;
@@ -18,10 +19,14 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     [SerializeField] float vida;
     [SerializeField] float speedPatrol = 0.7f;
     [SerializeField] float speedChase = 2f;
+    [SerializeField] EnemyType enemyType;
 
     [Header("Disparo")]
     [SerializeField] private GameObject bala;
     [SerializeField] private GameObject shootingPoint;
+    [SerializeField] public float damageAmount = 1f;
+    [SerializeField] public float bulleSpeed = 20f;
+    [SerializeField] public float shootCooldown = 1f;
 
     [Header("Eventos")]
     [SerializeField] private GameEventString OnAidenScared;
@@ -336,10 +341,42 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
         if (shootingPoint != null && bala != null)
         {
-            GameObject go = Instantiate(bala, shootingPoint.transform.position, shootingPoint.transform.rotation);
-            Rigidbody rb = go.GetComponent<Rigidbody>();
-            if (rb != null)
-                rb.linearVelocity = this.transform.forward * 20f;
+            switch (enemyType)
+            {
+                case EnemyType.FUERTE:
+                    // Escopeta: varios proyectiles con dispersión
+                    int pellets = 5;
+                    float spreadAngle = 15f;
+                    for (int i = 0; i < pellets; i++)
+                    {
+                        Quaternion spread = Quaternion.Euler(
+                            Random.Range(-spreadAngle, spreadAngle),
+                            Random.Range(-spreadAngle, spreadAngle),
+                            0
+                        );
+                        Vector3 direction = spread * transform.forward;
+
+                        GameObject go = Instantiate(bala, shootingPoint.transform.position, shootingPoint.transform.rotation);
+                        BalaController balaController = go.GetComponent<BalaController>();
+                        if (balaController != null)
+                            balaController.SetDamage(damageAmount);
+                        Rigidbody rb = go.GetComponent<Rigidbody>();
+                        if (rb != null)
+                            rb.linearVelocity = direction * bulleSpeed;
+                    }
+                    break;
+
+                default:
+                    // Disparo normal para NORMAL y FAST
+                    GameObject goDefault = Instantiate(bala, shootingPoint.transform.position, shootingPoint.transform.rotation);
+                    BalaController balaDefault = goDefault.GetComponent<BalaController>();
+                    if (balaDefault != null)
+                        balaDefault.SetDamage(damageAmount);
+                    Rigidbody rbDefault = goDefault.GetComponent<Rigidbody>();
+                    if (rbDefault != null)
+                        rbDefault.linearVelocity = this.transform.forward * bulleSpeed;
+                    break;
+            }
         }
 
         if (SceneManager.GetActiveScene().name != "Escena2")
@@ -349,7 +386,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     private IEnumerator ShootCooldown()
     {
         hasShot = true;
-        yield return new WaitForSeconds(1f); // ajusta el tiempo entre disparos
+        yield return new WaitForSeconds(shootCooldown); // ajusta el tiempo entre disparos
         hasShot = false;
     }
 

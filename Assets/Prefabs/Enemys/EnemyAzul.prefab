@@ -2738,11 +2738,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   currentState: 0
-  vida: 0
-  speedPatrol: 1
-  speedChase: 2.3
+  vida: 3
+  speedPatrol: 1.5
+  speedChase: 2
+  enemyType: 2
   bala: {fileID: 769116550249096355, guid: 52ceab2e7939f084491bfaac844b5192, type: 3}
   shootingPoint: {fileID: 7643821986064342836}
+  damageAmount: 0.3
+  bulleSpeed: 20
+  shootCooldown: 0.5
   OnAidenScared: {fileID: 11400000, guid: 8c594f5565fc02f4db9991d6d6c69b3d, type: 2}
   headTransform: {fileID: 391963164876802710}
   radiusChase: 4

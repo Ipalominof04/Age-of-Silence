@@ -3,7 +3,13 @@
 public class BalaController : MonoBehaviour
 {
     private bool yaImpacto = false;
+    private float damage;
 
+
+    public void SetDamage(float amount)
+    {
+        damage = amount;
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (yaImpacto) return;
@@ -11,8 +17,9 @@ public class BalaController : MonoBehaviour
 
         IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
         if (damageable != null)
-            damageable.TakeDamage(1);
+            damageable.TakeDamage(damage);
 
         Destroy(gameObject);
     }
+
 }
