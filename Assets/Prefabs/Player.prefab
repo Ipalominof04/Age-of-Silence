@@ -1143,6 +1143,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6581264682736331950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4147800015935036215
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1966297326195871146}
+  m_Layer: 8
+  m_Name: headTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1966297326195871146
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4147800015935036215}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1075083039853645334}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4297575116288105919
 GameObject:
   m_ObjectHideFlags: 0
@@ -1886,6 +1917,7 @@ Transform:
   - {fileID: 1453270521304110753}
   - {fileID: 1867358619669389811}
   - {fileID: 8767658093652189346}
+  - {fileID: 1966297326195871146}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &1796687356054423060
@@ -1932,6 +1964,9 @@ MonoBehaviour:
   aiden: {fileID: 0}
   interactRange: 2
   playerCollider: {fileID: 1166554516456749207}
+  eyePoint: {fileID: 1966297326195871146}
+  eyeHeightStanding: 1.6
+  eyeHeightCrouch: 0.9
   objetoMano: {fileID: 11400000, guid: d5cd034fa04a9034f969502806a1a3bf, type: 2}
   OnDialogueStarted: {fileID: 11400000, guid: dcef17d5a629fe8478bd188922dbae88, type: 2}
   OnDialogueEnded: {fileID: 11400000, guid: 24d173763f19212419ab012c1f7833f5, type: 2}
