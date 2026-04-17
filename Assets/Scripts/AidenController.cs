@@ -136,6 +136,7 @@ public class AidenController : MonoBehaviour
                 agent.speed = 1.75f;
                 break;
             case AidenState.RUN:
+                animator.SetFloat("Speed", 1f);
                 agent.speed = 3f;
                 break;
             case AidenState.CROUCH:
@@ -150,18 +151,18 @@ public class AidenController : MonoBehaviour
             case AidenState.SCARED:
                 if (scaredNum == 0)
                 {
+                    animator.SetTrigger("scaredScream");
                     print("Aiden ha GRITADO");
-                    emitter.EmitSound(ESound.A_SCARE);
-                    print("pichilla");
+                  //  emitter.EmitSound(ESound.A_SCARE);
                     SetUI(true);
-                    StartCoroutine(GritoUIRoutine());
-                    ChangeState(AidenState.WALK);         
+                    StartCoroutine(ScreamRoutine());
+                    //ChangeState(AidenState.WALK);         
                 }
                else if (scaredNum == 1)
                 {
+                    animator.SetTrigger("scaredRunning");
                     print("Aiden ha SALIDO CORRIENDO");
-                    emitter.EmitSound(ESound.A_RUN);
-                    print("pichote");
+                  //  emitter.EmitSound(ESound.A_RUN);
                     SetUI(true);
                     Vector3 randomDirection = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)).normalized;
                     Vector3 targetPos = transform.position + randomDirection * 7;
@@ -341,10 +342,22 @@ public class AidenController : MonoBehaviour
         ChangeState(AidenState.WALK);
     }
 
-    private IEnumerator GritoUIRoutine()
+    private IEnumerator ScreamRoutine()
     {
-        yield return new WaitForSeconds(2f);
+        agent.isStopped = true;
+
+        yield return null;
+        yield return new WaitUntil(() =>
+            animator.GetCurrentAnimatorStateInfo(0).IsName("scaredScream"));
+
+        yield return new WaitUntil(() =>
+            animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+
+        Debug.Log("ScreamRoutine terminada correctamente");
+        agent.isStopped = false;
         SetUI(false);
+        ChangeState(AidenState.WALK); // reset para que HandlePlayerStateChanged no ignore el evento
+        //HandlePlayerStateChanged(PlayerController.CurrentState);
     }
     public void PedirAyuda(Vector3 destino, GameEvent onLlego, bool esperarEnDestino2 = false)
     {
