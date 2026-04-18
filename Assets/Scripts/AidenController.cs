@@ -5,12 +5,11 @@ using UnityEngine.AI;
 
 public class AidenController : MonoBehaviour
 {
-    public enum AidenState { NONE, IDLE, WALK, RUN, CROUCH, SCARED, HELP };
+    public enum AidenState { NONE, IDLE, WALK, RUN, CROUCH, SCARED, HELP }
 
-    [Header("Maquina de estados")]
+    [Header("Máquina de estados")]
     [SerializeField] private AidenState currentState;
     [SerializeField] private Transform player;
-    private NavMeshAgent agent;
 
     [Header("UI")]
     [SerializeField] private GameObject canvasWorld;
@@ -19,25 +18,24 @@ public class AidenController : MonoBehaviour
     [SerializeField] private CapsuleCollider aidenCollider;
 
     [Header("Eventos")]
-    [SerializeField] GameEvent OnDialogueStarted;
-    [SerializeField] GameEvent OnDialogueEnded;
-    [SerializeField] GameEvent OnAidenStopped;
-    [SerializeField] GameEventString OnAidenScared;
-    [SerializeField] GameEvent OnAidenReanudar;
-    private bool InDialogue;
+    [SerializeField] private GameEvent OnDialogueStarted;
+    [SerializeField] private GameEvent OnDialogueEnded;
+    [SerializeField] private GameEvent OnAidenStopped;
+    [SerializeField] private GameEventString OnAidenScared;
+    [SerializeField] private GameEvent OnAidenReanudar;
 
-    private int scaredNum;
-    private Coroutine scaredCoroutine;
-
-    private Vector3 _destino;
-    private GameEvent _onAyudaCompletada;
-    private bool esperarEnDestino;
-
+    private NavMeshAgent agent;
+    private Animator animator;
     private SoundEmitter emitter;
 
-    private Animator animator;
+    private bool inDialogue;
+    private bool esperarEnDestino;
+    private int scaredNum;
+    private Coroutine scaredCoroutine;
+    private Vector3 destino;
+    private GameEvent onAyudaCompletada;
 
-
+    #region Unity Callbacks
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -72,13 +70,15 @@ public class AidenController : MonoBehaviour
         OnAidenScared.Unsubscribe(Scared);
         OnAidenReanudar.Unsubscribe(HandleReanudar);
     }
-
+    #endregion
+    #region Event Handlers
     private void HandleReanudar()
     {
         esperarEnDestino = false;
         if (currentState == AidenState.IDLE)
             ChangeState(AidenState.RUN);
     }
+
     private void HandlePlayerStateChanged(PlayerController.PlayerState playerState)
     {
         //si el niño esta asustado, que ignore lo que hace el player y no le siga hasta que se indique dependiendo el caso 
@@ -94,6 +94,7 @@ public class AidenController : MonoBehaviour
             case PlayerController.PlayerState.IDLE: ChangeState(AidenState.IDLE); break;
         }
     }
+
     private void HandleDialogueTrigger()
     {
         agent.isStopped = true;
@@ -104,24 +105,18 @@ public class AidenController : MonoBehaviour
 
     private void HandleDialogueStarted()
     {
-        InDialogue = true;
+        inDialogue = true;
     }
 
     private void HandleDialogueEnded()
     {
         if (agent == null) return;
-        InDialogue = false;
+        inDialogue = false;
         agent.isStopped = false;
         SetUI(false);
         ChangeState(AidenState.WALK);
     }
-
-    private void SetUI(bool active)
-    {
-        if (canvasWorld != null)
-            canvasWorld.SetActive(active);
-    }
-
+    #endregion
     #region State Machine
     private void InitState(AidenState state)
     {
@@ -149,39 +144,10 @@ public class AidenController : MonoBehaviour
                 agent.radius = 0.2f;
                 break;
             case AidenState.SCARED:
-                if (scaredNum == 0)
-                {
-                    animator.SetTrigger("scaredScream");
-                    print("Aiden ha GRITADO");
-                  //  emitter.EmitSound(ESound.A_SCARE);
-                    SetUI(true);
-                    StartCoroutine(ScreamRoutine());
-                    //ChangeState(AidenState.WALK);         
-                }
-               else if (scaredNum == 1)
-                {
-                    animator.SetTrigger("scaredRunning");
-                    print("Aiden ha SALIDO CORRIENDO");
-                  //  emitter.EmitSound(ESound.A_RUN);
-                    SetUI(true);
-                    Vector3 randomDirection = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)).normalized;
-                    Vector3 targetPos = transform.position + randomDirection * 7;
-
-                    //primero limitar que solamente pueda salir corriendo a zonas dentro del navmesh
-                    if (NavMesh.SamplePosition(targetPos, out NavMeshHit hit, 5f, NavMesh.AllAreas))
-                    {
-                        agent.speed = 2.5f;
-                        agent.stoppingDistance = 0f;
-                        agent.SetDestination(hit.position);
-                    }
-
-                    //si ya hay una corrutina que no se empiece otra, para q no haya bugs
-                    if (scaredCoroutine != null) StopCoroutine(scaredCoroutine);
-                    scaredCoroutine = StartCoroutine(scaredRunRoutine());
-                }
+                InitScared();
                 break;
             case AidenState.HELP:
-                agent.SetDestination(_destino);
+                agent.SetDestination(destino);
                 break;
         }
     }
@@ -199,41 +165,18 @@ public class AidenController : MonoBehaviour
                 FollowPlayer();
                 break;
             case AidenState.CROUCH:
-                float speed = agent.velocity.magnitude;
-
-                if (speed < 0.1f)
-                    animator.SetFloat("Speed", 0f);      // crouch idle
-                else
-                    animator.SetFloat("Speed", 0.5f);    // crouch walk
-
+                //si el agente se esta moviendo, animación de crouch walking (0.35), si no, crouch idle (0.25)
+                animator.SetFloat("Speed", agent.velocity.magnitude > 0.1f ? 0.35f : 0.25f);
                 FollowPlayer();
                 break;
             case AidenState.SCARED:
-                float distancia = Vector3.Distance(transform.position, player.position);
-
-                //cuando llegue al destination que salte la otra animacion
-                if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
-                {
-                    animator.SetFloat("Speed", 0.75f);
-                }
-
-                //uso el getkeydown para poder leer el input de forma facil, tambien puede hacerse por evento (por si queremos cambiarlo)
-                if (distancia <= 2f && Input.GetKeyDown(KeyCode.E))
-                {
-                    //si la corrutina esta activa, parala y ponla a null
-                    if (scaredCoroutine != null) StopCoroutine(scaredCoroutine);
-                    scaredCoroutine = null;
-                    SetUI(false);
-                    GameManager.Instance.SumValor(10);
-                    ChangeState(AidenState.WALK);
-                }
+                UpdateScared();
                 break;
             case AidenState.HELP:
                 if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
                 {
-                    _onAyudaCompletada?.Raise();
+                    onAyudaCompletada?.Raise();
                     ChangeState(esperarEnDestino ? AidenState.IDLE : AidenState.WALK);
-                    //ChangeState(AidenState.WALK);
                 }
                 break;
         }
@@ -264,38 +207,7 @@ public class AidenController : MonoBehaviour
         }
     }
     #endregion
-
-    private void FollowPlayer()
-    {
-        if (InDialogue) return;
-
-        agent.stoppingDistance = 1f;
-        agent.autoBraking = false;
-        agent.SetDestination(player.transform.position);
-
-        // Rotar hacia el player cuando está cerca y el agente está parado
-        if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
-        {
-            Vector3 direccion = player.position - transform.position;
-            direccion.y = 0f;
-            if (direccion.sqrMagnitude > 0.01f)
-            {
-                Quaternion rotacionObjetivo = Quaternion.LookRotation(direccion);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, rotacionObjetivo, 180f * Time.deltaTime);
-            }
-        }
-    }
-
-    private void SetColliderNormal()
-    {
-        aidenCollider.center = new Vector3(0, 0.5f, 0);
-        aidenCollider.radius = 0.2f;
-        aidenCollider.height = 1f;
-        agent.height = 0.8f;
-        agent.radius = 0.2f;
-        agent.baseOffset = -0.14f;
-    }
-
+    #region Scared
     private void Scared(ScareType type)
     {
         //si se ha asustado y a huido, que no se vuelva a asustar mientras esta esperando a que el player vaya a consolarlo
@@ -323,9 +235,8 @@ public class AidenController : MonoBehaviour
                 ChangeState(AidenState.SCARED);
             else
                 print("Aiden no se ha asustado por probabilidad");
-        }
 
-        if (type == ScareType.Shoot)
+        } else if (type == ScareType.Shoot)
         {
             if (confianza <= 20)
             {
@@ -344,6 +255,59 @@ public class AidenController : MonoBehaviour
                 ChangeState(AidenState.SCARED);
             else
                 print("Aiden no se ha asustado por probabilidad");
+        }
+    }
+
+    private void InitScared()
+    {
+        if (scaredNum == 0)
+        {
+            animator.SetTrigger("scaredScream");
+            //  emitter.EmitSound(ESound.A_SCARE);
+            SetUI(true);
+            StartCoroutine(ScreamRoutine());
+        }
+        else if (scaredNum == 1)
+        {
+            animator.SetTrigger("scaredRunning");
+            //  emitter.EmitSound(ESound.A_RUN);
+            SetUI(true);
+            Vector3 randomDirection = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)).normalized;
+            Vector3 targetPos = transform.position + randomDirection * 7;
+
+            //primero limitar que solamente pueda salir corriendo a zonas dentro del navmesh
+            if (NavMesh.SamplePosition(targetPos, out NavMeshHit hit, 5f, NavMesh.AllAreas))
+            {
+                agent.speed = 2.5f;
+                agent.stoppingDistance = 0f;
+                agent.SetDestination(hit.position);
+            }
+
+            //si ya hay una corrutina que no se empiece otra, para q no haya bugs
+            if (scaredCoroutine != null) StopCoroutine(scaredCoroutine);
+            scaredCoroutine = StartCoroutine(scaredRunRoutine());
+        }
+    }
+
+    private void UpdateScared()
+    {
+        float distancia = Vector3.Distance(transform.position, player.position);
+
+        //cuando llegue al destination que salte la otra animacion
+        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+        {
+            animator.SetFloat("Speed", 0.75f);
+        }
+
+        //uso el getkeydown para poder leer el input de forma facil, tambien puede hacerse por evento (por si queremos cambiarlo)
+        if (distancia <= 2f && Input.GetKeyDown(KeyCode.E))
+        {
+            //si la corrutina esta activa, parala y ponla a null
+            if (scaredCoroutine != null) StopCoroutine(scaredCoroutine);
+            scaredCoroutine = null;
+            SetUI(false);
+            GameManager.Instance.SumValor(10);
+            ChangeState(AidenState.WALK);
         }
     }
 
@@ -366,17 +330,53 @@ public class AidenController : MonoBehaviour
         yield return new WaitUntil(() =>
             animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
 
-        Debug.Log("ScreamRoutine terminada correctamente");
         agent.isStopped = false;
         SetUI(false);
         ChangeState(AidenState.WALK); 
     }
-    public void PedirAyuda(Vector3 destino, GameEvent onLlego, bool esperarEnDestino2 = false)
+    #endregion 
+    private void FollowPlayer()
     {
-        _destino = destino;
-        _onAyudaCompletada = onLlego;
-        esperarEnDestino = esperarEnDestino2;
+        if (inDialogue) return;
+
+        agent.stoppingDistance = 1f;
+        agent.autoBraking = false;
+        agent.SetDestination(player.transform.position);
+
+        // Rotar hacia el player cuando está cerca y el agente está parado
+        if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
+        {
+            Vector3 direccion = player.position - transform.position;
+            direccion.y = 0f;
+            if (direccion.sqrMagnitude > 0.01f)
+            {
+                Quaternion rotacionObjetivo = Quaternion.LookRotation(direccion);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, rotacionObjetivo, 180f * Time.deltaTime);
+            }
+        }
+    }
+
+    public void Help(Vector3 nuevoDest, GameEvent onLlego, bool esperar = false)
+    {
+        destino = nuevoDest;
+        onAyudaCompletada = onLlego;
+        esperarEnDestino = esperar;
         ChangeState(AidenState.HELP);
     }
 
+    private void SetUI(bool active)
+    {
+        if (canvasWorld != null)
+            canvasWorld.SetActive(active);
+    }
+
+    private void SetColliderNormal()
+    {
+        aidenCollider.center = new Vector3(0, 0.5f, 0);
+        aidenCollider.radius = 0.2f;
+        aidenCollider.height = 1f;
+        agent.height = 0.8f;
+        agent.radius = 0.2f;
+        agent.baseOffset = -0.14f;
+    }
 }
