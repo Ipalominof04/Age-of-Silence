@@ -1599,6 +1599,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5494949496183577677}
   - component: {fileID: 6115172565872847486}
+  - component: {fileID: 8162457719775075230}
   - component: {fileID: 5929403921499201219}
   - component: {fileID: 4111485202954055687}
   m_Layer: 11
@@ -1649,6 +1650,33 @@ CapsuleCollider:
   m_Height: 1.85
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!54 &8162457719775075230
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4268463047697333556}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!195 &5929403921499201219
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1686,13 +1714,13 @@ MonoBehaviour:
   currentState: 0
   vida: 6
   speedPatrol: 0.7
-  speedChase: 1.7
+  speedChase: 1.5
   enemyType: 1
   bala: {fileID: 769116550249096355, guid: 52ceab2e7939f084491bfaac844b5192, type: 3}
   shootingPoint: {fileID: 2487847830686730099}
   damageAmount: 1.5
   bulleSpeed: 20
-  shootCooldown: 3
+  shootCooldown: 5
   OnAidenScared: {fileID: 11400000, guid: 8c594f5565fc02f4db9991d6d6c69b3d, type: 2}
   headTransform: {fileID: 994906122305305805}
   radiusChase: 4
@@ -1710,7 +1738,7 @@ MonoBehaviour:
   currentIndex: 0
   canvasWorld: {fileID: 2841645535165106273}
   stateText: {fileID: 796417001254933288}
-  listenRadius: 10
+  listenRadius: 5
   minDetectionLevel: 0.2
 --- !u!1 &4373906735640789687
 GameObject:
