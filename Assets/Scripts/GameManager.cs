@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
         foreach (var obj in FindObjectsByType<ObjetoGuardable>(FindObjectsInactive.Include, FindObjectsSortMode.None))
             obj.Restaurar();
     }
-    private void LimpiarSOEscenas()
+    public void LimpiarSOEscenas()
     {
         foreach (SOEscena soEscena in datos.escenas)
             soEscena.objetos.Clear();

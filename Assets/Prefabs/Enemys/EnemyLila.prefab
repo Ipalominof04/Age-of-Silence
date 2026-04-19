@@ -1647,6 +1647,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1712341438451684261}
   - component: {fileID: 7949272213746247385}
+  - component: {fileID: 5107671002927953167}
   - component: {fileID: 1683994436551212145}
   - component: {fileID: 8578534858660886678}
   m_Layer: 11
@@ -1697,6 +1698,33 @@ CapsuleCollider:
   m_Height: 1.85
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!54 &5107671002927953167
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5047882029397535212}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!195 &1683994436551212145
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1758,7 +1786,7 @@ MonoBehaviour:
   currentIndex: 0
   canvasWorld: {fileID: 5863818849920944494}
   stateText: {fileID: 9104580420946483895}
-  listenRadius: 20
+  listenRadius: 8
   minDetectionLevel: 0.2
 --- !u!1 &5125358810631046514
 GameObject:
