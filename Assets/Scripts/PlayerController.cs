@@ -166,7 +166,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 characterController.height = 0.7f;
                 playerCollider.center = new Vector3(0, 0.475f, 0);
                 playerCollider.radius = 0.7f;
-                playerCollider.height = 0.8f;
+                playerCollider.height = 0.7f;
 
                 eyePoint.localPosition = new Vector3(0, eyeHeightCrouch, 0);
                 break;
@@ -443,8 +443,9 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             GameObject arma = armaEnMano;
             arma.transform.SetParent(huesoMano.transform);
-            arma.transform.position = huesoMano.transform.position;
-            arma.transform.rotation = huesoMano.transform.rotation;
+            arma.transform.localPosition = new Vector3(-0.046f, 0.052f, -0.006f);     
+            arma.transform.localRotation = Quaternion.Euler(33.283f, 142.394f, 38.761f);
+            arma.transform.localScale = Vector3.one;
             MeshRenderer meshArma = arma.GetComponent<MeshRenderer>();
             ArmaController arma_ctrl = arma.GetComponent<ArmaController>();
 
@@ -494,12 +495,16 @@ public class PlayerController : MonoBehaviour, IDamageable
         if(!armaSobrecalentada)
         {
         GameObject go = Instantiate(bala, shootingPoint.transform.position, shootingPoint.transform.rotation);
+            BalaController balaDefault = go.GetComponent<BalaController>();
+            if (balaDefault != null)
+                balaDefault.SetDamage(1);
 
-        Rigidbody rb = go.GetComponent<Rigidbody>();
+            Rigidbody rb = go.GetComponent<Rigidbody>();
         if (rb != null)
             rb.linearVelocity = this.gameObject.transform.forward * 20f;
 
         onShoot.Raise();
+            soundEmitter.EmitSound(ESound.SHOOT);
         }
         ChangeState(PlayerState.IDLE);
 
@@ -519,8 +524,9 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void Die()
     {
         print("player muerto");
+        GameManager.Instance.LimpiarSOEscenas();
+        GameManager.Instance.IrAScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
-
     private void SetColliderNormal()
     {
         characterController.center = new Vector3(0, 0.8f, 0);
