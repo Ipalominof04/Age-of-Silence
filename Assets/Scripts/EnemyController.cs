@@ -52,6 +52,9 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     [SerializeField] private float listenRadius = 15f;
     [SerializeField][Range(0f, 1f)] private float minDetectionLevel = 0.2f;
 
+    private float gravity = -9.81f;
+    private Vector3 verticalVelocity = Vector3.zero;
+
     public float GetListenRadius() => listenRadius;
     public float GetMinDetectionLevel() => minDetectionLevel;
 
@@ -113,6 +116,12 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     void Update()
     {
         UpdateState();
+        ApplyGravity();
+    }
+    private void ApplyGravity()
+    {
+        verticalVelocity.y += gravity * Time.deltaTime;
+        agent.Move(verticalVelocity * Time.deltaTime);
     }
 
     private void ChangeState(EnemyState newState)
@@ -253,6 +262,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 break;
         }
     }
+
     private IEnumerator SearchRoutine()
     {
         // Espera hasta que llegue al destino
@@ -293,13 +303,15 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         Collider hit = Physics.OverlapSphere(transform.position, radius, playerLayer).FirstOrDefault();
         if (hit == null) return false;
 
+        PlayerController player = hit.GetComponent<PlayerController>();
+        Vector3 targetForAngle = player != null ? player.GetEyePoint().position : hit.transform.position;
+
         float angle = Vector3.Angle(transform.forward,
-                      (hit.transform.position - transform.position).normalized);
+                      (targetForAngle - transform.position).normalized);
 
         if (angle <= 45f)
         {
             Vector3 origin = headTransform != null ? headTransform.position : transform.position + Vector3.up;
-            PlayerController player = hit.GetComponent<PlayerController>();
 
             Vector3 targetPoint;
 
