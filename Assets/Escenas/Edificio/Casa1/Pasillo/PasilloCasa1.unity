@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: e651d2bbb8e88d442a54ead7560a000c, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: 5105b10d3cdfe9c468d34928d55cf453, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: afbfed4e248ccb04e998ad2d056a470a, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -3926,7 +3926,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4034780930492792896, guid: 6fd978a8658d8be488a0ab54165dda6a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1043046336}
+      addedObject: {fileID: 1043046339}
   m_SourcePrefab: {fileID: 100100000, guid: 6fd978a8658d8be488a0ab54165dda6a, type: 3}
 --- !u!4 &1043046334 stripped
 Transform:
@@ -3938,22 +3938,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4034780930492792896, guid: 6fd978a8658d8be488a0ab54165dda6a, type: 3}
   m_PrefabInstance: {fileID: 1043046333}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1043046336
-NavMeshObstacle:
+--- !u!65 &1043046339
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1043046335}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.312, y: 0.35200003, z: 1.212}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0.296, y: 0.349, z: 0}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.62482846, y: 0.7035766, z: 2.4235327}
+  m_Center: {x: 0.29646808, y: 0.3494615, z: -0.0000000018692101}
 --- !u!1 &1055674641
 GameObject:
   m_ObjectHideFlags: 0
@@ -6681,7 +6686,7 @@ MonoBehaviour:
   m_LightUnit: 0
   m_LuxAtDistance: 1
   m_Intensity: 0
-  m_InnerSpotPercent: 71.10273
+  m_InnerSpotPercent: 64.4247
   m_SpotIESCutoffPercent: 100
   m_LightDimmer: 1
   m_VolumetricDimmer: 1
@@ -6815,9 +6820,9 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 70.83268
+  m_Intensity: 136.92528
   m_Range: 3
-  m_SpotAngle: 137.96074
+  m_SpotAngle: 152.26125
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
@@ -6858,9 +6863,9 @@ Light:
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 0.5, y: 0.5}
   m_BounceIntensity: 1
-  m_ColorTemperature: 5637
+  m_ColorTemperature: 6260
   m_UseColorTemperature: 1
-  m_BoundingSphereOverride: {x: 2.1866396e+23, y: 1.3162101e+22, z: 0.00000021160079, w: 5.264977e+22}
+  m_BoundingSphereOverride: {x: 2.8508e-41, y: 2.524355e-29, z: 0, w: -1.7917742e-37}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -6970,7 +6975,7 @@ MonoBehaviour:
   m_LightUnit: 0
   m_LuxAtDistance: 1
   m_Intensity: 0
-  m_InnerSpotPercent: 59.398243
+  m_InnerSpotPercent: 56.725933
   m_SpotIESCutoffPercent: 100
   m_LightDimmer: 1
   m_VolumetricDimmer: 1
@@ -7104,9 +7109,9 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 61.346737
+  m_Intensity: 130.05534
   m_Range: 3
-  m_SpotAngle: 149.9165
+  m_SpotAngle: 156.97891
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
@@ -7147,9 +7152,9 @@ Light:
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 0.5, y: 0.5}
   m_BounceIntensity: 1
-  m_ColorTemperature: 5637
+  m_ColorTemperature: 5978
   m_UseColorTemperature: 1
-  m_BoundingSphereOverride: {x: 1.3563128e-19, y: 3574.8203, z: 1.0947093e+27, w: 1.578803e-19}
+  m_BoundingSphereOverride: {x: 4.0032e-41, y: 2.524355e-29, z: 0, w: -9.18355e-39}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
