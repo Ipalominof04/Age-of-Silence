@@ -62,7 +62,7 @@ public class TriggerAyuda : MonoBehaviour
         onDialogueEnded.Unsubscribe(HandleDialogoAcabado);
         player.ClearTriggerAyuda();
         bool esperarEnDestino = (tipo == PuzleHelpType.BRIDGE);
-        aiden.PedirAyuda(puntoDestino.position, onAyudaCompletada, esperarEnDestino);
+        aiden.Help(puntoDestino.position, onAyudaCompletada, esperarEnDestino);
     }
 
     public void MostrarUI()
