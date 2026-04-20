@@ -39,9 +39,12 @@ public class TriggerAyuda : MonoBehaviour
                 this.gameObject.SetActive(false);
             }
             else
+            {
                 DialogueManager.Instance.StartInfo(graphNoAyuda);
                 GameManager.Instance.ResolverPuzzle("AidenNiega");
                 this.gameObject.SetActive(false);
+            }
+               
         }
         else if (tipo == PuzleHelpType.BRIDGE)
         {
@@ -52,7 +55,10 @@ public class TriggerAyuda : MonoBehaviour
                 this.gameObject.SetActive(false);
             }
             else
+            {
                 DialogueManager.Instance.StartInfo(graphNoAyuda);
+            }
+                
         }
        
     }
