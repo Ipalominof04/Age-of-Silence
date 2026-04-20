@@ -82,7 +82,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     {
         return transform.position;
     }
-    
+
     private void SetUI(bool active, string text = "", string hexColor = "#FFFFFF") //asi se pone un valor por defecto
     {
         if (canvasWorld != null)
@@ -143,13 +143,12 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
             case EnemyState.CHASE:
                 agent.isStopped = false;
-                SetUI(true, "!" , "#F11200");
+                SetUI(true, "!", "#F11200");
                 agent.speed = speedChase;
                 agent.stoppingDistance = radiusAttack;
                 break;
 
             case EnemyState.ATTACK:
-                agent.isStopped = true;
                 break;
 
             case EnemyState.SEARCHING:
@@ -172,11 +171,17 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         {
             case EnemyState.IDLE:
                 if (PlayerInArea(radiusChase))
+                {
                     ChangeState(EnemyState.CHASE);
-                else if (PlayerInArea(radiusLook))
-                    ChangeState(EnemyState.LOOK);
-                else
+                }
+                else if (!PlayerInArea(radiusChase))
+                {
                     ChangeState(EnemyState.PATROL);
+                }
+                else if (PlayerInArea(radiusLook))
+                {
+                    ChangeState(EnemyState.LOOK);
+                }
                 break;
 
             case EnemyState.PATROL:
@@ -188,7 +193,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 break;
 
             case EnemyState.CHASE:
-                MoveToPlayer();
+                ChasePlayer();
                 if (PlayerInAttackArea())
                     ChangeState(EnemyState.ATTACK);
                 else if (!PlayerInArea(radiusChase) && !PlayerInArea(radiusLook))
@@ -199,11 +204,15 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 LookToPlayer();
                 Shoot();
                 if (!PlayerInAttackArea())
-                    ChangeState(EnemyState.CHASE);
+                {
+                    if (PlayerInArea(radiusChase))
+                        ChangeState(EnemyState.CHASE);
+                    else
+                        ChangeState(EnemyState.SEARCHING);
+                }
                 break;
 
             case EnemyState.SEARCHING:
-                //la corrutina se inicia en el init
                 if (PlayerInArea(radiusChase))
                     ChangeState(EnemyState.CHASE);
                 else if (PlayerInArea(radiusLook))
@@ -211,7 +220,9 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 break;
 
             case EnemyState.LOOK:
-                //la corrutina se inicia en el init
+
+                if (playerTransform != null) LookToPlayer();
+
                 if (PlayerInAttackArea())
                     ChangeState(EnemyState.ATTACK);
                 else if (PlayerInArea(radiusChase))
@@ -233,11 +244,11 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             case EnemyState.ATTACK:
                 break;
             case EnemyState.SEARCHING:
-                if (searchCoroutine != null) 
+                if (searchCoroutine != null)
                     StopCoroutine(searchCoroutine);
                 break;
             case EnemyState.LOOK:
-                if (lookCoroutine != null) 
+                if (lookCoroutine != null)
                     StopCoroutine(lookCoroutine);
                 break;
         }
@@ -288,7 +299,19 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         if (angle <= 45f)
         {
             Vector3 origin = headTransform != null ? headTransform.position : transform.position + Vector3.up;
-            Vector3 targetPoint = hit.bounds.max;
+            PlayerController player = hit.GetComponent<PlayerController>();
+
+            Vector3 targetPoint;
+
+            if (player != null)
+            {
+                targetPoint = player.GetEyePoint().position;
+            }
+            else
+            {
+                targetPoint = hit.bounds.max;
+            }
+
             Vector3 direction = (targetPoint - origin).normalized;
             float distance = Vector3.Distance(origin, targetPoint);
 
@@ -309,12 +332,22 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     private bool PlayerInAttackArea()
     {
         Collider hit = Physics.OverlapSphere(transform.position, radiusAttack, playerLayer).FirstOrDefault();
-        if (hit != null)
-        {
-            playerTransform = hit.transform;
-            return true;
-        }
-        return false;
+        if (hit == null) return false;
+
+        playerTransform = hit.transform;
+
+        Vector3 origin = headTransform != null ? headTransform.position : transform.position + Vector3.up;
+
+        // Apunta a los ojos igual que PlayerInArea, no a los pies
+        PlayerController player = hit.GetComponent<PlayerController>();
+        Vector3 targetPoint = player != null ? player.GetEyePoint().position : hit.bounds.center;
+
+        Vector3 direction = (targetPoint - origin).normalized;
+        float distance = Vector3.Distance(origin, targetPoint);
+        bool blocked = Physics.Raycast(origin, direction, distance, obstacleLayer);
+
+        Debug.DrawRay(origin, direction * distance, blocked ? Color.red : Color.green);
+        return !blocked;
     }
 
     private void LookToPlayer()
@@ -328,7 +361,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         transform.rotation = Quaternion.LookRotation(direction);
     }
 
-    private void MoveToPlayer()
+    private void ChasePlayer()
     {
         if (playerTransform == null) return;
         agent.SetDestination(playerTransform.position);
@@ -336,15 +369,15 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
     private void Shoot()
     {
-        if (hasShot) return;
-        StartCoroutine(ShootCooldown());
+        if (hasShot) return;  // <-- si ya disparó, salir completamente
+
+        hasShot = true; // <-- bloquear aquí, antes de todo
 
         if (shootingPoint != null && bala != null)
         {
             switch (enemyType)
             {
                 case EnemyType.FUERTE:
-                    // Escopeta: varios proyectiles con dispersión
                     int pellets = 5;
                     float spreadAngle = 15f;
                     for (int i = 0; i < pellets; i++)
@@ -355,32 +388,28 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                             0
                         );
                         Vector3 direction = spread * transform.forward;
-
                         GameObject go = Instantiate(bala, shootingPoint.transform.position, shootingPoint.transform.rotation);
                         BalaController balaController = go.GetComponent<BalaController>();
-                        if (balaController != null)
-                            balaController.SetDamage(damageAmount);
+                        if (balaController != null) balaController.SetDamage(damageAmount);
                         Rigidbody rb = go.GetComponent<Rigidbody>();
-                        if (rb != null)
-                            rb.linearVelocity = direction * bulleSpeed;
+                        if (rb != null) rb.linearVelocity = direction * bulleSpeed;
                     }
                     break;
 
                 default:
-                    // Disparo normal para NORMAL y FAST
                     GameObject goDefault = Instantiate(bala, shootingPoint.transform.position, shootingPoint.transform.rotation);
                     BalaController balaDefault = goDefault.GetComponent<BalaController>();
-                    if (balaDefault != null)
-                        balaDefault.SetDamage(damageAmount);
+                    if (balaDefault != null) balaDefault.SetDamage(damageAmount);
                     Rigidbody rbDefault = goDefault.GetComponent<Rigidbody>();
-                    if (rbDefault != null)
-                        rbDefault.linearVelocity = this.transform.forward * bulleSpeed;
+                    if (rbDefault != null) rbDefault.linearVelocity = transform.forward * bulleSpeed;
                     break;
             }
         }
 
         if (SceneManager.GetActiveScene().name != "Escena2")
             OnAidenScared?.Raise(ScareType.Shoot);
+
+        StartCoroutine(ShootCooldown()); // <-- iniciar cooldown al final, una sola vez
     }
 
     private IEnumerator ShootCooldown()
@@ -443,6 +472,10 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, radiusAttack);
+
+
+        Gizmos.color = new Color(1f, 0.5f, 0f, 1f);
+        Gizmos.DrawWireSphere(origin, listenRadius);
     }
 
     public void TakeDamage(float damage)

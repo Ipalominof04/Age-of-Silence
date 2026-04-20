@@ -1808,6 +1808,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2315888582983247488}
   - component: {fileID: 2178129232349228991}
+  - component: {fileID: 6797816240879166560}
   - component: {fileID: 2057251542276414231}
   - component: {fileID: 8346064789273925734}
   m_Layer: 11
@@ -1858,6 +1859,33 @@ CapsuleCollider:
   m_Height: 1.85
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!54 &6797816240879166560
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6630787418489709627}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!195 &2057251542276414231
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1896,10 +1924,12 @@ MonoBehaviour:
   vida: 3
   speedPatrol: 1
   speedChase: 2
+  enemyType: 0
   bala: {fileID: 769116550249096355, guid: 52ceab2e7939f084491bfaac844b5192, type: 3}
   shootingPoint: {fileID: 604611997568827125}
   damageAmount: 1
   bulleSpeed: 20
+  shootCooldown: 1
   OnAidenScared: {fileID: 11400000, guid: 8c594f5565fc02f4db9991d6d6c69b3d, type: 2}
   headTransform: {fileID: 8046646139055460003}
   radiusChase: 4
@@ -1917,7 +1947,7 @@ MonoBehaviour:
   currentIndex: 0
   canvasWorld: {fileID: 2763708108248123121}
   stateText: {fileID: 3804765012919029533}
-  listenRadius: 15
+  listenRadius: 6
   minDetectionLevel: 0.2
 --- !u!1 &6706483303658749984
 GameObject:
