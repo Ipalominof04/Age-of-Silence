@@ -73,7 +73,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (Mouse.current.leftButton.wasPressedThisFrame && _currentNode != null && _currentNode.Choices.Count == 0)
         {
-            // Si est� escribiendo, completa el texto al instante
+            // Si esta escribiendo, completa el texto al instante
             if (_isTyping)
             {
                 SkipTypewriter();
