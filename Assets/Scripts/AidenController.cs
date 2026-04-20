@@ -82,7 +82,6 @@ public class AidenController : MonoBehaviour
 
     private void HandlePlayerStateChanged(PlayerController.PlayerState playerState)
     {
-        Debug.Log("HandlePlayerStateChanged: " + playerState + " | currentState: " + currentState + " | inDialogue: " + inDialogue + " | inDialogueTrigger: " + inDialogueTrigger);
 
         // para que ignore los cambios del player hasta que el niño llegue al player
         if (currentState == AidenState.CATCH_UP) return;
@@ -116,6 +115,7 @@ public class AidenController : MonoBehaviour
         inDialogue = true;
         inDialogueTrigger = false;
         agent.isStopped = true;
+        ChangeState(AidenState.IDLE);
     }
 
     private void HandleDialogueEnded()
