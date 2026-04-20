@@ -17077,6 +17077,7 @@ GameObject:
   - component: {fileID: 1385728853}
   - component: {fileID: 1385728855}
   - component: {fileID: 1385728854}
+  - component: {fileID: 1385728856}
   m_Layer: 9
   m_Name: TriggerInfo
   m_TagString: TriggerInfo
@@ -17133,6 +17134,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.4515239, y: 0.80603325, z: 3.2565978}
   m_Center: {x: -0.106797844, y: -0.09698409, z: -0.34174612}
+--- !u!114 &1385728856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385728852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: 66814645e2f483940bba8054319df218, type: 2}
+  id: TriggerInfo
 --- !u!1001 &1387180998
 PrefabInstance:
   m_ObjectHideFlags: 0
