@@ -561,6 +561,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 {
                     puzleInRange = puzle;
                     puzle.OnEnterRange();
+                    ChangeState(PlayerState.IDLE);
                 }
             }
 
@@ -568,8 +569,13 @@ public class PlayerController : MonoBehaviour, IDamageable
             {
                 TriggerInfo info = other.GetComponent<TriggerInfo>();
                 if (info != null)
+                {
                     DialogueManager.Instance.StartInfo(info.graphInfo);
+                    ChangeState(PlayerState.IDLE);
+                }
+
             }
+        
 
             if (other.tag == "TriggerEscalera")
             {
