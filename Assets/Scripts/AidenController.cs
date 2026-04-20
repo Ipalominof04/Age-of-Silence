@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class AidenController : MonoBehaviour
 {
-    public enum AidenState { NONE, IDLE, WALK, RUN, CROUCH, SCARED, HELP }
+    public enum AidenState { NONE, IDLE, WALK, RUN, CROUCH, SCARED, HELP, CATCH_UP }
 
     [Header("Máquina de estados")]
     [SerializeField] private AidenState currentState;
@@ -29,6 +29,7 @@ public class AidenController : MonoBehaviour
     private SoundEmitter emitter;
 
     private bool inDialogue;
+    private bool inDialogueTrigger;
     private bool esperarEnDestino;
     private int scaredNum;
     private Coroutine scaredCoroutine;
@@ -81,10 +82,14 @@ public class AidenController : MonoBehaviour
 
     private void HandlePlayerStateChanged(PlayerController.PlayerState playerState)
     {
+        // para que ignore los cambios del player hasta que el niño llegue al player
+        if (currentState == AidenState.CATCH_UP) return;
         //si el niño esta asustado, que ignore lo que hace el player y no le siga hasta que se indique dependiendo el caso 
         if (currentState == AidenState.SCARED) return;
         if (currentState == AidenState.HELP) return; // para que ignore los cambios del player y se mueva hasta el waypont
         if (esperarEnDestino && currentState == AidenState.IDLE) return;
+        if (inDialogue) return;
+        if (inDialogueTrigger) return;
 
         switch (playerState)
         {
@@ -97,6 +102,7 @@ public class AidenController : MonoBehaviour
 
     private void HandleDialogueTrigger()
     {
+        inDialogueTrigger = true;
         agent.isStopped = true;
         ChangeState(AidenState.IDLE);
         SetUI(true);
@@ -106,6 +112,8 @@ public class AidenController : MonoBehaviour
     private void HandleDialogueStarted()
     {
         inDialogue = true;
+        inDialogueTrigger = false;
+        agent.isStopped = true;
     }
 
     private void HandleDialogueEnded()
@@ -114,7 +122,7 @@ public class AidenController : MonoBehaviour
         inDialogue = false;
         agent.isStopped = false;
         SetUI(false);
-        ChangeState(AidenState.WALK);
+        ChangeState(AidenState.IDLE);
     }
     #endregion
     #region State Machine
@@ -147,7 +155,13 @@ public class AidenController : MonoBehaviour
                 InitScared();
                 break;
             case AidenState.HELP:
+                animator.SetFloat("Speed", 1f);
+                agent.stoppingDistance = 0f;
                 agent.SetDestination(destino);
+                break;
+            case AidenState.CATCH_UP:
+                animator.SetFloat("Speed", 1f);
+                agent.speed = 3f;
                 break;
         }
     }
@@ -157,14 +171,22 @@ public class AidenController : MonoBehaviour
         switch (currentState)
         {
             case AidenState.IDLE:
+                if (!esperarEnDestino && Vector3.Distance(transform.position, player.position) > 4f)
+                    ChangeState(AidenState.CATCH_UP);
                 break;
             case AidenState.WALK:
+                if (Vector3.Distance(transform.position, player.position) > 4f)
+                    ChangeState(AidenState.CATCH_UP);
                 FollowPlayer();
                 break;
             case AidenState.RUN:
+                if (Vector3.Distance(transform.position, player.position) > 4f)
+                    ChangeState(AidenState.CATCH_UP);
                 FollowPlayer();
                 break;
             case AidenState.CROUCH:
+                if (Vector3.Distance(transform.position, player.position) > 4f)
+                    ChangeState(AidenState.CATCH_UP);
                 //si el agente se esta moviendo, animación de crouch walking (0.35), si no, crouch idle (0.25)
                 animator.SetFloat("Speed", agent.velocity.magnitude > 0.1f ? 0.35f : 0.25f);
                 FollowPlayer();
@@ -176,8 +198,13 @@ public class AidenController : MonoBehaviour
                 if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
                 {
                     onAyudaCompletada?.Raise();
-                    ChangeState(esperarEnDestino ? AidenState.IDLE : AidenState.WALK);
+                    ChangeState(esperarEnDestino ? AidenState.IDLE : AidenState.RUN);
                 }
+                break;
+            case AidenState.CATCH_UP:
+                FollowPlayer();
+                if (Vector3.Distance(transform.position, player.position) <= agent.stoppingDistance)
+                    ChangeState(AidenState.IDLE);
                 break;
         }
     }
@@ -203,6 +230,11 @@ public class AidenController : MonoBehaviour
                 SetColliderNormal();
                 break;
             case AidenState.SCARED:
+                break;
+            case AidenState.HELP:
+                agent.stoppingDistance = 1f;
+                break;
+            case AidenState.CATCH_UP:
                 break;
         }
     }
@@ -307,7 +339,7 @@ public class AidenController : MonoBehaviour
             scaredCoroutine = null;
             SetUI(false);
             GameManager.Instance.SumValor(10);
-            ChangeState(AidenState.WALK);
+            ChangeState(AidenState.CATCH_UP);
         }
     }
 
@@ -317,7 +349,7 @@ public class AidenController : MonoBehaviour
         scaredCoroutine = null;
         SetUI(false);
         GameManager.Instance.RestValor(10);
-        ChangeState(AidenState.WALK);
+        ChangeState(AidenState.CATCH_UP);
     }
 
     private IEnumerator ScreamRoutine()
@@ -332,7 +364,7 @@ public class AidenController : MonoBehaviour
 
         agent.isStopped = false;
         SetUI(false);
-        ChangeState(AidenState.WALK); 
+        ChangeState(AidenState.CATCH_UP); 
     }
     #endregion 
     private void FollowPlayer()
@@ -346,13 +378,18 @@ public class AidenController : MonoBehaviour
         // Rotar hacia el player cuando está cerca y el agente está parado
         if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
         {
-            Vector3 direccion = player.position - transform.position;
-            direccion.y = 0f;
-            if (direccion.sqrMagnitude > 0.01f)
-            {
-                Quaternion rotacionObjetivo = Quaternion.LookRotation(direccion);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, rotacionObjetivo, 180f * Time.deltaTime);
-            }
+            RotarHaciaPlayer();
+        }
+    }
+
+    private void RotarHaciaPlayer()
+    {
+        Vector3 direccion = player.position - transform.position;
+        direccion.y = 0f;
+        if (direccion.sqrMagnitude > 0.01f)
+        {
+            Quaternion rotacionObjetivo = Quaternion.LookRotation(direccion);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotacionObjetivo, 180f * Time.deltaTime);
         }
     }
 
