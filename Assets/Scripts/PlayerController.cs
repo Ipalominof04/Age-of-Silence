@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
 
     [Header("Maquina de estados")]
-    [SerializeField] private PlayerState currentState;
+    [SerializeField] public PlayerState currentState;
 
     [Header("Movimiento")]
     [SerializeField] private InputActionAsset myInputActionAsset;
@@ -363,19 +363,19 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void Walk()
     {
         Move(1.75f);
-        soundEmitter.EmitSound(ESound.WALK);
+       //soundEmitter.EmitSound(ESound.WALK);
     }
 
     private void Run()
     {
         Move(3f);
-        soundEmitter.EmitSound(ESound.WALK);
+       // soundEmitter.EmitSound(ESound.WALK);
     }
 
     private void Crouch()
     {
         Move(1f);
-        soundEmitter.EmitSound(ESound.CROUCH);
+      //  soundEmitter.EmitSound(ESound.CROUCH);
     }
 
     private void ClimbLadder()
