@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private Animator animator;
 
-
+    private PlayerState previousState;
     public Transform GetEyePoint()
     {
         return eyePoint;
@@ -186,7 +186,8 @@ public class PlayerController : MonoBehaviour, IDamageable
                     }
                     else
                     {
-                        ChangeState(PlayerState.IDLE);
+                        ChangeState(previousState);
+                        //ChangeState(PlayerState.IDLE);
                     }
                 }
                 break;
@@ -275,7 +276,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         if (newState == currentState) return;
         ExitState();
-       // currentState = newState;
+        // currentState = newState;
+        previousState = currentState;
         InitState(newState);
         OnPlayerStateChanged?.Invoke(currentState);
     }
@@ -308,7 +310,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         if (objetoLanzableEnMano == null)
         {
-            ChangeState(PlayerState.IDLE);
+            ChangeState(previousState);
+            //ChangeState(PlayerState.IDLE);
             return;
         }
 
@@ -330,12 +333,14 @@ public class PlayerController : MonoBehaviour, IDamageable
             Vector3 velocidad = parabolaRenderer.CalcularVelocidadInicial(huesoMano.position, puntoObjetivo);
             objetoLanzableEnMano.Lanzar(velocidad, playerCollider);
             objetoLanzableEnMano = null;
-            ChangeState(PlayerState.IDLE);
+            ChangeState(previousState);
+            //ChangeState(PlayerState.IDLE);
         }
         else
         {
             parabolaRenderer.OcultarParabola();
-            ChangeState(PlayerState.IDLE);
+            ChangeState(previousState);
+            //ChangeState(PlayerState.IDLE);
         }
     }
     private void ApplyGravity()
