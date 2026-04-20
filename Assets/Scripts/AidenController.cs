@@ -377,6 +377,6 @@ public class AidenController : MonoBehaviour
         aidenCollider.height = 1f;
         agent.height = 0.8f;
         agent.radius = 0.2f;
-        agent.baseOffset = -0.14f;
+        agent.baseOffset = -0.07f;
     }
 }
