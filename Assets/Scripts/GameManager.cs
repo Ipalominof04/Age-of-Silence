@@ -135,11 +135,11 @@ public class GameManager : MonoBehaviour
         if (newScene.IsValid() && newScene.isLoaded) SceneManager.SetActiveScene(newScene);
 
 
-        if(sceneName == "Comedor")
+        if(sceneName == "Escena2")
         {
             ChapterUI.ChapterStep[] steps = new ChapterUI.ChapterStep[]
             {
-                new ChapterUI.ChapterStep("CAPÍTUL0 1: LA CIUDAD", 1f),
+                new ChapterUI.ChapterStep("CAPÍTULO 1: LA CIUDAD", 1f),
                 new ChapterUI.ChapterStep("LA CIUDAD 1.1: ZONA 0", 1f)
             };
             yield return StartCoroutine(ChapterUI.Instance.PlaySequence(steps));
