@@ -76,6 +76,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     public void OnHearSound(Vector3 soundPosition, float volume)
     {
         if (volume < minDetectionLevel) return; // filtre nivell mínim
+        if (currentState == EnemyState.CHASE || currentState == EnemyState.ATTACK) return;
 
         agent.SetDestination(soundPosition);
         ChangeState(EnemyState.SEARCHING);
@@ -212,7 +213,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             case EnemyState.ATTACK:
                 LookToPlayer();
                 Shoot();
-                if (!PlayerInAttackArea())
+              if (!PlayerInAttackArea())
                 {
                     if (PlayerInArea(radiusChase))
                         ChangeState(EnemyState.CHASE);
@@ -220,6 +221,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                         ChangeState(EnemyState.SEARCHING);
                 }
                 break;
+
 
             case EnemyState.SEARCHING:
                 if (PlayerInArea(radiusChase))
@@ -300,6 +302,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
     private bool PlayerInArea(float radius)
     {
+        //ESTO LANZA EL RAYCAST MUY ARRIBA
         Collider hit = Physics.OverlapSphere(transform.position, radius, playerLayer).FirstOrDefault();
         if (hit == null) return false;
 
@@ -309,7 +312,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         float angle = Vector3.Angle(transform.forward,
                       (targetForAngle - transform.position).normalized);
 
-        if (angle <= 45f)
+        if (angle <= 60f)
         {
             Vector3 origin = headTransform != null ? headTransform.position : transform.position + Vector3.up;
 
@@ -342,7 +345,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     }
 
     private bool PlayerInAttackArea()
-    {
+    { 
         Collider hit = Physics.OverlapSphere(transform.position, radiusAttack, playerLayer).FirstOrDefault();
         if (hit == null) return false;
 
@@ -362,7 +365,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         return !blocked;
     }
 
-    private void LookToPlayer()
+private void LookToPlayer()
     {
         if (playerTransform == null) return;
 
@@ -376,6 +379,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     private void ChasePlayer()
     {
         if (playerTransform == null) return;
+       // agent.stoppingDistance = radiusAttack;
         agent.SetDestination(playerTransform.position);
     }
 
@@ -454,7 +458,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     {
         Vector3 origin = transform.position;
         Vector3 forward = transform.forward;
-        float halfAngle = 45f;
+        float halfAngle = 60f;
         int arcSegments = 12;
 
         Gizmos.color = Color.green;

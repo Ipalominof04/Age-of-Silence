@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
@@ -86,6 +87,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         return eyePoint;
     }
+    public bool IsCrouching() => currentState == PlayerState.CROUCH;
 
     private void Awake()
     {
@@ -106,6 +108,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     void Start()
     {
+        isDying = false;
         shootingPoint = GameObject.Find("shooting_point");
         camara = Camera.main;
         if (shootingPoint == null)
@@ -143,6 +146,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         onArmaSobrecalentada.Unsubscribe(() => armaSobrecalentada = true);
         onArmaEnfriada.Unsubscribe(() => armaSobrecalentada = false);
     }
+
+
 
 
     #region State Machine
@@ -247,6 +252,14 @@ public class PlayerController : MonoBehaviour, IDamageable
             case PlayerState.CROUCH:
                 Crouch();
                 if (!crouchAction.IsPressed()) ChangeState(PlayerState.IDLE);
+
+                if (interactAction.triggered && (objectInRange != null || puzleInRange != null) && crouchAction.IsPressed())
+                    ChangeState(PlayerState.INTERACT);
+                if (interactAction.triggered && armaEnMano != null && crouchAction.IsPressed())
+                    ChangeState(PlayerState.INTERACT);
+
+                if (interactAction.triggered && canInteract && objectInRange == null)
+                    ChangeState(PlayerState.DIALOGUE);
                 if (interactAction.triggered && objectLanzableInRange != null)
                     ChangeState(PlayerState.THROW);
 
@@ -379,7 +392,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void Crouch()
     {
-        Move(1f);
+        Move(1.5f);
         soundEmitter.EmitSound(ESound.CROUCH);
     }
 
@@ -526,12 +539,18 @@ public class PlayerController : MonoBehaviour, IDamageable
             Die();
     }
 
+    private bool isDying = false;
+
     public void Die()
     {
+        if (isDying) return;
+        isDying = true;
+
         print("player muerto");
         GameManager.Instance.LimpiarSOEscenas();
-        GameManager.Instance.IrAScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        GameManager.Instance.IrAScene(SceneManager.GetActiveScene().name);
     }
+
     private void SetColliderNormal()
     {
         characterController.center = new Vector3(0, 0.8f, 0);
