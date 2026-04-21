@@ -56,7 +56,6 @@ public class SoundManager : MonoBehaviour
             {
                 // Atenuació per distància
                 float attenuatedVolume = volume * (1f - (distance / listenRadius));
-
                 // El filtre de nivell mínim el fa el listener
                 listener.OnHearSound(position, attenuatedVolume);
             }
