@@ -5256,15 +5256,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4111485202954055687, guid: c2bcabc1005afd44d8e0439b329062e5, type: 3}
       propertyPath: radiusLook
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4111485202954055687, guid: c2bcabc1005afd44d8e0439b329062e5, type: 3}
       propertyPath: radiusChase
-      value: 7
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111485202954055687, guid: c2bcabc1005afd44d8e0439b329062e5, type: 3}
+      propertyPath: listenRadius
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4111485202954055687, guid: c2bcabc1005afd44d8e0439b329062e5, type: 3}
       propertyPath: radiusAttack
-      value: 4
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 4111485202954055687, guid: c2bcabc1005afd44d8e0439b329062e5, type: 3}
       propertyPath: destination.Array.size
@@ -14728,8 +14732,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4080044, y: 0.43248463, z: 0.5875264}
-  m_Center: {x: -0.0015219003, y: 0.048222102, z: -8.565966e-17}
+  m_Size: {x: 0.4080044, y: 0.455567, z: 0.5875264}
+  m_Center: {x: -0.0015219003, y: 0.059763283, z: 1.2924738e-11}
 --- !u!1 &1323555965
 GameObject:
   m_ObjectHideFlags: 0
