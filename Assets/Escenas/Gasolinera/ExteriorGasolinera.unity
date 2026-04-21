@@ -7475,7 +7475,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1075083039853645334, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.54
+      value: -0.89
       objectReference: {fileID: 0}
     - target: {fileID: 1075083039853645334, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_LocalPosition.y
@@ -11600,6 +11600,7 @@ GameObject:
   - component: {fileID: 1634605525}
   - component: {fileID: 1634605524}
   - component: {fileID: 1634605523}
+  - component: {fileID: 1634605526}
   m_Layer: 9
   m_Name: TriggerPuzleGasolina
   m_TagString: TriggerPuzle
@@ -11659,6 +11660,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1329903149}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1634605526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634605522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: fd20156faab44434687e1963ab9e464d, type: 2}
+  id: TriggerPuzleGasolina
 --- !u!1001 &1640512815
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14641,7 +14656,6 @@ GameObject:
   - component: {fileID: 2087370029}
   - component: {fileID: 2087370028}
   - component: {fileID: 2087370027}
-  - component: {fileID: 2087370026}
   m_Layer: 0
   m_Name: CinemachineCamera
   m_TagString: Untagged
@@ -14658,32 +14672,12 @@ Transform:
   m_GameObject: {fileID: 2087370024}
   serializedVersion: 2
   m_LocalRotation: {x: 0.067928255, y: 0, z: 0, w: 0.99769026}
-  m_LocalPosition: {x: 7.29, y: -0.21122158, z: -9.04217}
+  m_LocalPosition: {x: 6.94, y: -0.21122158, z: -9.04217}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1922300302}
   m_LocalEulerAnglesHint: {x: 7.79, y: 0, z: 0}
---- !u!114 &2087370026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2087370024}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7df3a1ae5d1e3ca4ca43566333af111d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CameraTilt
-  player: {fileID: 0}
-  minDistance: 3
-  maxDistance: 4
-  minAngle: 17
-  maxAngle: 40
-  minOffsetY: 0.62
-  maxOffsetY: 0.9
-  smoothSpeed: 1
 --- !u!114 &2087370027
 MonoBehaviour:
   m_ObjectHideFlags: 0
