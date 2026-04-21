@@ -14,11 +14,7 @@ public class MainMenuCanvas : MonoBehaviour
     }
     public void Play()
     {
-<<<<<<< HEAD
-        GameManager.Instance.datos.NameScene = "PuenteLevadizo";
-=======
-        GameManager.Instance.datos.NameScene = "ExteriorGasolinera";
->>>>>>> 8103bc5 (uff luces basta)
+        GameManager.Instance.datos.NameScene = "PuenteBosque";
         GameManager.Instance.IrAScene("LoadManagers");
     }
 
