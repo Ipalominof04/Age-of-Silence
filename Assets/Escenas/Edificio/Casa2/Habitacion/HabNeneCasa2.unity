@@ -389,6 +389,7 @@ GameObject:
   - component: {fileID: 69846075}
   - component: {fileID: 69846074}
   - component: {fileID: 69846073}
+  - component: {fileID: 69846076}
   m_Layer: 0
   m_Name: LamparaMesa
   m_TagString: Untagged
@@ -618,6 +619,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 530091167}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &69846076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69846072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 488b6d829bdf54b4f9aedb46c305a8ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlickeringLight
+  minIntensity: 0
+  maxIntensity: 30
+  flickerSpeed: 3
 --- !u!1001 &96225157
 PrefabInstance:
   m_ObjectHideFlags: 0
