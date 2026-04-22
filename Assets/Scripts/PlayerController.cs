@@ -81,12 +81,17 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private bool isCrouchWalking = false;
     private bool isAiming = false;
+    private bool isClimbingTop = false;
 
     private IPuzle puzleInRange = null;
 
     private Animator animator;
 
     private PlayerState previousState;
+
+    private float climbTopTimer = 0f;
+    private float climbTopUpDuration = 1.5f;      // segundos subiendo
+    private float climbTopForwardDuration = 0.5f; // segundos avanzando
     public Transform GetEyePoint()
     {
         return eyePoint;
@@ -128,8 +133,24 @@ public class PlayerController : MonoBehaviour, IDamageable
     void Update()
     {
         inputMoviment = walkAction.ReadValue<Vector2>();
+        if (isClimbingTop) inputMoviment = Vector2.zero;
         UpdateState();
         ApplyGravity();
+        if (isClimbingTop)
+        {
+            climbTopTimer += Time.deltaTime;
+
+            if (climbTopTimer < climbTopUpDuration)
+                characterController.Move(Vector3.up * 1f * Time.deltaTime);
+            else if (climbTopTimer < climbTopUpDuration + climbTopForwardDuration)
+                characterController.Move(transform.forward * 1f * Time.deltaTime);
+            else
+            {
+                isClimbingTop = false;
+                climbTopTimer = 0f;
+                ChangeState(PlayerState.IDLE);
+            }
+        }
     }
 
     private void OnEnable()
@@ -228,6 +249,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void UpdateState()
     {
         if (InDialogue) return;
+        if (isClimbingTop) return;
 
         switch (currentState)
         {
@@ -415,7 +437,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
     private void ApplyGravity()
     {
-        if (escaleraInRange)
+        if (escaleraInRange || isClimbingTop)
         {
             verticalVelocity.y = 0;
             return;
@@ -662,6 +684,17 @@ public class PlayerController : MonoBehaviour, IDamageable
                 transform.rotation = Quaternion.LookRotation(direccionEscalera);
             }
 
+            if (other.tag == "TriggerTopEscalera" && inputMoviment.y > 0)
+            {
+                print("nrtrooo");
+                escaleraInRange = false;
+                isClimbingTop = true;
+                climbTopTimer = 0f;
+                animator.SetBool("onLadder", false);
+                animator.SetTrigger("climbTop");
+                other.enabled = false;
+            }
+
             if (other.tag == "TriggerAyuda")
             {
                 TriggerAyuda ayuda = other.GetComponent<TriggerAyuda>();
@@ -722,6 +755,11 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             escaleraInRange = false;
             animator.SetBool("onLadder", false);
+
+            GameObject topTrigger = GameObject.FindWithTag("TriggerTopEscalera");
+            if (topTrigger != null)
+                topTrigger.GetComponent<Collider>().enabled = true;
+
             if (currentState == PlayerState.WALK)
                 animator.Play("walk");
             else if (currentState == PlayerState.RUN)
