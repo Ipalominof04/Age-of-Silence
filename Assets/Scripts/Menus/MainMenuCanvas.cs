@@ -14,7 +14,7 @@ public class MainMenuCanvas : MonoBehaviour
     }
     public void Play()
     {
-        GameManager.Instance.datos.NameScene = "PuenteLevadizo";
+        GameManager.Instance.datos.NameScene = "SigiloSalida";
         GameManager.Instance.IrAScene("LoadManagers");
     }
 
