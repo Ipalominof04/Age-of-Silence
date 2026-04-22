@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private bool isDying = false;
 
     private bool isCrouchWalking = false;
-    private bool isClimbing = false;
+    private bool isAiming = false;
 
     private IPuzle puzleInRange = null;
 
@@ -161,7 +161,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 {
                     if (armaEquipada)
                     {
-                        animator.Play("idle_arma");
+                        animator.Play("idleArma");
                         armaEnMano.transform.localPosition = new Vector3(0.0153f, 0.0766f, 0.0142f);
                         armaEnMano.transform.localRotation = Quaternion.Euler(33.74f, 137.574f, -44.139f);
                     }    
@@ -178,25 +178,27 @@ public class PlayerController : MonoBehaviour, IDamageable
                 animator.Play("run");
                 break;
             case PlayerState.CROUCH:
-                animator.Play("crouch");
-                characterController.center = new Vector3(0, 0.375f, 0);
-                characterController.radius = 0.4f;
-                characterController.height = 0.7f;
-                playerCollider.center = new Vector3(0, 0.475f, 0);
-                playerCollider.radius = 0.6f;
-                playerCollider.height = 0.7f;
-
-                eyePoint.localPosition = new Vector3(0, eyeHeightCrouch, 0);
-
-                if (inputMoviment.magnitude > 0.01f)
+                if (!escaleraInRange)
                 {
-                    isCrouchWalking = true;
-                    animator.Play("crouchWalking");
-                }
-                else
-                {
-                    isCrouchWalking = false;
-                    animator.Play("crouch");
+                    animator.SetBool("isCrouching", true);
+                    characterController.center = new Vector3(0, 0.375f, 0);
+                    characterController.radius = 0.4f;
+                    characterController.height = 0.7f;
+                    playerCollider.center = new Vector3(0, 0.475f, 0);
+                    playerCollider.radius = 0.6f;
+                    playerCollider.height = 0.7f;
+
+                    eyePoint.localPosition = new Vector3(0, eyeHeightCrouch, 0);
+
+                    if (inputMoviment.magnitude > 0.01f)
+                    {
+                        isCrouchWalking = true;
+                        animator.Play("crouchWalking");
+                    }
+                    else
+                    {
+                        isCrouchWalking = false;
+                    }
                 }
                 break;
             case PlayerState.SHOOT:
@@ -274,18 +276,23 @@ public class PlayerController : MonoBehaviour, IDamageable
                 break;
 
             case PlayerState.CROUCH:
-                Crouch();
-
-                //para que se actualice la animacion si el player deja de andar mientras esta agachado y se ponga en crouch idle
-                if (inputMoviment.magnitude > 0.01f && !isCrouchWalking)
+                if (escaleraInRange)
                 {
-                    isCrouchWalking = true;
-                    animator.Play("crouchWalking");
+                    ClimbLadder();
                 }
-                else if (inputMoviment.magnitude < 0.01f && isCrouchWalking)
+                else
                 {
-                    isCrouchWalking = false;
-                    animator.Play("crouch");
+                    Crouch();
+                    if (inputMoviment.magnitude > 0.01f && !isCrouchWalking)
+                    {
+                        isCrouchWalking = true;
+                        animator.Play("crouchWalking");
+                    }
+                    else if (inputMoviment.magnitude < 0.01f && isCrouchWalking)
+                    {
+                        isCrouchWalking = false;
+                        animator.Play("crouch");
+                    }
                 }
 
                 if (!crouchAction.IsPressed()) ChangeState(PlayerState.IDLE);
@@ -343,6 +350,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             case PlayerState.RUN:
                 break;
             case PlayerState.CROUCH:
+                animator.SetBool("isCrouching", false);
                 SetColliderNormal();
                 break;
             case PlayerState.SHOOT:
@@ -367,6 +375,14 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         if (throwAction.IsPressed())
         {
+            if (previousState == PlayerState.CROUCH && !isAiming)
+            {
+                isAiming = true;
+                animator.SetBool("isAiming", true);
+            }
+            else if (previousState != PlayerState.CROUCH)
+                animator.Play("aimThrow");
+
             Vector3 puntoObjetivo = parabolaRenderer.ObtenerPuntoObjetivo(huesoMano.position, camara);
 
             // Rotar player hacia el punto objetivo
@@ -379,6 +395,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
         else if (throwAction.WasReleasedThisFrame())
         {
+            isAiming = false;
+            animator.SetBool("isAiming", false);
             Vector3 puntoObjetivo = parabolaRenderer.ObtenerPuntoObjetivo(huesoMano.position, camara);
             Vector3 velocidad = parabolaRenderer.CalcularVelocidadInicial(huesoMano.position, puntoObjetivo);
             objetoLanzableEnMano.Lanzar(velocidad, playerCollider);
@@ -388,6 +406,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
         else
         {
+            isAiming = false;
+            animator.SetBool("isAiming", false);
             parabolaRenderer.OcultarParabola();
             ChangeState(previousState);
             //ChangeState(PlayerState.IDLE);
@@ -701,7 +721,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (other.tag == "TriggerEscalera")
         {
             escaleraInRange = false;
-            isClimbing = false;
             animator.SetBool("onLadder", false);
             if (currentState == PlayerState.WALK)
                 animator.Play("walk");
