@@ -2869,6 +2869,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Aiden
       objectReference: {fileID: 0}
+    - target: {fileID: 4509992435902890988, guid: ec08a826fda66694a935962919dabfd7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6828666274242469974, guid: ec08a826fda66694a935962919dabfd7, type: 3}
       propertyPath: player
       value: 
@@ -4941,6 +4945,7 @@ Transform:
   - {fileID: 1178898443}
   - {fileID: 980031780}
   - {fileID: 859071375}
+  - {fileID: 1575774923}
   m_Father: {fileID: 931849231}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &398862673
@@ -5312,6 +5317,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2105058337}
   - {fileID: 340815189}
   - {fileID: 860585171}
   - {fileID: 1125677037}
@@ -5347,8 +5353,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1921492, y: 2.8304815, z: 0.1102142}
-  m_Center: {x: 0.8831382, y: -0.6585417, z: 1.8784959}
+  m_Size: {x: 0.6688147, y: 2.5588095, z: 0.1102142}
+  m_Center: {x: 0.96028924, y: -0.7943777, z: 1.8784959}
 --- !u!1 &432446330
 GameObject:
   m_ObjectHideFlags: 0
@@ -13996,6 +14002,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 196869344584577787, guid: 89437555278a3b747b73449b8a201440, type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'Right_ThumbIntermediate'\n\tTransform 'Left_IndexProximal'\n\tTransform
+        'Right_IndexProximal'\n\tTransform 'Right_MiddleIntermediate'\n\tTransform
+        'Left_LowerArm'\n\tTransform 'Left_PinkyDistal'\n\tTransform 'Left_RingIntermediate'\n\tTransform
+        'Chest'\n\tTransform 'Right_ThumbDistal'\n\tTransform 'Right_IndexIntermediate'\n\tand
+        more ...\n\tFrom animation clip 'aimThrow'"
+      objectReference: {fileID: 0}
     - target: {fileID: 1075083039853645334, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_LocalPosition.x
       value: 46.26
@@ -18346,7 +18362,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6357746898875310754, guid: 057003e5f488cc74f908a70494daea53, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 52.631
+      value: 46.513
       objectReference: {fileID: 0}
     - target: {fileID: 6357746898875310754, guid: 057003e5f488cc74f908a70494daea53, type: 3}
       propertyPath: m_LocalPosition.y
@@ -18354,7 +18370,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6357746898875310754, guid: 057003e5f488cc74f908a70494daea53, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.493
+      value: -5.017
       objectReference: {fileID: 0}
     - target: {fileID: 6357746898875310754, guid: 057003e5f488cc74f908a70494daea53, type: 3}
       propertyPath: m_LocalRotation.w
@@ -18547,12 +18563,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1575774921}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 55.68326, y: 2.9583528, z: -4.710455}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6.765003, y: 1.0801128, z: -2.985215}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 395701190}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1578587863
 GameObject:
@@ -21391,7 +21407,7 @@ MonoBehaviour:
   fadeDuration: 1
   lastDoorID: 
   ruta: Assets/savegame.json
-  datos: {fileID: 11400000, guid: d5cd9530358ab5f488bbf0ac0b7995f6, type: 2}
+  datos: {fileID: 11400000, guid: 180792a5f9adf6d44a73d8344a13e625, type: 2}
 --- !u!4 &1845911923
 Transform:
   m_ObjectHideFlags: 0
@@ -21830,7 +21846,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1889507122
 Transform:
   m_ObjectHideFlags: 0
@@ -24564,6 +24580,59 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2102618590}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2105058336
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2105058337}
+  - component: {fileID: 2105058338}
+  m_Layer: 9
+  m_Name: TopEscalera
+  m_TagString: TriggerTopEscalera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2105058337
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105058336}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.9536308, y: 0.685, z: 1.9336015}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 421116447}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2105058338
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105058336}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.24359128, y: 0.80308557, z: 0.625202}
+  m_Center: {x: -0.0033569478, y: -0.12907588, z: -0.0145189725}
 --- !u!1 &2135665664
 GameObject:
   m_ObjectHideFlags: 0
@@ -24605,14 +24674,13 @@ SceneRoots:
   - {fileID: 1468219934}
   - {fileID: 536777768}
   - {fileID: 1161955361}
+  - {fileID: 1889507122}
   - {fileID: 931849231}
   - {fileID: 1141754970}
   - {fileID: 187656265}
-  - {fileID: 421116447}
   - {fileID: 432446333}
   - {fileID: 1562273253}
   - {fileID: 1300459183}
-  - {fileID: 1889507122}
-  - {fileID: 1575774923}
   - {fileID: 1226496423}
   - {fileID: 283934129}
+  - {fileID: 421116447}

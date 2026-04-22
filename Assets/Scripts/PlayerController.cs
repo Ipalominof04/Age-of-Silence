@@ -77,12 +77,21 @@ public class PlayerController : MonoBehaviour, IDamageable
     private bool escaleraInRange = false;
     private TriggerAyuda ayudaInRange = null;
     private Vector3 direccionEscalera;
+    private bool isDying = false;
+
+    private bool isCrouchWalking = false;
+    private bool isAiming = false;
+    private bool isClimbingTop = false;
 
     private IPuzle puzleInRange = null;
 
     private Animator animator;
 
     private PlayerState previousState;
+
+    private float climbTopTimer = 0f;
+    private float climbTopUpDuration = 1.5f;      // segundos subiendo
+    private float climbTopForwardDuration = 0.5f; // segundos avanzando
     public Transform GetEyePoint()
     {
         return eyePoint;
@@ -124,8 +133,24 @@ public class PlayerController : MonoBehaviour, IDamageable
     void Update()
     {
         inputMoviment = walkAction.ReadValue<Vector2>();
+        if (isClimbingTop) inputMoviment = Vector2.zero;
         UpdateState();
         ApplyGravity();
+        if (isClimbingTop)
+        {
+            climbTopTimer += Time.deltaTime;
+
+            if (climbTopTimer < climbTopUpDuration)
+                characterController.Move(Vector3.up * 1f * Time.deltaTime);
+            else if (climbTopTimer < climbTopUpDuration + climbTopForwardDuration)
+                characterController.Move(transform.forward * 1f * Time.deltaTime);
+            else
+            {
+                isClimbingTop = false;
+                climbTopTimer = 0f;
+                ChangeState(PlayerState.IDLE);
+            }
+        }
     }
 
     private void OnEnable()
@@ -146,10 +171,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         onArmaSobrecalentada.Unsubscribe(() => armaSobrecalentada = true);
         onArmaEnfriada.Unsubscribe(() => armaSobrecalentada = false);
     }
-
-
-
-
     #region State Machine
     private void InitState(PlayerState state)
     {
@@ -157,23 +178,49 @@ public class PlayerController : MonoBehaviour, IDamageable
         switch (currentState)
         {
             case PlayerState.IDLE:
-                animator.Play("idle");
+                if (!escaleraInRange)
+                {
+                    if (armaEquipada)
+                    {
+                        animator.Play("idleArma");
+                        armaEnMano.transform.localPosition = new Vector3(0.0153f, 0.0766f, 0.0142f);
+                        armaEnMano.transform.localRotation = Quaternion.Euler(33.74f, 137.574f, -44.139f);
+                    }    
+                    else
+                        animator.Play("idle");
+                }
                 break;
+                
             case PlayerState.WALK:
-                animator.Play("walk");
+                if (!escaleraInRange)
+                    animator.Play("walk");
                 break;
             case PlayerState.RUN:
+                animator.Play("run");
                 break;
             case PlayerState.CROUCH:
-                animator.Play("crouch");
-                characterController.center = new Vector3(0, 0.375f, 0);
-                characterController.radius = 0.3f;
-                characterController.height = 0.7f;
-                playerCollider.center = new Vector3(0, 0.475f, 0);
-                playerCollider.radius = 0.7f;
-                playerCollider.height = 0.7f;
+                if (!escaleraInRange)
+                {
+                    animator.SetBool("isCrouching", true);
+                    characterController.center = new Vector3(0, 0.375f, 0);
+                    characterController.radius = 0.4f;
+                    characterController.height = 0.7f;
+                    playerCollider.center = new Vector3(0, 0.475f, 0);
+                    playerCollider.radius = 0.6f;
+                    playerCollider.height = 0.7f;
 
-                eyePoint.localPosition = new Vector3(0, eyeHeightCrouch, 0);
+                    eyePoint.localPosition = new Vector3(0, eyeHeightCrouch, 0);
+
+                    if (inputMoviment.magnitude > 0.01f)
+                    {
+                        isCrouchWalking = true;
+                        animator.Play("crouchWalking");
+                    }
+                    else
+                    {
+                        isCrouchWalking = false;
+                    }
+                }
                 break;
             case PlayerState.SHOOT:
                 break;
@@ -202,6 +249,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void UpdateState()
     {
         if (InDialogue) return;
+        if (isClimbingTop) return;
 
         switch (currentState)
         {
@@ -250,7 +298,25 @@ public class PlayerController : MonoBehaviour, IDamageable
                 break;
 
             case PlayerState.CROUCH:
-                Crouch();
+                if (escaleraInRange)
+                {
+                    ClimbLadder();
+                }
+                else
+                {
+                    Crouch();
+                    if (inputMoviment.magnitude > 0.01f && !isCrouchWalking)
+                    {
+                        isCrouchWalking = true;
+                        animator.Play("crouchWalking");
+                    }
+                    else if (inputMoviment.magnitude < 0.01f && isCrouchWalking)
+                    {
+                        isCrouchWalking = false;
+                        animator.Play("crouch");
+                    }
+                }
+
                 if (!crouchAction.IsPressed()) ChangeState(PlayerState.IDLE);
 
                 if (interactAction.triggered && (objectInRange != null || puzleInRange != null) && crouchAction.IsPressed())
@@ -306,6 +372,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             case PlayerState.RUN:
                 break;
             case PlayerState.CROUCH:
+                animator.SetBool("isCrouching", false);
                 SetColliderNormal();
                 break;
             case PlayerState.SHOOT:
@@ -330,6 +397,14 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         if (throwAction.IsPressed())
         {
+            if (previousState == PlayerState.CROUCH && !isAiming)
+            {
+                isAiming = true;
+                animator.SetBool("isAiming", true);
+            }
+            else if (previousState != PlayerState.CROUCH)
+                animator.Play("aimThrow");
+
             Vector3 puntoObjetivo = parabolaRenderer.ObtenerPuntoObjetivo(huesoMano.position, camara);
 
             // Rotar player hacia el punto objetivo
@@ -342,6 +417,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
         else if (throwAction.WasReleasedThisFrame())
         {
+            isAiming = false;
+            animator.SetBool("isAiming", false);
             Vector3 puntoObjetivo = parabolaRenderer.ObtenerPuntoObjetivo(huesoMano.position, camara);
             Vector3 velocidad = parabolaRenderer.CalcularVelocidadInicial(huesoMano.position, puntoObjetivo);
             objetoLanzableEnMano.Lanzar(velocidad, playerCollider);
@@ -351,6 +428,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
         else
         {
+            isAiming = false;
+            animator.SetBool("isAiming", false);
             parabolaRenderer.OcultarParabola();
             ChangeState(previousState);
             //ChangeState(PlayerState.IDLE);
@@ -358,7 +437,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
     private void ApplyGravity()
     {
-        if (escaleraInRange)
+        if (escaleraInRange || isClimbingTop)
         {
             verticalVelocity.y = 0;
             return;
@@ -381,19 +460,19 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void Walk()
     {
         Move(1.75f);
-       soundEmitter.EmitSound(ESound.WALK);
+       //soundEmitter.EmitSound(ESound.WALK);
     }
 
     private void Run()
     {
         Move(3f);
-        soundEmitter.EmitSound(ESound.WALK);
+        //soundEmitter.EmitSound(ESound.WALK);
     }
 
     private void Crouch()
     {
         Move(1.5f);
-        soundEmitter.EmitSound(ESound.CROUCH);
+        //soundEmitter.EmitSound(ESound.CROUCH);
     }
 
     private void ClimbLadder()
@@ -403,7 +482,9 @@ public class PlayerController : MonoBehaviour, IDamageable
         Vector3 verticalMovement = new Vector3(0, inputMoviment.y, 0);
         Vector3 horizontalMovement = new Vector3(inputMoviment.x, 0, 0);
 
-        characterController.Move((verticalMovement + horizontalMovement) * 2f * Time.deltaTime);
+        animator.SetFloat("Speed", inputMoviment.magnitude);
+
+        characterController.Move((verticalMovement + horizontalMovement) * 1f * Time.deltaTime);
     }
 
     private void Interact()
@@ -522,7 +603,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             rb.linearVelocity = this.gameObject.transform.forward * 20f;
 
         onShoot.Raise();
-            soundEmitter.EmitSound(ESound.SHOOT);
+            //soundEmitter.EmitSound(ESound.SHOOT);
         }
         ChangeState(PlayerState.IDLE);
 
@@ -538,8 +619,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (vidaActual <= 0f)
             Die();
     }
-
-    private bool isDying = false;
 
     public void Die()
     {
@@ -594,15 +673,26 @@ public class PlayerController : MonoBehaviour, IDamageable
                 }
 
             }
-        
 
             if (other.tag == "TriggerEscalera")
             {
                 escaleraInRange = true;
+                animator.SetBool("onLadder", true);
                 direccionEscalera = (other.transform.position - transform.position).normalized;
                 direccionEscalera.y = 0;
                 // Fuerza al player a mirar hacia la escalera
                 transform.rotation = Quaternion.LookRotation(direccionEscalera);
+            }
+
+            if (other.tag == "TriggerTopEscalera" && inputMoviment.y > 0)
+            {
+                print("nrtrooo");
+                escaleraInRange = false;
+                isClimbingTop = true;
+                climbTopTimer = 0f;
+                animator.SetBool("onLadder", false);
+                animator.SetTrigger("climbTop");
+                other.enabled = false;
             }
 
             if (other.tag == "TriggerAyuda")
@@ -662,7 +752,21 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
 
         if (other.tag == "TriggerEscalera")
+        {
             escaleraInRange = false;
+            animator.SetBool("onLadder", false);
+
+            GameObject topTrigger = GameObject.FindWithTag("TriggerTopEscalera");
+            if (topTrigger != null)
+                topTrigger.GetComponent<Collider>().enabled = true;
+
+            if (currentState == PlayerState.WALK)
+                animator.Play("walk");
+            else if (currentState == PlayerState.RUN)
+                animator.Play("run");
+            else
+                animator.Play("idle");
+        }
 
         if (other.tag == "TriggerAyuda")
             ayudaInRange = null;

@@ -107,7 +107,7 @@ public class ObjetoLanzable : MonoBehaviour
             {
                 if (!yaLanzado) return;
                 if ((capasColision.value & (1 << collision.gameObject.layer)) == 0) return;
-                emitter.EmitSound(ESound.BOTTLE);
+              //  emitter.EmitSound(ESound.BOTTLE);
                 Destroy(gameObject);
             }
 
@@ -115,7 +115,7 @@ public class ObjetoLanzable : MonoBehaviour
             {
                 if (!yaLanzado) return;
                 if ((capasColision.value & (1 << collision.gameObject.layer)) == 0) return;
-                emitter.EmitSound(ESound.ROCK);
+              //  emitter.EmitSound(ESound.ROCK);
             }
         }
     }
