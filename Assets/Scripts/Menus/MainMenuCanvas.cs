@@ -14,11 +14,7 @@ public class MainMenuCanvas : MonoBehaviour
     }
     public void Play()
     {
-<<<<<<< HEAD
-        GameManager.Instance.datos.NameScene = "SigiloSalida";
-=======
         GameManager.Instance.datos.NameScene = "CabañaNPC";
->>>>>>> 09a8d25 (arreglo escena2 + NPC y dialogo)
         GameManager.Instance.IrAScene("LoadManagers");
     }
 
