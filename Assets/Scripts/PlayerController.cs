@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         InitState(PlayerState.IDLE);
 
-        float vidaGuardada = GameManager.Instance.datos.PlayerHealth; 
+        float vidaGuardada = GameManager.Instance.datos.PlayerHealth;
         vidaActual = vidaGuardada > 0f ? vidaGuardada : vidaMaxima;
         onVidaCambiada.Raise(vidaActual / vidaMaxima);
     }
@@ -134,7 +134,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         OnDialogueEnded.Subscribe(() => { InDialogue = false; canInteract = false; });
         OnAidenStopped.Subscribe(() => canInteract = true);
         onArmaSobrecalentada.Subscribe(() => armaSobrecalentada = true);
-        onArmaEnfriada.Subscribe(() =>  armaSobrecalentada = false);
+        onArmaEnfriada.Subscribe(() => armaSobrecalentada = false);
 
     }
 
@@ -381,20 +381,20 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void Walk()
     {
         Move(1.75f);
-       soundEmitter.EmitSound(ESound.WALK);
+        //  soundEmitter.EmitSound(ESound.WALK);
     }
 
     private void Run()
     {
         Move(3f);
-        soundEmitter.EmitSound(ESound.RUN);
+        //    soundEmitter.EmitSound(ESound.RUN);
     }
 
     private void Crouch()
     {
         Move(1.5f);
-        soundEmitter.EmitSound(ESound.CROUCH);
-       
+        //    soundEmitter.EmitSound(ESound.CROUCH);
+
     }
 
     private void ClimbLadder()
@@ -421,14 +421,16 @@ public class PlayerController : MonoBehaviour, IDamageable
                     objectInRange = null;
                     return; //salir sin guardar en la mano
 
-                } else if (objectInRange.CompareTag("Pieza"))
+                }
+                else if (objectInRange.CompareTag("Pieza"))
                 {
                     if (vidaActual >= vidaMaxima)
                     {
                         Debug.Log("Vida al máximo, no necesitas la pieza");
                         return;
 
-                    } else
+                    }
+                    else
                     {
                         vidaActual += 2f; // o la cantidad que quieras
                         vidaActual = Mathf.Clamp(vidaActual, 0f, vidaMaxima);
@@ -439,15 +441,16 @@ public class PlayerController : MonoBehaviour, IDamageable
                         objectInRange = null;
                         return;
                     }
-                        
-                }else
+
+                }
+                else
                 {
                     objetoMano.GuardarObjeto(objectInRange);
                     GameManager.Instance.datos.objetoMano = objetoMano;
                     objectInRange.SetActive(false);
                     objectInRange = null;
                     Debug.Log("Objeto recogido: " + objetoMano.nombreObjeto);
-                }   
+                }
             }
             else
             {
@@ -462,7 +465,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             GameObject arma = armaEnMano;
             arma.transform.SetParent(huesoMano.transform);
-            arma.transform.localPosition = new Vector3(-0.046f, 0.052f, -0.006f);     
+            arma.transform.localPosition = new Vector3(-0.046f, 0.052f, -0.006f);
             arma.transform.localRotation = Quaternion.Euler(33.283f, 142.394f, 38.761f);
             arma.transform.localScale = Vector3.one;
             MeshRenderer meshArma = arma.GetComponent<MeshRenderer>();
@@ -509,20 +512,20 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
     private void Shoot()
     {
-        if(shootingPoint == null) return;
+        if (shootingPoint == null) return;
 
-        if(!armaSobrecalentada)
+        if (!armaSobrecalentada)
         {
-        GameObject go = Instantiate(bala, shootingPoint.transform.position, shootingPoint.transform.rotation);
+            GameObject go = Instantiate(bala, shootingPoint.transform.position, shootingPoint.transform.rotation);
             BalaController balaDefault = go.GetComponent<BalaController>();
             if (balaDefault != null)
                 balaDefault.SetDamage(1);
 
             Rigidbody rb = go.GetComponent<Rigidbody>();
-        if (rb != null)
-            rb.linearVelocity = this.gameObject.transform.forward * 20f;
+            if (rb != null)
+                rb.linearVelocity = this.gameObject.transform.forward * 20f;
 
-        onShoot.Raise();
+            onShoot.Raise();
             soundEmitter.EmitSound(ESound.SHOOT);
         }
         ChangeState(PlayerState.IDLE);
@@ -595,7 +598,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 }
 
             }
-        
+
 
             if (other.tag == "TriggerEscalera")
             {
@@ -640,6 +643,11 @@ public class PlayerController : MonoBehaviour, IDamageable
                 print("objeto " + other.gameObject.name + " en rango");
             }
             if (other.tag == "Pieza")
+            {
+                objectInRange = other.gameObject;
+                print("objeto " + other.gameObject.name + " en rango");
+            }
+            if (other.tag == "ComidaNPC")
             {
                 objectInRange = other.gameObject;
                 print("objeto " + other.gameObject.name + " en rango");

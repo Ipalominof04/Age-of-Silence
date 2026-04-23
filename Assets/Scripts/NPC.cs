@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public class NPC : MonoBehaviour
+public class NPC : MonoBehaviour, IPuzle
 {
+    public bool infoMostrada = false;
+
     [SerializeField] GameEvent misionComidaNPC;
     [SerializeField] GameEvent amenazaNPC;
 
     [Header("Dialogos")]
     [SerializeField] private RuntimeDialogueGraph graphComida;
+    [SerializeField] private RuntimeDialogueGraph graphTraigoComida;
 
     private void OnEnable()
     {
@@ -29,7 +32,7 @@ public class NPC : MonoBehaviour
 
         string objeto = objetoMano.nombreObjeto;
 
-        if (objeto == "Comida" && GameManager.Instance.PuzzleResuelto("MisionComidaNPC"))
+        if (objeto == "ComidaNPC" && GameManager.Instance.PuzzleResuelto("MisionComidaNPC"))
         {
             if (graphComida != null)
                 DialogueManager.Instance.StartInfo(graphComida);
@@ -46,5 +49,12 @@ public class NPC : MonoBehaviour
         GameManager.Instance.datos.puzzlesResueltos.Add("AmenazadoNPC");
     }
 
-    private void OnTriggerEnter(Collider other) { }
+    public void OnEnterRange()
+    {
+        if (!infoMostrada && graphTraigoComida != null)
+        {
+            infoMostrada = true;
+            DialogueManager.Instance.StartInfo(graphTraigoComida);
+        }
+    }
 }

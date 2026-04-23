@@ -1,15 +1,70 @@
 {
-    "confianza": -8.0,
+    "confianza": 10.0,
     "playerHealth": 0.19999980926513673,
-    "objetoMano": "",
-    "nameScene": "CañanaNPC",
+    "objetoMano": "ComidaNPC",
+    "nameScene": "InteriorCabaña",
     "puzlesCompletados": [
         "FusibleVerde",
         "FusibleAzul",
         "AidenNiega",
-        "FusibleAmarillo"
+        "FusibleAmarillo",
+        "MisionComidaNPC"
     ],
     "escenas": [
+        {
+            "sceneName": "Interior Tienda",
+            "objetos": [
+                {
+                    "id": "TriggerMalEstado",
+                    "active": true,
+                    "pos": {
+                        "x": 19.272838592529298,
+                        "y": 0.6276599764823914,
+                        "z": -1.629000186920166
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 1.0
+                    }
+                },
+                {
+                    "id": "TriggerMalEstado (1)",
+                    "active": true,
+                    "pos": {
+                        "x": 22.39299964904785,
+                        "y": 0.6276599764823914,
+                        "z": -1.6770000457763672
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 1.0
+                    }
+                },
+                {
+                    "id": "ComidaNPC",
+                    "active": true,
+                    "pos": {
+                        "x": 21.039810180664064,
+                        "y": 0.1738000065088272,
+                        "z": -2.350851535797119
+                    },
+                    "rot": {
+                        "x": 0.6883655190467835,
+                        "y": 0.6883653998374939,
+                        "z": 0.16171900928020478,
+                        "w": -0.16171899437904359
+                    }
+                }
+            ]
+        },
+        {
+            "sceneName": "Almacen Fabrica",
+            "objetos": []
+        },
         {
             "sceneName": "Cocina Fabrica",
             "objetos": []
@@ -24,6 +79,10 @@
         },
         {
             "sceneName": "Electricidad",
+            "objetos": []
+        },
+        {
+            "sceneName": "",
             "objetos": []
         },
         {
@@ -43,6 +102,10 @@
             "objetos": []
         },
         {
+            "sceneName": "",
+            "objetos": []
+        },
+        {
             "sceneName": "Oficina 2",
             "objetos": []
         },
@@ -51,11 +114,15 @@
             "objetos": []
         },
         {
+            "sceneName": "Salida Fabrica",
+            "objetos": []
+        },
+        {
             "sceneName": "Trastero",
             "objetos": []
         },
         {
-            "sceneName": "Almacen Fabrica",
+            "sceneName": "ZonaChill",
             "objetos": []
         }
     ]
