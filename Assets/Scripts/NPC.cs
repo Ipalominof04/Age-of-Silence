@@ -22,10 +22,6 @@ public class NPC : MonoBehaviour, IPuzle
         amenazaNPC.Unsubscribe(AñadirPuzleAmenaza);
         misionComidaNPC.Unsubscribe(AñadirPuzleComida);
     }
-
-    void Start() { }
-    void Update() { }
-
     public void Interact(ObjetoAgarrado objetoMano)
     {
         if (string.IsNullOrEmpty(objetoMano.nombreObjeto)) return;
@@ -34,6 +30,8 @@ public class NPC : MonoBehaviour, IPuzle
 
         if (objeto == "ComidaNPC" && GameManager.Instance.PuzzleResuelto("MisionComidaNPC"))
         {
+                    objetoMano.UsarObjeto();
+                    this.gameObject.SetActive(false);
             if (graphComida != null)
                 DialogueManager.Instance.StartInfo(graphComida);
         }
