@@ -5,6 +5,8 @@ public class NPC : MonoBehaviour
     [SerializeField] GameEvent misionComidaNPC;
     [SerializeField] GameEvent amenazaNPC;
 
+    [Header("Dialogos")]
+    [SerializeField] private RuntimeDialogueGraph graphComida;
 
     private void OnEnable()
     {
@@ -18,16 +20,20 @@ public class NPC : MonoBehaviour
         misionComidaNPC.Unsubscribe(AñadirPuzleComida);
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    void Start() { }
+    void Update() { }
 
-    // Update is called once per frame
-    void Update()
+    public void Interact(ObjetoAgarrado objetoMano)
     {
-        
+        if (string.IsNullOrEmpty(objetoMano.nombreObjeto)) return;
+
+        string objeto = objetoMano.nombreObjeto;
+
+        if (objeto == "Comida" && GameManager.Instance.PuzzleResuelto("MisionComidaNPC"))
+        {
+            if (graphComida != null)
+                DialogueManager.Instance.StartInfo(graphComida);
+        }
     }
 
     private void AñadirPuzleComida()
@@ -39,4 +45,6 @@ public class NPC : MonoBehaviour
     {
         GameManager.Instance.datos.puzzlesResueltos.Add("AmenazadoNPC");
     }
+
+    private void OnTriggerEnter(Collider other) { }
 }
