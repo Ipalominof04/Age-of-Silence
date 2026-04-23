@@ -740,7 +740,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4acf82a54dde76a459ee43d44cfb99d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CanvasLookAtCamera
-  _camera: {fileID: 0}
+  camara: {fileID: 0}
 --- !u!1 &2770639337598142202
 GameObject:
   m_ObjectHideFlags: 0
@@ -1905,7 +1905,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1.7
-  m_BaseOffset: 0
+  m_BaseOffset: -0.1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &8346064789273925734
@@ -1947,7 +1947,7 @@ MonoBehaviour:
   currentIndex: 0
   canvasWorld: {fileID: 2763708108248123121}
   stateText: {fileID: 3804765012919029533}
-  listenRadius: 6
+  listenRadius: 5
   minDetectionLevel: 0.2
 --- !u!1 &6706483303658749984
 GameObject:
