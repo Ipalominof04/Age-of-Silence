@@ -4291,15 +4291,15 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 8717ce8a08fb0a14fa961e7e13e11af8, type: 2}
     - target: {fileID: 8191855616036889098, guid: 036c576504fa16147906e501b1a57384, type: 3}
       propertyPath: m_Name
-      value: Canned_food_A_01 (1)
+      value: ComidaNPC
       objectReference: {fileID: 0}
     - target: {fileID: 8191855616036889098, guid: 036c576504fa16147906e501b1a57384, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8191855616036889098, guid: 036c576504fa16147906e501b1a57384, type: 3}
       propertyPath: m_TagString
-      value: ComidaPuzzle
+      value: TriggerPuzle
       objectReference: {fileID: 0}
     - target: {fileID: 8855345615104293040, guid: 036c576504fa16147906e501b1a57384, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4354,6 +4354,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8191855616036889098, guid: 036c576504fa16147906e501b1a57384, type: 3}
       insertIndex: -1
       addedObject: {fileID: 413208867}
+    - targetCorrespondingSourceObject: {fileID: 8191855616036889098, guid: 036c576504fa16147906e501b1a57384, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 413208868}
   m_SourcePrefab: {fileID: 100100000, guid: 036c576504fa16147906e501b1a57384, type: 3}
 --- !u!1 &413208861 stripped
 GameObject:
@@ -4427,6 +4430,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
   soEscena: {fileID: 11400000, guid: 2a9b9d2665ec5e349925fadd3371eef8, type: 2}
   id: ComidaNPC
+--- !u!114 &413208868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 413208861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ed669305fdec4f4cace89a7756f7021, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TriggerPuzleComida
+  infoMostrada: 0
+  graphInfo: {fileID: 0}
+  meshComida: {fileID: 413208861}
 --- !u!1 &424288933
 GameObject:
   m_ObjectHideFlags: 0
