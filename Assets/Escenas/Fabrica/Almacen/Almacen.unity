@@ -5353,8 +5353,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.6688147, y: 2.5588095, z: 0.1102142}
-  m_Center: {x: 0.96028924, y: -0.7943777, z: 1.8784959}
+  m_Size: {x: 0.6688147, y: 2.8760083, z: 0.1102142}
+  m_Center: {x: 0.96028924, y: -0.6357783, z: 1.8784959}
 --- !u!1 &432446330
 GameObject:
   m_ObjectHideFlags: 0
@@ -9026,6 +9026,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1141754972}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &690260871 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1453270521304110753, guid: 89437555278a3b747b73449b8a201440, type: 3}
+  m_PrefabInstance: {fileID: 1141754970}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &695777134
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14004,13 +14009,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 196869344584577787, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_WarningMessage
-      value: "\nBinding warning: Some generic clip(s) animate transforms that are
-        already bound by a Humanoid avatar. These transforms can only be changed
-        by Humanoid clips.\n\tTransform 'Right_ThumbIntermediate'\n\tTransform 'Left_IndexProximal'\n\tTransform
-        'Right_IndexProximal'\n\tTransform 'Right_MiddleIntermediate'\n\tTransform
-        'Left_LowerArm'\n\tTransform 'Left_PinkyDistal'\n\tTransform 'Left_RingIntermediate'\n\tTransform
-        'Chest'\n\tTransform 'Right_ThumbDistal'\n\tTransform 'Right_IndexIntermediate'\n\tand
-        more ...\n\tFrom animation clip 'aimThrow'"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1075083039853645334, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14064,6 +14063,10 @@ PrefabInstance:
       propertyPath: aiden
       value: 
       objectReference: {fileID: 187656266}
+    - target: {fileID: 1337398149008683969, guid: 89437555278a3b747b73449b8a201440, type: 3}
+      propertyPath: geometry
+      value: 
+      objectReference: {fileID: 690260871}
     - target: {fileID: 7366088206330199277, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_Name
       value: Player
@@ -24596,7 +24599,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2105058337
 Transform:
   m_ObjectHideFlags: 0
@@ -24631,8 +24634,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.24359128, y: 0.80308557, z: 0.625202}
-  m_Center: {x: -0.0033569478, y: -0.12907588, z: -0.0145189725}
+  m_Size: {x: 0.24359128, y: 0.66594243, z: 0.625202}
+  m_Center: {x: -0.0033569478, y: -0.060504317, z: -0.0145189725}
 --- !u!1 &2135665664
 GameObject:
   m_ObjectHideFlags: 0
