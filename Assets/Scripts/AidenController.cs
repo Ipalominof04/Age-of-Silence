@@ -87,8 +87,11 @@ public class AidenController : MonoBehaviour
         if (currentState == AidenState.CATCH_UP) return;
         //si el niño esta asustado, que ignore lo que hace el player y no le siga hasta que se indique dependiendo el caso 
         if (currentState == AidenState.SCARED) return;
-        if (currentState == AidenState.HELP) return; // para que ignore los cambios del player y se mueva hasta el waypont
+        // para que ignore los cambios del player y se mueva hasta el waypont
+        if (currentState == AidenState.HELP) return; 
         if (esperarEnDestino && currentState == AidenState.IDLE) return;
+
+        // para que ignore los cambios del player mientras esta esperando a un dialogo o en el propio dialogo
         if (inDialogue) return;
         if (inDialogueTrigger) return;
 
@@ -173,21 +176,21 @@ public class AidenController : MonoBehaviour
         switch (currentState)
         {
             case AidenState.IDLE:
-                if (!esperarEnDestino && Vector3.Distance(transform.position, player.position) > 4f)
+                if (!inDialogueTrigger && !esperarEnDestino && Vector3.Distance(transform.position, player.position) > 4f)
                     ChangeState(AidenState.CATCH_UP);
                 break;
             case AidenState.WALK:
-                if (Vector3.Distance(transform.position, player.position) > 4f)
+                if (!inDialogueTrigger && Vector3.Distance(transform.position, player.position) > 4f)
                     ChangeState(AidenState.CATCH_UP);
                 FollowPlayer();
                 break;
             case AidenState.RUN:
-                if (Vector3.Distance(transform.position, player.position) > 4f)
+                if (!inDialogueTrigger && Vector3.Distance(transform.position, player.position) > 4f)
                     ChangeState(AidenState.CATCH_UP);
                 FollowPlayer();
                 break;
             case AidenState.CROUCH:
-                if (Vector3.Distance(transform.position, player.position) > 4f)
+                if (!inDialogueTrigger && Vector3.Distance(transform.position, player.position) > 4f)
                     ChangeState(AidenState.CATCH_UP);
                 //si el agente se esta moviendo, animación de crouch walking (0.35), si no, crouch idle (0.25)
                 animator.SetFloat("Speed", agent.velocity.magnitude > 0.1f ? 0.35f : 0.25f);
@@ -205,7 +208,7 @@ public class AidenController : MonoBehaviour
                 break;
             case AidenState.CATCH_UP:
                 FollowPlayer();
-                if (Vector3.Distance(transform.position, player.position) <= agent.stoppingDistance)
+                if (!inDialogueTrigger && Vector3.Distance(transform.position, player.position) <= agent.stoppingDistance)
                     ChangeState(AidenState.IDLE);
                 break;
         }

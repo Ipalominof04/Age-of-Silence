@@ -2,14 +2,18 @@
 
 public class CanvasLookAtCamera : MonoBehaviour
 {
-    [SerializeField] private Camera _camera;
+    [SerializeField] private Camera camara;
 
+    private void Start()
+    {
+        camara = Camera.main;
+    }
     void Update()
     {
-        if (_camera == null) return;
+        if (camara == null) return;
 
        
-        Vector3 direction = transform.position - _camera.transform.position;
+        Vector3 direction = transform.position - camara.transform.position;
         transform.rotation = Quaternion.LookRotation(direction);
     }
 }
