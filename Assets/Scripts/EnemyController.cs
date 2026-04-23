@@ -302,11 +302,11 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
     private bool PlayerInArea(float radius)
     {
-        //ESTO LANZA EL RAYCAST MUY ARRIBA
         Collider hit = Physics.OverlapSphere(transform.position, radius, playerLayer).FirstOrDefault();
         if (hit == null) return false;
 
-        PlayerController player = hit.GetComponent<PlayerController>();
+        // Buscar en el padre si el script no está en el mismo objeto que el collider
+        PlayerController player = hit.GetComponentInParent<PlayerController>();
         Vector3 targetForAngle = player != null ? player.GetEyePoint().position : hit.transform.position;
 
         float angle = Vector3.Angle(transform.forward,
@@ -315,24 +315,12 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         if (angle <= 60f)
         {
             Vector3 origin = headTransform != null ? headTransform.position : transform.position + Vector3.up;
-
-            Vector3 targetPoint;
-
-            if (player != null)
-            {
-                targetPoint = player.GetEyePoint().position;
-            }
-            else
-            {
-                targetPoint = hit.bounds.max;
-            }
+            Vector3 targetPoint = player != null ? player.GetEyePoint().position : hit.bounds.max;
 
             Vector3 direction = (targetPoint - origin).normalized;
             float distance = Vector3.Distance(origin, targetPoint);
 
             bool blocked = Physics.Raycast(origin, direction, distance, obstacleLayer);
-
-            // Rojo = bloqueado, Verde = ve al jugador
             Debug.DrawRay(origin, direction * distance, blocked ? Color.red : Color.green);
 
             if (!blocked)
@@ -345,7 +333,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     }
 
     private bool PlayerInAttackArea()
-    { 
+    {
         Collider hit = Physics.OverlapSphere(transform.position, radiusAttack, playerLayer).FirstOrDefault();
         if (hit == null) return false;
 
@@ -353,8 +341,8 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
         Vector3 origin = headTransform != null ? headTransform.position : transform.position + Vector3.up;
 
-        // Apunta a los ojos igual que PlayerInArea, no a los pies
-        PlayerController player = hit.GetComponent<PlayerController>();
+        // Buscar en el padre igual que en PlayerInArea
+        PlayerController player = hit.GetComponentInParent<PlayerController>();
         Vector3 targetPoint = player != null ? player.GetEyePoint().position : hit.bounds.center;
 
         Vector3 direction = (targetPoint - origin).normalized;
@@ -365,11 +353,14 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         return !blocked;
     }
 
-private void LookToPlayer()
+    private void LookToPlayer()
     {
         if (playerTransform == null) return;
 
-        Vector3 direction = (playerTransform.position - transform.position);
+        PlayerController player = playerTransform.GetComponent<PlayerController>();
+        Vector3 targetPos = player != null ? player.GetEyePoint().position : playerTransform.position;
+
+        Vector3 direction = (targetPos - transform.position);
         direction.y = 0;
         if (direction == Vector3.zero) return;
 
@@ -385,12 +376,22 @@ private void LookToPlayer()
 
     private void Shoot()
     {
-        if (hasShot) return;  // <-- si ya disparó, salir completamente
-
-        hasShot = true; // <-- bloquear aquí, antes de todo
+        if (hasShot) return;
+        hasShot = true;
 
         if (shootingPoint != null && bala != null)
         {
+            // Calcula dirección hacia el punto de mira del jugador
+            Vector3 shootDirection = transform.forward; // fallback
+            if (playerTransform != null)
+            {
+                PlayerController player = playerTransform.GetComponentInParent<PlayerController>();
+                Vector3 targetPoint = player != null
+                    ? player.GetEyePoint().position
+                    : playerTransform.position;
+                shootDirection = (targetPoint - shootingPoint.transform.position).normalized;
+            }
+
             switch (enemyType)
             {
                 case EnemyType.FUERTE:
@@ -403,7 +404,7 @@ private void LookToPlayer()
                             Random.Range(-spreadAngle, spreadAngle),
                             0
                         );
-                        Vector3 direction = spread * transform.forward;
+                        Vector3 direction = spread * shootDirection; // <-- usar shootDirection
                         GameObject go = Instantiate(bala, shootingPoint.transform.position, shootingPoint.transform.rotation);
                         BalaController balaController = go.GetComponent<BalaController>();
                         if (balaController != null) balaController.SetDamage(damageAmount);
@@ -417,7 +418,7 @@ private void LookToPlayer()
                     BalaController balaDefault = goDefault.GetComponent<BalaController>();
                     if (balaDefault != null) balaDefault.SetDamage(damageAmount);
                     Rigidbody rbDefault = goDefault.GetComponent<Rigidbody>();
-                    if (rbDefault != null) rbDefault.linearVelocity = transform.forward * bulleSpeed;
+                    if (rbDefault != null) rbDefault.linearVelocity = shootDirection * bulleSpeed; // <-- usar shootDirection
                     break;
             }
         }
@@ -425,7 +426,7 @@ private void LookToPlayer()
         if (SceneManager.GetActiveScene().name != "Escena2")
             OnAidenScared?.Raise(ScareType.Shoot);
 
-        StartCoroutine(ShootCooldown()); // <-- iniciar cooldown al final, una sola vez
+        StartCoroutine(ShootCooldown());
     }
 
     private IEnumerator ShootCooldown()

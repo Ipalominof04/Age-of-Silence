@@ -3084,7 +3084,7 @@ PrefabInstance:
       objectReference: {fileID: 1482270136}
     - target: {fileID: 8346064789273925734, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
       propertyPath: listenRadius
-      value: 10
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8346064789273925734, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
       propertyPath: minDetectionLevel
@@ -9858,6 +9858,52 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 0811c5ee9933dbe4297eb4b6aa51c7d8, type: 2}
   m_BuildHeightMesh: 0
+--- !u!1 &432548618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 432548620}
+  - component: {fileID: 432548619}
+  m_Layer: 9
+  m_Name: SpawnEntrada
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &432548619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432548618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  doorID: spawnhabcasa1
+  aidenOffset: 1
+--- !u!4 &432548620
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432548618}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -12.62, y: 0.13400006, z: 12}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &433336542
 GameObject:
   m_ObjectHideFlags: 0
@@ -16246,6 +16292,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8346064789273925734, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
+      propertyPath: listenRadius
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8346064789273925734, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
+      propertyPath: minDetectionLevel
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8346064789273925734, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
       propertyPath: destination.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -18287,7 +18341,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1170998714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18880,8 +18934,12 @@ PrefabInstance:
       value: Enemy5
       objectReference: {fileID: 0}
     - target: {fileID: 8346064789273925734, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
+      propertyPath: listenRadius
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8346064789273925734, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
       propertyPath: minDetectionLevel
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8346064789273925734, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
       propertyPath: 'destination.Array.data[0]'
@@ -19775,11 +19833,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8346064789273925734, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
       propertyPath: listenRadius
-      value: 15
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8346064789273925734, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
       propertyPath: minDetectionLevel
-      value: 0.3
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8346064789273925734, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
       propertyPath: destination.Array.size
@@ -30961,7 +31019,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.ProbeVolume
   mode: 1
-  size: {x: 105.55006, y: 15.848267, z: 33.576607}
+  size: {x: 105.55005, y: 15.848267, z: 33.576607}
   overrideRendererFilters: 0
   minRendererVolumeSize: 0.1
   objectLayerMask:
@@ -31690,6 +31748,14 @@ PrefabInstance:
     - target: {fileID: 6630787418489709627, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8346064789273925734, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
+      propertyPath: listenRadius
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8346064789273925734, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
+      propertyPath: minDetectionLevel
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8346064789273925734, guid: ac493697ae216f0419e65fcc206a7935, type: 3}
       propertyPath: destination.Array.size
@@ -33587,7 +33653,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1970869868
 Transform:
   m_ObjectHideFlags: 0
@@ -38355,3 +38421,4 @@ SceneRoots:
   - {fileID: 1005163691}
   - {fileID: 5125709772291496159}
   - {fileID: 2845275247305403998}
+  - {fileID: 432548620}
