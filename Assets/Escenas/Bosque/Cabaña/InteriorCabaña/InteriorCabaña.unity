@@ -3684,6 +3684,92 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7894133148651297418, guid: 34785ad8f60384e449d99867f7f946c3, type: 3}
   m_PrefabInstance: {fileID: 957958255}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &981605487
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 981605488}
+  - component: {fileID: 981605491}
+  - component: {fileID: 981605490}
+  - component: {fileID: 981605489}
+  m_Layer: 9
+  m_Name: TriggerPuzleNPC
+  m_TagString: TriggerPuzle
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &981605488
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981605487}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.9494616, z: -0, w: 0.31388327}
+  m_LocalPosition: {x: 1.779541, y: 0.099999785, z: -13.18369}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1968446707}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &981605489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981605487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: 220400bd4d41d9e44b85ec62708d75ca, type: 2}
+  id: NPC
+--- !u!135 &981605490
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981605487}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.8
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &981605491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981605487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aba4ffd22421aa46b86fbccebff4da2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPC
+  infoMostrada: 0
+  misionComidaNPC: {fileID: 11400000, guid: 6ce02bd99dc07cc4faf0b2c7e9296771, type: 2}
+  amenazaNPC: {fileID: 11400000, guid: 82d9ddf986897e44b9b2b6a2ac14cced, type: 2}
+  graphComida: {fileID: 3965311268370046156, guid: 09847268c1aa5b04ab9d03658b9d3ab0, type: 3}
+  graphTraigoComida: {fileID: 3965311268370046156, guid: 22c76d9fde521914f958b457a96aa299, type: 3}
 --- !u!1 &1054818355
 GameObject:
   m_ObjectHideFlags: 0
@@ -5382,6 +5468,7 @@ GameObject:
   - component: {fileID: 1466932823}
   - component: {fileID: 1466932825}
   - component: {fileID: 1466932826}
+  - component: {fileID: 1466932827}
   m_Layer: 9
   m_Name: TriggerDialogue
   m_TagString: TriggerInfo
@@ -5438,6 +5525,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerInfo
   graphInfo: {fileID: 3965311268370046156, guid: d6e1aaaf42ebd684b9dffbe5715cee83, type: 3}
+--- !u!114 &1466932827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1466932822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: 220400bd4d41d9e44b85ec62708d75ca, type: 2}
+  id: TriggerDialoguePuerta
 --- !u!1001 &1489912893
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6329,57 +6430,8 @@ PrefabInstance:
     - {fileID: 1058556038379161208, guid: f71041fd118fbb34aa9d2dd6a1d96fce, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1616406060653692748, guid: f71041fd118fbb34aa9d2dd6a1d96fce, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1598169143}
-    - targetCorrespondingSourceObject: {fileID: 1616406060653692748, guid: f71041fd118fbb34aa9d2dd6a1d96fce, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1598169144}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f71041fd118fbb34aa9d2dd6a1d96fce, type: 3}
---- !u!1 &1598169142 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1616406060653692748, guid: f71041fd118fbb34aa9d2dd6a1d96fce, type: 3}
-  m_PrefabInstance: {fileID: 1598169141}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1598169143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1598169142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5aba4ffd22421aa46b86fbccebff4da2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NPC
-  infoMostrada: 0
-  misionComidaNPC: {fileID: 11400000, guid: 6ce02bd99dc07cc4faf0b2c7e9296771, type: 2}
-  amenazaNPC: {fileID: 11400000, guid: 82d9ddf986897e44b9b2b6a2ac14cced, type: 2}
-  graphComida: {fileID: 3965311268370046156, guid: 09847268c1aa5b04ab9d03658b9d3ab0, type: 3}
-  graphTraigoComida: {fileID: 3965311268370046156, guid: bff2225ff5c23dc4e9456fb37a40c3bd, type: 3}
---- !u!135 &1598169144
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1598169142}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.9
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1624095233 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 156976217076831411, guid: 80e5bbfa6aa12b34ca98423c9e7a0f86, type: 3}
@@ -6686,6 +6738,7 @@ GameObject:
   - component: {fileID: 1684109530}
   - component: {fileID: 1684109532}
   - component: {fileID: 1684109533}
+  - component: {fileID: 1684109534}
   m_Layer: 9
   m_Name: TriggerDialogue
   m_TagString: TriggerInfo
@@ -6742,6 +6795,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerInfo
   graphInfo: {fileID: 3965311268370046156, guid: aed18f8ac4d60b94ab102bc45af0f171, type: 3}
+--- !u!114 &1684109534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684109529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: 220400bd4d41d9e44b85ec62708d75ca, type: 2}
+  id: TriggerDialogueInicial
 --- !u!1001 &1742419860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7178,6 +7245,7 @@ Transform:
   - {fileID: 1466932823}
   - {fileID: 323090840}
   - {fileID: 1684109530}
+  - {fileID: 981605488}
   m_Father: {fileID: 877780753}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2022115826

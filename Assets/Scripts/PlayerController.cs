@@ -761,7 +761,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-
      private void OnTriggerExit(Collider other)
     {
         if (other.gameObject == objectInRange)

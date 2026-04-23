@@ -16,7 +16,7 @@ public class TriggerPuzleComida : MonoBehaviour, IPuzle
     {
        
             meshComida.SetActive(true);
-            objetoMano.UsarObjeto();        
+            objetoMano.UsarObjeto();
     }
 
     public void OnEnterRange()
