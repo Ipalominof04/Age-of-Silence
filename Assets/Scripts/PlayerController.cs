@@ -753,6 +753,11 @@ public class PlayerController : MonoBehaviour, IDamageable
                 objectInRange = other.gameObject;
                 print("objeto " + other.gameObject.name + " en rango");
             }
+            if (other.tag == "ComidaNPC")
+            {
+                objectInRange = other.gameObject;
+                print("objeto " + other.gameObject.name + " en rango");
+            }
         }
     }
 

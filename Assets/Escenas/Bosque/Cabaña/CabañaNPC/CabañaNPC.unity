@@ -3059,7 +3059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d732863fd212e48a7d7f450ce4ffed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
-  nombreEscena: 
+  nombreEscena: "InteriorCaba\xF1a"
   miDoorID: 
   targetDoorID: 
   puzzleRequeridoID: 
@@ -5750,6 +5750,7 @@ Transform:
   m_Children:
   - {fileID: 331886172}
   - {fileID: 1645687198}
+  - {fileID: 1600553194}
   m_Father: {fileID: 1254842504}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &677634139
@@ -15764,6 +15765,76 @@ Transform:
   - {fileID: 1036123557}
   m_Father: {fileID: 1254842504}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1600553193
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1600553194}
+  - component: {fileID: 1600553196}
+  - component: {fileID: 1600553195}
+  m_Layer: 9
+  m_Name: TriggerCambioEscena3
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1600553194
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600553193}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -19.727, y: 0.000000022351742, z: -1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 669244263}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1600553195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600553193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d732863fd212e48a7d7f450ce4ffed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
+  nombreEscena: ExteriorTienda
+  miDoorID: 
+  targetDoorID: 
+  puzzleRequeridoID: MisionComidaNPC
+--- !u!65 &1600553196
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600553193}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.9815185, y: 2.253533, z: 1}
+  m_Center: {x: 0.58358026, y: 0.93960357, z: -1.1877486e-15}
 --- !u!1001 &1609148092
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16288,10 +16359,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d732863fd212e48a7d7f450ce4ffed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
-  nombreEscena: 
+  nombreEscena: MaderaBosque
   miDoorID: 
   targetDoorID: 
-  puzzleRequeridoID: 
+  puzzleRequeridoID: AmenazadoNPC
 --- !u!65 &1645687200
 BoxCollider:
   m_ObjectHideFlags: 0
