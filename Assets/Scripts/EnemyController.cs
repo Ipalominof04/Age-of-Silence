@@ -22,6 +22,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     [SerializeField] EnemyType enemyType;
 
     [Header("Disparo")]
+    [SerializeField] private GameObject arma;
     [SerializeField] private GameObject bala;
     [SerializeField] private GameObject shootingPoint;
     [SerializeField] public float damageAmount = 1f;
@@ -62,6 +63,8 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     private bool hasShot = false;
     private Coroutine lookCoroutine;
     private Coroutine searchCoroutine;
+
+    private Animator animator;
 
     private void OnEnable()
     {
@@ -105,6 +108,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
     }
 
     void Start()
@@ -145,6 +149,9 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
             case EnemyState.PATROL:
                 agent.isStopped = false;
+                animator.SetBool("onPatrol", true);
+                arma.transform.localPosition = new Vector3(-0.048f, -0.122f, 0.009f);
+                arma.transform.localRotation = Quaternion.Euler(-73.674f, 115.541f, -128.345f);
                 SetUI(false);
                 agent.speed = speedPatrol;
                 agent.stoppingDistance = 0.2f;
@@ -153,21 +160,29 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
             case EnemyState.CHASE:
                 agent.isStopped = false;
+                animator.SetBool("onChase", true);
+                arma.transform.localPosition = new Vector3(-0.05697f, -0.131036f, -0.00457f);
+                arma.transform.localRotation = Quaternion.Euler(-100.667f, -73.7940f, 71.358f);
                 SetUI(true, "!", "#F11200");
                 agent.speed = speedChase;
                 agent.stoppingDistance = radiusAttack;
                 break;
 
             case EnemyState.ATTACK:
+                animator.SetBool("onShoot", true);
+                arma.transform.localPosition = new Vector3(-0.03414f, -0.13247f, -0.007156f);
+                arma.transform.localRotation = Quaternion.Euler(-96.586f, -34.216f, 31.978f);
                 break;
 
             case EnemyState.SEARCHING:
+                animator.SetBool("onPatrol", true);
                 agent.isStopped = false;
                 SetUI(true, "?", "#FFC300");
                 searchCoroutine = StartCoroutine(SearchRoutine());
                 break;
 
             case EnemyState.LOOK:
+                animator.SetBool("onLook", true);
                 agent.isStopped = true;
                 SetUI(true, "?", "#FFC300");
                 lookCoroutine = StartCoroutine(LookRoutine());
@@ -246,21 +261,22 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     {
         switch (currentState)
         {
-            case EnemyState.IDLE:
-                break;
             case EnemyState.PATROL:
+                animator.SetBool("onPatrol", false);
                 break;
             case EnemyState.CHASE:
+                animator.SetBool("onChase", false);
                 break;
             case EnemyState.ATTACK:
+                animator.SetBool("onShoot", false);
                 break;
             case EnemyState.SEARCHING:
-                if (searchCoroutine != null)
-                    StopCoroutine(searchCoroutine);
+                animator.SetBool("onSearching", false);
+                if (searchCoroutine != null) StopCoroutine(searchCoroutine);
                 break;
             case EnemyState.LOOK:
-                if (lookCoroutine != null)
-                    StopCoroutine(lookCoroutine);
+                animator.SetBool("onLook", false);
+                if (lookCoroutine != null) StopCoroutine(lookCoroutine);
                 break;
         }
     }
@@ -270,6 +286,12 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         // Espera hasta que llegue al destino
         while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
             yield return null;
+
+       // agent.isStopped = true;
+        animator.SetBool("onPatrol", false);
+        animator.SetBool("onSearching", true);
+        arma.transform.localPosition = new Vector3(-0.022f, -0.132f, 0f);
+        arma.transform.localRotation = Quaternion.Euler(-93.801f, -29.005f, 22.375f);
 
         // Una vez llegado, espera el tiempo de búsqueda
         yield return new WaitForSeconds(searchDuration);
@@ -381,14 +403,13 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
         if (shootingPoint != null && bala != null)
         {
-            // Calcula dirección hacia el punto de mira del jugador
-            Vector3 shootDirection = transform.forward; // fallback
+            //calcula dirección hacia el punto de mira del jugador
+            Vector3 shootDirection = transform.forward; //fallback
             if (playerTransform != null)
             {
                 PlayerController player = playerTransform.GetComponentInParent<PlayerController>();
                 Vector3 targetPoint = player != null
-                    ? player.GetEyePoint().position
-                    : playerTransform.position;
+                    ? player.GetEyePoint().position : playerTransform.position;
                 shootDirection = (targetPoint - shootingPoint.transform.position).normalized;
             }
 
@@ -399,12 +420,8 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                     float spreadAngle = 15f;
                     for (int i = 0; i < pellets; i++)
                     {
-                        Quaternion spread = Quaternion.Euler(
-                            Random.Range(-spreadAngle, spreadAngle),
-                            Random.Range(-spreadAngle, spreadAngle),
-                            0
-                        );
-                        Vector3 direction = spread * shootDirection; // <-- usar shootDirection
+                        Quaternion spread = Quaternion.Euler(Random.Range(-spreadAngle, spreadAngle), Random.Range(-spreadAngle, spreadAngle),0);
+                        Vector3 direction = spread * shootDirection; //usar shootDirection
                         GameObject go = Instantiate(bala, shootingPoint.transform.position, shootingPoint.transform.rotation);
                         BalaController balaController = go.GetComponent<BalaController>();
                         if (balaController != null) balaController.SetDamage(damageAmount);
@@ -418,7 +435,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                     BalaController balaDefault = goDefault.GetComponent<BalaController>();
                     if (balaDefault != null) balaDefault.SetDamage(damageAmount);
                     Rigidbody rbDefault = goDefault.GetComponent<Rigidbody>();
-                    if (rbDefault != null) rbDefault.linearVelocity = shootDirection * bulleSpeed; // <-- usar shootDirection
+                    if (rbDefault != null) rbDefault.linearVelocity = shootDirection * bulleSpeed; //usar shootDirection
                     break;
             }
         }
@@ -432,7 +449,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     private IEnumerator ShootCooldown()
     {
         hasShot = true;
-        yield return new WaitForSeconds(shootCooldown); // ajusta el tiempo entre disparos
+        yield return new WaitForSeconds(shootCooldown); //ajusta el tiempo entre disparos
         hasShot = false;
     }
 
@@ -443,7 +460,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             string tag = collision.gameObject.tag;
             if (tag == "Botella" || tag == "Piedra")
             {
-                // Dirección desde la que viene el objeto
+                //dirección desde la que viene el objeto
                 Vector3 hitDirection = (transform.position - collision.transform.position).normalized;
                 hitDirection.y = 0;
 
@@ -455,6 +472,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         }
     }
 
+    
     private void OnDrawGizmos()
     {
         Vector3 origin = transform.position;
@@ -491,10 +509,11 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         Gizmos.DrawWireSphere(transform.position, radiusAttack);
 
 
+        /*
         Gizmos.color = new Color(1f, 0.5f, 0f, 1f);
-        Gizmos.DrawWireSphere(origin, listenRadius);
+        Gizmos.DrawWireSphere(origin, listenRadius);*/
     }
-
+    
     public void TakeDamage(float damage)
     {
         this.vida -= damage;
