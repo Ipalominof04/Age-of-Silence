@@ -15,7 +15,7 @@ public class TriggerPuzlePuertas : MonoBehaviour, IPuzle
     [Header("Acción al resolver el puzzle")]
     public UnityEvent OnPuzzleSolved;
 
-    [SerializeField] public PlayerController player;
+    private PlayerController player;
 
 
     private void Start()
