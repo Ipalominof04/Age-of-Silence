@@ -13,14 +13,14 @@ public class NPC : MonoBehaviour, IPuzle
 
     private void OnEnable()
     {
-        amenazaNPC.Subscribe(AñadirPuzleAmenaza);
-        misionComidaNPC.Subscribe(AñadirPuzleComida);
+        amenazaNPC.Subscribe(AnadirPuzleAmenaza);
+        misionComidaNPC.Subscribe(AnadirPuzleComida);
     }
 
     private void OnDisable()
     {
-        amenazaNPC.Unsubscribe(AñadirPuzleAmenaza);
-        misionComidaNPC.Unsubscribe(AñadirPuzleComida);
+        amenazaNPC.Unsubscribe(AnadirPuzleAmenaza);
+        misionComidaNPC.Unsubscribe(AnadirPuzleComida);
     }
     public void Interact(ObjetoAgarrado objetoMano)
     {
@@ -37,12 +37,12 @@ public class NPC : MonoBehaviour, IPuzle
         }
     }
 
-    private void AñadirPuzleComida()
+    private void AnadirPuzleComida()
     {
         GameManager.Instance.datos.puzzlesResueltos.Add("MisionComidaNPC");
     }
 
-    private void AñadirPuzleAmenaza()
+    private void AnadirPuzleAmenaza()
     {
         GameManager.Instance.datos.puzzlesResueltos.Add("AmenazadoNPC");
     }
