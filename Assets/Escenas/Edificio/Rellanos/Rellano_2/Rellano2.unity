@@ -93,8 +93,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 54a374e2c0c27f6459cc0b9e24b44a4f, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: e17eb5fb6960423408955ae804152364, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 459ab929586f91749bdd01414dbddced, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -205,6 +205,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5359397275927398838, guid: aca4f0effb3f3614eb4ad28467e7e424, type: 3}
       propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5359397275927398838, guid: aca4f0effb3f3614eb4ad28467e7e424, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5359397275927398838, guid: aca4f0effb3f3614eb4ad28467e7e424, type: 3}
@@ -2969,6 +2973,10 @@ PrefabInstance:
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8397218785555371621, guid: 554a5e88eb18d254d8c18a357df05724, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8397218785555371621, guid: 554a5e88eb18d254d8c18a357df05724, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 942eadbeed18c7a4c8440c139367b61e, type: 2}
@@ -3215,7 +3223,7 @@ Transform:
   m_GameObject: {fileID: 906410730}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.31588984, y: 2.159, z: 0.64521}
+  m_LocalPosition: {x: 0.31588984, y: 2.276, z: 0.64521}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3240,7 +3248,7 @@ MonoBehaviour:
   m_LightUnit: 0
   m_LuxAtDistance: 1
   m_Intensity: 0
-  m_InnerSpotPercent: 56.130947
+  m_InnerSpotPercent: 61.481686
   m_SpotIESCutoffPercent: 100
   m_LightDimmer: 1
   m_VolumetricDimmer: 1
@@ -3374,9 +3382,9 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 45.825756
+  m_Intensity: 110.16939
   m_Range: 5.45702
-  m_SpotAngle: 179
+  m_SpotAngle: 163.4216
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
@@ -3419,7 +3427,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 5489
   m_UseColorTemperature: 1
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 2.7247e-41, y: 2.524355e-29, z: 0, w: 3.049315e-35}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -3556,7 +3564,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1116931612
 Transform:
   m_ObjectHideFlags: 0
@@ -3725,7 +3733,7 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 45.825756
+  m_Intensity: 95.11633
   m_Range: 5.45702
   m_SpotAngle: 179
   m_InnerSpotAngle: 21.80208
@@ -3770,7 +3778,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 5489
   m_UseColorTemperature: 1
-  m_BoundingSphereOverride: {x: 0, y: 1.3e-44, z: NaN, w: 3e-45}
+  m_BoundingSphereOverride: {x: 7.166e-42, y: 2.524355e-29, z: 0, w: 3.049315e-35}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -4270,7 +4278,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: 8ba92e2dd7f884a0f88b98fa2d235fe7, type: 2}
+  sharedProfile: {fileID: 11400000, guid: bca25f933c267b942b49b5a1284d95d5, type: 2}
 --- !u!4 &1358114755
 Transform:
   m_ObjectHideFlags: 0
@@ -4575,6 +4583,10 @@ PrefabInstance:
     - target: {fileID: 8036697236969387952, guid: 554a5e88eb18d254d8c18a357df05724, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8397218785555371621, guid: 554a5e88eb18d254d8c18a357df05724, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8397218785555371621, guid: 554a5e88eb18d254d8c18a357df05724, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -4965,7 +4977,7 @@ Transform:
   m_GameObject: {fileID: 1522866212}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1.5411098, y: 2.159, z: -3.05779}
+  m_LocalPosition: {x: 0.319, y: 2.159, z: -3.05779}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4990,7 +5002,7 @@ MonoBehaviour:
   m_LightUnit: 0
   m_LuxAtDistance: 1
   m_Intensity: 0
-  m_InnerSpotPercent: 68.54074
+  m_InnerSpotPercent: 74.91593
   m_SpotIESCutoffPercent: 100
   m_LightDimmer: 1
   m_VolumetricDimmer: 1
@@ -5124,9 +5136,9 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 45.825756
+  m_Intensity: 109.78617
   m_Range: 5.45702
-  m_SpotAngle: 179
+  m_SpotAngle: 163.76746
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
@@ -5169,7 +5181,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 5489
   m_UseColorTemperature: 1
-  m_BoundingSphereOverride: {x: 0, y: 1e-45, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 2.614e-41, y: 2.524355e-29, z: 0, w: 2.7470774e+20}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -5508,7 +5520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cded085d155cde949b60f67a11dbc3bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.ProbeVolume
-  mode: 1
+  mode: 2
   size: {x: 9.411509, y: 7.789539, z: 11.044104}
   overrideRendererFilters: 0
   minRendererVolumeSize: 0.1
@@ -5518,7 +5530,7 @@ MonoBehaviour:
   lowestSubdivLevelOverride: 0
   highestSubdivLevelOverride: 7
   overridesSubdivLevels: 0
-  mightNeedRebaking: 1
+  mightNeedRebaking: 0
   cachedTransform:
     e00: 1
     e01: 0
@@ -5584,7 +5596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a83d2f7ae04ab6f4f99b0d85377be998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.ProbeVolumePerSceneData
-  serializedBakingSet: {fileID: 0}
+  serializedBakingSet: {fileID: 11400000, guid: 9ea849c843b647a4086effd493438558, type: 2}
   sceneGUID: fb2e2b1ebea0eb5438fd160b33ac4705
   obsoleteAsset: {fileID: 0}
   obsoleteCellSharedDataAsset: {fileID: 0}
@@ -5733,7 +5745,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1886492064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6033,6 +6045,10 @@ PrefabInstance:
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8397218785555371621, guid: 554a5e88eb18d254d8c18a357df05724, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8397218785555371621, guid: 554a5e88eb18d254d8c18a357df05724, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 1e1610f19fd502a4e9078f74603b4da1, type: 2}
@@ -6211,7 +6227,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4696049079298888460, guid: aca4f0effb3f3614eb4ad28467e7e424, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.52
+      value: 0.34011006
       objectReference: {fileID: 0}
     - target: {fileID: 4696049079298888460, guid: aca4f0effb3f3614eb4ad28467e7e424, type: 3}
       propertyPath: m_LocalPosition.y
