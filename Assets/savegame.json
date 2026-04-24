@@ -1,13 +1,14 @@
 {
-    "confianza": -5.0,
-    "playerHealth": 0.19999980926513673,
+    "confianza": -4.0,
+    "playerHealth": 3.0,
     "objetoMano": "",
-    "nameScene": "Escena3",
+    "nameScene": "SigiloSalida",
     "puzlesCompletados": [
         "FusibleVerde",
         "FusibleAzul",
         "AidenNiega",
-        "FusibleAmarillo"
+        "FusibleAmarillo",
+        "MisionComidaNPC"
     ],
     "escenas": [
         {
@@ -44,23 +45,7 @@
         },
         {
             "sceneName": "Habitacion_casa_1",
-            "objetos": [
-                {
-                    "id": "TriggerDialogue",
-                    "active": false,
-                    "pos": {
-                        "x": 0.8705697059631348,
-                        "y": 0.5460000038146973,
-                        "z": -2.2533605098724367
-                    },
-                    "rot": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    }
-                }
-            ]
+            "objetos": []
         },
         {
             "sceneName": "Habitación Niño Casa 2",
@@ -84,7 +69,23 @@
         },
         {
             "sceneName": "Salida Fabrica",
-            "objetos": []
+            "objetos": [
+                {
+                    "id": "TriggerDialogo",
+                    "active": false,
+                    "pos": {
+                        "x": -0.6230000257492065,
+                        "y": 0.6402914524078369,
+                        "z": 0.23999977111816407
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 1.0
+                    }
+                }
+            ]
         },
         {
             "sceneName": "Trastero",
@@ -92,6 +93,14 @@
         },
         {
             "sceneName": "ZonaChill",
+            "objetos": []
+        },
+        {
+            "sceneName": "",
+            "objetos": []
+        },
+        {
+            "sceneName": "",
             "objetos": []
         }
     ]

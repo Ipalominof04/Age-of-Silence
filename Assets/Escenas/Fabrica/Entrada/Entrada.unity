@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 5183132}
   - component: {fileID: 5183131}
   m_Layer: 9
-  m_Name: TriggerCambioEscena4
+  m_Name: TriggerAlmacen
   m_TagString: TriggerCambioEscena
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -270,8 +270,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: Almacen
-  miDoorID: 
-  targetDoorID: 
+  miDoorID: entrada_almacen
+  targetDoorID: spawnentrada_almacen
   puzzleRequeridoID: FusibleAmarillo
 --- !u!65 &5183132
 BoxCollider:
