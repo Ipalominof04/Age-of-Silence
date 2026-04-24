@@ -16,7 +16,7 @@ public class TriggerPuzlePuertas : MonoBehaviour, IPuzle
     [SerializeField] private string nombreEscena;
     [SerializeField] private string targetDoorID;
 
-    [SerializeField] public PlayerController player;
+    private PlayerController player;
 
 
     private void Start()
