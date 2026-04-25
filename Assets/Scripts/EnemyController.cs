@@ -97,10 +97,17 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             canvasWorld.SetActive(active);
             if (stateText != null)
             {
+                //solo anima si el texto cambia, si vuelve a ser el mismo simbolo no se hace la animacion
+                if (stateText.text != text)
+                {
+                    stateText.GetComponent<Animator>().SetTrigger("Play");
+                }
                 stateText.text = text;
                 //para poder ponerle un color especifico con los colorutility
                 ColorUtility.TryParseHtmlString(hexColor, out Color color);
                 stateText.color = color;
+
+               
             }
         }
     }
