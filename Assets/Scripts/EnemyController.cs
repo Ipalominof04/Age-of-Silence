@@ -150,8 +150,15 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             case EnemyState.PATROL:
                 agent.isStopped = false;
                 animator.SetBool("onPatrol", true);
-                arma.transform.localPosition = new Vector3(-0.048f, -0.122f, 0.009f);
-                arma.transform.localRotation = Quaternion.Euler(-73.674f, 115.541f, -128.345f);
+                if (enemyType == EnemyType.FUERTE)
+                {
+                    arma.transform.localPosition = new Vector3(0.046f, -0.352f, -0.055f);
+                    arma.transform.localRotation = Quaternion.Euler(-107.384f, -72.8330f, 27.522f);
+                } else
+                {
+                    arma.transform.localPosition = new Vector3(-0.048f, -0.122f, 0.009f);
+                    arma.transform.localRotation = Quaternion.Euler(-73.674f, 115.541f, -128.345f);
+                }      
                 SetUI(false);
                 agent.speed = speedPatrol;
                 agent.stoppingDistance = 0.2f;
@@ -161,8 +168,16 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             case EnemyState.CHASE:
                 agent.isStopped = false;
                 animator.SetBool("onChase", true);
-                arma.transform.localPosition = new Vector3(-0.05697f, -0.131036f, -0.00457f);
-                arma.transform.localRotation = Quaternion.Euler(-100.667f, -73.7940f, 71.358f);
+                if (enemyType == EnemyType.FUERTE)
+                {
+                    arma.transform.localPosition = new Vector3(0.033f, -0.348f, -0.074f);
+                    arma.transform.localRotation = Quaternion.Euler(-98.997f, -85.295f, 55.136f);
+                }
+                else
+                {
+                    arma.transform.localPosition = new Vector3(-0.05697f, -0.131036f, -0.00457f);
+                    arma.transform.localRotation = Quaternion.Euler(-100.667f, -73.7940f, 71.358f);
+                }    
                 SetUI(true, "!", "#F11200");
                 agent.speed = speedChase;
                 agent.stoppingDistance = radiusAttack;
@@ -170,8 +185,16 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
             case EnemyState.ATTACK:
                 animator.SetBool("onShoot", true);
-                arma.transform.localPosition = new Vector3(-0.03414f, -0.13247f, -0.007156f);
-                arma.transform.localRotation = Quaternion.Euler(-96.586f, -34.216f, 31.978f);
+                if (enemyType == EnemyType.FUERTE)
+                {
+                    arma.transform.localPosition = new Vector3(0.052f, -0.324f, -0.061f);
+                    arma.transform.localRotation = Quaternion.Euler(-97.789f, -68.198f, 37.141f);
+                }
+                else
+                {
+                    arma.transform.localPosition = new Vector3(-0.03414f, -0.13247f, -0.007156f);
+                    arma.transform.localRotation = Quaternion.Euler(-96.586f, -34.216f, 31.978f);
+                }   
                 break;
 
             case EnemyState.SEARCHING:
@@ -290,9 +313,16 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
        // agent.isStopped = true;
         animator.SetBool("onPatrol", false);
         animator.SetBool("onSearching", true);
-        arma.transform.localPosition = new Vector3(-0.022f, -0.132f, 0f);
-        arma.transform.localRotation = Quaternion.Euler(-93.801f, -29.005f, 22.375f);
-
+        if (enemyType == EnemyType.FUERTE)
+        {
+            arma.transform.localPosition = new Vector3(0.083f, -0.315f, -0.06f);
+            arma.transform.localRotation = Quaternion.Euler(-93.849f, -44.531f, 10.404f);
+        }
+        else
+        {
+            arma.transform.localPosition = new Vector3(-0.022f, -0.132f, 0f);
+            arma.transform.localRotation = Quaternion.Euler(-93.801f, -29.005f, 22.375f);
+        }
         // Una vez llegado, espera el tiempo de búsqueda
         yield return new WaitForSeconds(searchDuration);
 
