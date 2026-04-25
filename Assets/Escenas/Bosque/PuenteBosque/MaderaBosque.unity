@@ -3494,6 +3494,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Palet
       objectReference: {fileID: 0}
+    - target: {fileID: 7544420449339507241, guid: 931aea578e9e7f7499b2987da9ed2fb0, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7544420449339507241, guid: 931aea578e9e7f7499b2987da9ed2fb0, type: 3}
+      propertyPath: m_TagString
+      value: PaletPuente
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3501,6 +3509,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7544420449339507241, guid: 931aea578e9e7f7499b2987da9ed2fb0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 747665886}
+    - targetCorrespondingSourceObject: {fileID: 7544420449339507241, guid: 931aea578e9e7f7499b2987da9ed2fb0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 747665887}
   m_SourcePrefab: {fileID: 100100000, guid: 931aea578e9e7f7499b2987da9ed2fb0, type: 3}
 --- !u!1 &747665885 stripped
 GameObject:
@@ -3521,6 +3532,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
   soEscena: {fileID: 11400000, guid: d6f4a7902efe54e4c915d976b09c2605, type: 2}
   id: Palet
+--- !u!135 &747665887
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747665885}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1
+  m_Center: {x: -0.0032884777, y: 0.04135012, z: -0.000000059604645}
 --- !u!1001 &748029078
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6204,6 +6236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1237986099}
   - component: {fileID: 1237986098}
+  - component: {fileID: 1237986100}
   m_Layer: 12
   m_Name: MaderasPuente
   m_TagString: MaderasPuente
@@ -6239,10 +6272,30 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1383698766}
-  - {fileID: 1747019703}
   - {fileID: 885022816}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: -72.05}
+--- !u!135 &1237986100
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237986097}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1240596989
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8723,43 +8776,47 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1237986099}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5996607582558775544, guid: 55e1f79d8a468b24ab8480140b8e8a57, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.3354077
+      value: 0.40720555
       objectReference: {fileID: 0}
     - target: {fileID: 5996607582558775544, guid: 55e1f79d8a468b24ab8480140b8e8a57, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.535
+      value: 0.4680671
+      objectReference: {fileID: 0}
+    - target: {fileID: 5996607582558775544, guid: 55e1f79d8a468b24ab8480140b8e8a57, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.3049298
       objectReference: {fileID: 0}
     - target: {fileID: 5996607582558775544, guid: 55e1f79d8a468b24ab8480140b8e8a57, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.41698164
+      value: 10.715505
       objectReference: {fileID: 0}
     - target: {fileID: 5996607582558775544, guid: 55e1f79d8a468b24ab8480140b8e8a57, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.44699413
+      value: 0.42103228
       objectReference: {fileID: 0}
     - target: {fileID: 5996607582558775544, guid: 55e1f79d8a468b24ab8480140b8e8a57, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.4089992
+      value: 10.223481
       objectReference: {fileID: 0}
     - target: {fileID: 5996607582558775544, guid: 55e1f79d8a468b24ab8480140b8e8a57, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.02389818
+      value: 0.19121622
       objectReference: {fileID: 0}
     - target: {fileID: 5996607582558775544, guid: 55e1f79d8a468b24ab8480140b8e8a57, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.23234756
+      value: -0.5361579
       objectReference: {fileID: 0}
     - target: {fileID: 5996607582558775544, guid: 55e1f79d8a468b24ab8480140b8e8a57, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.68855387
+      value: -0.7895805
       objectReference: {fileID: 0}
     - target: {fileID: 5996607582558775544, guid: 55e1f79d8a468b24ab8480140b8e8a57, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.68653995
+      value: -0.22920251
       objectReference: {fileID: 0}
     - target: {fileID: 5996607582558775544, guid: 55e1f79d8a468b24ab8480140b8e8a57, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8781,6 +8838,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 6373695731884372546, guid: 55e1f79d8a468b24ab8480140b8e8a57, type: 3}
+      propertyPath: m_TagString
+      value: "MaderaPeque\xF1aPuente"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8788,12 +8849,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6373695731884372546, guid: 55e1f79d8a468b24ab8480140b8e8a57, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1747019705}
+    - targetCorrespondingSourceObject: {fileID: 6373695731884372546, guid: 55e1f79d8a468b24ab8480140b8e8a57, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1747019706}
   m_SourcePrefab: {fileID: 100100000, guid: 55e1f79d8a468b24ab8480140b8e8a57, type: 3}
---- !u!4 &1747019703 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5996607582558775544, guid: 55e1f79d8a468b24ab8480140b8e8a57, type: 3}
-  m_PrefabInstance: {fileID: 1747019702}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1747019704 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6373695731884372546, guid: 55e1f79d8a468b24ab8480140b8e8a57, type: 3}
@@ -8813,6 +8872,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
   soEscena: {fileID: 11400000, guid: d6f4a7902efe54e4c915d976b09c2605, type: 2}
   id: "MaderaPeque\xF1a"
+--- !u!135 &1747019706
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747019704}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.0082232
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1766992345
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10118,3 +10198,4 @@ SceneRoots:
   - {fileID: 1516728434}
   - {fileID: 1237986099}
   - {fileID: 747665884}
+  - {fileID: 1747019702}
