@@ -13,6 +13,7 @@ public class AidenController : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private GameObject canvasWorld;
+    [SerializeField] private Animator canvasAnimator;
 
     [Header("Crouch")]
     [SerializeField] private CapsuleCollider aidenCollider;
@@ -409,7 +410,11 @@ public class AidenController : MonoBehaviour
     private void SetUI(bool active)
     {
         if (canvasWorld != null)
+        {
             canvasWorld.SetActive(active);
+            if (active && canvasAnimator != null)
+                canvasAnimator.SetTrigger("Play");
+        }
     }
 
     private void SetColliderNormal()
