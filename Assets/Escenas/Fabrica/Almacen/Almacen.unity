@@ -2070,6 +2070,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 914194293}
+  - {fileID: 1657342665}
   m_Father: {fileID: 931849231}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &163017839
@@ -2871,7 +2872,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4509992435902890988, guid: ec08a826fda66694a935962919dabfd7, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6828666274242469974, guid: ec08a826fda66694a935962919dabfd7, type: 3}
       propertyPath: player
@@ -11139,8 +11140,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: ZonaChill
-  miDoorID: 
-  targetDoorID: 
+  miDoorID: almacen_zonachill
+  targetDoorID: spawnalmacen_zonachill
   puzzleRequeridoID: 
 --- !u!65 &914194295
 BoxCollider:
@@ -18301,7 +18302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6357746898875310754, guid: 057003e5f488cc74f908a70494daea53, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 46.513
+      value: 48.289
       objectReference: {fileID: 0}
     - target: {fileID: 6357746898875310754, guid: 057003e5f488cc74f908a70494daea53, type: 3}
       propertyPath: m_LocalPosition.y
@@ -18309,7 +18310,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6357746898875310754, guid: 057003e5f488cc74f908a70494daea53, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.017
+      value: -6.275
       objectReference: {fileID: 0}
     - target: {fileID: 6357746898875310754, guid: 057003e5f488cc74f908a70494daea53, type: 3}
       propertyPath: m_LocalRotation.w
@@ -19262,6 +19263,52 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1652081042}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1657342663
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1657342665}
+  - component: {fileID: 1657342664}
+  m_Layer: 9
+  m_Name: Spawn
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1657342664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657342663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  doorID: spawnentrada_almacen
+  aidenOffset: 1
+--- !u!4 &1657342665
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657342663}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -2.9182587, y: -1.7442399, z: -3.5547602}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 161772991}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1662045842
 GameObject:
   m_ObjectHideFlags: 0
@@ -21785,7 +21832,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1889507122
 Transform:
   m_ObjectHideFlags: 0

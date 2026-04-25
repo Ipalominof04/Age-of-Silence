@@ -12,8 +12,9 @@ public class TriggerPuzlePuertas : MonoBehaviour, IPuzle
     public RuntimeDialogueGraph grapSinObjeto;
     public RuntimeDialogueGraph graphObjetoIncorrecto;
 
-    [Header("Acción al resolver el puzzle")]
-    public UnityEvent OnPuzzleSolved;
+    [Header("Cambio de escena")]
+    [SerializeField] private string nombreEscena;
+    [SerializeField] private string targetDoorID;
 
     private PlayerController player;
 
@@ -27,10 +28,7 @@ public class TriggerPuzlePuertas : MonoBehaviour, IPuzle
     {
         if (!requiereObjeto)
         {
-            OnPuzzleSolved?.Invoke();
-            gameObject.SetActive(false);
-            player.ClearTriggerPuzle();
-
+            ResolvePuzzle();
             return;
         }
 
@@ -40,12 +38,8 @@ public class TriggerPuzlePuertas : MonoBehaviour, IPuzle
             return;
         }
         if (objetoMano.nombreObjeto == objetoRequerido)
-        {
-            OnPuzzleSolved?.Invoke();
-            gameObject.SetActive(false);
-            player.ClearTriggerPuzle();
-
-
+        {;
+            ResolvePuzzle();
         }
         else
             DialogueManager.Instance.StartInfo(graphObjetoIncorrecto);
@@ -59,6 +53,17 @@ public class TriggerPuzlePuertas : MonoBehaviour, IPuzle
         {
             infoMostrada = true;
             DialogueManager.Instance.StartInfo(graphInfo);
+        }
+    }
+    private void ResolvePuzzle()
+    {
+        gameObject.SetActive(false);
+        player.ClearTriggerPuzle();
+
+        if (!string.IsNullOrEmpty(nombreEscena))
+        {
+            GameManager.Instance.lastDoorID = targetDoorID;
+            GameManager.Instance.ChangeScene(nombreEscena);
         }
     }
 }
