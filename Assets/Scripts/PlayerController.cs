@@ -673,6 +673,22 @@ public class PlayerController : MonoBehaviour, IDamageable
                     print("objeto " + other.gameObject.name + " en rango");
                 }
             }
+            if (other.tag == "PaletPuente")
+            {
+                if (objectInRange == null)
+                {
+                    objectInRange = other.gameObject;
+                    print("objeto " + other.gameObject.name + " en rango");
+                }
+            }
+            if (other.tag == "MaderaPequeñaPuente")
+            {
+                if (objectInRange == null)
+                {
+                    objectInRange = other.gameObject;
+                    print("objeto " + other.gameObject.name + " en rango");
+                }
+            }
         }
     }
 
