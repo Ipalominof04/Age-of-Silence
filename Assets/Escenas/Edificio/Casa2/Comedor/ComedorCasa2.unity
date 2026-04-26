@@ -4846,8 +4846,8 @@ GameObject:
   m_Component:
   - component: {fileID: 988155187}
   - component: {fileID: 988155189}
-  - component: {fileID: 988155188}
   - component: {fileID: 988155190}
+  - component: {fileID: 988155191}
   m_Layer: 9
   m_Name: TriggerPuzle
   m_TagString: TriggerPuzle
@@ -4870,40 +4870,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 351299443}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &988155188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 988155186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6dc3275631d30cd4ca1db364c4f76272, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
-  objetoRequerido: Cizallas
-  requiereObjeto: 1
-  infoMostrada: 0
-  graphInfo: {fileID: 3965311268370046156, guid: e0c3e9be133fb944ebaa66dbe2f3844f, type: 3}
-  grapSinObjeto: {fileID: 3965311268370046156, guid: 2528a99c4d3ed0644893199ff4a0e08c, type: 3}
-  graphObjetoIncorrecto: {fileID: 3965311268370046156, guid: f6265653a4f9cde4d83477e5222b8e1a, type: 3}
-  OnPuzzleSolved:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1690361425}
-        m_TargetAssemblyTypeName: NeveraPuzle, Assembly-CSharp
-        m_MethodName: SubirConfianza
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  player: {fileID: 1738004519}
 --- !u!65 &988155189
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4939,6 +4905,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
   soEscena: {fileID: 11400000, guid: 1c7a584a243e4924ab5eb2d372e6fcb8, type: 2}
   id: TriggerPuzle
+--- !u!114 &988155191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988155186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5104ba385b0c75c45b507162c55dd231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TriggerPuzleNevera
+  objetoRequerido: Cizallas
+  requiereObjeto: 1
+  infoMostrada: 0
+  graphInfo: {fileID: 3965311268370046156, guid: e0c3e9be133fb944ebaa66dbe2f3844f, type: 3}
+  grapSinObjeto: {fileID: 3965311268370046156, guid: 2528a99c4d3ed0644893199ff4a0e08c, type: 3}
+  graphObjetoIncorrecto: {fileID: 3965311268370046156, guid: f6265653a4f9cde4d83477e5222b8e1a, type: 3}
+  graphDialogue: {fileID: 3965311268370046156, guid: 358a5b952ae68974cb40476cf44b19b1, type: 3}
+  player: {fileID: 1738004514}
 --- !u!1001 &1059112698
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7409,51 +7395,6 @@ Transform:
   - {fileID: 1807524174}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1690361424
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1690361426}
-  - component: {fileID: 1690361425}
-  m_Layer: 0
-  m_Name: LevelManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1690361425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1690361424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c2a428fe26b1724eb6565514c11d712, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NeveraPuzle
-  graphDialogue: {fileID: 3965311268370046156, guid: 358a5b952ae68974cb40476cf44b19b1, type: 3}
---- !u!4 &1690361426
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1690361424}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.56449, y: 1.96229, z: -3.93072}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1691099486
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7759,7 +7700,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1075083039853645334, guid: 89437555278a3b747b73449b8a201440, type: 3}
   m_PrefabInstance: {fileID: 1738004512}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1738004519 stripped
+--- !u!114 &1738004514 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1337398149008683969, guid: 89437555278a3b747b73449b8a201440, type: 3}
   m_PrefabInstance: {fileID: 1738004512}
@@ -10184,7 +10125,6 @@ Camera:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1690361426}
   - {fileID: 256990277}
   - {fileID: 1117378892}
   - {fileID: 1450741315}

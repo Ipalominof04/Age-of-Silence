@@ -14,7 +14,7 @@ public class MainMenuCanvas : MonoBehaviour
     }
     public void Play()
     {
-        GameManager.Instance.datos.NameScene = "Escena3";
+        GameManager.Instance.datos.NameScene = "ComedorCasa2";
         GameManager.Instance.IrAScene("LoadManagers");
     }
 
