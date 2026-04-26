@@ -1,14 +1,13 @@
 {
-    "confianza": -10.0,
+    "confianza": 5.0,
     "playerHealth": 6.0,
     "objetoMano": "",
-    "nameScene": "MaderaBosque",
+    "nameScene": "ComedorCasa2",
     "puzlesCompletados": [
         "FusibleVerde",
         "FusibleAzul",
         "AidenNiega",
-        "FusibleAmarillo",
-        "MisionComidaNPC"
+        "FusibleAmarillo"
     ],
     "escenas": [
         {
@@ -25,10 +24,26 @@
         },
         {
             "sceneName": "Comedor Casa2",
-            "objetos": []
+            "objetos": [
+                {
+                    "id": "TriggerPuzle",
+                    "active": false,
+                    "pos": {
+                        "x": 1.2025902271270753,
+                        "y": 0.16300000250339509,
+                        "z": 2.539919853210449
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.7071068286895752,
+                        "z": 0.0,
+                        "w": 0.7071068286895752
+                    }
+                }
+            ]
         },
         {
-            "sceneName": "",
+            "sceneName": "Comedor Fabrica",
             "objetos": []
         },
         {
@@ -36,7 +51,7 @@
             "objetos": []
         },
         {
-            "sceneName": "",
+            "sceneName": "Entrada Fabrica",
             "objetos": []
         },
         {
@@ -56,7 +71,7 @@
             "objetos": []
         },
         {
-            "sceneName": "",
+            "sceneName": "Oficina 1",
             "objetos": []
         },
         {
@@ -69,23 +84,7 @@
         },
         {
             "sceneName": "Salida Fabrica",
-            "objetos": [
-                {
-                    "id": "TriggerDialogo",
-                    "active": false,
-                    "pos": {
-                        "x": -0.6230000257492065,
-                        "y": 0.6402914524078369,
-                        "z": 0.23999977111816407
-                    },
-                    "rot": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    }
-                }
-            ]
+            "objetos": []
         },
         {
             "sceneName": "Trastero",
@@ -96,11 +95,11 @@
             "objetos": []
         },
         {
-            "sceneName": "",
+            "sceneName": "Interior Cabaña",
             "objetos": []
         },
         {
-            "sceneName": "",
+            "sceneName": "Madera Bosque",
             "objetos": []
         }
     ]
