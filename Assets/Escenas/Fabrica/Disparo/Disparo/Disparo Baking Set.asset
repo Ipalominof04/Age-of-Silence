@@ -37,66 +37,102 @@ MonoBehaviour:
   m_LightingScenarios:
   - Default
   cellDescs:
-    m_Keys: 0000000002000000
+    m_Keys: 00000000030000000100000004000000
     m_Values:
-    - position: {x: 0, y: -1, z: -1}
+    - position: {x: 1, y: -1, z: -1}
       index: 0
-      probeCount: 3648
+      probeCount: 1344
       minSubdiv: 0
-      indexChunkCount: 91
+      indexChunkCount: 5
       shChunkCount: 1
-      bricksCount: 57
+      bricksCount: 21
       indirectionEntryInfo:
-      - positionInBricks: {x: 0, y: -27, z: -27}
+      - positionInBricks: {x: 9, y: -9, z: -9}
         minSubdiv: 0
         minBrickPos: {x: 0, y: 0, z: 0}
-        maxBrickPosPlusOne: {x: 28, y: 28, z: 28}
+        maxBrickPosPlusOne: {x: 10, y: 10, z: 10}
         hasMinMax: 1
         hasOnlyBiggerBricks: 0
-    - position: {x: 0, y: 0, z: -1}
-      index: 2
-      probeCount: 6464
+    - position: {x: 1, y: 0, z: -1}
+      index: 3
+      probeCount: 1344
       minSubdiv: 0
-      indexChunkCount: 91
+      indexChunkCount: 5
       shChunkCount: 1
-      bricksCount: 101
+      bricksCount: 21
       indirectionEntryInfo:
-      - positionInBricks: {x: 0, y: 0, z: -27}
+      - positionInBricks: {x: 9, y: 0, z: -9}
         minSubdiv: 0
         minBrickPos: {x: 0, y: 0, z: 0}
-        maxBrickPosPlusOne: {x: 28, y: 28, z: 28}
+        maxBrickPosPlusOne: {x: 10, y: 10, z: 10}
+        hasMinMax: 1
+        hasOnlyBiggerBricks: 0
+    - position: {x: 2, y: -1, z: -1}
+      index: 1
+      probeCount: 2240
+      minSubdiv: 0
+      indexChunkCount: 5
+      shChunkCount: 1
+      bricksCount: 35
+      indirectionEntryInfo:
+      - positionInBricks: {x: 18, y: -9, z: -9}
+        minSubdiv: 0
+        minBrickPos: {x: 0, y: 0, z: 0}
+        maxBrickPosPlusOne: {x: 10, y: 10, z: 10}
+        hasMinMax: 1
+        hasOnlyBiggerBricks: 0
+    - position: {x: 2, y: 0, z: -1}
+      index: 4
+      probeCount: 2240
+      minSubdiv: 0
+      indexChunkCount: 5
+      shChunkCount: 1
+      bricksCount: 35
+      indirectionEntryInfo:
+      - positionInBricks: {x: 18, y: 0, z: -9}
+        minSubdiv: 0
+        minBrickPos: {x: 0, y: 0, z: 0}
+        maxBrickPosPlusOne: {x: 10, y: 10, z: 10}
         hasMinMax: 1
         hasOnlyBiggerBricks: 0
   m_SerializedPerSceneCellList:
   - sceneGUID: 1fb69474e24cf6349bcc8ae722399ece
-    cellList: 0000000002000000
+    cellList: 00000000030000000100000004000000
   cellSharedDataAsset:
     m_AssetGUID: fe5130a0fc5e8f14b9ba0d66de97fd91
     m_StreamableAssetPath: APVStreamingAssets\d6756d932c2a21e4f974f3c732497b1d\fe5130a0fc5e8f14b9ba0d66de97fd91.bytes
     m_ElementSize: 8192
     m_StreamableCellDescs:
-      m_Keys: 0000000002000000
+      m_Keys: 00000000030000000100000004000000
       m_Values:
       - offset: 0
         elementCount: 1
       - offset: 8192
+        elementCount: 1
+      - offset: 16384
+        elementCount: 1
+      - offset: 24576
         elementCount: 1
     m_Asset: {fileID: 4900000, guid: fe5130a0fc5e8f14b9ba0d66de97fd91, type: 3}
   scenarios:
     m_Keys:
     - Default
     m_Values:
-    - sceneHash: 1269907553
+    - sceneHash: 1861412179
       cellDataAsset:
         m_AssetGUID: dbdc6c4f7bf759b47bfc8a8087cfd0fd
         m_StreamableAssetPath: APVStreamingAssets\d6756d932c2a21e4f974f3c732497b1d\dbdc6c4f7bf759b47bfc8a8087cfd0fd.bytes
         m_ElementSize: 131072
         m_StreamableCellDescs:
-          m_Keys: 0000000002000000
+          m_Keys: 00000000030000000100000004000000
           m_Values:
           - offset: 0
             elementCount: 1
           - offset: 131072
+            elementCount: 1
+          - offset: 262144
+            elementCount: 1
+          - offset: 393216
             elementCount: 1
         m_Asset: {fileID: 4900000, guid: dbdc6c4f7bf759b47bfc8a8087cfd0fd, type: 3}
       cellOptionalDataAsset:
@@ -104,11 +140,15 @@ MonoBehaviour:
         m_StreamableAssetPath: APVStreamingAssets\d6756d932c2a21e4f974f3c732497b1d\13866ff96622b9248a190587860584e8.bytes
         m_ElementSize: 131072
         m_StreamableCellDescs:
-          m_Keys: 0000000002000000
+          m_Keys: 00000000030000000100000004000000
           m_Values:
           - offset: 0
             elementCount: 1
           - offset: 131072
+            elementCount: 1
+          - offset: 262144
+            elementCount: 1
+          - offset: 393216
             elementCount: 1
         m_Asset: {fileID: 4900000, guid: 13866ff96622b9248a190587860584e8, type: 3}
       cellProbeOcclusionDataAsset:
@@ -116,8 +156,12 @@ MonoBehaviour:
         m_StreamableAssetPath: APVStreamingAssets\d6756d932c2a21e4f974f3c732497b1d\.bytes
         m_ElementSize: 0
         m_StreamableCellDescs:
-          m_Keys: 0000000002000000
+          m_Keys: 00000000030000000100000004000000
           m_Values:
+          - offset: 0
+            elementCount: 1
+          - offset: 0
+            elementCount: 1
           - offset: 0
             elementCount: 1
           - offset: 0
@@ -128,32 +172,40 @@ MonoBehaviour:
     m_StreamableAssetPath: APVStreamingAssets\d6756d932c2a21e4f974f3c732497b1d\64a34c4a8bd54ec45a5dc24ac8a98917.bytes
     m_ElementSize: 16
     m_StreamableCellDescs:
-      m_Keys: 0000000002000000
+      m_Keys: 00000000030000000100000004000000
       m_Values:
       - offset: 0
-        elementCount: 57
-      - offset: 912
-        elementCount: 101
+        elementCount: 21
+      - offset: 336
+        elementCount: 21
+      - offset: 672
+        elementCount: 35
+      - offset: 1232
+        elementCount: 35
     m_Asset: {fileID: 4900000, guid: 64a34c4a8bd54ec45a5dc24ac8a98917, type: 3}
   cellSupportDataAsset:
     m_AssetGUID: 5d78a3678a3b88d4c9008b52c1dc2d0e
     m_StreamableAssetPath: APVStreamingAssets\d6756d932c2a21e4f974f3c732497b1d\5d78a3678a3b88d4c9008b52c1dc2d0e.bytes
     m_ElementSize: 262144
     m_StreamableCellDescs:
-      m_Keys: 0000000002000000
+      m_Keys: 00000000030000000100000004000000
       m_Values:
       - offset: 0
         elementCount: 1
       - offset: 262144
         elementCount: 1
+      - offset: 524288
+        elementCount: 1
+      - offset: 786432
+        elementCount: 1
     m_Asset: {fileID: 4900000, guid: 5d78a3678a3b88d4c9008b52c1dc2d0e, type: 3}
   chunkSizeInBricks: 128
-  maxCellPosition: {x: 1, y: 1, z: 1}
-  minCellPosition: {x: 0, y: -1, z: -1}
+  maxCellPosition: {x: 3, y: 1, z: 1}
+  minCellPosition: {x: 1, y: -1, z: -1}
   globalBounds:
-    m_Center: {x: 40.5, y: 0, z: 0}
-    m_Extent: {x: 40.5, y: 81, z: 81}
-  bakedSimplificationLevels: 3
+    m_Center: {x: 54, y: 0, z: 0}
+    m_Extent: {x: 27, y: 27, z: 27}
+  bakedSimplificationLevels: 2
   bakedMinDistanceBetweenProbes: 1
   bakedProbeOcclusion: 0
   bakedSkyOcclusionValue: 0
@@ -184,7 +236,7 @@ MonoBehaviour:
   version: 2
   freezePlacement: 0
   probeOffset: {x: 0, y: 0, z: 0}
-  simplificationLevels: 3
+  simplificationLevels: 2
   minDistanceBetweenProbes: 1
   renderersLayerMask:
     serializedVersion: 2
@@ -205,5 +257,5 @@ MonoBehaviour:
     - hasProbeVolume: 1
       bakeScene: 1
       bounds:
-        m_Center: {x: 40.5, y: 0, z: 0}
-        m_Extent: {x: 40.5, y: 81, z: 81}
+        m_Center: {x: 54, y: 0, z: 0}
+        m_Extent: {x: 27, y: 27, z: 27}
