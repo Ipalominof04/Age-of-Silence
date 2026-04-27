@@ -17,6 +17,7 @@ public class TriggerPuzleComida : MonoBehaviour, IPuzle
        
             meshComida.SetActive(true);
             objetoMano.UsarObjeto();
+        GameManager.Instance.datos.puzzlesResueltos.Add("ComidaNPC");
     }
 
     public void OnEnterRange()
