@@ -26,7 +26,13 @@ public class SoundEmitter : MonoBehaviour
             Debug.LogError($"No sound found for {sound}");
 
         float volumeToPlay = volume != -1 ? volume : soundToEmmit.volume;
-    //    print(volumeToPlay);
+
+        if (soundToEmmit.clip != null)
+        {
+            audioSource.volume = volumeToPlay;
+            audioSource.PlayOneShot(soundToEmmit.clip);
+        }
+
         SoundManager.Instance.EmitSound(transform.position, volumeToPlay, shouldEmmit);
         return volumeToPlay;
     }
