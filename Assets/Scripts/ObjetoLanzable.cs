@@ -8,7 +8,7 @@ public class ObjetoLanzable : MonoBehaviour
 
     [Header("Colisión")]
     [SerializeField] private LayerMask capasColision;
-    [SerializeField] private ParticleSystem particulasCristal;
+    [SerializeField] private ParticleSystem particulas;
 
     private SphereCollider objetoCollider;
     private SoundEmitter emitter;
@@ -115,16 +115,16 @@ public class ObjetoLanzable : MonoBehaviour
                 if (!yaLanzado) return;
                 if ((capasColision.value & (1 << collision.gameObject.layer)) == 0) return;
 
-                if (particulasCristal != null)
+                if (particulas != null)
                 {
                     //las particulas son un hijo de la botella
                     //esto desvincula las partículas de la botella para que no se destruyan con ella
-                    particulasCristal.transform.SetParent(null);
+                    particulas.transform.SetParent(null);
                     //pone las partículas en el punto exacto de impacto
-                    particulasCristal.transform.position = collision.contacts[0].point;
-                    particulasCristal.Play();
+                    particulas.transform.position = collision.contacts[0].point;
+                    particulas.Play();
                     //y las destruye 2 segundos despues
-                    Destroy(particulasCristal.gameObject, 2f);
+                    Destroy(particulas.gameObject, 2f);
                 }
                 // emitter.EmitSound(ESound.BOTTLE);
                 Destroy(gameObject);
