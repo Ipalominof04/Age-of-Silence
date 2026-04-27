@@ -4,20 +4,16 @@ using UnityEngine;
 
 public enum ESound
 {
-    NONE, WALK, RUN, CROUCH, SHOOT, BOTTLE, ROCK, A_SCARE, A_RUN
-}
-
-[Serializable]
-public struct RandomClips
-{
-    public List<AudioClip> clips;
+    NONE, WALK, RUN, CROUCH, SHOOT, BOTTLE, ROCK,
+    A_SCARE, A_RUN,
+    ENEMY_SHOOT,ENEMY_ALERT,ENEMY_SEARCH
 }
 
 [Serializable]
 public struct SoundData
 {
     public ESound sound;
-    public RandomClips clip;
+    public AudioClip clip;
     public float volume;
 
 }
