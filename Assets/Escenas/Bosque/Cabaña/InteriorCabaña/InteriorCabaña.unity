@@ -3696,6 +3696,7 @@ GameObject:
   - component: {fileID: 981605491}
   - component: {fileID: 981605490}
   - component: {fileID: 981605489}
+  - component: {fileID: 981605492}
   m_Layer: 9
   m_Name: TriggerPuzleNPC
   m_TagString: TriggerPuzle
@@ -3770,6 +3771,22 @@ MonoBehaviour:
   amenazaNPC: {fileID: 11400000, guid: 82d9ddf986897e44b9b2b6a2ac14cced, type: 2}
   graphComida: {fileID: 3965311268370046156, guid: 09847268c1aa5b04ab9d03658b9d3ab0, type: 3}
   graphTraigoComida: {fileID: 3965311268370046156, guid: 22c76d9fde521914f958b457a96aa299, type: 3}
+--- !u!114 &981605492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981605487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d200b541f8bd8c44d946b5cf2cc6c150, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectoActivable
+  puzzleRequeridoID: ComidaNPC
+  rends: []
+  col: {fileID: 981605490}
+  luz: {fileID: 0}
 --- !u!1 &1054818355
 GameObject:
   m_ObjectHideFlags: 0
@@ -5485,7 +5502,7 @@ Transform:
   m_GameObject: {fileID: 1466932822}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.65, y: 0.282, z: -13.274}
+  m_LocalPosition: {x: 1.477, y: 0.282, z: -13.148}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
