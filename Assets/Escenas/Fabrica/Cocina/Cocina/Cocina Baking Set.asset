@@ -41,58 +41,58 @@ MonoBehaviour:
     m_Values:
     - position: {x: -1, y: 0, z: -1}
       index: 3
-      probeCount: 448
+      probeCount: 192
       minSubdiv: 0
-      indexChunkCount: 91
+      indexChunkCount: 5
       shChunkCount: 1
-      bricksCount: 7
+      bricksCount: 3
       indirectionEntryInfo:
-      - positionInBricks: {x: -27, y: 0, z: -27}
+      - positionInBricks: {x: -9, y: 0, z: -9}
         minSubdiv: 0
         minBrickPos: {x: 0, y: 0, z: 0}
-        maxBrickPosPlusOne: {x: 28, y: 28, z: 28}
+        maxBrickPosPlusOne: {x: 10, y: 10, z: 10}
         hasMinMax: 1
         hasOnlyBiggerBricks: 0
     - position: {x: -1, y: 0, z: 0}
       index: 12
-      probeCount: 576
+      probeCount: 320
       minSubdiv: 0
-      indexChunkCount: 91
+      indexChunkCount: 5
       shChunkCount: 1
-      bricksCount: 9
+      bricksCount: 5
       indirectionEntryInfo:
-      - positionInBricks: {x: -27, y: 0, z: 0}
+      - positionInBricks: {x: -9, y: 0, z: 0}
         minSubdiv: 0
         minBrickPos: {x: 0, y: 0, z: 0}
-        maxBrickPosPlusOne: {x: 28, y: 28, z: 28}
+        maxBrickPosPlusOne: {x: 10, y: 10, z: 10}
         hasMinMax: 1
         hasOnlyBiggerBricks: 0
     - position: {x: 0, y: 0, z: -1}
       index: 4
-      probeCount: 1984
+      probeCount: 256
       minSubdiv: 0
-      indexChunkCount: 91
+      indexChunkCount: 5
       shChunkCount: 1
-      bricksCount: 31
+      bricksCount: 4
       indirectionEntryInfo:
-      - positionInBricks: {x: 0, y: 0, z: -27}
+      - positionInBricks: {x: 0, y: 0, z: -9}
         minSubdiv: 0
         minBrickPos: {x: 0, y: 0, z: 0}
-        maxBrickPosPlusOne: {x: 28, y: 28, z: 28}
+        maxBrickPosPlusOne: {x: 10, y: 10, z: 10}
         hasMinMax: 1
         hasOnlyBiggerBricks: 0
     - position: {x: 0, y: 0, z: 0}
       index: 13
-      probeCount: 2880
+      probeCount: 1536
       minSubdiv: 0
-      indexChunkCount: 91
+      indexChunkCount: 5
       shChunkCount: 1
-      bricksCount: 45
+      bricksCount: 24
       indirectionEntryInfo:
       - positionInBricks: {x: 0, y: 0, z: 0}
         minSubdiv: 0
         minBrickPos: {x: 0, y: 0, z: 0}
-        maxBrickPosPlusOne: {x: 28, y: 28, z: 28}
+        maxBrickPosPlusOne: {x: 10, y: 10, z: 10}
         hasMinMax: 1
         hasOnlyBiggerBricks: 0
   m_SerializedPerSceneCellList:
@@ -118,7 +118,7 @@ MonoBehaviour:
     m_Keys:
     - Default
     m_Values:
-    - sceneHash: -41617036
+    - sceneHash: -1807933349
       cellDataAsset:
         m_AssetGUID: 8ab8b9bdd6a9385409ef58d2b2806be1
         m_StreamableAssetPath: APVStreamingAssets\e400b4e33d8403e42b40cd465de0ddfd\8ab8b9bdd6a9385409ef58d2b2806be1.bytes
@@ -175,13 +175,13 @@ MonoBehaviour:
       m_Keys: 030000000c000000040000000d000000
       m_Values:
       - offset: 0
-        elementCount: 7
-      - offset: 112
-        elementCount: 9
-      - offset: 256
-        elementCount: 31
-      - offset: 752
-        elementCount: 45
+        elementCount: 3
+      - offset: 48
+        elementCount: 5
+      - offset: 128
+        elementCount: 4
+      - offset: 192
+        elementCount: 24
     m_Asset: {fileID: 4900000, guid: e423addce2cd93a48830ebd6bcb63438, type: 3}
   cellSupportDataAsset:
     m_AssetGUID: 030f084529ffc8e4abd124ea808211f1
@@ -204,8 +204,8 @@ MonoBehaviour:
   minCellPosition: {x: -1, y: -1, z: -1}
   globalBounds:
     m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 81, y: 81, z: 81}
-  bakedSimplificationLevels: 3
+    m_Extent: {x: 27, y: 27, z: 27}
+  bakedSimplificationLevels: 2
   bakedMinDistanceBetweenProbes: 1
   bakedProbeOcclusion: 0
   bakedSkyOcclusionValue: 0
@@ -236,7 +236,7 @@ MonoBehaviour:
   version: 2
   freezePlacement: 0
   probeOffset: {x: 0, y: 0, z: 0}
-  simplificationLevels: 3
+  simplificationLevels: 2
   minDistanceBetweenProbes: 1
   renderersLayerMask:
     serializedVersion: 2
@@ -258,4 +258,4 @@ MonoBehaviour:
       bakeScene: 1
       bounds:
         m_Center: {x: 0, y: 0, z: 0}
-        m_Extent: {x: 81, y: 81, z: 81}
+        m_Extent: {x: 27, y: 27, z: 27}
