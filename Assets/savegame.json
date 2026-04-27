@@ -1,15 +1,14 @@
 {
-    "confianza": 5.0,
+    "confianza": -10.0,
     "playerHealth": 6.0,
-    "objetoMano": "MaderasPuente",
-    "nameScene": "PuenteBosque",
+    "objetoMano": "",
+    "nameScene": "MaderaBosque",
     "puzlesCompletados": [
         "FusibleVerde",
         "FusibleAzul",
         "AidenNiega",
         "FusibleAmarillo",
-        "MisionComidaNPC",
-        "GalonUsado"
+        "MisionComidaNPC"
     ],
     "escenas": [
         {
@@ -26,23 +25,7 @@
         },
         {
             "sceneName": "Comedor Casa2",
-            "objetos": [
-                {
-                    "id": "TriggerPuzle",
-                    "active": false,
-                    "pos": {
-                        "x": 1.2025902271270753,
-                        "y": 0.16300000250339509,
-                        "z": 2.539919853210449
-                    },
-                    "rot": {
-                        "x": 0.0,
-                        "y": 0.7071068286895752,
-                        "z": 0.0,
-                        "w": 0.7071068286895752
-                    }
-                }
-            ]
+            "objetos": []
         },
         {
             "sceneName": "Comedor Fabrica",
@@ -102,44 +85,18 @@
         },
         {
             "sceneName": "Madera Bosque",
+            "objetos": []
+        },
+        {
+            "sceneName": "PuenteBosque",
             "objetos": [
                 {
-                    "id": "maderas",
-                    "active": false,
+                    "id": "TriggerMaderasPuzle",
+                    "active": true,
                     "pos": {
-                        "x": 9.675999641418457,
-                        "y": 0.5839999914169312,
-                        "z": 10.133000373840332
-                    },
-                    "rot": {
-                        "x": -0.41587570309638979,
-                        "y": 0.5718806385993958,
-                        "z": -0.4158756136894226,
-                        "w": 0.5718806385993958
-                    }
-                },
-                {
-                    "id": "MaderaPequeña",
-                    "active": false,
-                    "pos": {
-                        "x": 10.71550464630127,
-                        "y": 0.42103227972984316,
-                        "z": 10.223481178283692
-                    },
-                    "rot": {
-                        "x": -0.5361579060554504,
-                        "y": -0.7895805239677429,
-                        "z": -0.2292025089263916,
-                        "w": 0.19121621549129487
-                    }
-                },
-                {
-                    "id": "Palet",
-                    "active": false,
-                    "pos": {
-                        "x": 8.375,
-                        "y": 0.08500000089406967,
-                        "z": 7.885000228881836
+                        "x": 31.222280502319337,
+                        "y": 0.7237600088119507,
+                        "z": -0.38899993896484377
                     },
                     "rot": {
                         "x": 0.0,
