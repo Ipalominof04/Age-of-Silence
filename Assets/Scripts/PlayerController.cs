@@ -82,6 +82,11 @@ public class PlayerController : MonoBehaviour, IDamageable
     private Animator animator;
     private PlayerState previousState;
 
+    private float nextStepTime = 0f;
+    [SerializeField] private float walkStepRate = 0.45f;
+    [SerializeField] private float runStepRate = 0.28f;
+    [SerializeField] private float crouchStepRate = 0.65f;
+
     public Transform GetEyePoint() => eyePoint;
 
     private void Awake()
@@ -318,17 +323,29 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         switch (currentState)
         {
-            case PlayerState.IDLE: break;
-            case PlayerState.WALK: break;
-            case PlayerState.RUN: break;
+            case PlayerState.IDLE:
+                soundEmitter.StopSound();
+                break;
+            case PlayerState.WALK:
+                soundEmitter.StopSound();
+                break;
+            case PlayerState.RUN:
+                soundEmitter.StopSound();
+                break;
             case PlayerState.CROUCH:
                 animator.SetBool("isCrouching", false);
+                soundEmitter.StopSound();
                 SetColliderNormal();
                 break;
-            case PlayerState.SHOOT: break;
-            case PlayerState.INTERACT: break;
+            case PlayerState.SHOOT:
+                soundEmitter.StopSound();
+                break;
+            case PlayerState.INTERACT:
+                soundEmitter.StopSound();
+                break;
             case PlayerState.THROW:
                 parabolaRenderer.OcultarParabola();
+                soundEmitter.StopSound();
                 break;
         }
     }
@@ -401,10 +418,38 @@ public class PlayerController : MonoBehaviour, IDamageable
         characterController.Move(movement * velocity * Time.deltaTime);
     }
 
-    private void Walk() { Move(1.75f); }
-    private void Run() { Move(3f); }
-    private void Crouch() { Move(1.5f); }
+    private void Walk()
+    {
+        Move(1.75f);
 
+        if (Time.time >= nextStepTime)
+        {
+            soundEmitter.EmitSound(ESound.WALK);
+            nextStepTime = Time.time + walkStepRate;
+        }
+    }
+    private void Run()
+    {
+        Move(3f);
+
+        if (Time.time >= nextStepTime)
+        {
+            soundEmitter.EmitSound(ESound.RUN);
+            nextStepTime = Time.time + runStepRate;
+        }
+    }
+    private void Crouch()
+    {
+        Move(1.5f);
+
+        if (inputMoviment.magnitude > 0.01f && Time.time >= nextStepTime)
+        {
+            soundEmitter.EmitSound(ESound.CROUCH);
+            nextStepTime = Time.time + crouchStepRate;
+
+
+        }
+    }
     private void ClimbLadder()
     {
         transform.rotation = Quaternion.LookRotation(direccionEscalera);
@@ -505,6 +550,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             Debug.Log("Muy lejos de Aiden");
         }
 
+
         ChangeState(PlayerState.IDLE);
     }
 
@@ -523,6 +569,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             if (rb != null)
                 rb.linearVelocity = this.gameObject.transform.forward * 20f;
 
+            soundEmitter.EmitSound(ESound.SHOOT);
             onShoot.Raise();
         }
         ChangeState(PlayerState.IDLE);

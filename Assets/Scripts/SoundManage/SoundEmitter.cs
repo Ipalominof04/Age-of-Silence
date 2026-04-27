@@ -17,24 +17,36 @@ public class SoundEmitter : MonoBehaviour
     }
 
 
-    // Eliminar: public float soundRadius = 10f;
+    public void StopSound()
+    {
+        audioSource.Stop();
+    }
 
     public float EmitSound(ESound sound, bool shouldEmmit = true, float volume = -1)
     {
         var soundToEmmit = SoundManager.Instance.soundRegistry.GetSound(sound);
+
         if (soundToEmmit.sound == ESound.NONE)
-            Debug.LogError($"No sound found for {sound}");
+            return 0f;
 
         float volumeToPlay = volume != -1 ? volume : soundToEmmit.volume;
 
         if (soundToEmmit.clip != null)
         {
             audioSource.volume = volumeToPlay;
-            audioSource.PlayOneShot(soundToEmmit.clip);
+
+            if (audioSource.clip != soundToEmmit.clip)
+                audioSource.clip = soundToEmmit.clip;
+
+            if (!audioSource.isPlaying)
+                audioSource.PlayOneShot(soundToEmmit.clip, volumeToPlay);
         }
 
         SoundManager.Instance.EmitSound(transform.position, volumeToPlay, shouldEmmit);
+
         return volumeToPlay;
     }
+
+
 
 }
