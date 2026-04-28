@@ -427,28 +427,30 @@ public class PlayerController : MonoBehaviour, IDamageable
             soundEmitter.EmitSound(ESound.WALK);
             nextStepTime = Time.time + walkStepRate;
         }
+
     }
     private void Run()
     {
         Move(3f);
-
+        
         if (Time.time >= nextStepTime)
         {
             soundEmitter.EmitSound(ESound.RUN);
             nextStepTime = Time.time + runStepRate;
         }
+        
+        
     }
     private void Crouch()
     {
         Move(1.5f);
-
+        
         if (inputMoviment.magnitude > 0.01f && Time.time >= nextStepTime)
         {
             soundEmitter.EmitSound(ESound.CROUCH);
             nextStepTime = Time.time + crouchStepRate;
-
-
         }
+        
     }
     private void ClimbLadder()
     {
@@ -569,12 +571,15 @@ public class PlayerController : MonoBehaviour, IDamageable
             if (rb != null)
                 rb.linearVelocity = this.gameObject.transform.forward * 20f;
 
-            soundEmitter.EmitSound(ESound.SHOOT);
             onShoot.Raise();
+            ChangeState(PlayerState.IDLE);
+            soundEmitter.EmitSound(ESound.SHOOT);
         }
-        ChangeState(PlayerState.IDLE);
+        else
+        {
+            ChangeState(PlayerState.IDLE);
+        }
     }
-
     public void TakeDamage(float damage)
     {
         vidaActual -= damage;
@@ -685,7 +690,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 }
             }
 
-            if (other.tag == "Comida")
+            if (other.tag == "Comida" || other.tag == "Agua")
             {
                 if (objectInRange == null)
                 {
