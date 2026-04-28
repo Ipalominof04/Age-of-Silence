@@ -78,7 +78,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
     public void OnHearSound(Vector3 soundPosition, float volume)
     {
-        if (volume < minDetectionLevel) return; // filtre nivell mínim
+        if (volume < minDetectionLevel) return;
         if (currentState == EnemyState.CHASE || currentState == EnemyState.ATTACK) return;
 
         agent.SetDestination(soundPosition);
@@ -105,9 +105,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 stateText.text = text;
                 //para poder ponerle un color especifico con los colorutility
                 ColorUtility.TryParseHtmlString(hexColor, out Color color);
-                stateText.color = color;
-
-               
+                stateText.color = color;   
             }
         }
     }
@@ -205,8 +203,9 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 break;
 
             case EnemyState.SEARCHING:
-                animator.SetBool("onPatrol", true);
                 agent.isStopped = false;
+                animator.SetBool("onPatrol", true);
+                animator.SetBool("onSearching", false);
                 SetUI(true, "?", "#FFC300");
                 searchCoroutine = StartCoroutine(SearchRoutine());
                 break;
@@ -269,6 +268,8 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
 
             case EnemyState.SEARCHING:
+                animator.SetBool("onPatrol", !agent.isStopped);
+                animator.SetBool("onSearching", agent.isStopped);
                 if (PlayerInArea(radiusChase))
                     ChangeState(EnemyState.CHASE);
                 else if (PlayerInArea(radiusLook))
@@ -302,6 +303,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 break;
             case EnemyState.SEARCHING:
                 animator.SetBool("onSearching", false);
+                animator.SetBool("onPatrol", false);
                 if (searchCoroutine != null) StopCoroutine(searchCoroutine);
                 break;
             case EnemyState.LOOK:
@@ -317,7 +319,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
             yield return null;
 
-       // agent.isStopped = true;
+        agent.isStopped = true;
         animator.SetBool("onPatrol", false);
         animator.SetBool("onSearching", true);
         if (enemyType == EnemyType.FUERTE)
@@ -332,6 +334,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         }
         // Una vez llegado, espera el tiempo de búsqueda
         yield return new WaitForSeconds(searchDuration);
+
 
         if (currentState == EnemyState.SEARCHING)
             ChangeState(EnemyState.PATROL);
