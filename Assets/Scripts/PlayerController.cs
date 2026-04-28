@@ -118,6 +118,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         float vidaGuardada = GameManager.Instance.datos.PlayerHealth;
         vidaActual = vidaGuardada > 0f ? vidaGuardada : vidaMaxima;
         onVidaCambiada.Raise(vidaActual / vidaMaxima);
+        float ratio = vidaActual / vidaMaxima;
+        DamageVignette.Instance?.UpdateHealthRatio(ratio);
     }
 
     void Update()
@@ -585,9 +587,15 @@ public class PlayerController : MonoBehaviour, IDamageable
         vidaActual -= damage;
         vidaActual = Mathf.Clamp(vidaActual, 0f, vidaMaxima);
         GameManager.Instance.datos.PlayerHealth = vidaActual;
-        onVidaCambiada.Raise(vidaActual / vidaMaxima);
-        if (vidaActual <= 0f)
-            Die();
+
+        float ratio = vidaActual / vidaMaxima;
+        onVidaCambiada.Raise(ratio);
+
+        // Actualitza l'alpha base + dispara el flash
+        DamageVignette.Instance?.UpdateHealthRatio(ratio);
+        DamageVignette.Instance?.PlayDamageFlash();
+
+        if (vidaActual <= 0f) Die();
     }
 
     public void Die()
@@ -595,6 +603,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (isDying) return;
         isDying = true;
         print("player muerto");
+        GameManager.Instance.datos.PlayerHealth = GameManager.Instance.GetHealthAlEntrarEscena();
         GameManager.Instance.LimpiarSOEscenas();
         GameManager.Instance.IrAScene(SceneManager.GetActiveScene().name);
     }

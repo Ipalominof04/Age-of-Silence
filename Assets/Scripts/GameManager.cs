@@ -1,11 +1,9 @@
-using NUnit.Framework.Constraints;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -15,6 +13,8 @@ public class GameManager : MonoBehaviour
 
     [Header("Confianza")]
     [SerializeField] public float confianza = 0;
+    [Header("Vida de escena")]
+    private float healthAlEntrarEscena;
     [Header("Fade")]
     private Image fadeImage;        // la UI Image negra
     public float fadeDuration = 1f;
@@ -25,10 +25,16 @@ public class GameManager : MonoBehaviour
     public string ruta = "Assets/savegame.json";
     public SOGeneral datos;
 
+    private readonly HashSet<string> escenesAccio = new HashSet<string> 
+    {
+    "Escena2", "Escena4", "SalidaFabrica","Muro"
+    };
+    public float GetHealthAlEntrarEscena() => healthAlEntrarEscena;
+
 
     private void Awake()
     {
-     //   Debug.Log($"Awake — InstanceID: {gameObject.GetInstanceID()} — Escena: {gameObject.scene.name}");
+        //   Debug.Log($"Awake — InstanceID: {gameObject.GetInstanceID()} — Escena: {gameObject.scene.name}");
 
         if (Instance == null)
         {
@@ -42,7 +48,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-        //    Debug.Log($"DUPLICADO detectado — destruyendo InstanceID: {gameObject.GetInstanceID()}");
+            //    Debug.Log($"DUPLICADO detectado — destruyendo InstanceID: {gameObject.GetInstanceID()}");
             Destroy(gameObject);
         }
     }
@@ -51,6 +57,17 @@ public class GameManager : MonoBehaviour
     {
         RestaurarEscena();
         MoverPlayerSpawn();
+        healthAlEntrarEscena = datos.PlayerHealth;
+
+        bool esAccio = escenesAccio.Contains(scene.name);
+        DamageVignette.Instance?.SetVignetteActive(esAccio);
+
+        if (esAccio)
+        {
+            float ratio = datos.PlayerHealth > 0 ? datos.PlayerHealth / 10f : 1f;
+            // Substitueix 10f pel teu valor de vida màxima si l'tens accessible
+            DamageVignette.Instance?.UpdateHealthRatio(ratio);
+        }
     }
 
     public void SumValor(int amount)
@@ -83,10 +100,10 @@ public class GameManager : MonoBehaviour
         StartCoroutine(FadeAndLoadScene(sceneName));
         GuardarPartida();
     }
-    
+
     public void IrAScene(string sceneName)
     {
-            StartCoroutine(FadeAndLoadScene(sceneName));
+        StartCoroutine(FadeAndLoadScene(sceneName));
     }
 
     public void GuardarEscena()
@@ -103,7 +120,7 @@ public class GameManager : MonoBehaviour
     }
     public void RestaurarEscena()
     {
-    //    Debug.Log("RestaurarEscena llamado desde:\n" + System.Environment.StackTrace);
+        //    Debug.Log("RestaurarEscena llamado desde:\n" + System.Environment.StackTrace);
         foreach (var obj in FindObjectsByType<ObjetoGuardable>(FindObjectsInactive.Include, FindObjectsSortMode.None))
             obj.Restaurar();
     }
@@ -135,7 +152,7 @@ public class GameManager : MonoBehaviour
         if (newScene.IsValid() && newScene.isLoaded) SceneManager.SetActiveScene(newScene);
 
 
-        if(sceneName == "Escena2")
+        if (sceneName == "Escena2")
         {
             ChapterUI.ChapterStep[] steps = new ChapterUI.ChapterStep[]
             {
@@ -143,16 +160,16 @@ public class GameManager : MonoBehaviour
                 new ChapterUI.ChapterStep("LA CIUDAD 1.1: ZONA 0", 1f)
             };
             yield return StartCoroutine(ChapterUI.Instance.PlaySequence(steps));
-        } 
+        }
         else if (sceneName == "Escena4")
         {
             yield return StartCoroutine(ChapterUI.Instance.MostrarCapitulo("LA CIUDAD 1.2: LA FÁBRICA", 3f));
         }
-        else if(sceneName == "SalidaFabrica")
+        else if (sceneName == "SalidaFabrica")
         {
             yield return StartCoroutine(ChapterUI.Instance.MostrarCapitulo("LA CIUDAD 1.3: ESCAPADA", 3f));
         }
-            yield return StartCoroutine(FadeIn());
+        yield return StartCoroutine(FadeIn());
     }
 
     private IEnumerator FadeOut()
@@ -254,9 +271,9 @@ public class GameManager : MonoBehaviour
             };
         }
 
-        SaveData data = new SaveData(datos.confianza, datos.PlayerHealth, datos.objetoMano, datos.NameScene,datos.puzzlesResueltos, escenasSave);
+        SaveData data = new SaveData(datos.confianza, datos.PlayerHealth, datos.objetoMano, datos.NameScene, datos.puzzlesResueltos, escenasSave);
 
-        string jsondata = JsonUtility.ToJson(data,true);
+        string jsondata = JsonUtility.ToJson(data, true);
         try
         {
             print("Guardando datos...");
@@ -326,7 +343,7 @@ public class GameManager : MonoBehaviour
         public List<string> puzlesCompletados;
         public EscenaData[] escenas;
 
-        public SaveData(float confianza, float playerHealth, ObjetoAgarrado objetoMano, string nameScene,List<string> puzlesCompletados, EscenaData[] escenas)
+        public SaveData(float confianza, float playerHealth, ObjetoAgarrado objetoMano, string nameScene, List<string> puzlesCompletados, EscenaData[] escenas)
         {
             this.confianza = confianza;
             this.playerHealth = playerHealth;
