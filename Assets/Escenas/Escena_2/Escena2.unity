@@ -1575,7 +1575,7 @@ GameObject:
   - component: {fileID: 141258874}
   - component: {fileID: 141258873}
   m_Layer: 0
-  m_Name: LluviaManager
+  m_Name: Rain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1714,7 +1714,8 @@ Transform:
   m_LocalPosition: {x: 1584.4266, y: 0, z: 11298.233}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1611485327}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &165050542 stripped
@@ -22313,7 +22314,7 @@ GameObject:
   - component: {fileID: 1611485326}
   - component: {fileID: 1611485325}
   m_Layer: 0
-  m_Name: Rain
+  m_Name: RainParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27130,13 +27131,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1611485324}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.61, y: 9.01, z: -0.35}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1559.8167, y: 9.01, z: -11298.583}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1193158169}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 141258876}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1617372563
 GameObject:
@@ -33033,8 +33034,8 @@ SceneRoots:
   - {fileID: 1023648381}
   - {fileID: 2113968982}
   - {fileID: 741188956}
+  - {fileID: 141258876}
   - {fileID: 733937298}
-  - {fileID: 1611485327}
   - {fileID: 1619737053}
   - {fileID: 1085435274}
   - {fileID: 1382796615}
@@ -33043,4 +33044,3 @@ SceneRoots:
   - {fileID: 1174113400816026923}
   - {fileID: 6344926664708796532}
   - {fileID: 1348472325}
-  - {fileID: 141258876}
