@@ -53,6 +53,10 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     [SerializeField] private float listenRadius = 15f;
     [SerializeField][Range(0f, 1f)] private float minDetectionLevel = 0.2f;
 
+    [Header("Ragdoll")]
+    [SerializeField] Transform root;
+    private Rigidbody[] rigidbodies;
+
     private float gravity = -9.81f;
     private Vector3 verticalVelocity = Vector3.zero;
 
@@ -113,14 +117,15 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>(); 
+        rigidbodies = GetComponentsInChildren<Rigidbody>();
     }
 
     void Start()
     {
         InitState(EnemyState.PATROL);
+        ActivateKinematic(true);
         SetUI(false);
-
     }
 
     void Update()
@@ -130,6 +135,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     }
     private void ApplyGravity()
     {
+        if (agent == null || !agent.enabled) return;
         verticalVelocity.y += gravity * Time.deltaTime;
         agent.Move(verticalVelocity * Time.deltaTime);
     }
@@ -313,6 +319,15 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         }
     }
 
+    private void ActivateKinematic(bool activate)
+    {
+        foreach (var rb in rigidbodies)
+        {
+            rb.isKinematic = activate;
+        }
+        animator.enabled = activate;
+    }
+
     private IEnumerator SearchRoutine()
     {
         // Espera hasta que llegue al destino
@@ -332,7 +347,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             arma.transform.localPosition = new Vector3(-0.022f, -0.132f, 0f);
             arma.transform.localRotation = Quaternion.Euler(-93.801f, -29.005f, 22.375f);
         }
-        // Una vez llegado, espera el tiempo de búsqueda
+        // Una vez llegado, espera el tiempo de busqueda
         yield return new WaitForSeconds(searchDuration);
 
 
@@ -345,7 +360,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
         if (currentState == EnemyState.LOOK)
         {
-            //si sigo viéndole, perseguir; si no, patrullar
+            //si sigo viendole, perseguir; si no, patrullar
             if (PlayerInArea(radiusLook))
                 ChangeState(EnemyState.CHASE);
             else
@@ -561,11 +576,21 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         {
             Die();
         }
-
-
     }
     public void Die()
     {
-        Destroy(this.gameObject);
+        if (agent != null)
+        {
+            agent.isStopped = true;
+            agent.ResetPath();
+            agent.enabled = false;
+        }
+
+        if (animator != null) animator.enabled = false;
+        ActivateKinematic(false);
+        CapsuleCollider col = GetComponent<CapsuleCollider>();
+        if (col != null) col.enabled = false;
+
+        this.enabled = false;
     }
 }
