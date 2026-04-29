@@ -38,7 +38,7 @@ public class SoundEmitter : MonoBehaviour
 
     private bool IsReplaceable(ESound sound)
     {
-        return sound == ESound.WALK || sound == ESound.RUN || sound == ESound.CROUCH || sound == ESound.LLUVIA; ;
+        return sound == ESound.WALK || sound == ESound.RUN || sound == ESound.CROUCH || sound == ESound.LLUVIA || sound == ESound.FUEGO;
     }
 
     public float EmitSound(ESound sound, bool shouldEmmit = true, float volume = -1)
