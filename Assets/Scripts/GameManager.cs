@@ -25,10 +25,6 @@ public class GameManager : MonoBehaviour
     public string ruta = "Assets/savegame.json";
     public SOGeneral datos;
 
-    private readonly HashSet<string> escenesAccio = new HashSet<string> 
-    {
-    "Escena2", "Escena4", "SalidaFabrica","Muro"
-    };
     public float GetHealthAlEntrarEscena() => healthAlEntrarEscena;
 
 
@@ -59,15 +55,10 @@ public class GameManager : MonoBehaviour
         MoverPlayerSpawn();
         healthAlEntrarEscena = datos.PlayerHealth;
 
-        bool esAccio = escenesAccio.Contains(scene.name);
-        DamageVignette.Instance?.SetVignetteActive(esAccio);
+        DamageVignette.Instance?.SetVignetteActive(true);
 
-        if (esAccio)
-        {
-            float ratio = datos.PlayerHealth > 0 ? datos.PlayerHealth / 10f : 1f;
-            // Substitueix 10f pel teu valor de vida màxima si l'tens accessible
-            DamageVignette.Instance?.UpdateHealthRatio(ratio);
-        }
+        float ratio = datos.PlayerHealth > 0 ? datos.PlayerHealth / 6f : 1f;
+        DamageVignette.Instance?.UpdateHealthRatio(ratio);
     }
 
     public void SumValor(int amount)

@@ -487,7 +487,10 @@ public class PlayerController : MonoBehaviour, IDamageable
                         vidaActual += 2f;
                         vidaActual = Mathf.Clamp(vidaActual, 0f, vidaMaxima);
                         GameManager.Instance.datos.PlayerHealth = vidaActual;
-                        onVidaCambiada.Raise(vidaActual / vidaMaxima);
+                        float ratio = vidaActual / vidaMaxima;
+                        onVidaCambiada.Raise(ratio);
+                        DamageVignette.Instance?.UpdateHealthRatio(ratio);
+
                         objectInRange.SetActive(false);
                         objectInRange = null;
                         return;
@@ -606,6 +609,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         GameManager.Instance.datos.PlayerHealth = GameManager.Instance.GetHealthAlEntrarEscena();
         GameManager.Instance.LimpiarSOEscenas();
         GameManager.Instance.IrAScene(SceneManager.GetActiveScene().name);
+        DamageVignette.Instance.SetVignetteActive(false);
     }
 
     private void SetColliderNormal()
