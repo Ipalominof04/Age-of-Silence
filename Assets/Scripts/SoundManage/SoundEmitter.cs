@@ -9,18 +9,24 @@ public class SoundEmitter : MonoBehaviour
     private void Awake()
     {
         AudioSource[] sources = GetComponents<AudioSource>();
-        if (sources.Length < 2)
-        {
-            audioSourceLoop = gameObject.AddComponent<AudioSource>();
-            audioSourceOneShot = gameObject.AddComponent<AudioSource>();
-        }
-        else
+        if (sources.Length >= 2)
         {
             audioSourceLoop = sources[0];
             audioSourceOneShot = sources[1];
         }
+        else if (sources.Length == 1)
+        {
+            audioSourceLoop = sources[0];
+            audioSourceOneShot = gameObject.AddComponent<AudioSource>();
+        }
+        else
+        {
+            audioSourceLoop = gameObject.AddComponent<AudioSource>();
+            audioSourceOneShot = gameObject.AddComponent<AudioSource>();
+        }
 
         audioSourceLoop.spatialBlend = 1f;
+        audioSourceLoop.loop = true; // importante para LLUVIA
         audioSourceOneShot.spatialBlend = 1f;
     }
 
@@ -32,7 +38,7 @@ public class SoundEmitter : MonoBehaviour
 
     private bool IsReplaceable(ESound sound)
     {
-        return sound == ESound.WALK || sound == ESound.RUN || sound == ESound.CROUCH;
+        return sound == ESound.WALK || sound == ESound.RUN || sound == ESound.CROUCH || sound == ESound.LLUVIA; ;
     }
 
     public float EmitSound(ESound sound, bool shouldEmmit = true, float volume = -1)
