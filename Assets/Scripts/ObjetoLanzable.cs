@@ -114,19 +114,21 @@ public class ObjetoLanzable : MonoBehaviour
             {
                 if (!yaLanzado) return;
                 if ((capasColision.value & (1 << collision.gameObject.layer)) == 0) return;
+
                 emitter.EmitSound(ESound.BOTTLE);
+
                 if (particulas != null)
                 {
-                    //las particulas son un hijo de la botella
-                    //esto desvincula las partículas de la botella para que no se destruyan con ella
                     particulas.transform.SetParent(null);
-                    //pone las partículas en el punto exacto de impacto
                     particulas.transform.position = collision.contacts[0].point;
                     particulas.Play();
-                    //y las destruye 2 segundos despues
                     Destroy(particulas.gameObject, 2f);
                 }
-                Destroy(gameObject);
+
+                // Ocultar la botella visualmente pero dejar el audio sonar
+                GetComponent<MeshRenderer>().enabled = false;
+                objetoCollider.enabled = false;
+                Destroy(gameObject, 0.5f); // <-- delay para que el sonido termine
             }
             if (this.gameObject.tag == "Roca")
             {
