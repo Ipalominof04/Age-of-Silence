@@ -11,6 +11,10 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
     [Header("Meshes")]
     [SerializeField] private GameObject meshGalon;
     [SerializeField] private GameObject meshCerilla;
+    [Header("Shake")]
+    [SerializeField] private CamaraTemblor cameraShake;
+    [SerializeField] private float duracion = 3f;
+    [SerializeField] private float fuerza = 0.5f;
 
     public void Interact(ObjetoAgarrado objetoMano)
     {
@@ -32,7 +36,8 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
         {
             meshCerilla.SetActive(true);
             objetoMano.UsarObjeto();
-           // GameManager.Instance.ResolverPuzzle("CerillasTiradas");
+            cameraShake.ShakeContinuo(duracion, fuerza);
+            // GameManager.Instance.ResolverPuzzle("CerillasTiradas");
         }
     }
 
