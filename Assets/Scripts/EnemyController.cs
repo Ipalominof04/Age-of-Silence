@@ -471,9 +471,9 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             switch (enemyType)
             {
                 case EnemyType.FUERTE:
-                    int pellets = 5;
+                    int perdigones = 3;
                     float spreadAngle = 15f;
-                    for (int i = 0; i < pellets; i++)
+                    for (int i = 0; i < perdigones; i++)
                     {
                         Quaternion spread = Quaternion.Euler(Random.Range(-spreadAngle, spreadAngle), Random.Range(-spreadAngle, spreadAngle),0);
                         Vector3 direction = spread * shootDirection; //usar shootDirection

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -65,6 +66,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private GameObject shootingPoint;
     private bool armaSobrecalentada;
 
+    [Header("Ragdoll")]
+    [SerializeField] private Transform ragdollRoot;
+    private Rigidbody[] ragdollRigidbodies;
+
     private bool InDialogue;
     private bool canInteract = false;
     private GameObject objectInRange = null;
@@ -103,6 +108,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         throwAction = inputInstance.FindActionMap("Player").FindAction("Throw");
         shootAction = inputInstance.FindActionMap("Player").FindAction("Attack");
         SetColliderNormal();
+        InitRagdoll();
     }
 
     void Start()
@@ -124,6 +130,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     void Update()
     {
+        if (isDying) return;
         inputMoviment = walkAction.ReadValue<Vector2>();
         UpdateState();
         ApplyGravity();
@@ -176,7 +183,11 @@ public class PlayerController : MonoBehaviour, IDamageable
             case PlayerState.CROUCH:
                 if (!escaleraInRange)
                 {
-                    animator.SetBool("isCrouching", true);
+                    if (armaEquipada)
+                        animator.Play("crouch");
+      
+                    else
+                        animator.SetBool("isCrouching", true);
                     characterController.center = new Vector3(0, 0.375f, 0);
                     characterController.radius = 0.4f;
                     characterController.height = 0.7f;
@@ -231,7 +242,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 if (armaEquipada && shootAction.triggered) ChangeState(PlayerState.SHOOT);
                 if (interactAction.triggered && (objectInRange != null || puzleInRange != null))
                     ChangeState(PlayerState.INTERACT);
-                if (interactAction.triggered && armaEnMano != null)
+                if (interactAction.triggered && armaEnMano != null && !armaEquipada)
                     ChangeState(PlayerState.INTERACT);
                 if (interactAction.triggered && canInteract && objectInRange == null)
                     ChangeState(PlayerState.DIALOGUE);
@@ -282,7 +293,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 if (!crouchAction.IsPressed()) ChangeState(PlayerState.IDLE);
                 if (interactAction.triggered && (objectInRange != null || puzleInRange != null) && crouchAction.IsPressed())
                     ChangeState(PlayerState.INTERACT);
-                if (interactAction.triggered && armaEnMano != null && crouchAction.IsPressed())
+                if (interactAction.triggered && armaEnMano != null && crouchAction.IsPressed() && !armaEquipada)
                     ChangeState(PlayerState.INTERACT);
                 if (interactAction.triggered && canInteract && objectInRange == null)
                     ChangeState(PlayerState.DIALOGUE);
@@ -353,6 +364,24 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
     #endregion
 
+    private void ActivateRagdoll()
+    {
+        characterController.enabled = false;
+        if (animator != null) animator.enabled = false;
+        foreach (var rb in ragdollRigidbodies)
+        {
+            rb.isKinematic = false;
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+    }
+
+    private void InitRagdoll()
+    {
+        ragdollRigidbodies = ragdollRoot.GetComponentsInChildren<Rigidbody>();
+        foreach (var rb in ragdollRigidbodies)
+            rb.isKinematic = true;
+    }
     private void ThrowObject()
     {
         if (objetoLanzableEnMano == null)
@@ -400,6 +429,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void ApplyGravity()
     {
+        if (isDying) return;
         if (escaleraInRange)
         {
             verticalVelocity.y = 0;
@@ -605,11 +635,17 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         if (isDying) return;
         isDying = true;
-        print("player muerto");
+        ActivateRagdoll();
         GameManager.Instance.datos.PlayerHealth = GameManager.Instance.GetHealthAlEntrarEscena();
         GameManager.Instance.LimpiarSOEscenas();
+        StartCoroutine(RespawnDelay());
+    }
+
+    private IEnumerator RespawnDelay()
+    {
+        yield return new WaitForSeconds(2f); // ajusta el tiempo a tu gusto
+        DamageVignette.Instance?.SetVignetteActive(false);
         GameManager.Instance.IrAScene(SceneManager.GetActiveScene().name);
-        DamageVignette.Instance.SetVignetteActive(false);
     }
 
     private void SetColliderNormal()
