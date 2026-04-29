@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
@@ -16,6 +17,13 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
     [SerializeField] private float duracion = 3f;
     [SerializeField] private float fuerza = 0.5f;
 
+    private SoundEmitter emitter;
+
+    private void Awake()
+    {
+        emitter = GetComponent<SoundEmitter>();
+    }
+
     public void Interact(ObjetoAgarrado objetoMano)
     {
         if (string.IsNullOrEmpty(objetoMano.nombreObjeto))
@@ -30,14 +38,18 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
             meshGalon.SetActive(true);
             objetoMano.UsarObjeto();
             GameManager.Instance.ResolverPuzzle("GalonUsado");
+            emitter.EmitSound(ESound.GASOLINA);
 
         }
         else if (objeto == "Cerillas")
         {
             meshCerilla.SetActive(true);
             objetoMano.UsarObjeto();
+            emitter.EmitSound(ESound.CERILLAS);
+            StartCoroutine(SonarDespuesDeCerillas());
             cameraShake.ShakeContinuo(duracion, fuerza);
-            // GameManager.Instance.ResolverPuzzle("CerillasTiradas");
+            this.gameObject.SetActive(false);
+
         }
     }
 
@@ -48,5 +60,15 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
             infoMostrada = true;
             DialogueManager.Instance.StartInfo(graphInfo);
         }
+    }
+
+    private IEnumerator SonarDespuesDeCerillas()
+    {
+        var soundData = SoundManager.Instance.soundRegistry.GetSound(ESound.CERILLAS);
+        float duracionClip = soundData.clip != null ? soundData.clip.length : 1f;
+
+        yield return new WaitForSeconds(duracionClip);
+
+        emitter.EmitSound(ESound.FUEGO);
     }
 }
