@@ -114,7 +114,7 @@ public class ObjetoLanzable : MonoBehaviour
             {
                 if (!yaLanzado) return;
                 if ((capasColision.value & (1 << collision.gameObject.layer)) == 0) return;
-
+                emitter.EmitSound(ESound.BOTTLE);
                 if (particulas != null)
                 {
                     //las particulas son un hijo de la botella
@@ -126,14 +126,13 @@ public class ObjetoLanzable : MonoBehaviour
                     //y las destruye 2 segundos despues
                     Destroy(particulas.gameObject, 2f);
                 }
-                // emitter.EmitSound(ESound.BOTTLE);
                 Destroy(gameObject);
             }
             if (this.gameObject.tag == "Roca")
             {
                 if (!yaLanzado) return;
                 if ((capasColision.value & (1 << collision.gameObject.layer)) == 0) return;
-                // emitter.EmitSound(ESound.ROCK);
+                 emitter.EmitSound(ESound.ROCK);
             }
         }
     }
