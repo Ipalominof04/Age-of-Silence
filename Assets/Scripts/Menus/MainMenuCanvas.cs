@@ -14,7 +14,7 @@ public class MainMenuCanvas : MonoBehaviour
     }
     public void Play()
     {
-        GameManager.Instance.datos.NameScene = "Muro";
+        GameManager.Instance.datos.NameScene = "Disparo";
         GameManager.Instance.IrAScene("LoadManagers");
     }
 
