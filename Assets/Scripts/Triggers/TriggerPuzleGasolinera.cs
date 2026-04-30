@@ -18,6 +18,7 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
     [SerializeField] private float fuerza = 0.5f;
 
     private SoundEmitter emitter;
+    [SerializeField] private CinematicaGasolinera cinematicaMovimiento;
 
     private void Awake()
     {
@@ -48,6 +49,7 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
             emitter.EmitSound(ESound.CERILLAS);
             StartCoroutine(SonarDespuesDeCerillas());
             cameraShake.ShakeContinuo(duracion, fuerza);
+           // cinematicaMovimiento.Iniciar();
             this.gameObject.SetActive(false);
 
         }
