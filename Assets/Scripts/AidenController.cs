@@ -301,14 +301,14 @@ public class AidenController : MonoBehaviour
         if (scaredNum == 0)
         {
             animator.SetTrigger("scaredScream");
-            //  emitter.EmitSound(ESound.A_SCARE);
+            emitter.EmitSound(ESound.A_SCARE);
             SetUI(true);
             StartCoroutine(ScreamRoutine());
         }
         else if (scaredNum == 1)
         {
             animator.SetTrigger("scaredRunning");
-            //  emitter.EmitSound(ESound.A_RUN);
+            emitter.EmitSound(ESound.A_RUN);
             SetUI(true);
             Vector3 randomDirection = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)).normalized;
             Vector3 targetPos = transform.position + randomDirection * 7;
@@ -335,6 +335,7 @@ public class AidenController : MonoBehaviour
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
             animator.SetFloat("Speed", 0.75f);
+            emitter.StopSound();
         }
 
         //uso el getkeydown para poder leer el input de forma facil, tambien puede hacerse por evento (por si queremos cambiarlo)
