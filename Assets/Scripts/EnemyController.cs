@@ -69,6 +69,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     private Coroutine searchCoroutine;
 
     private Animator animator;
+    private SoundEmitter soundEmitter;
 
     private void OnEnable()
     {
@@ -84,6 +85,9 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     {
         if (volume < minDetectionLevel) return;
         if (currentState == EnemyState.CHASE || currentState == EnemyState.ATTACK) return;
+
+        Collider[] enemiesNearSound = Physics.OverlapSphere(soundPosition, 1f, LayerMask.GetMask("Enemies"));
+        if (enemiesNearSound.Length > 0) return;
 
         agent.SetDestination(soundPosition);
         ChangeState(EnemyState.SEARCHING);
@@ -119,6 +123,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>(); 
         rigidbodies = GetComponentsInChildren<Rigidbody>();
+        soundEmitter = GetComponent<SoundEmitter>();
     }
 
     void Start()
@@ -300,12 +305,15 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         {
             case EnemyState.PATROL:
                 animator.SetBool("onPatrol", false);
+                soundEmitter.StopSound();
                 break;
             case EnemyState.CHASE:
                 animator.SetBool("onChase", false);
+                soundEmitter.StopSound();
                 break;
             case EnemyState.ATTACK:
                 animator.SetBool("onShoot", false);
+                soundEmitter.StopSound();
                 break;
             case EnemyState.SEARCHING:
                 animator.SetBool("onSearching", false);
@@ -375,6 +383,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
         currentIndex = (currentIndex + 1) % destination.Length;
         agent.SetDestination(destination[currentIndex].position);
+        soundEmitter.EmitSound(ESound.ENEMY_PATROL);
     }
 
     private bool PlayerInArea(float radius)
@@ -449,6 +458,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         if (playerTransform == null) return;
        // agent.stoppingDistance = radiusAttack;
         agent.SetDestination(playerTransform.position);
+        soundEmitter.EmitSound(ESound.ENEMY_CHASE);
     }
 
     private void Shoot()
@@ -483,6 +493,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                         Rigidbody rb = go.GetComponent<Rigidbody>();
                         if (rb != null) rb.linearVelocity = direction * bulleSpeed;
                     }
+                    soundEmitter.EmitSound(ESound.ENEMY_SHOOT);
                     break;
 
                 default:
@@ -491,6 +502,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                     if (balaDefault != null) balaDefault.SetDamage(damageAmount);
                     Rigidbody rbDefault = goDefault.GetComponent<Rigidbody>();
                     if (rbDefault != null) rbDefault.linearVelocity = shootDirection * bulleSpeed; //usar shootDirection
+                    soundEmitter.EmitSound(ESound.ENEMY_SHOOT);
                     break;
             }
         }
