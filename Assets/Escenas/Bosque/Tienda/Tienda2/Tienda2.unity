@@ -807,6 +807,52 @@ MonoBehaviour:
   onShoot: {fileID: 11400000, guid: 07e473aafd09beb40b0b1c09f73e8e65, type: 2}
   onArmaSobrecalentada: {fileID: 11400000, guid: 610d165f1559f4f438c0223d6fa89cd3, type: 2}
   onArmaEnfriada: {fileID: 11400000, guid: 741bb83822b2d004db97056d4089e9af, type: 2}
+--- !u!1 &261361987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 261361989}
+  - component: {fileID: 261361988}
+  m_Layer: 9
+  m_Name: SpawnInterior
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!114 &261361988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261361987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  doorID: spawninteriortienda_tienda2
+  aidenOffset: 1
+--- !u!4 &261361989
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261361987}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -1.2662792, y: 0.13400006, z: 1.5192301}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2078138041}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1001 &268815595
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2185,8 +2231,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: InteriorTienda
-  miDoorID: 
-  targetDoorID: 
+  miDoorID: tienda2_interiortienda
+  targetDoorID: spawntienda2_interiortienda
   puzzleRequeridoID: 
 --- !u!65 &1165062566
 BoxCollider:
@@ -4581,6 +4627,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1165062564}
+  - {fileID: 261361989}
   m_Father: {fileID: 503947780}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2124447552
