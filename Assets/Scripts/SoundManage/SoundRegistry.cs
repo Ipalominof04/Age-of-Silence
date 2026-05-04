@@ -5,7 +5,7 @@ using UnityEngine;
 public enum ESound
 {
     // SONIDOS PLAYER
-    NONE, WALK, RUN, CROUCH, SHOOT, BOTTLE, ROCK,
+    NONE, WALK, RUN, SHOOT, BOTTLE, ROCK,PICKUP,
     // SONIDOS AIDEN
     A_SCARE, A_RUN,
     // SONIDOS ENEMY
