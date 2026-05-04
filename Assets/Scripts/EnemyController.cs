@@ -493,7 +493,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                         Rigidbody rb = go.GetComponent<Rigidbody>();
                         if (rb != null) rb.linearVelocity = direction * bulleSpeed;
                     }
-                    soundEmitter.EmitSound(ESound.ENEMY_SHOOT);
+                    soundEmitter.EmitSound(ESound.ENEMY_SHOOT2);
                     break;
 
                 default:
