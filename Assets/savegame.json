@@ -1,8 +1,8 @@
 {
-    "confianza": -10.0,
+    "confianza": -5.0,
     "playerHealth": 0.0,
     "objetoMano": "",
-    "nameScene": "PuenteBosque",
+    "nameScene": "CabañaNPC",
     "puzlesCompletados": [
         "FusibleVerde",
         "FusibleAzul",
@@ -84,6 +84,21 @@
             "sceneName": "Interior Cabaña",
             "objetos": [
                 {
+                    "id": "NPC",
+                    "active": true,
+                    "pos": {
+                        "x": 19.972000122070314,
+                        "y": 0.09999978542327881,
+                        "z": -1.5399999618530274
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": -0.9494615793228149,
+                        "z": 0.0,
+                        "w": 0.3138832747936249
+                    }
+                },
+                {
                     "id": "TriggerDialoguePuerta",
                     "active": false,
                     "pos": {
@@ -111,21 +126,6 @@
                         "y": 0.0,
                         "z": 0.0,
                         "w": 1.0
-                    }
-                },
-                {
-                    "id": "NPC",
-                    "active": true,
-                    "pos": {
-                        "x": 19.972000122070314,
-                        "y": 0.09999978542327881,
-                        "z": -1.5399999618530274
-                    },
-                    "rot": {
-                        "x": 0.0,
-                        "y": -0.9494615793228149,
-                        "z": 0.0,
-                        "w": 0.3138832747936249
                     }
                 }
             ]
