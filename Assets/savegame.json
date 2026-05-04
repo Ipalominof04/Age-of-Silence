@@ -1,14 +1,15 @@
 {
-    "confianza": 10.0,
-    "playerHealth": 1.0,
+    "confianza": -10.0,
+    "playerHealth": 0.0,
     "objetoMano": "",
-    "nameScene": "MainMenu",
+    "nameScene": "PuenteBosque",
     "puzlesCompletados": [
         "FusibleVerde",
         "FusibleAzul",
         "AidenNiega",
         "FusibleAmarillo",
-        "GalonUsado"
+        "GalonUsado",
+        "MisionComidaNPC"
     ],
     "escenas": [
         {
@@ -81,7 +82,53 @@
         },
         {
             "sceneName": "Interior Cabaña",
-            "objetos": []
+            "objetos": [
+                {
+                    "id": "TriggerDialoguePuerta",
+                    "active": false,
+                    "pos": {
+                        "x": 19.669458389282228,
+                        "y": 0.28200000524520876,
+                        "z": -1.5043096542358399
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 1.0
+                    }
+                },
+                {
+                    "id": "TriggerDialogueInicial",
+                    "active": false,
+                    "pos": {
+                        "x": 16.212459564208986,
+                        "y": 0.28200000524520876,
+                        "z": -0.5853099822998047
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 1.0
+                    }
+                },
+                {
+                    "id": "NPC",
+                    "active": true,
+                    "pos": {
+                        "x": 19.972000122070314,
+                        "y": 0.09999978542327881,
+                        "z": -1.5399999618530274
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": -0.9494615793228149,
+                        "z": 0.0,
+                        "w": 0.3138832747936249
+                    }
+                }
+            ]
         },
         {
             "sceneName": "Madera Bosque",

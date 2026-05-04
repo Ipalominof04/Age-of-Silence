@@ -3897,7 +3897,7 @@ Transform:
   m_GameObject: {fileID: 249391546}
   serializedVersion: 2
   m_LocalRotation: {x: 0.114070274, y: 0, z: 0, w: 0.9934727}
-  m_LocalPosition: {x: -0.79190564, y: 0.21175957, z: 7.1577125}
+  m_LocalPosition: {x: 23.962358, y: 0.21175957, z: 7.1577125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4886,6 +4886,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4372973593729692, guid: 491dc122236ad9749a046177ea69736d, type: 3}
   m_PrefabInstance: {fileID: 344652107}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &347162763
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 347162765}
+  - component: {fileID: 347162764}
+  m_Layer: 9
+  m_Name: "SpawnCaba\xF1a"
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!114 &347162764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347162763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  doorID: spawncabananpc_exteriortienda
+  aidenOffset: 1
+--- !u!4 &347162765
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347162763}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 31.640003, y: 0.054599673, z: -5.773992}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 902810844}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1001 &347485829
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4989,7 +5035,7 @@ Transform:
   m_GameObject: {fileID: 354601987}
   serializedVersion: 2
   m_LocalRotation: {x: 0.114070274, y: -0, z: -0, w: 0.9934727}
-  m_LocalPosition: {x: -1.39, y: 0.55034304, z: 5.1512766}
+  m_LocalPosition: {x: 24.66, y: 0.55034304, z: 5.1512766}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6526,8 +6572,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.84987, y: 0.55080587, z: 0.9117802}
-  m_Center: {x: 6.8785496, y: 1.4811164, z: -0.908866}
+  m_Size: {x: 6.1399183, y: 0.55080587, z: 0.9117802}
+  m_Center: {x: 6.0235643, y: 1.4811164, z: -0.908866}
 --- !u!4 &531003921 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4708455475324100604, guid: fbcbd790c07f7c4439bcc8a7e6c71f60, type: 3}
@@ -9355,6 +9401,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 770601390196403168, guid: e2896a4832c1fe84f82ec5e46d3dd9ac, type: 3}
   m_PrefabInstance: {fileID: 1743865586}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &888780376
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 888780378}
+  - component: {fileID: 888780377}
+  m_Layer: 9
+  m_Name: SpawnSalidaMuro
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!114 &888780377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888780376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  doorID: spawnsalidamuro_exteriortienda
+  aidenOffset: 1
+--- !u!4 &888780378
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888780376}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 4.170001, y: 0.054599673, z: -5.703992}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 902810844}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &890227852
 GameObject:
   m_ObjectHideFlags: 0
@@ -9657,6 +9749,9 @@ Transform:
   m_Children:
   - {fileID: 915299635}
   - {fileID: 952921704}
+  - {fileID: 888780378}
+  - {fileID: 1902915822}
+  - {fileID: 347162765}
   m_Father: {fileID: 1906699629}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &909184683 stripped
@@ -9772,8 +9867,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: InteriorTienda
-  miDoorID: 
-  targetDoorID: 
+  miDoorID: exteriortienda_interiortienda
+  targetDoorID: spawnexteriortienda_interiortienda
   puzzleRequeridoID: 
 --- !u!65 &915299637
 BoxCollider:
@@ -10085,7 +10180,7 @@ Transform:
   m_GameObject: {fileID: 952921702}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 35.77, y: 0.37059966, z: -3.9339924}
+  m_LocalPosition: {x: 34.26, y: 0.37059966, z: -3.9339924}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10104,8 +10199,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: "Caba\xF1aNPC"
-  miDoorID: 
-  targetDoorID: 
+  miDoorID: exteriortienda_cabananpc
+  targetDoorID: spawnexteriortienda_cabananpc
   puzzleRequeridoID: 
 --- !u!1001 &961539245
 PrefabInstance:
@@ -10518,7 +10613,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1075083039853645334, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.11
+      value: 25.94
       objectReference: {fileID: 0}
     - target: {fileID: 1075083039853645334, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_LocalPosition.y
@@ -19532,6 +19627,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5090800308018870982, guid: 94b8c6e641b0c1747b9970b67a7eefc2, type: 3}
   m_PrefabInstance: {fileID: 1215706257}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1902915820
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1902915822}
+  - component: {fileID: 1902915821}
+  m_Layer: 9
+  m_Name: SpawnTienda
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!114 &1902915821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902915820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  doorID: spawninteriortienda_exteriortienda
+  aidenOffset: 1
+--- !u!4 &1902915822
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902915820}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 21.61, y: 0.054599673, z: -4.543992}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 902810844}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1906699628
 GameObject:
   m_ObjectHideFlags: 0
