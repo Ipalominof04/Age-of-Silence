@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
+    public static PlayerController Instance;
     private CharacterController characterController;
     private SoundEmitter soundEmitter;
 
@@ -93,9 +94,11 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private float crouchStepRate = 0.65f;
 
     public Transform GetEyePoint() => eyePoint;
+    public InputActionAsset GetInputInstance() => inputInstance;
 
     private void Awake()
     {
+        Instance = this;
         characterController = GetComponent<CharacterController>();
         soundEmitter = GetComponent<SoundEmitter>();
         animator = GetComponent<Animator>();

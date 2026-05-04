@@ -90,7 +90,20 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         if (enemiesNearSound.Length > 0) return;
 
         agent.SetDestination(soundPosition);
-        ChangeState(EnemyState.SEARCHING);
+
+        if (currentState == EnemyState.SEARCHING)
+        {
+            // Al escuchar un sonido mientras esta en search 
+            if (searchCoroutine != null) StopCoroutine(searchCoroutine);
+            agent.isStopped = false;
+            animator.SetBool("onPatrol", true);
+            animator.SetBool("onSearching", false);
+            searchCoroutine = StartCoroutine(SearchRoutine());
+        }
+        else
+        {
+            ChangeState(EnemyState.SEARCHING);
+        }
     }
 
     public Vector3 GetPosition()
