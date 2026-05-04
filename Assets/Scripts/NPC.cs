@@ -38,12 +38,12 @@ public class NPC : MonoBehaviour, IPuzle
 
     private void AnadirPuzleComida()
     {
-        GameManager.Instance.datos.puzzlesResueltos.Add("MisionComidaNPC");
+        GameManager.Instance.ResolverPuzzle("MisionComidaNPC");
     }
 
     private void AnadirPuzleAmenaza()
     {
-        GameManager.Instance.datos.puzzlesResueltos.Add("AmenazadoNPC");
+        GameManager.Instance.ResolverPuzzle("AmenazadoNPC");
     }
 
     public void OnEnterRange()
