@@ -50,7 +50,6 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
             StartCoroutine(SonarDespuesDeCerillas());
             cameraShake.ShakeContinuo(duracion, fuerza);
            // cinematicaMovimiento.Iniciar();
-            this.gameObject.SetActive(false);
 
         }
     }
@@ -72,5 +71,11 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
         yield return new WaitForSeconds(duracionClip);
 
         emitter.EmitSound(ESound.FUEGO);
+
+        var fuegoData = SoundManager.Instance.soundRegistry.GetSound(ESound.FUEGO);
+        float duracionFuego = fuegoData.clip != null ? fuegoData.clip.length : 1f;
+        yield return new WaitForSeconds(duracionFuego);
+
+        this.gameObject.SetActive(false);
     }
 }

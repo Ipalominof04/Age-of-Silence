@@ -477,12 +477,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         Move(1.5f);
         
-        if (inputMoviment.magnitude > 0.01f && Time.time >= nextStepTime)
-        {
-            soundEmitter.EmitSound(ESound.CROUCH);
-            nextStepTime = Time.time + crouchStepRate;
-        }
-        
     }
     private void ClimbLadder()
     {
@@ -503,6 +497,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                     GameManager.Instance.SumValor(3);
                     objectInRange.SetActive(false);
                     objectInRange = null;
+                    soundEmitter.EmitSound(ESound.PICKUP);
                     return;
                 }
                 else if (objectInRange.CompareTag("Pieza"))
@@ -523,6 +518,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
                         objectInRange.SetActive(false);
                         objectInRange = null;
+                        soundEmitter.EmitSound(ESound.PICKUP);
                         return;
                     }
                 }
@@ -533,6 +529,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                     objectInRange.SetActive(false);
                     objectInRange = null;
                     Debug.Log("Objeto recogido: " + objetoMano.nombreObjeto);
+                    soundEmitter.EmitSound(ESound.PICKUP);
                 }
             }
             else
@@ -564,6 +561,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             meshArma.materials = newMaterials;
             armaEquipada = true;
             arma_ctrl?.Equipar();
+            soundEmitter.EmitSound(ESound.PICKUP);
         }
     }
 
