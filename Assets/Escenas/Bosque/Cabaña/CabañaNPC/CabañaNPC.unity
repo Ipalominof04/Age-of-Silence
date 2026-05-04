@@ -1136,6 +1136,59 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4931211907768612, guid: e88b7bb02ae149940a5a0cddf34fe370, type: 3}
   m_PrefabInstance: {fileID: 91430059}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &100120747
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 100120748}
+  - component: {fileID: 100120749}
+  m_Layer: 3
+  m_Name: PlayerLimit2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &100120748
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100120747}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 35.76, y: -2.06746, z: -18}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 398743932}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &100120749
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100120747}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.7290294, z: 5.1302648}
+  m_Center: {x: -2.9538004e-15, y: 0.3645147, z: 31.792137}
 --- !u!4 &104290229 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4383882971595202, guid: e1154cf6ac27b2f45b4ae35582e7e363, type: 3}
@@ -2501,6 +2554,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4383882971595202, guid: e1154cf6ac27b2f45b4ae35582e7e363, type: 3}
   m_PrefabInstance: {fileID: 2052248870}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &260386223
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 260386225}
+  - component: {fileID: 260386224}
+  m_Layer: 9
+  m_Name: SpawnInterior
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!114 &260386224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260386223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  doorID: spawninteriorcabana_cabananpc
+  aidenOffset: 1
+--- !u!4 &260386225
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260386223}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -1.0100784, y: 0.03400003, z: -0.83086014}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 669244263}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1001 &276313187
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3026,7 +3125,7 @@ GameObject:
   - component: {fileID: 331886174}
   - component: {fileID: 331886173}
   m_Layer: 9
-  m_Name: TriggerCambioEscena
+  m_Name: TriggerInterior
   m_TagString: TriggerCambioEscena
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3060,9 +3159,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: "InteriorCaba\xF1a"
-  miDoorID: 
-  targetDoorID: 
-  puzzleRequeridoID: 
+  miDoorID: "caba\xF1anpc_interiorcabana"
+  targetDoorID: "spawncaba\xF1anpc_interiorcabana"
+  puzzleRequeridoID: []
+  requiereTodos: 0
 --- !u!65 &331886174
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3498,6 +3598,7 @@ Transform:
   - {fileID: 1002922677}
   - {fileID: 181240905}
   - {fileID: 149820914}
+  - {fileID: 100120748}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &400813950 stripped
@@ -4765,6 +4866,7 @@ GameObject:
   - component: {fileID: 539251113}
   - component: {fileID: 539251112}
   - component: {fileID: 539251111}
+  - component: {fileID: 539251114}
   m_Layer: 9
   m_Name: TriggerDialogo
   m_TagString: TriggerDialogue
@@ -4822,6 +4924,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 669244263}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &539251114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539251110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: cee8496fe43e5d94a85532876a99f435, type: 2}
+  id: TriggerDialogo
 --- !u!1001 &543601180
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5821,6 +5937,8 @@ Transform:
   - {fileID: 1600553194}
   - {fileID: 539251113}
   - {fileID: 2051361861}
+  - {fileID: 1105842185}
+  - {fileID: 260386225}
   m_Father: {fileID: 1254842504}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &677634139
@@ -10134,6 +10252,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4931211907768612, guid: e88b7bb02ae149940a5a0cddf34fe370, type: 3}
   m_PrefabInstance: {fileID: 1088995225}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1105842183
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1105842185}
+  - component: {fileID: 1105842184}
+  m_Layer: 9
+  m_Name: SpawnTienda
+  m_TagString: TriggerCambioEscena
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!114 &1105842184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105842183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  doorID: spawnexteriortienda_cabananpc
+  aidenOffset: 1
+--- !u!4 &1105842185
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105842183}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -17.85408, y: 0.03400003, z: -1.7448602}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 669244263}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1001 &1111083515
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13046,7 +13210,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: d34e8533c8de8ec45869f9144584d929, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d34e8533c8de8ec45869f9144584d929, type: 3}
       propertyPath: m_LocalScale.x
@@ -15847,7 +16011,7 @@ GameObject:
   - component: {fileID: 1600553196}
   - component: {fileID: 1600553195}
   m_Layer: 9
-  m_Name: TriggerCambioEscena3
+  m_Name: TriggerTienda
   m_TagString: TriggerCambioEscena
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15881,9 +16045,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: ExteriorTienda
-  miDoorID: 
-  targetDoorID: 
-  puzzleRequeridoID: MisionComidaNPC
+  miDoorID: cabananpc_exteriortienda
+  targetDoorID: spawncabananpc_exteriortienda
+  puzzleRequeridoID:
+  - MisionComidaNPC
+  requiereTodos: 0
 --- !u!65 &1600553196
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16396,7 +16562,7 @@ GameObject:
   - component: {fileID: 1645687200}
   - component: {fileID: 1645687199}
   m_Layer: 9
-  m_Name: TriggerCambioEscena2
+  m_Name: TriggerPuente
   m_TagString: TriggerCambioEscena
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16429,10 +16595,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d732863fd212e48a7d7f450ce4ffed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
-  nombreEscena: MaderaBosque
-  miDoorID: 
-  targetDoorID: 
-  puzzleRequeridoID: AmenazadoNPC
+  nombreEscena: PuenteBosque
+  miDoorID: cabananpc_puentebosque
+  targetDoorID: spawncabana_bosque
+  puzzleRequeridoID:
+  - MisionComidaNPC
+  - AmenazadoNPC
+  requiereTodos: 1
 --- !u!65 &1645687200
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19880,6 +20049,7 @@ GameObject:
   - component: {fileID: 2051361861}
   - component: {fileID: 2051361860}
   - component: {fileID: 2051361859}
+  - component: {fileID: 2051361862}
   m_Layer: 9
   m_Name: TriggerInfo
   m_TagString: TriggerInfo
@@ -19936,6 +20106,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 669244263}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2051361862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051361858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: cee8496fe43e5d94a85532876a99f435, type: 2}
+  id: TriggerInfo
 --- !u!1001 &2052248870
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -25,13 +25,12 @@ public class NPC : MonoBehaviour, IPuzle
     public void Interact(ObjetoAgarrado objetoMano)
     {
         if (string.IsNullOrEmpty(objetoMano.nombreObjeto)) return;
-
         string objeto = objetoMano.nombreObjeto;
 
         if (objeto == "ComidaNPC" && GameManager.Instance.PuzzleResuelto("MisionComidaNPC"))
         {
-                    objetoMano.UsarObjeto();
-                    this.gameObject.SetActive(false);
+            objetoMano.UsarObjeto();
+            this.gameObject.SetActive(false);
             if (graphComida != null)
                 DialogueManager.Instance.StartInfo(graphComida);
         }
