@@ -615,6 +615,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
     public void TakeDamage(float damage)
     {
+        if (isDying) return;
         vidaActual -= damage;
         vidaActual = Mathf.Clamp(vidaActual, 0f, vidaMaxima);
         GameManager.Instance.datos.PlayerHealth = vidaActual;

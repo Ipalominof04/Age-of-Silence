@@ -51,9 +51,12 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log($"[OnSceneLoaded] ANTES RestaurarEscena — datos.PlayerHealth: {datos.PlayerHealth}");
         RestaurarEscena();
+        Debug.Log($"[OnSceneLoaded] DESPUÉS RestaurarEscena — datos.PlayerHealth: {datos.PlayerHealth}");
         MoverPlayerSpawn();
         healthAlEntrarEscena = datos.PlayerHealth;
+        datos.PlayerHealth = healthAlEntrarEscena;
 
         DamageVignette.Instance?.SetVignetteActive(true);
 
