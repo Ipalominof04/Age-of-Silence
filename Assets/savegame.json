@@ -1,83 +1,22 @@
 {
-    "confianza": -5.0,
-    "playerHealth": 0.0,
-    "objetoMano": "ComidaNPC",
-    "nameScene": "InteriorCabaña",
+    "confianza": 3.0,
+    "playerHealth": 3.0,
+    "objetoMano": "Cerillas",
+    "nameScene": "ExteriorGasolinera",
     "puzlesCompletados": [
         "FusibleVerde",
         "FusibleAzul",
         "AidenNiega",
         "FusibleAmarillo",
-        "GalonUsado",
         "MisionComidaNPC",
         "ComidaNPC",
-        "PuzleNPC"
+        "PuzleNPC",
+        "GalonUsado"
     ],
     "escenas": [
         {
             "sceneName": "Interior Tienda",
-            "objetos": [
-                {
-                    "id": "TriggerMalEstado (1)",
-                    "active": true,
-                    "pos": {
-                        "x": 22.39299964904785,
-                        "y": 0.6276599764823914,
-                        "z": -1.6770000457763672
-                    },
-                    "rot": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    }
-                },
-                {
-                    "id": "TriggerMalEstado",
-                    "active": true,
-                    "pos": {
-                        "x": 22.750999450683595,
-                        "y": 0.6276599764823914,
-                        "z": -2.9679999351501467
-                    },
-                    "rot": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    }
-                },
-                {
-                    "id": "TriggerInfoComida",
-                    "active": true,
-                    "pos": {
-                        "x": 19.272838592529298,
-                        "y": 0.6276599764823914,
-                        "z": -1.629000186920166
-                    },
-                    "rot": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    }
-                },
-                {
-                    "id": "ComidaNPC",
-                    "active": false,
-                    "pos": {
-                        "x": 21.039810180664064,
-                        "y": 0.1738000065088272,
-                        "z": -2.350851535797119
-                    },
-                    "rot": {
-                        "x": 0.6883655190467835,
-                        "y": 0.6883653998374939,
-                        "z": 0.16171900928020478,
-                        "w": -0.16171899437904359
-                    }
-                }
-            ]
+            "objetos": []
         },
         {
             "sceneName": "Almacen Fabrica",
@@ -105,7 +44,68 @@
         },
         {
             "sceneName": "ExteriorGasolinera",
-            "objetos": []
+            "objetos": [
+                {
+                    "id": "Cerillas",
+                    "active": false,
+                    "pos": {
+                        "x": 45.68299865722656,
+                        "y": 0.1679999977350235,
+                        "z": 1.8049999475479127
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.9507696032524109,
+                        "z": 0.0,
+                        "w": 0.3098987340927124
+                    }
+                },
+                {
+                    "id": "Galon",
+                    "active": true,
+                    "pos": {
+                        "x": 45.61600112915039,
+                        "y": 0.04399999976158142,
+                        "z": 2.4040000438690187
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.8986632823944092,
+                        "z": 0.0,
+                        "w": 0.43863919377326968
+                    }
+                },
+                {
+                    "id": "TriggerPuzleGasolina",
+                    "active": true,
+                    "pos": {
+                        "x": 46.46992874145508,
+                        "y": 0.3009899854660034,
+                        "z": 2.884199857711792
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 1.0
+                    }
+                },
+                {
+                    "id": "TriggerInfo",
+                    "active": true,
+                    "pos": {
+                        "x": 1.3189277648925782,
+                        "y": 0.4390000104904175,
+                        "z": -6.059999942779541
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 1.0
+                    }
+                }
+            ]
         },
         {
             "sceneName": "Habitacion_casa_1",
@@ -117,7 +117,53 @@
         },
         {
             "sceneName": "InteriorGasolinera",
-            "objetos": []
+            "objetos": [
+                {
+                    "id": "Cerillas",
+                    "active": false,
+                    "pos": {
+                        "x": 2.5420000553131105,
+                        "y": 0.9667999744415283,
+                        "z": 0.44699999690055849
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": -0.977668285369873,
+                        "z": 0.0,
+                        "w": 0.21015416085720063
+                    }
+                },
+                {
+                    "id": "Galon",
+                    "active": false,
+                    "pos": {
+                        "x": 8.71500015258789,
+                        "y": -0.14000016450881959,
+                        "z": -0.1340000033378601
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.7132167220115662,
+                        "z": 0.0,
+                        "w": 0.700943648815155
+                    }
+                },
+                {
+                    "id": "TriggerInfo",
+                    "active": false,
+                    "pos": {
+                        "x": 9.072999954223633,
+                        "y": 0.6539934873580933,
+                        "z": 0.6329993605613709
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.7071068286895752,
+                        "z": 0.0,
+                        "w": 0.7071068286895752
+                    }
+                }
+            ]
         },
         {
             "sceneName": "Oficina 1",
@@ -145,53 +191,7 @@
         },
         {
             "sceneName": "Interior Cabaña",
-            "objetos": [
-                {
-                    "id": "NPC",
-                    "active": true,
-                    "pos": {
-                        "x": 19.972000122070314,
-                        "y": 0.09999978542327881,
-                        "z": -1.5399999618530274
-                    },
-                    "rot": {
-                        "x": 0.0,
-                        "y": -0.9494615793228149,
-                        "z": 0.0,
-                        "w": 0.3138832747936249
-                    }
-                },
-                {
-                    "id": "TriggerDialogueInicial",
-                    "active": false,
-                    "pos": {
-                        "x": 16.212459564208986,
-                        "y": 0.28200000524520876,
-                        "z": -0.5853099822998047
-                    },
-                    "rot": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    }
-                },
-                {
-                    "id": "TriggerDialoguePuerta",
-                    "active": false,
-                    "pos": {
-                        "x": 19.669458389282228,
-                        "y": 0.28200000524520876,
-                        "z": -1.5043096542358399
-                    },
-                    "rot": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    }
-                }
-            ]
+            "objetos": []
         },
         {
             "sceneName": "Madera Bosque",
