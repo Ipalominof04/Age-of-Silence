@@ -2,19 +2,81 @@
     "confianza": -5.0,
     "playerHealth": 0.0,
     "objetoMano": "",
-    "nameScene": "CabañaNPC",
+    "nameScene": "PuenteBosque",
     "puzlesCompletados": [
         "FusibleVerde",
         "FusibleAzul",
         "AidenNiega",
         "FusibleAmarillo",
         "GalonUsado",
-        "MisionComidaNPC"
+        "MisionComidaNPC",
+        "PuzleNPC"
     ],
     "escenas": [
         {
             "sceneName": "Interior Tienda",
-            "objetos": []
+            "objetos": [
+                {
+                    "id": "TriggerMalEstado",
+                    "active": true,
+                    "pos": {
+                        "x": 22.750999450683595,
+                        "y": 0.6276599764823914,
+                        "z": -2.9679999351501467
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 1.0
+                    }
+                },
+                {
+                    "id": "ComidaNPC",
+                    "active": false,
+                    "pos": {
+                        "x": 21.039810180664064,
+                        "y": 0.1738000065088272,
+                        "z": -2.350851535797119
+                    },
+                    "rot": {
+                        "x": 0.6883655190467835,
+                        "y": 0.6883653998374939,
+                        "z": 0.16171900928020478,
+                        "w": -0.16171899437904359
+                    }
+                },
+                {
+                    "id": "TriggerMalEstado (1)",
+                    "active": true,
+                    "pos": {
+                        "x": 22.39299964904785,
+                        "y": 0.6276599764823914,
+                        "z": -1.6770000457763672
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 1.0
+                    }
+                },
+                {
+                    "id": "TriggerInfoComida",
+                    "active": false,
+                    "pos": {
+                        "x": 19.272838592529298,
+                        "y": 0.6276599764823914,
+                        "z": -1.629000186920166
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 1.0
+                    }
+                }
+            ]
         },
         {
             "sceneName": "Almacen Fabrica",
@@ -84,21 +146,6 @@
             "sceneName": "Interior Cabaña",
             "objetos": [
                 {
-                    "id": "NPC",
-                    "active": true,
-                    "pos": {
-                        "x": 19.972000122070314,
-                        "y": 0.09999978542327881,
-                        "z": -1.5399999618530274
-                    },
-                    "rot": {
-                        "x": 0.0,
-                        "y": -0.9494615793228149,
-                        "z": 0.0,
-                        "w": 0.3138832747936249
-                    }
-                },
-                {
                     "id": "TriggerDialoguePuerta",
                     "active": false,
                     "pos": {
@@ -126,6 +173,21 @@
                         "y": 0.0,
                         "z": 0.0,
                         "w": 1.0
+                    }
+                },
+                {
+                    "id": "NPC",
+                    "active": false,
+                    "pos": {
+                        "x": 19.972000122070314,
+                        "y": 0.09999978542327881,
+                        "z": -1.5399999618530274
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": -0.9494615793228149,
+                        "z": 0.0,
+                        "w": 0.3138832747936249
                     }
                 }
             ]

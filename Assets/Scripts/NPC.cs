@@ -33,6 +33,8 @@ public class NPC : MonoBehaviour, IPuzle
             this.gameObject.SetActive(false);
             if (graphComida != null)
                 DialogueManager.Instance.StartInfo(graphComida);
+
+            GameManager.Instance.ResolverPuzzle("PuzleNPC");
         }
     }
 
@@ -43,7 +45,7 @@ public class NPC : MonoBehaviour, IPuzle
 
     private void AnadirPuzleAmenaza()
     {
-        GameManager.Instance.ResolverPuzzle("AmenazadoNPC");
+        GameManager.Instance.ResolverPuzzle("PuzleNPC");
     }
 
     public void OnEnterRange()
