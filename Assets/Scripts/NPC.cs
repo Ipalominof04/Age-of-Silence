@@ -27,7 +27,7 @@ public class NPC : MonoBehaviour, IPuzle
         if (string.IsNullOrEmpty(objetoMano.nombreObjeto)) return;
         string objeto = objetoMano.nombreObjeto;
 
-        if (objeto == "ComidaNPC" && GameManager.Instance.PuzzleResuelto("MisionComidaNPC"))
+        if (objeto == "ComidaNPC" && GameManager.Instance.PuzzleResuelto("ComidaNPC"))
         {
             objetoMano.UsarObjeto();
             this.gameObject.SetActive(false);
