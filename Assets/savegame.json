@@ -1,8 +1,8 @@
 {
-    "confianza": -5.0,
+    "confianza": 5.0,
     "playerHealth": 0.0,
-    "objetoMano": "",
-    "nameScene": "PuenteBosque",
+    "objetoMano": "ComidaNPC",
+    "nameScene": "InteriorCabaña",
     "puzlesCompletados": [
         "FusibleVerde",
         "FusibleAzul",
@@ -10,27 +10,12 @@
         "FusibleAmarillo",
         "GalonUsado",
         "MisionComidaNPC",
-        "PuzleNPC"
+        "ComidaNPC"
     ],
     "escenas": [
         {
             "sceneName": "Interior Tienda",
             "objetos": [
-                {
-                    "id": "TriggerMalEstado",
-                    "active": true,
-                    "pos": {
-                        "x": 22.750999450683595,
-                        "y": 0.6276599764823914,
-                        "z": -2.9679999351501467
-                    },
-                    "rot": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    }
-                },
                 {
                     "id": "ComidaNPC",
                     "active": false,
@@ -47,12 +32,12 @@
                     }
                 },
                 {
-                    "id": "TriggerMalEstado (1)",
+                    "id": "TriggerInfoComida",
                     "active": true,
                     "pos": {
-                        "x": 22.39299964904785,
+                        "x": 19.272838592529298,
                         "y": 0.6276599764823914,
-                        "z": -1.6770000457763672
+                        "z": -1.629000186920166
                     },
                     "rot": {
                         "x": 0.0,
@@ -62,12 +47,27 @@
                     }
                 },
                 {
-                    "id": "TriggerInfoComida",
-                    "active": false,
+                    "id": "TriggerMalEstado",
+                    "active": true,
                     "pos": {
-                        "x": 19.272838592529298,
+                        "x": 22.750999450683595,
                         "y": 0.6276599764823914,
-                        "z": -1.629000186920166
+                        "z": -2.9679999351501467
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 1.0
+                    }
+                },
+                {
+                    "id": "TriggerMalEstado (1)",
+                    "active": true,
+                    "pos": {
+                        "x": 22.39299964904785,
+                        "y": 0.6276599764823914,
+                        "z": -1.6770000457763672
                     },
                     "rot": {
                         "x": 0.0,
@@ -146,21 +146,6 @@
             "sceneName": "Interior Cabaña",
             "objetos": [
                 {
-                    "id": "TriggerDialoguePuerta",
-                    "active": false,
-                    "pos": {
-                        "x": 19.669458389282228,
-                        "y": 0.28200000524520876,
-                        "z": -1.5043096542358399
-                    },
-                    "rot": {
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0,
-                        "w": 1.0
-                    }
-                },
-                {
                     "id": "TriggerDialogueInicial",
                     "active": false,
                     "pos": {
@@ -176,8 +161,23 @@
                     }
                 },
                 {
-                    "id": "NPC",
+                    "id": "TriggerDialoguePuerta",
                     "active": false,
+                    "pos": {
+                        "x": 19.669458389282228,
+                        "y": 0.28200000524520876,
+                        "z": -1.5043096542358399
+                    },
+                    "rot": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0,
+                        "w": 1.0
+                    }
+                },
+                {
+                    "id": "NPC",
+                    "active": true,
                     "pos": {
                         "x": 19.972000122070314,
                         "y": 0.09999978542327881,
