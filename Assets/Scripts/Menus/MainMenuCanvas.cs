@@ -7,6 +7,8 @@ public class MainMenuCanvas : MonoBehaviour
     [Header("Boton continuar")]
     [SerializeField] private Button boton;
 
+    [SerializeField] public SOMenuName menuName;
+
     private void Start()
     {
         string ruta = GameManager.Instance.ruta;
@@ -14,7 +16,7 @@ public class MainMenuCanvas : MonoBehaviour
     }
     public void Play()
     {
-        GameManager.Instance.datos.NameScene = "SalidaFabrica";
+        GameManager.Instance.datos.NameScene = menuName.nameScene;
         GameManager.Instance.IrAScene("LoadManagers");
     }
 
