@@ -91,7 +91,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     private float nextStepTime = 0f;
     [SerializeField] private float walkStepRate = 0.45f;
     [SerializeField] private float runStepRate = 0.28f;
-    [SerializeField] private float crouchStepRate = 0.65f;
 
     public Transform GetEyePoint() => eyePoint;
     public InputActionAsset GetInputInstance() => inputInstance;
