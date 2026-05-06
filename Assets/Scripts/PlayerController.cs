@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Header("Vida")]
     [SerializeField] private float vidaMaxima;
     public float vidaActual;
+    [SerializeField] private GameObject luzBarraVida;
 
     [Header("Aiden")]
     [SerializeField] private GameObject aiden;
@@ -145,6 +146,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         OnAidenStopped.Subscribe(() => canInteract = true);
         onArmaSobrecalentada.Subscribe(() => armaSobrecalentada = true);
         onArmaEnfriada.Subscribe(() => armaSobrecalentada = false);
+        SceneManager.sceneLoaded += UpdateBrilloBarraVida;
     }
 
     private void OnDisable()
@@ -154,6 +156,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         OnAidenStopped.Unsubscribe(() => canInteract = true);
         onArmaSobrecalentada.Unsubscribe(() => armaSobrecalentada = true);
         onArmaEnfriada.Unsubscribe(() => armaSobrecalentada = false);
+        SceneManager.sceneLoaded -= UpdateBrilloBarraVida;
     }
 
     #region State Machine
@@ -647,6 +650,59 @@ public class PlayerController : MonoBehaviour, IDamageable
         yield return new WaitForSeconds(2f); // ajusta el tiempo a tu gusto
         DamageVignette.Instance?.SetVignetteActive(false);
         GameManager.Instance.IrAScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void UpdateBrilloBarraVida(Scene scene, LoadSceneMode mode)
+    {
+        if (luzBarraVida == null) return;
+
+        Light luz = luzBarraVida.GetComponent<Light>();
+        if (luz == null) return;
+
+        switch (scene.name)
+        {
+            case "Escena1":
+                luz.intensity = 0.5f;
+                luz.range = 1f;
+                break;
+            case "SalidaFabrica":
+                luz.intensity = 1f;
+                luz.range = 1f;
+                break;
+            case "SalidaSigilo":
+                luz.intensity = 35f;
+                luz.range = 1f;
+                break;
+            case "PuenteLevadizo":
+                luz.intensity = 40f;
+                luz.range = 1f;
+                break;
+            case "SalidaMuro":
+                luz.intensity = 60f;
+                luz.range = 1f;
+                break;
+            case "ExteriorTienda":
+                luz.intensity = 100f;
+                luz.range = 1f;
+                break;
+            case "InteriorTienda":
+                luz.intensity = 35f;
+                luz.range = 1f;
+                break;
+            case "CabañaNPC":
+                luz.intensity = 400f;
+                luz.range = 1f;
+                break;
+            case "InteriorCabaña":
+                luz.intensity = 0.3f;
+                luz.range = 1f;
+                break;
+            case "PuenteBosque":
+                luz.intensity = 800f;
+                luz.range = 1f;
+                break;
+           
+        }
     }
 
     private void SetColliderNormal()

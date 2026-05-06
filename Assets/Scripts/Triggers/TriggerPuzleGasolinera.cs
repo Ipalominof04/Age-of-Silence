@@ -11,6 +11,8 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
     [Header("Meshes")]
     [SerializeField] private GameObject meshGalon;
     [SerializeField] private GameObject meshCerilla;
+    [SerializeField] private GameObject triggerCambioEscena;
+
 
     [Header("Shake")]
     [SerializeField] private CamaraTemblor cameraShake;
@@ -33,6 +35,7 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
         GameObject player = GameObject.FindWithTag("Player");
         animator = player.GetComponent<Animator>();
         playerTransform = player.transform;
+        triggerCambioEscena.SetActive(false);
     }
 
     // CINEMATICA
@@ -92,7 +95,7 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
             emitter.EmitSound(ESound.CERILLAS);
             StartCoroutine(SonarDespuesDeCerillas());
             cameraShake.ShakeContinuo(duracion, fuerza);
-            GameManager.Instance.ResolverPuzzle("CerillaUsada");
+            triggerCambioEscena.SetActive(true);
             IniciarCinematica();
         }
     }
