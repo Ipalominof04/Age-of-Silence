@@ -120,6 +120,7 @@ public class GameManager : MonoBehaviour
     }
     public void LimpiarSOEscenas()
     {
+        datos.NameScene = "";
         foreach (SOEscena soEscena in datos.escenas)
             soEscena.objetos.Clear();
     }
@@ -280,6 +281,7 @@ public class GameManager : MonoBehaviour
     }
     public void CargarPartida()
     {
+        Debug.Log("CargarPartida llamado");
         try
         {
             print("Cargando partida...");
@@ -323,7 +325,8 @@ public class GameManager : MonoBehaviour
         }
 
         datos.NameScene = data.nameScene;
-        IrAScene("LoadManagers");
+        Debug.Log("Yendo a escena: " + data.nameScene);
+        IrAScene(data.nameScene);
     }
 
 
