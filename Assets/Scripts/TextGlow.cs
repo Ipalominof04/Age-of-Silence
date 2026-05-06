@@ -7,7 +7,7 @@ public class TextGlow : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private TextMeshProUGUI texto;
     private Material mat;
     public float velocidad = 5f;
-    private float glowObjetivo = 0f;
+    private float glowObjetivo;
 
 
     void Start()
@@ -27,7 +27,7 @@ public class TextGlow : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        glowObjetivo = 1f; // intensidad del brillo
+        glowObjetivo = 2f; // intensidad del brillo
     }
 
     public void OnPointerExit(PointerEventData eventData)
