@@ -6367,7 +6367,7 @@ GameObject:
   m_Component:
   - component: {fileID: 571609424}
   - component: {fileID: 571609426}
-  - component: {fileID: 571609425}
+  - component: {fileID: 571609427}
   m_Layer: 9
   m_Name: TriggerCambioEscena2
   m_TagString: TriggerCambioEscena
@@ -6390,22 +6390,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1329903149}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &571609425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 571609423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d732863fd212e48a7d7f450ce4ffed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
-  nombreEscena: Muro
-  miDoorID: 
-  targetDoorID: 
-  puzzleRequeridoID: CerillaUsada
 --- !u!65 &571609426
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6427,6 +6411,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.89575195, y: 2.0538027, z: 7.7910137}
   m_Center: {x: -0.6041794, y: 0.7240199, z: -4.3214817}
+--- !u!114 &571609427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 571609423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d732863fd212e48a7d7f450ce4ffed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
+  nombreEscena: Muro
+  miDoorID: gasolinera_muro
+  targetDoorID: spawngasolinera_muro
+  puzzleRequeridoID: 
 --- !u!1001 &576280979
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26846,6 +26846,7 @@ MonoBehaviour:
   graphInfo: {fileID: 3965311268370046156, guid: 1a777bda1e5f1d64494c024d0fc77662, type: 3}
   meshGalon: {fileID: 8652944857845715950}
   meshCerilla: {fileID: 4442862851282994285}
+  triggerCambioEscena: {fileID: 571609423}
   cameraShake: {fileID: 2087370032}
   duracion: 20
   fuerza: 1
