@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 public enum ESound
@@ -10,8 +11,8 @@ public enum ESound
     A_SCARE, A_RUN,
     // SONIDOS ENEMY
     ENEMY_SHOOT,ENEMY_SHOOT2, ENEMY_PATROL, ENEMY_CHASE,
-    // SONIDOS EN GENERAL
-    CERILLAS,GASOLINA,FUEGO,PUERTA_PUZZLE,LLUVIA
+    // SONIDOS AMBIENTE Y GENERALES
+    CERILLAS,GASOLINA,FUEGO,PUERTA_PUZZLE,LLUVIA,RIO,
 }
 
 [Serializable]
@@ -20,6 +21,7 @@ public struct SoundData
     public ESound sound;
     public AudioClip clip;
     public float volume;
+    public float playerVolume;
 
 }
 

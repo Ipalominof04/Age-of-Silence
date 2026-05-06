@@ -54,8 +54,4 @@ public class MenuPause : MonoBehaviour
         Time.timeScale = 1f;
         playerMap.Enable();
     }
-    public void Save()
-    {
-        GameManager.Instance.GuardarPartida();
-    }
 }

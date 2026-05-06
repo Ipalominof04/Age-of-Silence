@@ -25,6 +25,10 @@ public class SoundEmitter : MonoBehaviour
             audioSourceOneShot = gameObject.AddComponent<AudioSource>();
         }
 
+        // Al principio del Awake, después de obtener los AudioSources
+        audioSourceLoop.outputAudioMixerGroup = SoundManager.Instance.GetMasterGroup();
+        audioSourceOneShot.outputAudioMixerGroup = SoundManager.Instance.GetMasterGroup();
+
         audioSourceLoop.spatialBlend = 1f;
         audioSourceLoop.loop = true; // importante para LLUVIA
         audioSourceOneShot.spatialBlend = 1f;
@@ -51,27 +55,30 @@ public class SoundEmitter : MonoBehaviour
     public float EmitSound(ESound sound, bool shouldEmmit = true, float volume = -1)
     {
         if (!shouldEmmit) return 0f;
-
         var soundToEmmit = SoundManager.Instance.soundRegistry.GetSound(sound);
         if (soundToEmmit.clip == null) return 0f;
 
-        float volumeToPlay = volume != -1 ? volume : soundToEmmit.volume;
+        // playerVolume para lo que escucha el usuario (-1 = usar el del registry)
+        float playerVolumeToPlay = (volume != -1 ? volume : soundToEmmit.playerVolume) * SoundManager.Instance.playerVolumeMultiplier; // <-- nuevo
+        // gameVolume para la propagación en el juego (siempre del registry)
+        float gameVolumeToEmit = soundToEmmit.volume;
 
         if (IsReplaceable(sound))
         {
             if (audioSourceLoop.clip != soundToEmmit.clip || !audioSourceLoop.isPlaying)
             {
                 audioSourceLoop.clip = soundToEmmit.clip;
-                audioSourceLoop.volume = volumeToPlay;
+                audioSourceLoop.volume = playerVolumeToPlay; // <-- volumen real
                 audioSourceLoop.Play();
             }
         }
         else
         {
-            audioSourceOneShot.PlayOneShot(soundToEmmit.clip, volumeToPlay);
+            audioSourceOneShot.PlayOneShot(soundToEmmit.clip, playerVolumeToPlay); // <-- volumen real
         }
 
-        SoundManager.Instance.EmitSound(transform.position, volumeToPlay, shouldEmmit);
-        return volumeToPlay;
+        // La propagación usa el volumen del juego, no el del player
+        SoundManager.Instance.EmitSound(transform.position, gameVolumeToEmit, shouldEmmit);
+        return gameVolumeToEmit; // devuelve el volumen de juego, que es el relevante para mecánicas
     }
 }

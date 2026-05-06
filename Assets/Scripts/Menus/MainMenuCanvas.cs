@@ -24,4 +24,5 @@ public class MainMenuCanvas : MonoBehaviour
     {
         GameManager.Instance.CargarPartida();
     }
+
 }
