@@ -8,6 +8,7 @@ public class MainMenuCanvas : MonoBehaviour
     [SerializeField] private Button boton;
 
     [SerializeField] public SOMenuName menuName;
+    [SerializeField] public GameObject menuOpionsUI;
 
     private void Start()
     {
@@ -16,13 +17,31 @@ public class MainMenuCanvas : MonoBehaviour
     }
     public void Play()
     {
-        GameManager.Instance.datos.NameScene = menuName.nameScene;
-        GameManager.Instance.IrAScene("LoadManagers");
-    }
+        string ruta = GameManager.Instance.ruta;
+        if (System.IO.File.Exists(ruta))
+            System.IO.File.Delete(ruta);
 
+        GameManager.Instance.datos.NameScene = menuName.nameScene;
+        GameManager.Instance.datos.PlayerHealth = 6f;
+        GameManager.Instance.datos.puzzlesResueltos.Clear();
+
+        GameManager.Instance.IrAScene(menuName.nameScene);
+    }
     public void Continue()
     {
         GameManager.Instance.CargarPartida();
     }
+    public void Opciones()
+    {
+        this.gameObject.SetActive(false);
+        menuOpionsUI.SetActive(true);
+    }
+    public void Exit()
+    {
+        Application.Quit();
+        Debug.Log("Cerrando el juego...");
+    }
+
+
 
 }

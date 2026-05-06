@@ -4,8 +4,11 @@ using UnityEngine.Video;
 
 public class MenuOpciones : MonoBehaviour
 {
+    [SerializeField] GameObject canvasOpciones;
     [SerializeField] VideoPlayer player;
     [SerializeField] Slider volumeSlider;
+
+    private GameObject canvasAnterior;
 
     private void Awake()
     {
@@ -29,5 +32,19 @@ public class MenuOpciones : MonoBehaviour
     private void OnVolumeChanged(float value)
     {
         SoundManager.Instance.SetPlayerVolume(value);
+    }
+
+    public void AbrirOpcionesDesde(GameObject origen)
+    {
+        canvasAnterior = origen;
+        canvasAnterior.SetActive(false);
+        canvasOpciones.SetActive(true);
+    }
+
+    public void Volver()
+    {
+        canvasOpciones.SetActive(false);
+        if (canvasAnterior != null)
+            canvasAnterior.SetActive(true);
     }
 }
