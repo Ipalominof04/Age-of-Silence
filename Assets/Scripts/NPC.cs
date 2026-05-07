@@ -27,12 +27,14 @@ public class NPC : MonoBehaviour, IPuzle
         if (string.IsNullOrEmpty(objetoMano.nombreObjeto)) return;
         string objeto = objetoMano.nombreObjeto;
 
-        if (objeto == "ComidaNPC" && GameManager.Instance.PuzzleResuelto("MisionComidaNPC"))
+        if (objeto == "ComidaNPC" && GameManager.Instance.PuzzleResuelto("ComidaNPC"))
         {
             objetoMano.UsarObjeto();
             this.gameObject.SetActive(false);
             if (graphComida != null)
                 DialogueManager.Instance.StartInfo(graphComida);
+
+            GameManager.Instance.ResolverPuzzle("PuzleNPC");
         }
     }
 
@@ -43,7 +45,7 @@ public class NPC : MonoBehaviour, IPuzle
 
     private void AnadirPuzleAmenaza()
     {
-        GameManager.Instance.ResolverPuzzle("AmenazadoNPC");
+        GameManager.Instance.ResolverPuzzle("PuzleNPC");
     }
 
     public void OnEnterRange()

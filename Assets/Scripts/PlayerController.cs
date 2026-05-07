@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Header("Vida")]
     [SerializeField] private float vidaMaxima;
     public float vidaActual;
+    [SerializeField] private GameObject luzBarraVida;
 
     [Header("Aiden")]
     [SerializeField] private GameObject aiden;
@@ -54,6 +55,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private GameEventFloat onVidaCambiada;
     public static event Action<PlayerState> OnPlayerStateChanged;
     public static event Action OnPlayerEnteredDialogueTrigger;
+    public static event Action OnPlayerDied;
 
     [Header("Lanzamiento")]
     [SerializeField] private ParabolaRenderer parabolaRenderer;
@@ -91,7 +93,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     private float nextStepTime = 0f;
     [SerializeField] private float walkStepRate = 0.45f;
     [SerializeField] private float runStepRate = 0.28f;
-    [SerializeField] private float crouchStepRate = 0.65f;
 
     public Transform GetEyePoint() => eyePoint;
     public InputActionAsset GetInputInstance() => inputInstance;
@@ -146,6 +147,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         OnAidenStopped.Subscribe(() => canInteract = true);
         onArmaSobrecalentada.Subscribe(() => armaSobrecalentada = true);
         onArmaEnfriada.Subscribe(() => armaSobrecalentada = false);
+        SceneManager.sceneLoaded += UpdateBrilloBarraVida;
     }
 
     private void OnDisable()
@@ -155,6 +157,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         OnAidenStopped.Unsubscribe(() => canInteract = true);
         onArmaSobrecalentada.Unsubscribe(() => armaSobrecalentada = true);
         onArmaEnfriada.Unsubscribe(() => armaSobrecalentada = false);
+        SceneManager.sceneLoaded -= UpdateBrilloBarraVida;
     }
 
     #region State Machine
@@ -637,6 +640,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         if (isDying) return;
         isDying = true;
+        OnPlayerDied?.Invoke();
         ActivateRagdoll();
         GameManager.Instance.datos.PlayerHealth = GameManager.Instance.GetHealthAlEntrarEscena();
         GameManager.Instance.LimpiarSOEscenas();
@@ -648,6 +652,59 @@ public class PlayerController : MonoBehaviour, IDamageable
         yield return new WaitForSeconds(2f); // ajusta el tiempo a tu gusto
         DamageVignette.Instance?.SetVignetteActive(false);
         GameManager.Instance.IrAScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void UpdateBrilloBarraVida(Scene scene, LoadSceneMode mode)
+    {
+        if (luzBarraVida == null) return;
+
+        Light luz = luzBarraVida.GetComponent<Light>();
+        if (luz == null) return;
+
+        switch (scene.name)
+        {
+            case "Escena1":
+                luz.intensity = 1f;
+                luz.range = 1f;
+                break;
+            case "SalidaFabrica":
+                luz.intensity = 2f;
+                luz.range = 1f;
+                break;
+            case "SalidaSigilo":
+                luz.intensity = 35f;
+                luz.range = 1f;
+                break;
+            case "PuenteLevadizo":
+                luz.intensity = 40f;
+                luz.range = 1f;
+                break;
+            case "SalidaMuro":
+                luz.intensity = 60f;
+                luz.range = 1f;
+                break;
+            case "ExteriorTienda":
+                luz.intensity = 100f;
+                luz.range = 1f;
+                break;
+            case "InteriorTienda":
+                luz.intensity = 35f;
+                luz.range = 1f;
+                break;
+            case "CabañaNPC":
+                luz.intensity = 400f;
+                luz.range = 1f;
+                break;
+            case "InteriorCabaña":
+                luz.intensity = 0.3f;
+                luz.range = 1f;
+                break;
+            case "PuenteBosque":
+                luz.intensity = 800f;
+                luz.range = 1f;
+                break;
+           
+        }
     }
 
     private void SetColliderNormal()
