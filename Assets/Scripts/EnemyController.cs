@@ -28,6 +28,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     [SerializeField] public float damageAmount = 1f;
     [SerializeField] public float bulleSpeed = 20f;
     [SerializeField] public float shootCooldown = 1f;
+    [SerializeField] private ParticleSystem shootFlash;
 
     [Header("Eventos")]
     [SerializeField] private GameEventString OnAidenScared;
@@ -65,6 +66,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
     private float searchDuration = 5f;
     private bool hasShot = false;
+    private bool playerDead = false;
     private Coroutine lookCoroutine;
     private Coroutine searchCoroutine;
 
@@ -74,11 +76,13 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     private void OnEnable()
     {
         SoundManager.Instance.Subscribe(this);
+        PlayerController.OnPlayerDied += OnPlayerDied;
     }
 
     private void OnDisable()
     {
         SoundManager.Instance.Unsubscribe(this);
+        PlayerController.OnPlayerDied -= OnPlayerDied;
     }
 
     public void OnHearSound(Vector3 soundPosition, float volume)
@@ -290,7 +294,6 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 }
                 break;
 
-
             case EnemyState.SEARCHING:
                 animator.SetBool("onPatrol", !agent.isStopped);
                 animator.SetBool("onSearching", agent.isStopped);
@@ -399,8 +402,10 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         soundEmitter.EmitSound(ESound.ENEMY_PATROL);
     }
 
+
     private bool PlayerInArea(float radius)
     {
+        if (playerDead) return false;
         Collider hit = Physics.OverlapSphere(transform.position, radius, playerLayer).FirstOrDefault();
         if (hit == null) return false;
 
@@ -433,6 +438,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
     private bool PlayerInAttackArea()
     {
+        if (playerDead) return false;
         Collider hit = Physics.OverlapSphere(transform.position, radiusAttack, playerLayer).FirstOrDefault();
         if (hit == null) return false;
 
@@ -507,6 +513,8 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                         if (rb != null) rb.linearVelocity = direction * bulleSpeed;
                     }
                     soundEmitter.EmitSound(ESound.ENEMY_SHOOT2);
+                    if (shootFlash != null)
+                        shootFlash.Play();
                     break;
 
                 default:
@@ -516,6 +524,8 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                     Rigidbody rbDefault = goDefault.GetComponent<Rigidbody>();
                     if (rbDefault != null) rbDefault.linearVelocity = shootDirection * bulleSpeed; //usar shootDirection
                     soundEmitter.EmitSound(ESound.ENEMY_SHOOT);
+                    if (shootFlash != null)
+                        shootFlash.Play();
                     break;
             }
         }
@@ -531,6 +541,11 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         hasShot = true;
         yield return new WaitForSeconds(shootCooldown); //ajusta el tiempo entre disparos
         hasShot = false;
+    }
+    private void OnPlayerDied()
+    {
+        playerDead = true;
+        ChangeState(EnemyState.PATROL);
     }
 
     private void OnCollisionEnter(Collision collision)
