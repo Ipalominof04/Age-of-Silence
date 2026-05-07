@@ -513,6 +513,8 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                         if (rb != null) rb.linearVelocity = direction * bulleSpeed;
                     }
                     soundEmitter.EmitSound(ESound.ENEMY_SHOOT2);
+
+                    //particula flash arma
                     if (shootFlash != null)
                         shootFlash.Play();
                     break;
@@ -524,6 +526,8 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                     Rigidbody rbDefault = goDefault.GetComponent<Rigidbody>();
                     if (rbDefault != null) rbDefault.linearVelocity = shootDirection * bulleSpeed; //usar shootDirection
                     soundEmitter.EmitSound(ESound.ENEMY_SHOOT);
+
+                    //particula flash arma
                     if (shootFlash != null)
                         shootFlash.Play();
                     break;
