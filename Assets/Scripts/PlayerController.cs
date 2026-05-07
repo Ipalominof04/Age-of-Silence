@@ -73,6 +73,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private Transform ragdollRoot;
     private Rigidbody[] ragdollRigidbodies;
 
+    [Header("Sound Waves")]
+    [SerializeField] private MeshRenderer wavesRenderer;
+    [SerializeField] private Texture2D[] wavesTextures;
+
     private bool InDialogue;
     private bool canInteract = false;
     private GameObject objectInRange = null;
@@ -167,6 +171,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         switch (currentState)
         {
             case PlayerState.IDLE:
+                SetWavesSprite(-1);
                 if (!escaleraInRange)
                 {
                     if (armaEquipada)
@@ -180,27 +185,31 @@ public class PlayerController : MonoBehaviour, IDamageable
                 }
                 break;
             case PlayerState.WALK:
+                SetWavesSprite(0);
                 if (!escaleraInRange)
                     animator.Play("walk");
                 break;
             case PlayerState.RUN:
+                SetWavesSprite(1);
                 animator.Play("run");
                 break;
             case PlayerState.CROUCH:
+                SetWavesSprite(-1);
                 if (!escaleraInRange)
                 {
                     if (armaEquipada)
                         animator.Play("crouch");
-      
                     else
+                    {
                         animator.SetBool("isCrouching", true);
-                    characterController.center = new Vector3(0, 0.375f, 0);
-                    characterController.radius = 0.4f;
-                    characterController.height = 0.7f;
-                    playerCollider.center = new Vector3(0, 0.475f, 0);
-                    playerCollider.radius = 0.6f;
-                    playerCollider.height = 0.7f;
-                    eyePoint.localPosition = new Vector3(0, eyeHeightCrouch, 0);
+                        characterController.center = new Vector3(0, 0.45f, 0);
+                        characterController.radius = 0.4f;
+                        characterController.height = 0.7f;
+                        playerCollider.center = new Vector3(0, 0.55f, 0);
+                        playerCollider.radius = 0.6f;
+                        playerCollider.height = 0.7f;
+                        eyePoint.localPosition = new Vector3(0, eyeHeightCrouch, 0);
+                    }
 
                     if (inputMoviment.magnitude > 0.01f)
                     {
@@ -214,6 +223,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 }
                 break;
             case PlayerState.SHOOT:
+                SetWavesSprite(2);
                 break;
             case PlayerState.INTERACT:
                 break;
@@ -369,7 +379,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
     #endregion
-
     private void ActivateRagdoll()
     {
         characterController.enabled = false;
@@ -475,9 +484,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             soundEmitter.EmitSound(ESound.RUN);
             nextStepTime = Time.time + runStepRate;
-        }
-        
-        
+        }      
     }
     private void Crouch()
     {
@@ -601,6 +608,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         if (!armaSobrecalentada)
         {
+
             GameObject go = Instantiate(bala, shootingPoint.transform.position, shootingPoint.transform.rotation);
             BalaController balaDefault = go.GetComponent<BalaController>();
             if (balaDefault != null)
@@ -613,12 +621,22 @@ public class PlayerController : MonoBehaviour, IDamageable
             onShoot.Raise();
             ChangeState(PlayerState.IDLE);
             soundEmitter.EmitSound(ESound.SHOOT);
-        }
-        else
-        {
-            ChangeState(PlayerState.IDLE);
+
+            //particula flash arma
+            ArmaController arma = armaEnMano.GetComponent<ArmaController>();
+            if (arma != null && arma.shootFlash != null)
+            {
+                arma.shootFlash.Play();
+
+            }
+            else
+            {
+                ChangeState(PlayerState.IDLE);
+            }
         }
     }
+
+
     public void TakeDamage(float damage)
     {
         if (isDying) return;
@@ -705,6 +723,18 @@ public class PlayerController : MonoBehaviour, IDamageable
                 break;
            
         }
+    }
+    private void SetWavesSprite(int index)
+    {
+        if (wavesRenderer == null) return;
+        if (index < 0)
+        {
+            wavesRenderer.gameObject.SetActive(false);
+            return;
+        }
+        wavesRenderer.gameObject.SetActive(true);
+        wavesRenderer.material.SetTexture("_UnlitColorMap", wavesTextures[index]);
+        wavesRenderer.material.SetTexture("_EmissiveColorMap", wavesTextures[index]);
     }
 
     private void SetColliderNormal()
