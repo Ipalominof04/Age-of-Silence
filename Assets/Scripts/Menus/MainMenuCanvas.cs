@@ -8,7 +8,7 @@ public class MainMenuCanvas : MonoBehaviour
     [SerializeField] private Button boton;
 
     [SerializeField] public SOMenuName menuName;
-    [SerializeField] public GameObject menuOpionsUI;
+    [SerializeField] public GameObject menuOptionsUI;
 
     private void Start()
     {
@@ -26,6 +26,7 @@ public class MainMenuCanvas : MonoBehaviour
         GameManager.Instance.datos.puzzlesResueltos.Clear();
 
         GameManager.Instance.IrAScene(menuName.nameScene);
+        this.gameObject.SetActive(false);
     }
     public void Continue()
     {
@@ -34,7 +35,7 @@ public class MainMenuCanvas : MonoBehaviour
     public void Opciones()
     {
         this.gameObject.SetActive(false);
-        menuOpionsUI.SetActive(true);
+        menuOptionsUI.SetActive(true);
     }
     public void Exit()
     {
