@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private GameEventFloat onVidaCambiada;
     public static event Action<PlayerState> OnPlayerStateChanged;
     public static event Action OnPlayerEnteredDialogueTrigger;
+    public static event Action OnPlayerDied;
 
     [Header("Lanzamiento")]
     [SerializeField] private ParabolaRenderer parabolaRenderer;
@@ -639,6 +640,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         if (isDying) return;
         isDying = true;
+        OnPlayerDied?.Invoke();
         ActivateRagdoll();
         GameManager.Instance.datos.PlayerHealth = GameManager.Instance.GetHealthAlEntrarEscena();
         GameManager.Instance.LimpiarSOEscenas();
@@ -662,11 +664,11 @@ public class PlayerController : MonoBehaviour, IDamageable
         switch (scene.name)
         {
             case "Escena1":
-                luz.intensity = 0.5f;
+                luz.intensity = 1f;
                 luz.range = 1f;
                 break;
             case "SalidaFabrica":
-                luz.intensity = 1f;
+                luz.intensity = 2f;
                 luz.range = 1f;
                 break;
             case "SalidaSigilo":
