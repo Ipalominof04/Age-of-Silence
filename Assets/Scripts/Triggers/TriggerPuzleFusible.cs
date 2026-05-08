@@ -7,17 +7,19 @@ public class TriggerPuzleFusible : MonoBehaviour, IPuzle
     [Header("Dialogos")]
     public RuntimeDialogueGraph graphInfo;
 
-
     [Header("Meshes")]
     [SerializeField] private GameObject meshVerde;
     [SerializeField] private GameObject meshAzul;
     [SerializeField] private GameObject meshAmarillo;
 
+    [Header("Canvas")]
+    [SerializeField] GameObject canvasworld;
+
     /*  [Header("Dialogos")]
       [SerializeField] private RuntimeDialogueGraph graphOrdenIncorrecto;
       [SerializeField] private RuntimeDialogueGraph graphNoFusible; */
 
-     public void Interact(ObjetoAgarrado objetoMano)
+    public void Interact(ObjetoAgarrado objetoMano)
     {
         if (string.IsNullOrEmpty(objetoMano.nombreObjeto))
         {
@@ -56,6 +58,7 @@ public class TriggerPuzleFusible : MonoBehaviour, IPuzle
         {
             infoMostrada = true;
             DialogueManager.Instance.StartInfo(graphInfo);
+            canvasworld.SetActive(false);
         }
     }
 }

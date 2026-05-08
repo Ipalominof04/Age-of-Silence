@@ -30,7 +30,7 @@ public class SoundEmitter : MonoBehaviour
         audioSourceOneShot.outputAudioMixerGroup = SoundManager.Instance.GetMasterGroup();
 
         audioSourceLoop.spatialBlend = 1f;
-        audioSourceLoop.loop = true; // importante para LLUVIA
+        audioSourceLoop.loop = true;
         audioSourceOneShot.spatialBlend = 1f;
         audioSourceLoop.maxDistance = 8f;
         audioSourceLoop.minDistance = 1f;
@@ -49,7 +49,8 @@ public class SoundEmitter : MonoBehaviour
 
     private bool IsReplaceable(ESound sound)
     {
-        return sound == ESound.WALK || sound == ESound.RUN || sound == ESound.LLUVIA || sound == ESound.FUEGO || sound == ESound.A_RUN || sound == ESound.ENEMY_PATROL || sound == ESound.ENEMY_CHASE;
+        return sound == ESound.WALK || sound == ESound.RUN || sound == ESound.LLUVIA || sound == ESound.FUEGO || sound == ESound.BOSQUE ||sound == ESound.RIO ||
+            sound == ESound.A_RUN || sound == ESound.ENEMY_PATROL || sound == ESound.ENEMY_CHASE;
     }
 
     public float EmitSound(ESound sound, bool shouldEmmit = true, float volume = -1)

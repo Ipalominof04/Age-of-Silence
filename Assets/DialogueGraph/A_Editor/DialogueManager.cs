@@ -23,12 +23,14 @@ public class DialogueManager : MonoBehaviour
     private Dictionary<string, RuntimeDialogueNode> _nodeLookup = new Dictionary<string, RuntimeDialogueNode>();
     private RuntimeDialogueNode _currentNode;
     private Coroutine _typewriterCoroutine;
-    private bool _isTyping = false; //para saber si estA escribiendo
-    //private bool _isInfo = false;
+    private bool _isTyping = false; //para saber si esta escribiendo
+    private bool _isInfo = false;
 
     [Header("Events")]
     public GameEvent OnDialogueStarted;
     public GameEvent OnDialogueEnded;
+    public GameEvent OnInfoStarted;
+    public GameEvent OnInfoEnded;    
 
     private void Awake()
     {
@@ -58,9 +60,9 @@ public class DialogueManager : MonoBehaviour
     }
     public void StartInfo(RuntimeDialogueGraph graph)
     {
-       // _isInfo = true;
-        //bloquea al jugador igual que un dialogo normal
-        OnDialogueStarted.Raise();
+        _isInfo = true;
+        //bloquea al player para q no se pueda mover mientras esta en info
+        OnInfoStarted.Raise();
         _nodeLookup.Clear();
         foreach (var node in graph.AllNodes)
             _nodeLookup[node.NodeID] = node;
@@ -73,7 +75,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (Mouse.current.leftButton.wasPressedThisFrame && _currentNode != null && _currentNode.Choices.Count == 0)
         {
-            // Si esta escribiendo, completa el texto al instante
+            //si esta escribiendo, completa el texto al instante
             if (_isTyping)
             {
                 SkipTypewriter();
@@ -173,11 +175,12 @@ public class DialogueManager : MonoBehaviour
         if (_typewriterCoroutine != null)
             StopCoroutine(_typewriterCoroutine);
 
-        //siempre desbloquea al player sea info o dialogo normal
-        OnDialogueEnded.Raise();
+        if (_isInfo)
+            OnInfoEnded.Raise();
+        else
+            OnDialogueEnded.Raise();
 
-       // _isInfo = false;
-
+        _isInfo = false;
         _nodeLookup.Clear();
         _currentNode = null;
         _isTyping = false;

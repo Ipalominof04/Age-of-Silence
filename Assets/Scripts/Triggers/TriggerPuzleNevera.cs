@@ -13,6 +13,9 @@ public class TriggerPuzleNevera : MonoBehaviour, IPuzle
     public RuntimeDialogueGraph graphObjetoIncorrecto;
     public RuntimeDialogueGraph graphDialogue;
 
+    [Header("Canvas")]
+    [SerializeField] GameObject canvasworld;
+
     public void Interact(ObjetoAgarrado objetoMano)
     {
         if (!requiereObjeto)
@@ -46,6 +49,7 @@ public class TriggerPuzleNevera : MonoBehaviour, IPuzle
         {
             infoMostrada = true;
             DialogueManager.Instance.StartInfo(graphInfo);
+            canvasworld.SetActive(false);
         }
     }
 }

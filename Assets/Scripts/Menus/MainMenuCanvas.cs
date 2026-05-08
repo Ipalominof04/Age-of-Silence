@@ -1,3 +1,4 @@
+using System.Collections;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +9,8 @@ public class MainMenuCanvas : MonoBehaviour
     [SerializeField] private Button boton;
 
     [SerializeField] public SOMenuName menuName;
-    [SerializeField] public GameObject menuOpionsUI;
+    [SerializeField] public GameObject menuOptionsUI;
+    [SerializeField] public GameObject mainMenuUI;
 
     private void Start()
     {
@@ -26,15 +28,17 @@ public class MainMenuCanvas : MonoBehaviour
         GameManager.Instance.datos.puzzlesResueltos.Clear();
 
         GameManager.Instance.IrAScene(menuName.nameScene);
+        StartCoroutine(OcultarTrasFade());   
     }
     public void Continue()
     {
         GameManager.Instance.CargarPartida();
+        StartCoroutine(OcultarTrasFade());
     }
     public void Opciones()
     {
         this.gameObject.SetActive(false);
-        menuOpionsUI.SetActive(true);
+        menuOptionsUI.SetActive(true);
     }
     public void Exit()
     {
@@ -42,6 +46,10 @@ public class MainMenuCanvas : MonoBehaviour
         Debug.Log("Cerrando el juego...");
     }
 
-
+    private IEnumerator OcultarTrasFade()
+    {
+        yield return new WaitForSeconds(GameManager.Instance.fadeDuration);
+        mainMenuUI.SetActive(false);
+    }
 
 }

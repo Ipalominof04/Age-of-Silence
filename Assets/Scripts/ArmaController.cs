@@ -3,6 +3,7 @@ using UnityEngine;
 public class ArmaController : MonoBehaviour
 {
     [SerializeField] GameObject ShootUI;
+    [SerializeField] public ParticleSystem shootFlash;
 
     public void Equipar()
     {

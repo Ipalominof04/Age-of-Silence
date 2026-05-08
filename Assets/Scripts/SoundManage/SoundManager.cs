@@ -11,7 +11,7 @@ public class SoundManager : MonoBehaviour
 
     public SoundRegistry soundRegistry;
 
-    [Range(0f, 10f)]
+    [Range(0f, 5f)]
     public float playerVolumeMultiplier = 1f;
 
     private List<ISoundListener> listeners = new List<ISoundListener>();
@@ -73,7 +73,7 @@ public class SoundManager : MonoBehaviour
     }
     public void SetPlayerVolume(float value)
     {
-        playerVolumeMultiplier = Mathf.Clamp(value, 0f, 10f);
+        playerVolumeMultiplier = Mathf.Clamp(value, 0f, 5f);
         PlayerPrefs.SetFloat("playerVolume", playerVolumeMultiplier);
 
         // El AudioMixer trabaja en decibelios, hay que convertir

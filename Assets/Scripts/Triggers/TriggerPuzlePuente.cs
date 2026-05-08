@@ -11,7 +11,11 @@ public class TriggerPuzlePuente : MonoBehaviour, IPuzle
     public RuntimeDialogueGraph grapSinObjeto;
     public RuntimeDialogueGraph graphObjetoIncorrecto;
 
+    [Header("Meshes")]
     [SerializeField] GameObject maderas;
+
+    [Header("Canvas")]
+    [SerializeField] GameObject canvasworld;
 
 
     private PlayerController player;
@@ -50,6 +54,7 @@ public class TriggerPuzlePuente : MonoBehaviour, IPuzle
         {
             infoMostrada = true;
             DialogueManager.Instance.StartInfo(graphInfo);
+            canvasworld.SetActive(false);
         }
     }
 }
