@@ -16,6 +16,9 @@ public class TriggerPuzlePuertas : MonoBehaviour, IPuzle
     [SerializeField] private string nombreEscena;
     [SerializeField] private string targetDoorID;
 
+    [Header("Canvas")]
+    [SerializeField] GameObject canvasworld;
+
     private PlayerController player;
 
 
@@ -53,6 +56,7 @@ public class TriggerPuzlePuertas : MonoBehaviour, IPuzle
         {
             infoMostrada = true;
             DialogueManager.Instance.StartInfo(graphInfo);
+            canvasworld.SetActive(false);
         }
     }
     private void ResolvePuzzle()
