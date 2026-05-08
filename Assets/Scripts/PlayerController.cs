@@ -48,6 +48,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Header("Eventos")]
     [SerializeField] private GameEvent OnDialogueStarted;
     [SerializeField] private GameEvent OnDialogueEnded;
+    [SerializeField] private GameEvent OnInfoStarted;
+    [SerializeField] private GameEvent OnInfoEnded;
     [SerializeField] private GameEvent OnAidenStopped;
     [SerializeField] private GameEvent onShoot;
     [SerializeField] private GameEvent onArmaSobrecalentada;
@@ -148,6 +150,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         OnDialogueStarted.Subscribe(() => InDialogue = true);
         OnDialogueEnded.Subscribe(() => { InDialogue = false; canInteract = false; });
+        OnInfoStarted.Subscribe(() => InDialogue = true);
+        OnInfoEnded.Subscribe(() => InDialogue = false);
         OnAidenStopped.Subscribe(() => canInteract = true);
         onArmaSobrecalentada.Subscribe(() => armaSobrecalentada = true);
         onArmaEnfriada.Subscribe(() => armaSobrecalentada = false);
@@ -158,6 +162,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         OnDialogueStarted.Unsubscribe(() => InDialogue = true);
         OnDialogueEnded.Unsubscribe(() => { InDialogue = false; canInteract = false; dialogueActivo = null; });
+        OnInfoStarted.Unsubscribe(() => InDialogue = true);
+        OnInfoEnded.Unsubscribe(() => InDialogue = false);
         OnAidenStopped.Unsubscribe(() => canInteract = true);
         onArmaSobrecalentada.Unsubscribe(() => armaSobrecalentada = true);
         onArmaEnfriada.Unsubscribe(() => armaSobrecalentada = false);
