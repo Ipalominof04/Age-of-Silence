@@ -21,7 +21,7 @@ public class TextGlow : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     void Update()
     {
         float glowActual = mat.GetFloat(ShaderUtilities.ID_GlowPower);
-        float nuevoGlow = Mathf.Lerp(glowActual, glowObjetivo, Time.deltaTime * velocidad);
+        float nuevoGlow = Mathf.Lerp(glowActual, glowObjetivo, Time.unscaledDeltaTime * velocidad);
         mat.SetFloat(ShaderUtilities.ID_GlowPower, nuevoGlow);
     }
 

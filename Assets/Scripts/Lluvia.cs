@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LluviaManager : MonoBehaviour
+public class Lluvia : MonoBehaviour
 {
     private SoundEmitter soundEmitter;
 
