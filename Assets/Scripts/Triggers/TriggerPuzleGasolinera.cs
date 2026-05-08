@@ -13,7 +13,6 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
     [SerializeField] private GameObject meshCerilla;
     [SerializeField] private GameObject triggerCambioEscena;
 
-
     [Header("Shake")]
     [SerializeField] private CamaraTemblor cameraShake;
     [SerializeField] private float duracion = 3f;
@@ -22,6 +21,9 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
     [Header("Cinematica")]
     [SerializeField] private Transform[] puntos;
     [SerializeField] private float velocidad = 3f;
+
+    [Header("Canvas")]
+    [SerializeField] GameObject canvasworld;
 
     private Animator animator;
     private Transform playerTransform;
@@ -106,6 +108,7 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
         {
             infoMostrada = true;
             DialogueManager.Instance.StartInfo(graphInfo);
+            canvasworld.SetActive(false);
         }
     }
 
