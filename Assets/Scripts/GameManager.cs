@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     [Header("Vida de escena")]
     private float healthAlEntrarEscena;
     [Header("Fade")]
-    private Image fadeImage;        // la UI Image negra
+    public Image fadeImage;        // la UI Image negra
     public float fadeDuration = 1f;
     [Header("Spawn")]
     public string lastDoorID = ""; // guarda la puerta de la que venimos
@@ -30,21 +30,16 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        //   Debug.Log($"Awake — InstanceID: {gameObject.GetInstanceID()} — Escena: {gameObject.scene.name}");
-
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
             LimpiarSOEscenas();
-            //fadeImage = GameObject.Find("Fundido")?.GetComponent<Image>();
-            fadeImage = GetComponentInChildren<Image>();
             SceneManager.sceneLoaded -= OnSceneLoaded;
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
-            //    Debug.Log($"DUPLICADO detectado — destruyendo InstanceID: {gameObject.GetInstanceID()}");
             Destroy(gameObject);
         }
     }
@@ -90,7 +85,8 @@ public class GameManager : MonoBehaviour
     public void ChangeScene(string sceneName)
     {
         GuardarEscena();
-        datos.NameScene = sceneName;
+        if (sceneName != "MainMenu")
+            datos.NameScene = sceneName;
         StartCoroutine(FadeAndLoadScene(sceneName));
         GuardarPartida();
     }
@@ -175,6 +171,7 @@ public class GameManager : MonoBehaviour
         Color c = fadeImage.color;
 
         fadeImage.gameObject.SetActive(true);
+        fadeImage.transform.parent.gameObject.SetActive(true);
 
         while (t < fadeDuration)
         {
@@ -208,6 +205,7 @@ public class GameManager : MonoBehaviour
         c.a = 0f;
         fadeImage.color = c;
         fadeImage.gameObject.SetActive(false);
+        fadeImage.transform.parent.gameObject.SetActive(false);
     }
 
     private void MoverPlayerSpawn()

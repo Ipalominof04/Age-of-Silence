@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.InputSystem;
 public class MenuPause : MonoBehaviour
 {
     [SerializeField] private InputActionAsset inputActions;
     [SerializeField] private GameObject menuPausaUI;
     [SerializeField] private GameObject menuOpionsUI;
+    [SerializeField] private GameObject mainMenuUI;
     private InputActionMap playerMap;
     private InputAction menuPausaAction;
     private bool isPaused = false;
@@ -34,7 +36,12 @@ public class MenuPause : MonoBehaviour
     }
     public void MainMenu()
     {
-        GameManager.Instance.ChangeScene("MainMenu");
+        isPaused = false;
+        Time.timeScale = 1f;
+        playerMap.Enable();
+        menuPausaUI.SetActive(false);
+        GameManager.Instance.IrAScene("MainMenu");
+        StartCoroutine(ActivarTrasFade());
     }
     public void Return()
     {
@@ -42,5 +49,11 @@ public class MenuPause : MonoBehaviour
         menuPausaUI.SetActive(false);
         Time.timeScale = 1f;
         playerMap.Enable();
+    }
+
+    private IEnumerator ActivarTrasFade()
+    {
+        yield return new WaitForSeconds(GameManager.Instance.fadeDuration);
+        mainMenuUI.SetActive(true);
     }
 }
