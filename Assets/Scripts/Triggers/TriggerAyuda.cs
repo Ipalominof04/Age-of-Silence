@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -16,20 +17,25 @@ public class TriggerAyuda : MonoBehaviour
     [SerializeField] private GameEvent onAyudaCompletada;
     [SerializeField] private GameEvent onDialogueEnded;
 
-    [SerializeField] PlayerController player;
-
+    [Header("Canvas")]
     [SerializeField] GameObject canvasworld;
+    [SerializeField] TextMeshProUGUI texto;
+    [SerializeField] Animator textoAnimator;
+    [SerializeField] private float fontSizeExclamacion;
+    [SerializeField] private float fontSizeInteract;
+
+    [Header("Clear Trigger")]
+    [SerializeField] PlayerController player;
 
     private void Awake()
     {
-        if (canvasworld != null)
-        {
-            canvasworld.SetActive(false);
-        }
+        SetUI("!", fontSizeExclamacion, true);
     }
 
     public void PedirAyuda()
     {
+        player.ClearTriggerAyuda();
+
         if (tipo == PuzleHelpType.DOOR)
         {
             if (GameManager.Instance.confianza >= 50)
@@ -66,23 +72,17 @@ public class TriggerAyuda : MonoBehaviour
     private void HandleDialogoAcabado()
     {
         onDialogueEnded.Unsubscribe(HandleDialogoAcabado);
-        player.ClearTriggerAyuda();
         bool esperarEnDestino = (tipo == PuzleHelpType.BRIDGE);
         aiden.Help(puntoDestino.position, onAyudaCompletada, esperarEnDestino);
     }
 
-    public void MostrarUI()
-    {
-        if(canvasworld != null)
-        {
-            canvasworld.SetActive(true);
-        }
-    }
-    public void OcultarUI()
+    private void SetUI(string texto, float size, bool animar)
     {
         if (canvasworld != null)
         {
-            canvasworld.SetActive(false);
+            this.texto.text = texto;
+            this.texto.fontSize = size;
+            textoAnimator.enabled = animar;
         }
     }
 
@@ -90,7 +90,7 @@ public class TriggerAyuda : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerCollider"))
         {
-            MostrarUI();
+            SetUI("Pulsa E para pedir ayuda a Aiden", fontSizeInteract, false);
         }
     }
 
@@ -99,7 +99,7 @@ public class TriggerAyuda : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerCollider"))
         {
-            OcultarUI();
+            SetUI("!", fontSizeExclamacion, true);
         }
     }
 }

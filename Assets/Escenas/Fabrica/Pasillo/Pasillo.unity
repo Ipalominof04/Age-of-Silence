@@ -2708,7 +2708,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &530088824
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2726,7 +2726,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.346, y: 0.608}
+  m_AnchoredPosition: {x: -0.804, y: 0.608}
   m_SizeDelta: {x: 1151, y: 588}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &530088825
@@ -2962,6 +2962,7 @@ GameObject:
   - component: {fileID: 608719930}
   - component: {fileID: 608719932}
   - component: {fileID: 608719931}
+  - component: {fileID: 608719933}
   m_Layer: 7
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -3008,7 +3009,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Pulsa E para pedir ayuda
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3035,8 +3036,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 0
+  m_fontSizeBase: 0
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3088,6 +3089,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 608719929}
   m_CullTransparentMesh: 1
+--- !u!95 &608719933
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608719929}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4cbba7e11a255434c9416e3ca9afbecd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &626407975
 GameObject:
   m_ObjectHideFlags: 0
@@ -3320,7 +3343,7 @@ Transform:
   m_GameObject: {fileID: 667584437}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.06, y: -3.02, z: 0.28}
+  m_LocalPosition: {x: 0.06, y: -3.08, z: 0.28}
   m_LocalScale: {x: 4.0317, y: 4.0317, z: 4.0317}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5751,7 +5774,7 @@ Transform:
   m_GameObject: {fileID: 1059456785}
   serializedVersion: 2
   m_LocalRotation: {x: 0.12282203, y: -0, z: -0, w: 0.9924287}
-  m_LocalPosition: {x: -1.2577438, y: -0.34494495, z: -1.0220499}
+  m_LocalPosition: {x: -1.2577438, y: -0.4049449, z: -1.0220499}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5969,7 +5992,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 17.8
-  field of view: 45.2
+  field of view: 50.5
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -7104,6 +7127,14 @@ PrefabInstance:
       propertyPath: aiden
       value: 
       objectReference: {fileID: 1081473573}
+    - target: {fileID: 1337398149008683969, guid: 89437555278a3b747b73449b8a201440, type: 3}
+      propertyPath: OnInfoEnded
+      value: 
+      objectReference: {fileID: 11400000, guid: 2ce345208ed4c3546a30a1668e55d24b, type: 2}
+    - target: {fileID: 1337398149008683969, guid: 89437555278a3b747b73449b8a201440, type: 3}
+      propertyPath: OnInfoStarted
+      value: 
+      objectReference: {fileID: 11400000, guid: 5ea97cdf426ab174fb594463203d3952, type: 2}
     - target: {fileID: 7366088206330199277, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_Name
       value: Player
@@ -7837,6 +7868,8 @@ MonoBehaviour:
   charDelay: 0.05
   OnDialogueStarted: {fileID: 11400000, guid: dcef17d5a629fe8478bd188922dbae88, type: 2}
   OnDialogueEnded: {fileID: 11400000, guid: 24d173763f19212419ab012c1f7833f5, type: 2}
+  OnInfoStarted: {fileID: 11400000, guid: 5ea97cdf426ab174fb594463203d3952, type: 2}
+  OnInfoEnded: {fileID: 11400000, guid: 2ce345208ed4c3546a30a1668e55d24b, type: 2}
 --- !u!1001 &1476683215
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9814,8 +9847,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1.5824313}
-  m_Center: {x: 0, y: 0, z: -0.04579377}
+  m_Size: {x: 2.3792152, y: 1, z: 2.9824903}
+  m_Center: {x: -0.6896076, y: 0, z: 0.004851222}
 --- !u!4 &1877644719
 Transform:
   m_ObjectHideFlags: 0
@@ -9851,8 +9884,12 @@ MonoBehaviour:
   puntoDestino: {fileID: 352900354}
   onAyudaCompletada: {fileID: 11400000, guid: 3f7cfa99aaa08fb4eabb2a025d682389, type: 2}
   onDialogueEnded: {fileID: 11400000, guid: 24d173763f19212419ab012c1f7833f5, type: 2}
-  player: {fileID: 1275081047}
   canvasworld: {fileID: 530088823}
+  texto: {fileID: 608719931}
+  textoAnimator: {fileID: 608719933}
+  fontSizeExclamacion: 70
+  fontSizeInteract: 25
+  player: {fileID: 1275081047}
 --- !u!1 &1880560089
 GameObject:
   m_ObjectHideFlags: 0
@@ -10270,7 +10307,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 45.2
+    FieldOfView: 50.5
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 17.8
@@ -10691,6 +10728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   confianza: 100
+  fadeImage: {fileID: 0}
   fadeDuration: 1
   lastDoorID: 
   ruta: Assets/savegame.json
