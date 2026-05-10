@@ -1361,6 +1361,7 @@ GameObject:
   - component: {fileID: 50378965}
   - component: {fileID: 50378964}
   - component: {fileID: 50378963}
+  - component: {fileID: 50378967}
   m_Layer: 12
   m_Name: Fire
   m_TagString: Untagged
@@ -6295,6 +6296,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &50378967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50378961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c1717672ee71246ab464acaa2e3353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fuego
+  emitter: {fileID: 50378963}
+  minDistance: 0
+  maxDistance: 5
 --- !u!1001 &51624582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6426,6 +6442,7 @@ GameObject:
   - component: {fileID: 56441012}
   - component: {fileID: 56441011}
   - component: {fileID: 56441010}
+  - component: {fileID: 56441014}
   m_Layer: 12
   m_Name: Fire
   m_TagString: Untagged
@@ -11360,6 +11377,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &56441014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56441008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c1717672ee71246ab464acaa2e3353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fuego
+  emitter: {fileID: 56441010}
+  minDistance: 0
+  maxDistance: 5
 --- !u!1001 &58745491
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13710,6 +13742,7 @@ GameObject:
   - component: {fileID: 130162638}
   - component: {fileID: 130162637}
   - component: {fileID: 130162636}
+  - component: {fileID: 130162640}
   m_Layer: 12
   m_Name: Fire
   m_TagString: Untagged
@@ -18644,6 +18677,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &130162640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 130162634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c1717672ee71246ab464acaa2e3353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fuego
+  emitter: {fileID: 130162636}
+  minDistance: 0
+  maxDistance: 5
 --- !u!1 &133640861
 GameObject:
   m_ObjectHideFlags: 0
@@ -19757,6 +19805,7 @@ GameObject:
   - component: {fileID: 151617811}
   - component: {fileID: 151617810}
   - component: {fileID: 151617809}
+  - component: {fileID: 151617813}
   m_Layer: 12
   m_Name: Fire
   m_TagString: Untagged
@@ -24691,6 +24740,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &151617813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151617807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c1717672ee71246ab464acaa2e3353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fuego
+  emitter: {fileID: 151617809}
+  minDistance: 0
+  maxDistance: 5
 --- !u!4 &153681138 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8935635230296620957, guid: 87be66aac58b25f45803dd3ebc559cce, type: 3}
@@ -35655,6 +35719,7 @@ GameObject:
   - component: {fileID: 586548184}
   - component: {fileID: 586548183}
   - component: {fileID: 586548182}
+  - component: {fileID: 586548186}
   m_Layer: 12
   m_Name: Fire
   m_TagString: Untagged
@@ -40589,6 +40654,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &586548186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586548180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c1717672ee71246ab464acaa2e3353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fuego
+  emitter: {fileID: 586548182}
+  minDistance: 0
+  maxDistance: 5
 --- !u!1001 &587516356
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45091,6 +45171,7 @@ GameObject:
   - component: {fileID: 753034752}
   - component: {fileID: 753034751}
   - component: {fileID: 753034750}
+  - component: {fileID: 753034754}
   m_Layer: 12
   m_Name: Fire
   m_TagString: Untagged
@@ -50025,6 +50106,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &753034754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753034748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c1717672ee71246ab464acaa2e3353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fuego
+  emitter: {fileID: 753034750}
+  minDistance: 0
+  maxDistance: 5
 --- !u!1 &755622412
 GameObject:
   m_ObjectHideFlags: 0
@@ -67012,6 +67108,7 @@ GameObject:
   - component: {fileID: 1216158610}
   - component: {fileID: 1216158609}
   - component: {fileID: 1216158608}
+  - component: {fileID: 1216158612}
   m_Layer: 12
   m_Name: Fire
   m_TagString: Untagged
@@ -71946,6 +72043,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1216158612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216158606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c1717672ee71246ab464acaa2e3353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fuego
+  emitter: {fileID: 1216158608}
+  minDistance: 0
+  maxDistance: 5
 --- !u!1001 &1216410656
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -72365,6 +72477,7 @@ GameObject:
   - component: {fileID: 1234192129}
   - component: {fileID: 1234192128}
   - component: {fileID: 1234192127}
+  - component: {fileID: 1234192131}
   m_Layer: 12
   m_Name: Fire
   m_TagString: Untagged
@@ -77299,6 +77412,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1234192131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234192125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c1717672ee71246ab464acaa2e3353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fuego
+  emitter: {fileID: 1234192127}
+  minDistance: 0
+  maxDistance: 5
 --- !u!1001 &1234723294
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -77389,6 +77517,7 @@ GameObject:
   - component: {fileID: 1236438603}
   - component: {fileID: 1236438602}
   - component: {fileID: 1236438601}
+  - component: {fileID: 1236438605}
   m_Layer: 12
   m_Name: Fire
   m_TagString: Untagged
@@ -82323,6 +82452,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1236438605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236438599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c1717672ee71246ab464acaa2e3353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fuego
+  emitter: {fileID: 1236438601}
+  minDistance: 0
+  maxDistance: 5
 --- !u!1001 &1242315968
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -84657,6 +84801,7 @@ GameObject:
   - component: {fileID: 1314955111}
   - component: {fileID: 1314955110}
   - component: {fileID: 1314955109}
+  - component: {fileID: 1314955113}
   m_Layer: 12
   m_Name: Fire
   m_TagString: Untagged
@@ -89591,6 +89736,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1314955113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314955107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c1717672ee71246ab464acaa2e3353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fuego
+  emitter: {fileID: 1314955109}
+  minDistance: 0
+  maxDistance: 5
 --- !u!1 &1315483334
 GameObject:
   m_ObjectHideFlags: 0
@@ -100232,6 +100392,7 @@ GameObject:
   - component: {fileID: 1713145885}
   - component: {fileID: 1713145884}
   - component: {fileID: 1713145883}
+  - component: {fileID: 1713145887}
   m_Layer: 12
   m_Name: Fire
   m_TagString: Untagged
@@ -105166,6 +105327,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1713145887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713145881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c1717672ee71246ab464acaa2e3353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fuego
+  emitter: {fileID: 1713145883}
+  minDistance: 0
+  maxDistance: 5
 --- !u!1001 &1715205774
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -108893,6 +109069,7 @@ GameObject:
   - component: {fileID: 1859887553}
   - component: {fileID: 1859887552}
   - component: {fileID: 1859887551}
+  - component: {fileID: 1859887555}
   m_Layer: 12
   m_Name: Fire
   m_TagString: Untagged
@@ -113827,6 +114004,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1859887555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859887549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c1717672ee71246ab464acaa2e3353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fuego
+  emitter: {fileID: 1859887551}
+  minDistance: 0
+  maxDistance: 5
 --- !u!1001 &1860242135
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -115775,6 +115967,7 @@ GameObject:
   - component: {fileID: 1924713616}
   - component: {fileID: 1924713615}
   - component: {fileID: 1924713614}
+  - component: {fileID: 1924713618}
   m_Layer: 12
   m_Name: Fire
   m_TagString: Untagged
@@ -120709,6 +120902,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1924713618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924713612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c1717672ee71246ab464acaa2e3353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fuego
+  emitter: {fileID: 1924713614}
+  minDistance: 0
+  maxDistance: 5
 --- !u!1001 &1930821735
 PrefabInstance:
   m_ObjectHideFlags: 0
