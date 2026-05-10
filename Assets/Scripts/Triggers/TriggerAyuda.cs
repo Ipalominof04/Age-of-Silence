@@ -63,6 +63,7 @@ public class TriggerAyuda : MonoBehaviour
             else
             {
                 DialogueManager.Instance.StartInfo(graphNoAyuda);
+                this.gameObject.SetActive(false);
             }
                 
         }
