@@ -2205,6 +2205,7 @@ GameObject:
   - component: {fileID: 145412083}
   - component: {fileID: 145412082}
   - component: {fileID: 145412081}
+  - component: {fileID: 145412085}
   m_Layer: 12
   m_Name: Fire
   m_TagString: Untagged
@@ -7139,6 +7140,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &145412085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145412079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c1717672ee71246ab464acaa2e3353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fuego
+  emitter: {fileID: 145412081}
+  minDistance: 0
+  maxDistance: 5
 --- !u!1001 &148561599
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21809,7 +21825,6 @@ GameObject:
   m_Component:
   - component: {fileID: 422570984}
   - component: {fileID: 422570988}
-  - component: {fileID: 422570987}
   - component: {fileID: 422570986}
   - component: {fileID: 422570985}
   m_Layer: 0
@@ -22005,14 +22020,6 @@ MonoBehaviour:
       enableFptlForForwardOpaque: 0
       enableBigTilePrepass: 0
       isFptlEnabled: 0
---- !u!81 &422570987
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 422570983}
-  m_Enabled: 1
 --- !u!20 &422570988
 Camera:
   m_ObjectHideFlags: 0
@@ -36215,7 +36222,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1007688489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80802,13 +80809,29 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7366088206330199277, guid: 89437555278a3b747b73449b8a201440, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1887075087}
   m_SourcePrefab: {fileID: 100100000, guid: 89437555278a3b747b73449b8a201440, type: 3}
 --- !u!4 &1887075085 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1075083039853645334, guid: 89437555278a3b747b73449b8a201440, type: 3}
   m_PrefabInstance: {fileID: 1887075084}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1887075086 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7366088206330199277, guid: 89437555278a3b747b73449b8a201440, type: 3}
+  m_PrefabInstance: {fileID: 1887075084}
+  m_PrefabAsset: {fileID: 0}
+--- !u!81 &1887075087
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887075086}
+  m_Enabled: 1
 --- !u!1001 &1888391816
 PrefabInstance:
   m_ObjectHideFlags: 0

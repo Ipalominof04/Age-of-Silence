@@ -11,7 +11,7 @@ public class SoundManager : MonoBehaviour
 
     public SoundRegistry soundRegistry;
 
-    [Range(0f, 5f)]
+    [Range(0f, 1f)]
     public float playerVolumeMultiplier = 1f;
 
     private List<ISoundListener> listeners = new List<ISoundListener>();
@@ -29,15 +29,19 @@ public class SoundManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        playerVolumeMultiplier = PlayerPrefs.GetFloat("playerVolume", 1f);
+
+        if (PlayerPrefs.HasKey("playerVolume"))
+        {
+            playerVolumeMultiplier = PlayerPrefs.GetFloat("playerVolume");
+        }
+        // Si no hay prefs, respeta el valor del Inspector tal cual
 
         float db = playerVolumeMultiplier > 0
-           ? Mathf.Log10(playerVolumeMultiplier) * 20f
-           : -80f;
+            ? Mathf.Log10(playerVolumeMultiplier) * 20f
+            : -80f;
+
         audioMixer.SetFloat("MasterVolume", db);
-
     }
-
     // Suscribirse
     public void Subscribe(ISoundListener listener)
     {
@@ -73,7 +77,7 @@ public class SoundManager : MonoBehaviour
     }
     public void SetPlayerVolume(float value)
     {
-        playerVolumeMultiplier = Mathf.Clamp(value, 0f, 5f);
+        playerVolumeMultiplier = Mathf.Clamp01(value);
         PlayerPrefs.SetFloat("playerVolume", playerVolumeMultiplier);
 
         // El AudioMixer trabaja en decibelios, hay que convertir

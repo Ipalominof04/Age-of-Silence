@@ -19,6 +19,10 @@ public class MainMenuCanvas : MonoBehaviour
     }
     public void Play()
     {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        Debug.Log("PlayerPrefs borrados. Tiene 'playerVolume': " + PlayerPrefs.HasKey("playerVolume"));
+
         string ruta = GameManager.Instance.ruta;
         if (System.IO.File.Exists(ruta))
             System.IO.File.Delete(ruta);
