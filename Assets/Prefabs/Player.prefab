@@ -3140,6 +3140,7 @@ GameObject:
   - component: {fileID: 196869344584577787}
   - component: {fileID: 6908890300416654673}
   - component: {fileID: 7462320116961097168}
+  - component: {fileID: 4906304389969320955}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -3218,6 +3219,8 @@ MonoBehaviour:
   objetoMano: {fileID: 11400000, guid: d5cd034fa04a9034f969502806a1a3bf, type: 2}
   OnDialogueStarted: {fileID: 11400000, guid: dcef17d5a629fe8478bd188922dbae88, type: 2}
   OnDialogueEnded: {fileID: 11400000, guid: 24d173763f19212419ab012c1f7833f5, type: 2}
+  OnInfoStarted: {fileID: 11400000, guid: 5ea97cdf426ab174fb594463203d3952, type: 2}
+  OnInfoEnded: {fileID: 11400000, guid: 2ce345208ed4c3546a30a1668e55d24b, type: 2}
   OnAidenStopped: {fileID: 11400000, guid: e583d7700758c2b40b133794e92abb2f, type: 2}
   onShoot: {fileID: 11400000, guid: 07e473aafd09beb40b0b1c09f73e8e65, type: 2}
   onArmaSobrecalentada: {fileID: 11400000, guid: 610d165f1559f4f438c0223d6fa89cd3, type: 2}
@@ -3525,6 +3528,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54963b24924cef548bf2c749522b6377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundEmitter
+--- !u!81 &4906304389969320955
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7366088206330199277}
+  m_Enabled: 1
 --- !u!1 &7456667105730368708
 GameObject:
   m_ObjectHideFlags: 0
