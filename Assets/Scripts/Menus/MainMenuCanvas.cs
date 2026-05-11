@@ -15,7 +15,8 @@ public class MainMenuCanvas : MonoBehaviour
     private void Start()
     {
         string ruta = GameManager.Instance.ruta;
-        boton.interactable = File.Exists(ruta);
+        //    boton.interactable = File.Exists(ruta);
+        boton.gameObject.SetActive(File.Exists(ruta));
     }
     public void Play()
     {
