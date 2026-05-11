@@ -61,6 +61,7 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
         playerTransform.position = Vector3.MoveTowards(playerTransform.position, objetivo.position, velocidad * Time.deltaTime);
         animator.Play("run");
 
+
         if (Vector3.Distance(playerTransform.position, objetivo.position) < 0.1f)
         {
             puntoActual++;
