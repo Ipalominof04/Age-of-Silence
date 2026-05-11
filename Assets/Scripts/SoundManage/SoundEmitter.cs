@@ -68,8 +68,8 @@ public class SoundEmitter : MonoBehaviour
         var soundToEmmit = SoundManager.Instance.soundRegistry.GetSound(sound);
         if (soundToEmmit.clip == null) return 0f;
 
-        float playerVolumeToPlay = (volume != -1 ? volume : soundToEmmit.playerVolume) * SoundManager.Instance.playerVolumeMultiplier;
-        float gameVolumeToEmit = soundToEmmit.volume;
+        float playerVolumeToPlay = (volume != -1 ? volume : soundToEmmit.volumenOutGame) * SoundManager.Instance.playerVolumeMultiplier;
+        float gameVolumeToEmit = soundToEmmit.volumenInGame;
 
         if (IsReplaceable(sound))
         {
