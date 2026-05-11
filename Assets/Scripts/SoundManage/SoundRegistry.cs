@@ -20,8 +20,8 @@ public struct SoundData
 {
     public ESound sound;
     public AudioClip clip;
-    public float volume;
-    public float playerVolume;
+    public float volumenInGame;
+    public float volumenOutGame;
 
 }
 
