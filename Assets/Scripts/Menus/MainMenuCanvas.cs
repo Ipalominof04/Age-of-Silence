@@ -12,13 +12,12 @@ public class MainMenuCanvas : MonoBehaviour
     [SerializeField] public GameObject menuOptionsUI;
     [SerializeField] public GameObject mainMenuUI;
 
-    private void Start()
-    {
-        string ruta = GameManager.Instance.ruta;
-        boton.interactable = File.Exists(ruta);
-    }
     public void Play()
     {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        Debug.Log("PlayerPrefs borrados. Tiene 'playerVolume': " + PlayerPrefs.HasKey("playerVolume"));
+
         string ruta = GameManager.Instance.ruta;
         if (System.IO.File.Exists(ruta))
             System.IO.File.Delete(ruta);
@@ -37,7 +36,6 @@ public class MainMenuCanvas : MonoBehaviour
     }
     public void Opciones()
     {
-        this.gameObject.SetActive(false);
         menuOptionsUI.SetActive(true);
     }
     public void Exit()

@@ -12,7 +12,7 @@ public enum ESound
     // SONIDOS ENEMY
     ENEMY_SHOOT,ENEMY_SHOOT2, ENEMY_PATROL, ENEMY_CHASE,
     // SONIDOS AMBIENTE Y GENERALES
-    CERILLAS,GASOLINA,FUEGO,PUERTA_PUZZLE,LLUVIA,RIO,BOSQUE
+    CERILLAS,GASOLINA,FUEGO,PUERTA_PUZZLE,LLUVIA,RIO,BOSQUE,EXPLOSION,ALARMA,RIO2
 }
 
 [Serializable]
@@ -20,8 +20,8 @@ public struct SoundData
 {
     public ESound sound;
     public AudioClip clip;
-    public float volume;
-    public float playerVolume;
+    public float volumenInGame;
+    public float volumenOutGame;
 
 }
 
