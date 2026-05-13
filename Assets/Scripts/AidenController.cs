@@ -51,6 +51,7 @@ public class AidenController : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        this.gameObject.SetActive(false);
     }
 
     void Start()

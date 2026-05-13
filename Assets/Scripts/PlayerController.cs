@@ -183,12 +183,23 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
     private IEnumerator WaitingChargeMap()
     {
-        // desactiva la gravedad hasta que toque el suelo
+        characterController.enabled = false; // no procesa física mientras espera
+        verticalVelocity = Vector3.zero;
+
+        // espera un frame para que Unity inicialice colisiones
+        yield return null;
+
+        characterController.enabled = true;
+
+        // ahora espera hasta tocar el suelo
         while (!characterController.isGrounded)
         {
             verticalVelocity.y = 0f;
+            characterController.Move(Vector3.down * 0.01f); // pequeño empujón hacia abajo para detectar suelo
             yield return null;
         }
+
+        verticalVelocity.y = -2f;
     }
 
     #region State Machine
@@ -792,6 +803,9 @@ public class PlayerController : MonoBehaviour, IDamageable
         ChangeState(PlayerState.IDLE);
 
         characterController.enabled = true;
+
+        StartCoroutine(WaitingChargeMap());
+
     }
 
     private void OnTriggerEnter(Collider other)
