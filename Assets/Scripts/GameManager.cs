@@ -55,7 +55,9 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // Activa los personajes una vez la escena está cargada
+        RestaurarEscena();
+
+        // 1. Activa primero para que todos los componentes estén listos
         if (PlayerController.Instance != null)
         {
             PlayerController.Instance.gameObject.SetActive(true);
@@ -63,16 +65,16 @@ public class GameManager : MonoBehaviour
         }
 
 
-        Debug.Log($"[OnSceneLoaded] ANTES RestaurarEscena — datos.PlayerHealth: {datos.PlayerHealth}");
-        RestaurarEscena();
-        Debug.Log($"[OnSceneLoaded] DESPUÉS RestaurarEscena — datos.PlayerHealth: {datos.PlayerHealth}");
+        // 2. Recoloca después de activar
         MoverPlayerSpawn();
+
         healthAlEntrarEscena = datos.PlayerHealth;
         datos.PlayerHealth = healthAlEntrarEscena;
+
+        // 3. Resetea al final cuando todo está listo
         PlayerController.Instance?.RespawnReset();
 
         DamageVignette.Instance?.SetVignetteActive(true);
-
         float ratio = datos.PlayerHealth > 0 ? datos.PlayerHealth / 6f : 1f;
         DamageVignette.Instance?.UpdateHealthRatio(ratio);
     }

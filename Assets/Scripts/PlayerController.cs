@@ -115,6 +115,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             Destroy(this.gameObject);
         }
 
+
         characterController = GetComponent<CharacterController>();
         camara = Camera.main;
         soundEmitter = GetComponent<SoundEmitter>();
@@ -183,25 +184,27 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
     private IEnumerator WaitingChargeMap()
     {
-        characterController.enabled = false; // no procesa física mientras espera
+        characterController.enabled = false;
         verticalVelocity = Vector3.zero;
 
-        // espera un frame para que Unity inicialice colisiones
-        yield return null;
+        // espera hasta que haya NavMesh bajo el player
+        while (!UnityEngine.AI.NavMesh.SamplePosition(transform.position, out _, 2f, UnityEngine.AI.NavMesh.AllAreas))
+        {
+            yield return null;
+        }
 
         characterController.enabled = true;
 
-        // ahora espera hasta tocar el suelo
+        // ahora espera hasta tocar el suelo físicamente
         while (!characterController.isGrounded)
         {
             verticalVelocity.y = 0f;
-            characterController.Move(Vector3.down * 0.01f); // pequeño empujón hacia abajo para detectar suelo
+            characterController.Move(Vector3.down * 0.05f);
             yield return null;
         }
 
         verticalVelocity.y = -2f;
     }
-
     #region State Machine
     private void InitState(PlayerState state)
     {
