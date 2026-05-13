@@ -105,8 +105,18 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
         characterController = GetComponent<CharacterController>();
+        camara = Camera.main;
         soundEmitter = GetComponent<SoundEmitter>();
         animator = GetComponent<Animator>();
         inputInstance = Instantiate(myInputActionAsset);
@@ -136,6 +146,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         onVidaCambiada.Raise(vidaActual / vidaMaxima);
         float ratio = vidaActual / vidaMaxima;
         DamageVignette.Instance?.UpdateHealthRatio(ratio);
+
+        StartCoroutine(WaitingChargeMap());
     }
 
     void Update()
@@ -168,6 +180,15 @@ public class PlayerController : MonoBehaviour, IDamageable
         onArmaSobrecalentada.Unsubscribe(() => armaSobrecalentada = true);
         onArmaEnfriada.Unsubscribe(() => armaSobrecalentada = false);
         SceneManager.sceneLoaded -= UpdateBrilloBarraVida;
+    }
+    private IEnumerator WaitingChargeMap()
+    {
+        // desactiva la gravedad hasta que toque el suelo
+        while (!characterController.isGrounded)
+        {
+            verticalVelocity.y = 0f;
+            yield return null;
+        }
     }
 
     #region State Machine
@@ -752,6 +773,25 @@ public class PlayerController : MonoBehaviour, IDamageable
         playerCollider.radius = 0.3f;
         playerCollider.height = 1.6f;
         eyePoint.localPosition = new Vector3(0, eyeHeightStanding, 0);
+    }
+
+    public void RespawnReset()
+    {
+        isDying = false;
+
+        foreach (var rb in ragdollRigidbodies)
+        {
+            rb.isKinematic = true;
+        }
+
+        if (animator != null)
+            animator.enabled = true;
+
+        verticalVelocity = Vector3.zero;
+
+        ChangeState(PlayerState.IDLE);
+
+        characterController.enabled = true;
     }
 
     private void OnTriggerEnter(Collider other)
