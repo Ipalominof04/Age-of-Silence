@@ -12,9 +12,6 @@ public class MainMenuCanvas : MonoBehaviour
     [SerializeField] public GameObject menuOptionsUI;
     [SerializeField] public GameObject mainMenuUI;
 
-    [SerializeField] public GameObject player;
-    [SerializeField] public GameObject aiden;
-
 
     public void Play()
     {
@@ -29,14 +26,13 @@ public class MainMenuCanvas : MonoBehaviour
         GameManager.Instance.datos.NameScene = menuName.nameScene;
         GameManager.Instance.datos.PlayerHealth = 6f;
         GameManager.Instance.datos.puzzlesResueltos.Clear();
-        ActivarPersonajes();
+        GameManager.Instance.lastDoorID = menuName.spawnName;
         GameManager.Instance.IrAScene(menuName.nameScene);
         StartCoroutine(OcultarTrasFade());
         
     }
     public void Continue()
     {
-        ActivarPersonajes();
         GameManager.Instance.CargarPartida();
         StartCoroutine(OcultarTrasFade());
     }
@@ -54,12 +50,6 @@ public class MainMenuCanvas : MonoBehaviour
     {
         yield return new WaitForSeconds(GameManager.Instance.fadeDuration);
         mainMenuUI.SetActive(false);
-    }
-
-    private void ActivarPersonajes()
-    {
-        if(player != null) player.SetActive(true);
-        if(aiden != null) aiden.SetActive(true);
     }
 
 }

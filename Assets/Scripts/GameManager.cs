@@ -45,6 +45,24 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (scene.name == "MainMenu")
+        {
+            if (PlayerController.Instance != null)
+            {
+                PlayerController.Instance.gameObject.SetActive(false);
+                AidenController.Instance.gameObject.SetActive(false);
+                return;
+            }
+        }
+
+        // Activa los personajes una vez la escena está cargada
+        if (PlayerController.Instance != null)
+        {
+            PlayerController.Instance.gameObject.SetActive(true);
+            AidenController.Instance.gameObject.SetActive(true);
+        }
+
+
         Debug.Log($"[OnSceneLoaded] ANTES RestaurarEscena — datos.PlayerHealth: {datos.PlayerHealth}");
         RestaurarEscena();
         Debug.Log($"[OnSceneLoaded] DESPUÉS RestaurarEscena — datos.PlayerHealth: {datos.PlayerHealth}");

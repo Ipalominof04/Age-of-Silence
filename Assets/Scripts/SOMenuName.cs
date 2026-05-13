@@ -4,4 +4,5 @@ using UnityEngine;
 public class SOMenuName : ScriptableObject
 {
     public string nameScene;
+    public string spawnName;
 }
