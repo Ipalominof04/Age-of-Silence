@@ -60,7 +60,7 @@ public class SoundEmitter : MonoBehaviour
     private bool IsReplaceable(ESound sound)
     {
         return sound == ESound.WALK || sound == ESound.RUN || sound == ESound.LLUVIA || sound == ESound.FUEGO || sound == ESound.BOSQUE || sound == ESound.RIO || sound == ESound.RIO2 ||
-            sound == ESound.A_RUN || sound == ESound.ENEMY_PATROL || sound == ESound.ENEMY_CHASE | sound == ESound.ALARMA;
+            sound == ESound.A_RUN || sound == ESound.ENEMY_PATROL || sound == ESound.ENEMY_CHASE | sound == ESound.ALARMA || sound == ESound.MUSICAMENU;
     }
     public float EmitSound(ESound sound, bool shouldEmmit = true, float volume = -1)
     {
