@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class AidenController : MonoBehaviour
 {
+    public static AidenController Instance;
     public enum AidenState { NONE, IDLE, WALK, RUN, CROUCH, SCARED, HELP, CATCH_UP }
 
     [Header("Máquina de estados")]
@@ -38,6 +39,20 @@ public class AidenController : MonoBehaviour
     private GameEvent onAyudaCompletada;
 
     #region Unity Callbacks
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();

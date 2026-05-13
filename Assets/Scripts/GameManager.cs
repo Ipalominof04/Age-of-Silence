@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
 
     [Header("Confianza")]
     [SerializeField] public float confianza = 0;
-    [Header("Vida de escena")]
     private float healthAlEntrarEscena;
     [Header("Fade")]
     public Image fadeImage;        // la UI Image negra
@@ -52,6 +51,7 @@ public class GameManager : MonoBehaviour
         MoverPlayerSpawn();
         healthAlEntrarEscena = datos.PlayerHealth;
         datos.PlayerHealth = healthAlEntrarEscena;
+        PlayerController.Instance?.RespawnReset();
 
         DamageVignette.Instance?.SetVignetteActive(true);
 
