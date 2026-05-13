@@ -626,8 +626,6 @@ MonoBehaviour:
   menuName: {fileID: 11400000, guid: 7f6a7cc92f0a7284f8d2489c04cc1a17, type: 2}
   menuOptionsUI: {fileID: 172263924}
   mainMenuUI: {fileID: 5701181}
-  player: {fileID: 142645844}
-  aiden: {fileID: 1905098721}
 --- !u!114 &73096320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -717,7 +715,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4509992435902890988, guid: ec08a826fda66694a935962919dabfd7, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6828666274242469974, guid: ec08a826fda66694a935962919dabfd7, type: 3}
       propertyPath: player
@@ -728,11 +726,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec08a826fda66694a935962919dabfd7, type: 3}
---- !u!1 &142645844 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7366088206330199277, guid: 89437555278a3b747b73449b8a201440, type: 3}
-  m_PrefabInstance: {fileID: 767126005}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &142645845 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1075083039853645334, guid: 89437555278a3b747b73449b8a201440, type: 3}
@@ -1824,6 +1817,7 @@ GameObject:
   - component: {fileID: 729558119}
   - component: {fileID: 729558118}
   - component: {fileID: 729558120}
+  - component: {fileID: 729558121}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2036,6 +2030,14 @@ MonoBehaviour:
       enableFptlForForwardOpaque: 0
       enableBigTilePrepass: 0
       isFptlEnabled: 0
+--- !u!81 &729558121
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 729558116}
+  m_Enabled: 1
 --- !u!1 &736119785
 GameObject:
   m_ObjectHideFlags: 0
@@ -2311,7 +2313,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7366088206330199277, guid: 89437555278a3b747b73449b8a201440, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
