@@ -1,5 +1,6 @@
 using System.Collections;
 using System.IO;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -45,7 +46,10 @@ public class MainMenuCanvas : MonoBehaviour
     }
     public void Exit()
     {
+        //para cerrarlo en la build
         Application.Quit();
+        //para cerrarlo en el editor
+        EditorApplication.isPlaying = false;
         Debug.Log("Cerrando el juego...");
     }
 
