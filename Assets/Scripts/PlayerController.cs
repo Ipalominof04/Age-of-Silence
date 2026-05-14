@@ -486,6 +486,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void ApplyGravity()
     {
         if (isDying) return;
+        if (!characterController.enabled) return;
         if (escaleraInRange)
         {
             verticalVelocity.y = 0;
