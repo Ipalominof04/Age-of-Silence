@@ -51,15 +51,17 @@ public class AidenController : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        agent = GetComponent<NavMeshAgent>();
+        emitter = GetComponent<SoundEmitter>();
+        animator = GetComponent<Animator>();
+        SetColliderNormal();
+
         this.gameObject.SetActive(false);
     }
 
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        emitter = GetComponent<SoundEmitter>();
-        animator = GetComponent<Animator>();
-        SetColliderNormal();
         InitState(AidenState.IDLE);
         SetUI(false);
     }
@@ -99,7 +101,7 @@ public class AidenController : MonoBehaviour
 
     private void HandlePlayerStateChanged(PlayerController.PlayerState playerState)
     {
-
+        if (!gameObject.activeInHierarchy) return;
         // para que ignore los cambios del player hasta que el niño llegue al player
         if (currentState == AidenState.CATCH_UP) return;
         //si el niño esta asustado, que ignore lo que hace el player y no le siga hasta que se indique dependiendo el caso 
