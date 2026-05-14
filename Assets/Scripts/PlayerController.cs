@@ -487,6 +487,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         if (isDying) return;
         if (!characterController.enabled) return;
+
         if (escaleraInRange)
         {
             verticalVelocity.y = 0;
@@ -803,6 +804,10 @@ public class PlayerController : MonoBehaviour, IDamageable
             animator.enabled = true;
 
         verticalVelocity = Vector3.zero;
+
+        vidaActual = GameManager.Instance.datos.PlayerHealth;
+        onVidaCambiada.Raise(vidaActual / vidaMaxima);
+        DamageVignette.Instance?.UpdateHealthRatio(vidaActual / vidaMaxima);
 
         ChangeState(PlayerState.IDLE);
 
