@@ -31,7 +31,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     [SerializeField] private ParticleSystem shootFlash;
 
     [Header("Eventos")]
-    [SerializeField] private GameEventString OnAidenScared;
+    [SerializeField] private GameEventScareType OnAidenScared;
 
     [Header("Config Areas y Layers")]
     [SerializeField] private Transform headTransform;
@@ -210,7 +210,8 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 {
                     arma.transform.localPosition = new Vector3(-0.05697f, -0.131036f, -0.00457f);
                     arma.transform.localRotation = Quaternion.Euler(-100.667f, -73.7940f, 71.358f);
-                }    
+                }
+                soundEmitter.EmitSound(ESound.MUSICACHASE);
                 SetUI(true, "!", "#F11200");
                 agent.speed = speedChase;
                 agent.stoppingDistance = radiusAttack;
