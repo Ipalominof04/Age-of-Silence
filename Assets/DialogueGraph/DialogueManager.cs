@@ -32,6 +32,7 @@ public class DialogueManager : MonoBehaviour
     public GameEvent OnInfoStarted;
     public GameEvent OnInfoEnded;    
 
+
     private void Awake()
     {
         if (Instance == null)
@@ -158,6 +159,7 @@ public class DialogueManager : MonoBehaviour
                         GameManager.Instance.SumValor(choice.ValueChange);
                     else if (choice.ValueChange < 0)
                         GameManager.Instance.RestValor(Mathf.Abs(choice.ValueChange));
+
 
                     choice.OnChoiceSelected?.Raise();
 
