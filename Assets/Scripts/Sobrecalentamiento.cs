@@ -24,6 +24,7 @@ public class Sobrecalentamiento : MonoBehaviour
     [SerializeField] GameEvent onArmaSobrecalentada;
     [SerializeField] GameEvent onArmaEnfriada;
 
+
     void Update()
     {
         tiempoUltimoDisparo += Time.deltaTime;
