@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class MusicMedia : MonoBehaviour
 {
@@ -60,9 +61,20 @@ public class MusicMedia : MonoBehaviour
     {
         if (!canPlay) return;
 
+        if (soundEmitter == null)
+        {
+            Debug.LogError("MusicMedia: emitter no está asignado.");
+            return;
+        }
         if (!musicDictionary.ContainsKey(key))
         {
-            Debug.LogWarning($"No existe una música con la clave: {key}");
+            Debug.LogWarning($"MusicMedia: clave '{key}' no encontrada.");
+            return;
+        }
+
+        if (key == "musicStop")
+        {
+            soundEmitter.StopSound();
             return;
         }
 

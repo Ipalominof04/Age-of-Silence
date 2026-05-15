@@ -32,6 +32,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
     [Header("Eventos")]
     [SerializeField] private GameEventScareType OnAidenScared;
+    [SerializeField] private GameEventString onMusicChange;
 
     [Header("Config Areas y Layers")]
     [SerializeField] private Transform headTransform;
@@ -211,7 +212,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                     arma.transform.localPosition = new Vector3(-0.05697f, -0.131036f, -0.00457f);
                     arma.transform.localRotation = Quaternion.Euler(-100.667f, -73.7940f, 71.358f);
                 }
-                soundEmitter.EmitSound(ESound.MUSICACHASE);
+                onMusicChange.Raise("musicChase");
                 SetUI(true, "!", "#F11200");
                 agent.speed = speedChase;
                 agent.stoppingDistance = radiusAttack;
@@ -336,6 +337,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 animator.SetBool("onSearching", false);
                 animator.SetBool("onPatrol", false);
                 if (searchCoroutine != null) StopCoroutine(searchCoroutine);
+                onMusicChange.Raise("musicStop");
                 break;
             case EnemyState.LOOK:
                 animator.SetBool("onLook", false);
