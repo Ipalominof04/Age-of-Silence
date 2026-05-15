@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class AidenController : MonoBehaviour
 {
@@ -46,6 +47,10 @@ public class AidenController : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
+        }
+        else if (SceneManager.GetActiveScene().name == "Escena1" || SceneManager.GetActiveScene().name == "EscenaFinal")
+        {
+            return;
         }
         else
         {
