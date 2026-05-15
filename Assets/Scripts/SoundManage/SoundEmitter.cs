@@ -43,7 +43,7 @@ public class SoundEmitter : MonoBehaviour
         audioSourceOneShot.minDistance = minDistance;
         audioSourceOneShot.maxDistance = maxDistance;
 
-        // Regenerar curva si ya está activo
+        // Regenerar curva si ya estï¿½ activo
         if (audioSourceLoop.isPlaying)
         {
             audioSourceLoop.rolloffMode = AudioRolloffMode.Custom;
@@ -74,7 +74,7 @@ public class SoundEmitter : MonoBehaviour
 
         if (IsReplaceable(sound))
         {
-            // Si el clip cambió o no está sonando, inicializar
+            // Si el clip cambiï¿½ o no estï¿½ sonando, inicializar
             if (audioSourceLoop.clip != soundToEmmit.clip || !audioSourceLoop.isPlaying)
             {
                 audioSourceLoop.clip = soundToEmmit.clip;
@@ -86,7 +86,7 @@ public class SoundEmitter : MonoBehaviour
                 );
                 audioSourceLoop.Play();
             }
-            // Actualizar volumen SIEMPRE, esté o no recién iniciado
+            // Actualizar volumen SIEMPRE, estï¿½ o no reciï¿½n iniciado
             audioSourceLoop.volume = playerVolumeToPlay;
         }
         else
