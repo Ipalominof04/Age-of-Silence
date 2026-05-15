@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TriggerScared : MonoBehaviour
 {
-    [SerializeField] private GameEventString OnAidenScared;
+    [SerializeField] private GameEventScareType OnAidenScared;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Aiden"))
