@@ -28,6 +28,9 @@ public class MainMenuCanvas : MonoBehaviour
         GameManager.Instance.datos.PlayerHealth = 6f;
         GameManager.Instance.datos.puzzlesResueltos.Clear();
         GameManager.Instance.lastDoorID = menuName.spawnName;
+
+        GameManager.Instance.confianza = 0;
+        GameManager.Instance.datos.confianza = 0;
         GameManager.Instance.IrAScene(menuName.nameScene);
         StartCoroutine(OcultarTrasFade());
         
