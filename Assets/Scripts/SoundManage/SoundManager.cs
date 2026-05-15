@@ -13,6 +13,8 @@ public class SoundManager : MonoBehaviour
 
     [Range(0f, 1f)]
     public float playerVolumeMultiplier = 1f;
+    [Range(0f, 1f)]
+    public float musicVolumeMultiplier = 1f;
 
     private List<ISoundListener> listeners = new List<ISoundListener>();
 
