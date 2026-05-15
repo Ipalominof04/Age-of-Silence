@@ -3,8 +3,8 @@ using UnityEngine;
 
 public enum ScareType { Body, Shoot }
 
-[CreateAssetMenu(fileName = "GameEventString", menuName = "Events/GameEventString")]
-public class GameEventString : ScriptableObject
+[CreateAssetMenu(fileName = "GameEventScareType", menuName = "Events/GameEventScareType")]
+public class GameEventScareType : ScriptableObject
 {
     public event Action<ScareType> OnEventRaised;
 

@@ -23,7 +23,7 @@ public class AidenController : MonoBehaviour
     [SerializeField] private GameEvent OnDialogueStarted;
     [SerializeField] private GameEvent OnDialogueEnded;
     [SerializeField] private GameEvent OnAidenStopped;
-    [SerializeField] private GameEventString OnAidenScared;
+    [SerializeField] private GameEventScareType OnAidenScared;
     [SerializeField] private GameEvent OnAidenReanudar;
 
     private NavMeshAgent agent;

@@ -1,103 +1,93 @@
-// SoundEmitter.cs
+using System;
+using System.Collections.Generic;
 using UnityEngine;
-[RequireComponent(typeof(AudioSource))]
-public class SoundEmitter : MonoBehaviour
+
+public class MusicMedia : MonoBehaviour
 {
-    private AudioSource audioSourceLoop;
-    private AudioSource audioSourceOneShot;
+    [Serializable]
+    public struct MusicEntry
+    {
+        public string key;
+        public ESound sound;
+    }
+
+    [Header("Evento")]
+    [SerializeField] private GameEventString musicEvent;
+
+    [Header("Diccionario de músicas")]
+    [SerializeField] private List<MusicEntry> musicEntries = new();
+
+    [Header("Activar reproducción")]
+    [SerializeField] private bool canPlay = true;
+
+    private Dictionary<string, ESound> musicDictionary;
+
+    private SoundEmitter soundEmitter;
+
     private void Awake()
     {
-        AudioSource[] sources = GetComponents<AudioSource>();
-        if (sources.Length >= 2)
-        {
-            audioSourceLoop = sources[0];
-            audioSourceOneShot = sources[1];
-        }
-        else if (sources.Length == 1)
-        {
-            audioSourceLoop = sources[0];
-            audioSourceOneShot = gameObject.AddComponent<AudioSource>();
-        }
-        else
-        {
-            audioSourceLoop = gameObject.AddComponent<AudioSource>();
-            audioSourceOneShot = gameObject.AddComponent<AudioSource>();
-        }
-        audioSourceLoop.outputAudioMixerGroup = SoundManager.Instance.GetMasterGroup();
-        audioSourceOneShot.outputAudioMixerGroup = SoundManager.Instance.GetMasterGroup();
-        audioSourceLoop.spatialBlend = 1f;
-        audioSourceLoop.loop = true;
-        audioSourceOneShot.spatialBlend = 1f;
-        audioSourceLoop.maxDistance = 8f;
-        audioSourceLoop.minDistance = 1f;
-        audioSourceLoop.rolloffMode = AudioRolloffMode.Logarithmic;
-        audioSourceOneShot.maxDistance = 8f;
-        audioSourceOneShot.minDistance = 1f;
-        audioSourceOneShot.rolloffMode = AudioRolloffMode.Logarithmic;
-    }
-    public void SetRange(float minDistance, float maxDistance)
-    {
-        audioSourceLoop.minDistance = minDistance;
-        audioSourceLoop.maxDistance = maxDistance;
-        audioSourceOneShot.minDistance = minDistance;
-        audioSourceOneShot.maxDistance = maxDistance;
+        soundEmitter = GetComponent<SoundEmitter>();
 
-        // Regenerar curva si ya está activo
-        if (audioSourceLoop.isPlaying)
-        {
-            audioSourceLoop.rolloffMode = AudioRolloffMode.Custom;
-            audioSourceLoop.SetCustomCurve(
-                AudioSourceCurveType.CustomRolloff,
-                AnimationCurve.EaseInOut(minDistance, 1f, maxDistance, 0f)
-            );
-        }
-    }
-    public void StopSound()
-    {
-        audioSourceLoop.Stop();
-        audioSourceLoop.clip = null;
-    }
-    private bool IsReplaceable(ESound sound)
-    {
-        return sound == ESound.WALK || sound == ESound.RUN || sound == ESound.LLUVIA || sound == ESound.FUEGO || sound == ESound.BOSQUE || sound == ESound.RIO || sound == ESound.RIO2 ||
-            sound == ESound.A_RUN || sound == ESound.ENEMY_PATROL || sound == ESound.ENEMY_CHASE | sound == ESound.ALARMA || sound == ESound.MUSICAMENU;
-    }
-    public float EmitSound(ESound sound, bool shouldEmmit = true, float volume = -1)
-    {
-        if (!shouldEmmit) return 0f;
-        var soundToEmmit = SoundManager.Instance.soundRegistry.GetSound(sound);
-        if (soundToEmmit.clip == null) return 0f;
+        // Crear diccionario
+        musicDictionary = new Dictionary<string, ESound>();
 
-        float playerVolumeToPlay = (volume != -1 ? volume : soundToEmmit.volumenOutGame) * SoundManager.Instance.playerVolumeMultiplier;
-        float gameVolumeToEmit = soundToEmmit.volumenInGame;
-
-        if (IsReplaceable(sound))
+        foreach (var entry in musicEntries)
         {
-            // Si el clip cambió o no está sonando, inicializar
-            if (audioSourceLoop.clip != soundToEmmit.clip || !audioSourceLoop.isPlaying)
+            if (!musicDictionary.ContainsKey(entry.key))
             {
-                audioSourceLoop.clip = soundToEmmit.clip;
-                audioSourceLoop.rolloffMode = AudioRolloffMode.Custom;
-                audioSourceLoop.SetCustomCurve(
-                    AudioSourceCurveType.CustomRolloff,
-                    AnimationCurve.EaseInOut(audioSourceLoop.minDistance, 1f, audioSourceLoop.maxDistance, 0f)
-                );
-                audioSourceLoop.Play();
+                musicDictionary.Add(entry.key, entry.sound);
             }
-            // Actualizar volumen SIEMPRE, esté o no recién iniciado
-            audioSourceLoop.volume = playerVolumeToPlay;
         }
-        else
+    }
+
+    private void OnEnable()
+    {
+        if (musicEvent != null)
         {
-            audioSourceOneShot.rolloffMode = AudioRolloffMode.Custom;
-            audioSourceOneShot.SetCustomCurve(
-                AudioSourceCurveType.CustomRolloff,
-                AnimationCurve.EaseInOut(audioSourceOneShot.minDistance, 1f, audioSourceOneShot.maxDistance, 0f)
-            );
-            audioSourceOneShot.PlayOneShot(soundToEmmit.clip, playerVolumeToPlay);
+            musicEvent.Subscribe(OnMusicEvent);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (musicEvent != null)
+        {
+            musicEvent.Unsubscribe(OnMusicEvent);
+        }
+    }
+
+    private void OnMusicEvent(string key)
+    {
+        if (!canPlay) return;
+
+        if (!musicDictionary.ContainsKey(key))
+        {
+            Debug.LogWarning($"No existe una música con la clave: {key}");
+            return;
         }
 
-        SoundManager.Instance.EmitSound(transform.position, gameVolumeToEmit, shouldEmmit);
-        return gameVolumeToEmit;
+        ESound sound = musicDictionary[key];
+
+        switch (sound)
+        {
+            case ESound.MUSICAMENU:
+            case ESound.MUSICACHASE:
+                soundEmitter.EmitSound(sound);
+                break;
+
+            default:
+                Debug.LogWarning($"El sonido {sound} no es música válida.");
+                break;
+        }
+    }
+
+    public void EnableMusic(bool value)
+    {
+        canPlay = value;
+
+        if (!value)
+        {
+            soundEmitter.StopSound();
+        }
     }
 }
