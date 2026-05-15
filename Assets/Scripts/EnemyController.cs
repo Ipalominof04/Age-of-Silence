@@ -328,7 +328,6 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             case EnemyState.CHASE:
                 animator.SetBool("onChase", false);
                 soundEmitter.StopSound();
-                onMusicChange.Raise("musicStop");
                 break;
             case EnemyState.ATTACK:
                 animator.SetBool("onShoot", false);
@@ -338,6 +337,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 animator.SetBool("onSearching", false);
                 animator.SetBool("onPatrol", false);
                 if (searchCoroutine != null) StopCoroutine(searchCoroutine);
+                onMusicChange.Raise("musicStop");
                 break;
             case EnemyState.LOOK:
                 animator.SetBool("onLook", false);
