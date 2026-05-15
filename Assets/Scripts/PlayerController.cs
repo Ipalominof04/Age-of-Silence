@@ -110,6 +110,10 @@ public class PlayerController : MonoBehaviour, IDamageable
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
+        else if(SceneManager.GetActiveScene().name == "Escena1" || SceneManager.GetActiveScene().name == "EscenaFinal")
+        {
+            return;
+        }
         else
         {
             Destroy(this.gameObject);
