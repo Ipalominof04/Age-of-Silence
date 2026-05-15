@@ -1,5 +1,6 @@
 using System.Collections;
 using System.IO;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ public class MainMenuCanvas : MonoBehaviour
     [SerializeField] public SOMenuName menuName;
     [SerializeField] public GameObject menuOptionsUI;
     [SerializeField] public GameObject mainMenuUI;
+
 
     public void Play()
     {
@@ -25,9 +27,13 @@ public class MainMenuCanvas : MonoBehaviour
         GameManager.Instance.datos.NameScene = menuName.nameScene;
         GameManager.Instance.datos.PlayerHealth = 6f;
         GameManager.Instance.datos.puzzlesResueltos.Clear();
+        GameManager.Instance.lastDoorID = menuName.spawnName;
 
+        GameManager.Instance.confianza = 0;
+        GameManager.Instance.datos.confianza = 0;
         GameManager.Instance.IrAScene(menuName.nameScene);
-        StartCoroutine(OcultarTrasFade());   
+        StartCoroutine(OcultarTrasFade());
+        
     }
     public void Continue()
     {
@@ -40,7 +46,10 @@ public class MainMenuCanvas : MonoBehaviour
     }
     public void Exit()
     {
+        //para cerrarlo en la build
         Application.Quit();
+        //para cerrarlo en el editor
+        EditorApplication.isPlaying = false;
         Debug.Log("Cerrando el juego...");
     }
 

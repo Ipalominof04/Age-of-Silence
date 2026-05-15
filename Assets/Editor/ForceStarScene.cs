@@ -16,7 +16,7 @@ public class ForceStartScene
         if (state == PlayModeStateChange.ExitingEditMode)
         {
             EditorSceneManager.playModeStartScene =
-                AssetDatabase.LoadAssetAtPath<SceneAsset>("Assets/Escenas/Menus/MainMenu.unity");
+                AssetDatabase.LoadAssetAtPath<SceneAsset>("Assets/Escenas/Menus/LoadManagers.unity");
         }
     }
 }

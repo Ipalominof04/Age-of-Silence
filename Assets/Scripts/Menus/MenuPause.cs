@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 public class MenuPause : MonoBehaviour
 {
     [SerializeField] private InputActionAsset inputActions;
@@ -29,6 +30,7 @@ public class MenuPause : MonoBehaviour
     private void OnMenuPausa(InputAction.CallbackContext ctx)
     {
         if (isPaused) return;
+        if (SceneManager.GetActiveScene().name == "MainMenu") return;
         isPaused = true;
         menuPausaUI.SetActive(true);
         Time.timeScale = 0f;

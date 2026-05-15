@@ -105,8 +105,19 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
+
         characterController = GetComponent<CharacterController>();
+        camara = Camera.main;
         soundEmitter = GetComponent<SoundEmitter>();
         animator = GetComponent<Animator>();
         inputInstance = Instantiate(myInputActionAsset);
@@ -136,6 +147,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         onVidaCambiada.Raise(vidaActual / vidaMaxima);
         float ratio = vidaActual / vidaMaxima;
         DamageVignette.Instance?.UpdateHealthRatio(ratio);
+
+        StartCoroutine(WaitingChargeMap());
     }
 
     void Update()
@@ -169,7 +182,29 @@ public class PlayerController : MonoBehaviour, IDamageable
         onArmaEnfriada.Unsubscribe(() => armaSobrecalentada = false);
         SceneManager.sceneLoaded -= UpdateBrilloBarraVida;
     }
+    private IEnumerator WaitingChargeMap()
+    {
+        characterController.enabled = false;
+        verticalVelocity = Vector3.zero;
 
+        // espera hasta que haya NavMesh bajo el player
+        while (!UnityEngine.AI.NavMesh.SamplePosition(transform.position, out _, 2f, UnityEngine.AI.NavMesh.AllAreas))
+        {
+            yield return null;
+        }
+
+        characterController.enabled = true;
+
+        // ahora espera hasta tocar el suelo físicamente
+        while (!characterController.isGrounded)
+        {
+            verticalVelocity.y = 0f;
+            characterController.Move(Vector3.down * 0.05f);
+            yield return null;
+        }
+
+        verticalVelocity.y = -2f;
+    }
     #region State Machine
     private void InitState(PlayerState state)
     {
@@ -451,6 +486,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void ApplyGravity()
     {
         if (isDying) return;
+        if (!characterController.enabled) return;
+
         if (escaleraInRange)
         {
             verticalVelocity.y = 0;
@@ -752,6 +789,32 @@ public class PlayerController : MonoBehaviour, IDamageable
         playerCollider.radius = 0.3f;
         playerCollider.height = 1.6f;
         eyePoint.localPosition = new Vector3(0, eyeHeightStanding, 0);
+    }
+
+    public void RespawnReset()
+    {
+        isDying = false;
+
+        foreach (var rb in ragdollRigidbodies)
+        {
+            rb.isKinematic = true;
+        }
+
+        if (animator != null)
+            animator.enabled = true;
+
+        verticalVelocity = Vector3.zero;
+
+        vidaActual = GameManager.Instance.datos.PlayerHealth;
+        onVidaCambiada.Raise(vidaActual / vidaMaxima);
+        DamageVignette.Instance?.UpdateHealthRatio(vidaActual / vidaMaxima);
+
+        ChangeState(PlayerState.IDLE);
+
+        characterController.enabled = true;
+
+        StartCoroutine(WaitingChargeMap());
+
     }
 
     private void OnTriggerEnter(Collider other)

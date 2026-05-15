@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class AidenController : MonoBehaviour
 {
+    public static AidenController Instance;
     public enum AidenState { NONE, IDLE, WALK, RUN, CROUCH, SCARED, HELP, CATCH_UP }
 
     [Header("Máquina de estados")]
@@ -22,7 +23,7 @@ public class AidenController : MonoBehaviour
     [SerializeField] private GameEvent OnDialogueStarted;
     [SerializeField] private GameEvent OnDialogueEnded;
     [SerializeField] private GameEvent OnAidenStopped;
-    [SerializeField] private GameEventString OnAidenScared;
+    [SerializeField] private GameEventScareType OnAidenScared;
     [SerializeField] private GameEvent OnAidenReanudar;
 
     private NavMeshAgent agent;
@@ -38,12 +39,29 @@ public class AidenController : MonoBehaviour
     private GameEvent onAyudaCompletada;
 
     #region Unity Callbacks
-    void Start()
+
+    private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
         agent = GetComponent<NavMeshAgent>();
         emitter = GetComponent<SoundEmitter>();
         animator = GetComponent<Animator>();
         SetColliderNormal();
+
+        this.gameObject.SetActive(false);
+    }
+
+    void Start()
+    {
         InitState(AidenState.IDLE);
         SetUI(false);
     }
@@ -83,7 +101,7 @@ public class AidenController : MonoBehaviour
 
     private void HandlePlayerStateChanged(PlayerController.PlayerState playerState)
     {
-
+        if (!gameObject.activeInHierarchy) return;
         // para que ignore los cambios del player hasta que el niño llegue al player
         if (currentState == AidenState.CATCH_UP) return;
         //si el niño esta asustado, que ignore lo que hace el player y no le siga hasta que se indique dependiendo el caso 

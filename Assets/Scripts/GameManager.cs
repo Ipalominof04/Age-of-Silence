@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
 
     [Header("Confianza")]
     [SerializeField] public float confianza = 0;
-    [Header("Vida de escena")]
     private float healthAlEntrarEscena;
     [Header("Fade")]
     public Image fadeImage;        // la UI Image negra
@@ -46,15 +45,39 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log($"[OnSceneLoaded] ANTES RestaurarEscena — datos.PlayerHealth: {datos.PlayerHealth}");
+        if (scene.name == "MainMenu")
+        {
+            if (PlayerController.Instance != null)
+            {
+                PlayerController.Instance.gameObject.SetActive(false);
+                AidenController.Instance.gameObject.SetActive(false);
+                return;
+            }
+        }
+
         RestaurarEscena();
-        Debug.Log($"[OnSceneLoaded] DESPUÉS RestaurarEscena — datos.PlayerHealth: {datos.PlayerHealth}");
+
+        // 1. Activa primero para que todos los componentes estén listos
+        if (PlayerController.Instance != null)
+        {
+            PlayerController.Instance.gameObject.SetActive(true);
+            AidenController.Instance.gameObject.SetActive(true);
+        }
+
+
+        // 2. Recoloca después de activar
         MoverPlayerSpawn();
+
         healthAlEntrarEscena = datos.PlayerHealth;
+        Debug.Log($"Vida al entrar escena guardada: {healthAlEntrarEscena}");
         datos.PlayerHealth = healthAlEntrarEscena;
 
-        DamageVignette.Instance?.SetVignetteActive(true);
+        // 3. Resetea al final cuando todo está listo
+        PlayerController.Instance?.RespawnReset();
 
+        Debug.Log($"[SPAWN] Vida al entrar escena: {healthAlEntrarEscena} | Vida actual: {datos.PlayerHealth}");
+
+        DamageVignette.Instance?.SetVignetteActive(true);
         float ratio = datos.PlayerHealth > 0 ? datos.PlayerHealth / 6f : 1f;
         DamageVignette.Instance?.UpdateHealthRatio(ratio);
     }
@@ -210,16 +233,21 @@ public class GameManager : MonoBehaviour
 
     private void MoverPlayerSpawn()
     {
+        Debug.Log($"[SPAWN] lastDoorID: '{lastDoorID}'");
+
         if (string.IsNullOrEmpty(lastDoorID)) return;
 
         SpawnPoint[] spawnPoints = FindObjectsByType<SpawnPoint>(FindObjectsSortMode.None);
+        Debug.Log($"[SPAWN] SpawnPoints encontrados: {spawnPoints.Length}");
 
         foreach (SpawnPoint spawn in spawnPoints)
         {
+            Debug.Log($"[SPAWN] Comparando '{spawn.GetDoorID()}' con '{lastDoorID}'");
             if (spawn.GetDoorID() == lastDoorID)
             {
-                GameObject player = GameObject.FindGameObjectWithTag("Player");
-                GameObject aiden = GameObject.FindGameObjectWithTag("Aiden");
+                Debug.Log($"[SPAWN] ¡Match! Moviendo player a {spawn.transform.position}");
+                GameObject player = PlayerController.Instance.gameObject;
+                GameObject aiden = AidenController.Instance.gameObject;
 
                 if (player != null)
                 {
