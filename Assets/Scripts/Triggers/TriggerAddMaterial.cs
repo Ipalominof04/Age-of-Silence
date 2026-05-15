@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class TriggerAddMaterial : MonoBehaviour
 {
-    public GameObject[] objetosObjetivo; // objeto al que se le anadira el material
-    public Material materialExtra;     // material que se anadira
+    public GameObject[] objetosObjetivo; 
+    public Material materialExtra;     
 
     Renderer[] renderers;
     Material[][] materialesOriginales;
@@ -11,7 +11,7 @@ public class TriggerAddMaterial : MonoBehaviour
     void Start()
     {
         renderers = new Renderer[objetosObjetivo.Length];
-        materialesOriginales = new Material[objetosObjetivo.Length][]; // guardamos los mats originales
+        materialesOriginales = new Material[objetosObjetivo.Length][];
         for (int i = 0; i < objetosObjetivo.Length; i++)
         {
             renderers[i] = objetosObjetivo[i].GetComponent<Renderer>();

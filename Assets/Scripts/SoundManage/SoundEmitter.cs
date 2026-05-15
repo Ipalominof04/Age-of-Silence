@@ -1,5 +1,4 @@
 // SoundEmitter.cs
-using NUnit.Framework.Constraints;
 using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class SoundEmitter : MonoBehaviour
@@ -74,11 +73,15 @@ public class SoundEmitter : MonoBehaviour
 
         if (IsReplaceable(sound))
         {
-            // Si el clip cambi� o no est� sonando, inicializar
             if (audioSourceLoop.clip != soundToEmmit.clip || !audioSourceLoop.isPlaying)
             {
                 audioSourceLoop.clip = soundToEmmit.clip;
                 audioSourceLoop.spatialBlend = soundToEmmit.isMusic ? 0f : 1f;
+
+                audioSourceLoop.outputAudioMixerGroup = soundToEmmit.isMusic
+                ? SoundManager.Instance.GetMusicGroup()
+                : SoundManager.Instance.GetSoundsGroup();
+
                 audioSourceLoop.rolloffMode = AudioRolloffMode.Custom;
                 audioSourceLoop.SetCustomCurve(
                     AudioSourceCurveType.CustomRolloff,
@@ -86,7 +89,6 @@ public class SoundEmitter : MonoBehaviour
                 );
                 audioSourceLoop.Play();
             }
-            // Actualizar volumen SIEMPRE, est� o no reci�n iniciado
             audioSourceLoop.volume = playerVolumeToPlay;
         }
         else
