@@ -6,7 +6,9 @@ public class MenuOpciones : MonoBehaviour
 {
     [SerializeField] GameObject canvasOpciones;
     [SerializeField] VideoPlayer player;
+    [SerializeField] Slider masterSlider;
     [SerializeField] Slider volumeSlider;
+    [SerializeField] Slider musicSlider;
 
     private GameObject canvasAnterior;
 
@@ -17,21 +19,35 @@ public class MenuOpciones : MonoBehaviour
 
     private void Start()
     {
-        // Inicializar el slider con el valor actual
-        volumeSlider.value = SoundManager.Instance.playerVolumeMultiplier;
+        masterSlider.value = SoundManager.Instance.masterVolumeMultiplier;
+        masterSlider.onValueChanged.AddListener(OnMasterVolumeChanged);
 
-        // Suscribirse al evento del slider
+
+        volumeSlider.value = SoundManager.Instance.playerVolumeMultiplier;
         volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
+
+        musicSlider.value = SoundManager.Instance.musicVolumeMultiplier;
+        musicSlider.onValueChanged.AddListener(OnMusicVolumeChanged);
     }
 
     private void OnDestroy()
     {
         volumeSlider.onValueChanged.RemoveListener(OnVolumeChanged);
+        musicSlider.onValueChanged.RemoveListener(OnMusicVolumeChanged);
+    }
+
+    private void OnMasterVolumeChanged(float value)
+    {
+        SoundManager.Instance.SetMasterVolume(value);
     }
 
     private void OnVolumeChanged(float value)
     {
         SoundManager.Instance.SetPlayerVolume(value);
+    }
+    private void OnMusicVolumeChanged(float value)
+    {
+        SoundManager.Instance.SetMusicVolume(value);
     }
 
     public void AbrirOpcionesDesde(GameObject origen)
