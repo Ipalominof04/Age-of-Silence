@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
 
         // 3. Resetea al final cuando todo está listo
         PlayerController.Instance?.RespawnReset();
+        AidenController.Instance?.RespawnReset();
 
         Debug.Log($"[SPAWN] Vida al entrar escena: {healthAlEntrarEscena} | Vida actual: {datos.PlayerHealth}");
 
