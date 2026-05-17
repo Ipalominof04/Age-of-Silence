@@ -27,7 +27,10 @@ public class MusicMedia : MonoBehaviour
 
     [Header("Música inicial")]
     [SerializeField] private string startKey;
+    private int chaseCount = 0;
     private ESound currentSound = ESound.NONE;
+
+    private bool isChasing = false;
 
     private void Start()
     {
@@ -73,12 +76,23 @@ public class MusicMedia : MonoBehaviour
         if (!canPlay) return;
         if (soundEmitter == null) return;
 
+        if (key == "musicChase")
+        {
+            print("bool de chase" + isChasing);
+            if (!isChasing)
+            {
+                isChasing = true;
+                print("musica de chase");
+                soundEmitter.EmitSound(musicDictionary["musicChase"]);
+            }
+            return;
+        }
+
         if (key == "musicStop")
         {
+            isChasing = false;
             soundEmitter.StopSound();
-            // Si había ambiente antes, vuelve a ella
-            if (currentSound != ESound.NONE)
-                soundEmitter.EmitSound(currentSound);
+            soundEmitter.EmitSound(currentSound);
             return;
         }
 
@@ -92,7 +106,6 @@ public class MusicMedia : MonoBehaviour
         soundEmitter.EmitSound(sound);
         currentSound = sound;
     }
-
     public void EnableMusic(bool value)
     {
         canPlay = value;
