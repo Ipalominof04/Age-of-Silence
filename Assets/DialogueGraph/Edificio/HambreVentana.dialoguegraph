@@ -25,27 +25,27 @@ MonoBehaviour:
     - rid: 514183676795289920
       type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
       data:
-        m_Value: 
+        m_Value: Aiden
     - rid: 514183676795289921
       type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
       data:
-        m_Value: 
+        m_Value: Tengo mucha hambre
     - rid: 514183676795289922
       type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
       data:
-        m_Value: 
+        m_Value: Aiden
     - rid: 514183676795289923
       type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
       data:
-        m_Value: 
+        m_Value: "\xBFPodr\xEDamos buscar algo de comer?"
     - rid: 514183676795289924
       type: {class: 'Constant`1[[System.Int32, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
       data:
-        m_Value: 0
+        m_Value: 2
     - rid: 514183676795289925
       type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
       data:
-        m_Value: 
+        m_Value: Androide
     - rid: 514183676795289926
       type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
       data:
@@ -53,19 +53,19 @@ MonoBehaviour:
     - rid: 514183676795289927
       type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
       data:
-        m_Value: 
+        m_Value: Androide
     - rid: 514183676795289928
       type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
       data:
-        m_Value: 
+        m_Value: "S\xEDgueme, tiene que haber algo en alguna casa."
     - rid: 514183676795289929
       type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
       data:
-        m_Value: 
+        m_Value: Androide
     - rid: 514183676795289930
       type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
       data:
-        m_Value: 
+        m_Value: No tenemos tiempo, hay que avanzar.
     - rid: 4020160249315459361
       type: {class: GraphModelImp, ns: Unity.GraphToolkit.Editor.Implementation, asm: Unity.GraphToolkit.Editor}
       data:
@@ -102,10 +102,10 @@ MonoBehaviour:
         m_LocalSubgraphs: []
         m_LastKnownBounds:
           serializedVersion: 2
-          x: 0
-          y: 0
-          width: 0
-          height: 0
+          x: 235
+          y: 226
+          width: 1527
+          height: 322
         m_GraphElementMetaData:
         - m_Guid:
             m_Value0: 11827045066900749965
@@ -447,10 +447,22 @@ MonoBehaviour:
           - __option_portCount
           - Speaker
           - Dialogue
+          - Choice Text 0
+          - Choice Value 0
+          - Choice Event 0
+          - Choice Text 1
+          - Choice Value 1
+          - Choice Event 1
           m_ValueList:
           - rid: 514183676795289924
           - rid: 514183676795289925
           - rid: 514183676795289926
+          - rid: 6835154014158716928
+          - rid: 6835154014158716929
+          - rid: 6835154014158716930
+          - rid: 6835154014158716931
+          - rid: 6835154014158716932
+          - rid: 6835154014158716933
         m_InputPortInfos:
           expandedPortsById:
             m_KeyList: []
@@ -584,7 +596,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: 87f02555c2d5c71f7d55572c47294d02
         m_Version: 2
-        m_Position: {x: 1300.0859, y: 419.8896}
+        m_Position: {x: 1349.6512, y: 412.93304}
         m_Title: DialogueNode
         m_Tooltip: 
         m_NodePreviewModel:
@@ -785,3 +797,27 @@ MonoBehaviour:
           m_PortDirection: 1
           m_PortOrientation: 0
           m_Title: in
+    - rid: 6835154014158716928
+      type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: "Est\xE1 bien"
+    - rid: 6835154014158716929
+      type: {class: 'Constant`1[[System.Int32, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: 5
+    - rid: 6835154014158716930
+      type: {class: 'Constant`1[[GameEvent, Assembly-CSharp]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: {fileID: 0}
+    - rid: 6835154014158716931
+      type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: No hay tiempo
+    - rid: 6835154014158716932
+      type: {class: 'Constant`1[[System.Int32, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: -5
+    - rid: 6835154014158716933
+      type: {class: 'Constant`1[[GameEvent, Assembly-CSharp]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
+      data:
+        m_Value: {fileID: 0}
