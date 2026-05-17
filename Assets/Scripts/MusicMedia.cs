@@ -25,6 +25,20 @@ public class MusicMedia : MonoBehaviour
 
     private SoundEmitter soundEmitter;
 
+    [Header("Música inicial")]
+    [SerializeField] private string startKey;
+    private int chaseCount = 0;
+    private ESound currentSound = ESound.NONE;
+
+    private bool isChasing = false;
+
+    private void Start()
+    {
+        if (!string.IsNullOrEmpty(startKey))
+            OnMusicEvent(startKey);
+    }
+
+
     private void Awake()
     {
         soundEmitter = GetComponent<SoundEmitter>();
@@ -39,6 +53,7 @@ public class MusicMedia : MonoBehaviour
                 musicDictionary.Add(entry.key, entry.sound);
             }
         }
+
     }
 
     private void OnEnable()
@@ -56,43 +71,41 @@ public class MusicMedia : MonoBehaviour
             musicEvent.Unsubscribe(OnMusicEvent);
         }
     }
-
     private void OnMusicEvent(string key)
     {
         if (!canPlay) return;
+        if (soundEmitter == null) return;
 
-        if (soundEmitter == null)
+        if (key == "musicChase")
         {
-            Debug.LogError("MusicMedia: emitter no está asignado.");
-            return;
-        }
-        if (!musicDictionary.ContainsKey(key))
-        {
-            Debug.LogWarning($"MusicMedia: clave '{key}' no encontrada.");
+            print("bool de chase" + isChasing);
+            if (!isChasing)
+            {
+                isChasing = true;
+                print("musica de chase");
+                soundEmitter.EmitSound(musicDictionary["musicChase"]);
+            }
             return;
         }
 
         if (key == "musicStop")
         {
+            isChasing = false;
             soundEmitter.StopSound();
+            soundEmitter.EmitSound(currentSound);
             return;
         }
 
-        ESound sound = musicDictionary[key];
-
-        switch (sound)
+        if (!musicDictionary.TryGetValue(key, out ESound sound))
         {
-            case ESound.MUSICAMENU:
-            case ESound.MUSICACHASE:
-                soundEmitter.EmitSound(sound);
-                break;
-
-            default:
-                Debug.LogWarning($"El sonido {sound} no es música válida.");
-                break;
+            Debug.LogWarning($"MusicMedia: clave '{key}' no encontrada.");
+            return;
         }
-    }
 
+        soundEmitter.StopSound();
+        soundEmitter.EmitSound(sound);
+        currentSound = sound;
+    }
     public void EnableMusic(bool value)
     {
         canPlay = value;

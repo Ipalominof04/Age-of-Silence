@@ -13,7 +13,6 @@ public class MainMenuCanvas : MonoBehaviour
     [SerializeField] public GameObject menuOptionsUI;
     [SerializeField] public GameObject mainMenuUI;
 
-
     public void Play()
     {
         PlayerPrefs.DeleteAll();
