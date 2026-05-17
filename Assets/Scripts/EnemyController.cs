@@ -197,6 +197,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 agent.speed = speedPatrol;
                 agent.stoppingDistance = 0.2f;
                 agent.SetDestination(destination[currentIndex].position);
+                onMusicChange.Raise("musicStop");
                 break;
 
             case EnemyState.CHASE:
@@ -337,7 +338,6 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 animator.SetBool("onSearching", false);
                 animator.SetBool("onPatrol", false);
                 if (searchCoroutine != null) StopCoroutine(searchCoroutine);
-                onMusicChange.Raise("musicStop");
                 break;
             case EnemyState.LOOK:
                 animator.SetBool("onLook", false);
@@ -552,6 +552,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     private void OnPlayerDied()
     {
         playerDead = true;
+
         ChangeState(EnemyState.PATROL);
     }
 
