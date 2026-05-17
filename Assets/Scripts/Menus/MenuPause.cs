@@ -30,7 +30,8 @@ public class MenuPause : MonoBehaviour
     private void OnMenuPausa(InputAction.CallbackContext ctx)
     {
         if (isPaused) return;
-        if (SceneManager.GetActiveScene().name == "MainMenu") return;
+        if (SceneManager.GetActiveScene().name == "MainMenu" || SceneManager.GetActiveScene().name == "Creditos") return;
+
         isPaused = true;
         menuPausaUI.SetActive(true);
         Time.timeScale = 0f;

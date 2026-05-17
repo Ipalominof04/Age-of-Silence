@@ -45,13 +45,23 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "MainMenu")
+        if (scene.name == "MainMenu" || scene.name == "Creditos")
         {
+            Debug.Log($"[GameManager] Escena cargada: '{scene.name}'");
             if (PlayerController.Instance != null)
             {
                 PlayerController.Instance.gameObject.SetActive(false);
                 AidenController.Instance.gameObject.SetActive(false);
                 return;
+            }
+
+            if (scene.name == "MainMenu")
+            {
+                MainMenuCanvas menu = FindFirstObjectByType<MainMenuCanvas>(FindObjectsInactive.Include);
+                if (menu != null)
+                    menu.mainMenuUI.SetActive(true);
+                else
+                    Debug.LogError("[GameManager] No se encontró MainMenuCanvas");
             }
         }
 
@@ -108,11 +118,13 @@ public class GameManager : MonoBehaviour
     }
     public void ChangeScene(string sceneName)
     {
-        GuardarEscena();
-        if (sceneName != "MainMenu")
+        if (sceneName != "MainMenu" && sceneName != "Creditos")
+        {
+            GuardarEscena();
             datos.NameScene = sceneName;
+            GuardarPartida();
+        }
         StartCoroutine(FadeAndLoadScene(sceneName));
-        GuardarPartida();
     }
 
     public void IrAScene(string sceneName)
@@ -276,6 +288,7 @@ public class GameManager : MonoBehaviour
                         aiden.transform.rotation = Quaternion.Euler(0f, spawn.transform.eulerAngles.y, 0f);
                     }
                 }
+                Debug.LogWarning($"[SPAWN] No se encontró SpawnPoint con doorID '{lastDoorID}' en escena '{SceneManager.GetActiveScene().name}'");
                 return;
             }
         }
