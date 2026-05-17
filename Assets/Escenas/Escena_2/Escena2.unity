@@ -23170,6 +23170,7 @@ MonoBehaviour:
   - key: musicChase
     sound: 24
   canPlay: 1
+  startKey: 
 --- !u!4 &416359048
 Transform:
   m_ObjectHideFlags: 0
@@ -36595,6 +36596,59 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 926452951}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &941296064
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 941296065}
+  - component: {fileID: 941296066}
+  m_Layer: 3
+  m_Name: PlayerLimit (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &941296065
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941296064}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.54, y: -2.06746, z: 8.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1299801199}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &941296066
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941296064}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 4.2802906, z: 10.448713}
+  m_Center: {x: 0, y: 1.6401453, z: -0.2705593}
 --- !u!1001 &947309269
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38816,8 +38870,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.958063, y: 2.3178759, z: 6.3205442}
-  m_Center: {x: 0.00179244, y: 1.1553184, z: -0.19318281}
+  m_Size: {x: 2.958063, y: 2.3178759, z: 7.923622}
+  m_Center: {x: 0.0017924154, y: 1.1553187, z: 0.6083565}
 --- !u!1001 &1071484596
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48853,6 +48907,7 @@ Transform:
   - {fileID: 231353564}
   - {fileID: 1544596878}
   - {fileID: 1617372564}
+  - {fileID: 941296065}
   - {fileID: 203563597}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -50346,6 +50401,7 @@ MonoBehaviour:
   grapSinObjeto: {fileID: 3965311268370046156, guid: 2528a99c4d3ed0644893199ff4a0e08c, type: 3}
   graphObjetoIncorrecto: {fileID: 3965311268370046156, guid: f6265653a4f9cde4d83477e5222b8e1a, type: 3}
   nombreEscena: RellanoPB
+  miDoorID: 
   targetDoorID: spawnescena2_rellanopb
   canvasworld: {fileID: 1980362049}
 --- !u!65 &1354316618
@@ -58438,8 +58494,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.958063, y: 2, z: 5}
-  m_Center: {x: -0.006408449, y: 1.2162138, z: -0.19318642}
+  m_Size: {x: 2.958063, y: 2.7536385, z: 5}
+  m_Center: {x: -0.0064084628, y: 0.8393949, z: -0.19318654}
 --- !u!4 &1480406937 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 05aec82adc02f16409639716322b1673, type: 3}

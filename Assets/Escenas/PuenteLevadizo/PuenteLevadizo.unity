@@ -47119,13 +47119,17 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: f105511fd0d7e574a80845b3194a26aa, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2782315285047850117, guid: 54d8b5f898d226149905f2836c474e9b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3052786145037884313, guid: 54d8b5f898d226149905f2836c474e9b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 552499497}
+    - targetCorrespondingSourceObject: {fileID: 3052786145037884313, guid: 54d8b5f898d226149905f2836c474e9b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 552499498}
   m_SourcePrefab: {fileID: 100100000, guid: 54d8b5f898d226149905f2836c474e9b, type: 3}
 --- !u!4 &552499495 stripped
 Transform:
@@ -47153,6 +47157,27 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0.096, y: 0.26500002, z: 0.0050000004}
   m_TimeToStationary: 0.5
+--- !u!65 &552499498
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552499496}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.3859158, y: 0.59554476, z: 0.65529007}
+  m_Center: {x: 0.09567791, y: 0.2651743, z: 0.0054409234}
 --- !u!1001 &553717965
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -88165,8 +88190,8 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: -0.003, y: 1.0940001, z: -0.194}
   m_TimeToStationary: 0.5
---- !u!64 &1087804326
-MeshCollider:
+--- !u!65 &1087804326
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -88183,10 +88208,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 49fee4c5907e33545a3b2db2e9d66675, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 2.9580626, y: 2.1952403, z: 6.3205447}
+  m_Center: {x: -0.0029775715, y: 1.0939842, z: -0.19415756}
 --- !u!1001 &1088144052
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -155362,13 +155386,17 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: f105511fd0d7e574a80845b3194a26aa, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2782315285047850117, guid: 54d8b5f898d226149905f2836c474e9b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3052786145037884313, guid: 54d8b5f898d226149905f2836c474e9b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1889033797}
+    - targetCorrespondingSourceObject: {fileID: 3052786145037884313, guid: 54d8b5f898d226149905f2836c474e9b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1889033799}
   m_SourcePrefab: {fileID: 100100000, guid: 54d8b5f898d226149905f2836c474e9b, type: 3}
 --- !u!1 &1889033796 stripped
 GameObject:
@@ -155396,6 +155424,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2384229939999654179, guid: 54d8b5f898d226149905f2836c474e9b, type: 3}
   m_PrefabInstance: {fileID: 1889033795}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &1889033799
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889033796}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.3859155, y: 0.59554476, z: 0.65528995}
+  m_Center: {x: 0.095676, y: 0.26517433, z: 0.00544092}
 --- !u!4 &1890905997 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a9419a14ac8782141bb7f0b4a51a327b, type: 3}
@@ -162168,13 +162217,17 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: f105511fd0d7e574a80845b3194a26aa, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2782315285047850117, guid: 54d8b5f898d226149905f2836c474e9b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3052786145037884313, guid: 54d8b5f898d226149905f2836c474e9b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1930821738}
+    - targetCorrespondingSourceObject: {fileID: 3052786145037884313, guid: 54d8b5f898d226149905f2836c474e9b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1930821739}
   m_SourcePrefab: {fileID: 100100000, guid: 54d8b5f898d226149905f2836c474e9b, type: 3}
 --- !u!4 &1930821736 stripped
 Transform:
@@ -162202,6 +162255,27 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0.096, y: 0.26500002, z: 0.0050000004}
   m_TimeToStationary: 0.5
+--- !u!65 &1930821739
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930821737}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.3859155, y: 0.59554476, z: 0.65528995}
+  m_Center: {x: 0.095676, y: 0.26517433, z: 0.0054399665}
 --- !u!1 &1932927869 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 6a690a756dbd65141a09a3ad7fafacc4, type: 3}
