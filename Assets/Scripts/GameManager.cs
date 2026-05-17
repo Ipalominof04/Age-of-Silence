@@ -184,17 +184,25 @@ public class GameManager : MonoBehaviour
             ChapterUI.ChapterStep[] steps = new ChapterUI.ChapterStep[]
             {
                 new ChapterUI.ChapterStep("CAPÍTULO 1: LA CIUDAD", 1f),
-                new ChapterUI.ChapterStep("LA CIUDAD 1.1: ZONA 0", 1f)
+                new ChapterUI.ChapterStep("ZONA 0", 1f)
             };
             yield return StartCoroutine(ChapterUI.Instance.PlaySequence(steps));
         }
         else if (sceneName == "Escena4")
         {
-            yield return StartCoroutine(ChapterUI.Instance.MostrarCapitulo("LA CIUDAD 1.2: LA FÁBRICA", 3f));
+            yield return StartCoroutine(ChapterUI.Instance.MostrarCapitulo("LA FABRICA", 2f));
         }
         else if (sceneName == "SalidaFabrica")
         {
-            yield return StartCoroutine(ChapterUI.Instance.MostrarCapitulo("LA CIUDAD 1.3: ESCAPADA", 3f));
+            yield return StartCoroutine(ChapterUI.Instance.MostrarCapitulo("ESCAPE", 2f));
+        }
+        else if(sceneName == "SalidaMuro")
+        {
+            yield return StartCoroutine(ChapterUI.Instance.MostrarCapitulo("CAPÍTULO 2: EL BOSQUE", 2f));
+        }
+        else if (sceneName == "EscenaFinal")
+        {
+            yield return StartCoroutine(ChapterUI.Instance.MostrarCapitulo("CAPÍTULO 3: EL DESENLACE", 2f));
         }
         yield return StartCoroutine(FadeIn());
     }
