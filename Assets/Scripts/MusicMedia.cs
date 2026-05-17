@@ -25,6 +25,17 @@ public class MusicMedia : MonoBehaviour
 
     private SoundEmitter soundEmitter;
 
+    [Header("Música inicial")]
+    [SerializeField] private string startKey;
+    private ESound currentSound = ESound.NONE;
+
+    private void Start()
+    {
+        if (!string.IsNullOrEmpty(startKey))
+            OnMusicEvent(startKey);
+    }
+
+
     private void Awake()
     {
         soundEmitter = GetComponent<SoundEmitter>();
@@ -39,6 +50,7 @@ public class MusicMedia : MonoBehaviour
                 musicDictionary.Add(entry.key, entry.sound);
             }
         }
+
     }
 
     private void OnEnable()
@@ -56,41 +68,29 @@ public class MusicMedia : MonoBehaviour
             musicEvent.Unsubscribe(OnMusicEvent);
         }
     }
-
     private void OnMusicEvent(string key)
     {
         if (!canPlay) return;
+        if (soundEmitter == null) return;
 
-        if (soundEmitter == null)
+        if (key == "musicStop")
         {
-            Debug.LogError("MusicMedia: emitter no está asignado.");
+            soundEmitter.StopSound();
+            // Si había ambiente antes, vuelve a ella
+            if (currentSound != ESound.NONE)
+                soundEmitter.EmitSound(currentSound);
             return;
         }
-        if (!musicDictionary.ContainsKey(key))
+
+        if (!musicDictionary.TryGetValue(key, out ESound sound))
         {
             Debug.LogWarning($"MusicMedia: clave '{key}' no encontrada.");
             return;
         }
 
-        if (key == "musicStop")
-        {
-            soundEmitter.StopSound();
-            return;
-        }
-
-        ESound sound = musicDictionary[key];
-
-        switch (sound)
-        {
-            case ESound.MUSICAMENU:
-            case ESound.MUSICACHASE:
-                soundEmitter.EmitSound(sound);
-                break;
-
-            default:
-                Debug.LogWarning($"El sonido {sound} no es música válida.");
-                break;
-        }
+        soundEmitter.StopSound();
+        soundEmitter.EmitSound(sound);
+        currentSound = sound;
     }
 
     public void EnableMusic(bool value)

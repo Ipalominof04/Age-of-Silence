@@ -15,8 +15,10 @@ public class WaypointTriggerPuerta : MonoBehaviour
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Aiden"))
         {
-            triggerPuerta.SetActive(true);
+            soundEmitter.SetRange(1f, 50f);
             soundEmitter.EmitSound(ESound.PUERTA_PUZZLE);
+            triggerPuerta.SetActive(true);
+
         }
     }
 }
