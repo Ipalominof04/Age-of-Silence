@@ -31,7 +31,9 @@ public class ChapterUI : MonoBehaviour
     // un texto del cap
     public IEnumerator MostrarCapitulo(string mensaje, float duracion)
     {
+        canvas.SetActive(true);
         yield return PlayStep(mensaje, duracion);
+        canvas.SetActive(false);
     }
 
     // secuencia de textos

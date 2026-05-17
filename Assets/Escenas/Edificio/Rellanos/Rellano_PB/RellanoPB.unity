@@ -6558,6 +6558,59 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7260863774378962186, guid: 554a5e88eb18d254d8c18a357df05724, type: 3}
   m_PrefabInstance: {fileID: 216616350}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &230953766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 230953767}
+  - component: {fileID: 230953768}
+  m_Layer: 3
+  m_Name: ColliderEscalera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &230953767
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230953766}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.846, y: 0, z: -6.468}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2134870110}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &230953768
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230953766}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.2761221, y: 2.1715355, z: 1.4858255}
+  m_Center: {x: -0.36193895, y: 0.5857675, z: -0.24291277}
 --- !u!1 &235612561
 GameObject:
   m_ObjectHideFlags: 0
@@ -17685,8 +17738,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0412717, y: 0.692619, z: 0.38651597}
-  m_Center: {x: 0.0005585553, y: 0.14266767, z: -0.010803665}
+  m_Size: {x: 1.1373577, y: 1.1611004, z: 0.38651597}
+  m_Center: {x: 0.048601385, y: 0.37690827, z: -0.010803666}
 --- !u!1 &1276629241
 GameObject:
   m_ObjectHideFlags: 0
@@ -22472,6 +22525,7 @@ Transform:
   - {fileID: 99457952}
   - {fileID: 2067371970}
   - {fileID: 613454603}
+  - {fileID: 230953767}
   m_Father: {fileID: 403808283}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2137737527

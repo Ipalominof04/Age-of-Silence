@@ -13,8 +13,9 @@ public class TriggerPuzlePuertas : MonoBehaviour, IPuzle
     public RuntimeDialogueGraph graphObjetoIncorrecto;
 
     [Header("Cambio de escena")]
-    [SerializeField] private string nombreEscena;
-    [SerializeField] private string targetDoorID;
+    [SerializeField]  string nombreEscena;
+    [SerializeField]  string miDoorID;
+    [SerializeField]  string targetDoorID;
 
     [Header("Canvas")]
     [SerializeField] GameObject canvasworld;
@@ -61,7 +62,6 @@ public class TriggerPuzlePuertas : MonoBehaviour, IPuzle
     }
     private void ResolvePuzzle()
     {
-        gameObject.SetActive(false);
         player.ClearTriggerPuzle();
 
         if (!string.IsNullOrEmpty(nombreEscena))
@@ -69,5 +69,6 @@ public class TriggerPuzlePuertas : MonoBehaviour, IPuzle
             GameManager.Instance.lastDoorID = targetDoorID;
             GameManager.Instance.ChangeScene(nombreEscena);
         }
+        gameObject.SetActive(false);
     }
 }
