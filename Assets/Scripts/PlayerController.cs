@@ -77,7 +77,6 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     [Header("Sound Waves")]
     [SerializeField] private MeshRenderer wavesRenderer;
-    [SerializeField] private Texture2D[] wavesTextures;
 
     private bool InDialogue;
     private bool canInteract = false;
@@ -216,7 +215,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         switch (currentState)
         {
             case PlayerState.IDLE:
-                SetWavesSprite(-1);
+                if (previousState != PlayerState.SHOOT)
+                    SetWavesSprite(-1);
                 if (!escaleraInRange)
                 {
                     if (armaEquipada)
@@ -268,7 +268,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 }
                 break;
             case PlayerState.SHOOT:
-                SetWavesSprite(2);
+               // SetWavesSprite(2);
                 break;
             case PlayerState.INTERACT:
                 break;
@@ -300,7 +300,12 @@ public class PlayerController : MonoBehaviour, IDamageable
             case PlayerState.IDLE:
                 if (inputMoviment.magnitude > 0.01f) ChangeState(PlayerState.WALK);
                 if (crouchAction.IsPressed()) ChangeState(PlayerState.CROUCH);
-                if (armaEquipada && shootAction.triggered) ChangeState(PlayerState.SHOOT);
+                if (armaEquipada && shootAction.triggered)
+                {
+                    SetWavesSprite(2);
+                    ChangeState(PlayerState.SHOOT);
+                }
+                
                 if (interactAction.triggered && (objectInRange != null || puzleInRange != null))
                     ChangeState(PlayerState.INTERACT);
                 if (interactAction.triggered && armaEnMano != null && !armaEquipada)
@@ -780,8 +785,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             return;
         }
         wavesRenderer.gameObject.SetActive(true);
-        wavesRenderer.material.SetTexture("_UnlitColorMap", wavesTextures[index]);
-        wavesRenderer.material.SetTexture("_EmissiveColorMap", wavesTextures[index]);
+        wavesRenderer.GetComponent<SoundWavesController>()?.SetWaveState(index);
     }
 
     private void SetColliderNormal()

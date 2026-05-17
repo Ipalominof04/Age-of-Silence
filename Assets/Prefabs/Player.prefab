@@ -2542,6 +2542,7 @@ GameObject:
   - component: {fileID: 4085546631419536405}
   - component: {fileID: 8025010664901549534}
   - component: {fileID: 6776164849610751839}
+  - component: {fileID: 3613815830269377515}
   m_Layer: 8
   m_Name: soundWaves
   m_TagString: Untagged
@@ -2557,13 +2558,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6006789896441676903}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0.7071068, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.030000005, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5017409, y: 1.047569, z: 1.2527614}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1075083039853645334}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8025010664901549534
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2620,6 +2621,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3613815830269377515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6006789896441676903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 188ac8e8c1da33a4da040d9eff70c22b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LockSoundWaves
+  meshRenderer: {fileID: 6776164849610751839}
+  walkTextures:
+  - {fileID: 2800000, guid: f46b9adc3e2e784448b6facefcd5970c, type: 3}
+  - {fileID: 2800000, guid: 7e488a93f4a27ee4fac40dee8ef8fa6b, type: 3}
+  runTextures:
+  - {fileID: 2800000, guid: f46b9adc3e2e784448b6facefcd5970c, type: 3}
+  - {fileID: 2800000, guid: 7e488a93f4a27ee4fac40dee8ef8fa6b, type: 3}
+  - {fileID: 2800000, guid: c40980fc619db1e4e83e14f15f5f3590, type: 3}
+  - {fileID: 2800000, guid: 7e488a93f4a27ee4fac40dee8ef8fa6b, type: 3}
+  - {fileID: 2800000, guid: f46b9adc3e2e784448b6facefcd5970c, type: 3}
+  shootTextures:
+  - {fileID: 2800000, guid: fd5322ec7229ba8459bf2f212766d72e, type: 3}
+  - {fileID: 2800000, guid: 9dc66fd1169092147a2b715244bd622e, type: 3}
+  - {fileID: 2800000, guid: fd5322ec7229ba8459bf2f212766d72e, type: 3}
+  - {fileID: 2800000, guid: 7e488a93f4a27ee4fac40dee8ef8fa6b, type: 3}
+  - {fileID: 2800000, guid: 2ff0541b081765447a2ae3d241773b29, type: 3}
+  walkFrameRate: 0.32
+  runFrameRate: 0.16
+  shootFrameRate: 0.05
 --- !u!1 &6016840115722504282
 GameObject:
   m_ObjectHideFlags: 0
@@ -3233,10 +3265,6 @@ MonoBehaviour:
   shootingPoint: {fileID: 0}
   ragdollRoot: {fileID: 3624242300830788968}
   wavesRenderer: {fileID: 6776164849610751839}
-  wavesTextures:
-  - {fileID: 2800000, guid: 2b68ac31ea4b78c4780123e0071b50e4, type: 3}
-  - {fileID: 2800000, guid: f37aa167c4d0e2448a7c249aa78e96c8, type: 3}
-  - {fileID: 2800000, guid: a947a2a3a17f22c469a2d65068ebe61a, type: 3}
   walkStepRate: 0.45
   runStepRate: 0.28
 --- !u!114 &637834156667624345
