@@ -20,14 +20,6 @@ public class TriggerPuzlePuertas : MonoBehaviour, IPuzle
     [Header("Canvas")]
     [SerializeField] GameObject canvasworld;
 
-    private PlayerController player;
-
-
-    private void Start()
-    {
-        player = FindAnyObjectByType<PlayerController>();
-    }
-
     public void Interact(ObjetoAgarrado objetoMano)
     {
         if (!requiereObjeto)
@@ -62,7 +54,7 @@ public class TriggerPuzlePuertas : MonoBehaviour, IPuzle
     }
     private void ResolvePuzzle()
     {
-        player.ClearTriggerPuzle();
+        PlayerController.Instance.ClearTriggerPuzle();
 
         if (!string.IsNullOrEmpty(nombreEscena))
         {
