@@ -713,6 +713,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         OnPlayerDied?.Invoke();
         ActivateRagdoll();
         GameManager.Instance.datos.PlayerHealth = GameManager.Instance.GetHealthAlEntrarEscena();
+        GameManager.Instance.datos.confianza = GameManager.Instance.GetConfianzaAlEntrarEscena();
+        GameManager.Instance.confianza = GameManager.Instance.GetConfianzaAlEntrarEscena();
         GameManager.Instance.LimpiarSOEscenas();
         StartCoroutine(RespawnDelay());
     }
