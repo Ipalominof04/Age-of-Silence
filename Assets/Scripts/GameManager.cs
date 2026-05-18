@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     [Header("Confianza")]
     [SerializeField] public float confianza = 0;
     private float healthAlEntrarEscena;
+    private float confianzaAlEntrarEscena;
+
     [Header("Fade")]
     public Image fadeImage;        // la UI Image negra
     public float fadeDuration = 1f;
@@ -25,6 +27,7 @@ public class GameManager : MonoBehaviour
     public SOGeneral datos;
 
     public float GetHealthAlEntrarEscena() => healthAlEntrarEscena;
+    public float GetConfianzaAlEntrarEscena() => confianzaAlEntrarEscena;
 
 
     private void Awake()
@@ -81,6 +84,9 @@ public class GameManager : MonoBehaviour
         healthAlEntrarEscena = datos.PlayerHealth;
         Debug.Log($"Vida al entrar escena guardada: {healthAlEntrarEscena}");
         datos.PlayerHealth = healthAlEntrarEscena;
+        confianzaAlEntrarEscena = datos.confianza;
+
+        datos.confianza = confianzaAlEntrarEscena;
 
         // 3. Resetea al final cuando todo está listo
         PlayerController.Instance?.RespawnReset();

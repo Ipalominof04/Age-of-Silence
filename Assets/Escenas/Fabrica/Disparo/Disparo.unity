@@ -267,6 +267,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1284835920}
+  - {fileID: 1443350391}
   - {fileID: 1408775027}
   m_Father: {fileID: 414887211}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1767,6 +1768,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3463235669188579180, guid: 7ae4a5c03cc9dee4cb8e27fb853d5b4a, type: 3}
   m_PrefabInstance: {fileID: 345485605}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &127228767 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3665532341753221681, guid: 4d44efa3c65ac17418fef14f408843b2, type: 3}
+  m_PrefabInstance: {fileID: 895885331}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b86517ebb9649b74290a34f763a3234f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1001 &149999832
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13566,7 +13578,7 @@ Transform:
   m_GameObject: {fileID: 1284835919}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.123, y: -1.436, z: -3.52}
+  m_LocalPosition: {x: 23.213, y: -1.436, z: -3.431}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13607,8 +13619,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.423027, y: 1.9863706, z: 1.87778}
-  m_Center: {x: -0.28848648, y: 0.49318522, z: -0.1679018}
+  m_Size: {x: 0.65219885, y: 1.9863706, z: 1.87778}
+  m_Center: {x: -0.17390059, y: 0.49318522, z: -0.1679018}
 --- !u!1001 &1297276849
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15825,6 +15837,73 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3837893497168610565, guid: eb8d2e576a8e775459640e6724541695, type: 3}
   m_PrefabInstance: {fileID: 1436613350}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1443350390
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1443350391}
+  - component: {fileID: 1443350393}
+  - component: {fileID: 1443350392}
+  m_Layer: 9
+  m_Name: TriggerSoltarArma
+  m_TagString: TriggerDropWeapon
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &1443350391
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443350390}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 22.919, y: -1.436, z: -3.502}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 11481524}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1443350392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443350390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0315641a883ff8e4893621d997954a19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TriggerDropArma
+  armaController: {fileID: 127228767}
+--- !u!65 &1443350393
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443350390}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.1822054, y: 1.9863706, z: 2.66201}
+  m_Center: {x: 0.22131354, y: 0.49318522, z: -0.006887438}
 --- !u!1 &1456379245
 GameObject:
   m_ObjectHideFlags: 0
