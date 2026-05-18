@@ -19,13 +19,11 @@ public class CinematicaSelector : MonoBehaviour
     {
         if (GameManager.Instance.confianza >= umbralConfianza)
         {
-            print("entro en buena");
             finalBueno.gameObject.SetActive(true);
             finalBueno.Play();
         }
         else
         {
-            print("entro en mala");
             finalMalo.gameObject.SetActive(true);
             finalMalo.Play();
         }
