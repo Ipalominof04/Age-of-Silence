@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -15,7 +16,8 @@ public class AidenController : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private GameObject canvasWorld;
-    [SerializeField] private Animator canvasAnimator;
+    [SerializeField] private TextMeshProUGUI interactText;
+    private bool isFirstDialogue = true;
 
     [Header("Crouch")]
     [SerializeField] private CapsuleCollider aidenCollider;
@@ -48,6 +50,7 @@ public class AidenController : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
+        //que no se activen en las cinematicas pq los players que ahi hay son falsos
         else if (SceneManager.GetActiveScene().name == "Escena1" || SceneManager.GetActiveScene().name == "EscenaFinal")
         {
             return;
@@ -62,13 +65,17 @@ public class AidenController : MonoBehaviour
         animator = GetComponent<Animator>();
         SetColliderNormal();
 
+        //como se cargan desde el menu y cuando le das a play apareces en el menu para poder iniciar en cualquier escena para testear etc,
+        //ponerlos en false en el menu pq ahi no hacen falta
         this.gameObject.SetActive(false);
+
     }
 
     void Start()
     {
         InitState(AidenState.IDLE);
         SetUI(false);
+
     }
 
     void Update()
@@ -152,6 +159,12 @@ public class AidenController : MonoBehaviour
         agent.isStopped = false;
         SetUI(false);
         ChangeState(AidenState.IDLE);
+
+        if (isFirstDialogue)
+        {
+            isFirstDialogue = false;
+            interactText.gameObject.SetActive(false);
+        }
     }
     #endregion
     #region State Machine
@@ -434,11 +447,7 @@ public class AidenController : MonoBehaviour
     private void SetUI(bool active)
     {
         if (canvasWorld != null)
-        {
             canvasWorld.SetActive(active);
-            if (active && canvasAnimator != null)
-                canvasAnimator.SetTrigger("Play");
-        }
     }
 
     private void SetColliderNormal()
