@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
-        else if(SceneManager.GetActiveScene().name == "Escena1" || SceneManager.GetActiveScene().name == "EscenaFinal")
+        else if (SceneManager.GetActiveScene().name == "Escena1" || SceneManager.GetActiveScene().name == "EscenaFinal")
         {
             return;
         }
@@ -171,7 +171,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         OnAidenStopped.Subscribe(() => canInteract = true);
         onArmaSobrecalentada.Subscribe(() => armaSobrecalentada = true);
         onArmaEnfriada.Subscribe(() => armaSobrecalentada = false);
-        SceneManager.sceneLoaded += UpdateBrilloBarraVida;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDisable()
@@ -183,8 +183,16 @@ public class PlayerController : MonoBehaviour, IDamageable
         OnAidenStopped.Unsubscribe(() => canInteract = true);
         onArmaSobrecalentada.Unsubscribe(() => armaSobrecalentada = true);
         onArmaEnfriada.Unsubscribe(() => armaSobrecalentada = false);
-        SceneManager.sceneLoaded -= UpdateBrilloBarraVida;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        UpdateBrilloBarraVida(scene, mode);
+        shootingPoint = GameObject.Find("shooting_point");
+        camara = Camera.main;
+    }
+
     private IEnumerator WaitingChargeMap()
     {
         characterController.enabled = false;
@@ -268,7 +276,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 }
                 break;
             case PlayerState.SHOOT:
-               // SetWavesSprite(2);
+                // SetWavesSprite(2);
                 break;
             case PlayerState.INTERACT:
                 break;
@@ -305,7 +313,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                     SetWavesSprite(2);
                     ChangeState(PlayerState.SHOOT);
                 }
-                
+
                 if (interactAction.triggered && (objectInRange != null || puzleInRange != null))
                     ChangeState(PlayerState.INTERACT);
                 if (interactAction.triggered && armaEnMano != null && !armaEquipada)
@@ -531,17 +539,17 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void Run()
     {
         Move(3f);
-        
+
         if (Time.time >= nextStepTime)
         {
             soundEmitter.EmitSound(ESound.RUN);
             nextStepTime = Time.time + runStepRate;
-        }      
+        }
     }
     private void Crouch()
     {
         Move(1.5f);
-        
+
     }
     private void ClimbLadder()
     {
@@ -711,6 +719,16 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (isDying) return;
         isDying = true;
         OnPlayerDied?.Invoke();
+
+        if (armaEnMano != null)
+        {
+            ArmaController arma_ctrl = armaEnMano.GetComponent<ArmaController>();
+            arma_ctrl?.transform.SetParent(null);
+            arma_ctrl?.Soltar();
+            armaEnMano = null;
+            armaEquipada = false;
+        }
+
         ActivateRagdoll();
         GameManager.Instance.datos.PlayerHealth = GameManager.Instance.GetHealthAlEntrarEscena();
         GameManager.Instance.datos.confianza = GameManager.Instance.GetConfianzaAlEntrarEscena();
@@ -775,7 +793,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 luz.intensity = 800f;
                 luz.range = 1f;
                 break;
-           
+
         }
     }
     private void SetWavesSprite(int index)
@@ -804,14 +822,36 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void RespawnReset()
     {
         isDying = false;
+        escaleraInRange = false;
+        objectInRange = null;
+        objectLanzableInRange = null;
+        puzleInRange = null;
+        ayudaInRange = null;
+        dialogueActivo = null;
+        canInteract = false;
+        InDialogue = false;
+        armaSobrecalentada = false;
 
+        // 1. Primero reactivar ragdoll/animator
         foreach (var rb in ragdollRigidbodies)
-        {
             rb.isKinematic = true;
-        }
 
         if (animator != null)
+        {
             animator.enabled = true;
+            animator.Rebind();
+            animator.Update(0f);
+        }
+
+        // 2. Ahora soltar el arma (hueso ya está en posición correcta)
+        if (armaEnMano != null)
+        {
+            ArmaController arma_ctrl = armaEnMano.GetComponent<ArmaController>();
+            arma_ctrl?.transform.SetParent(null);
+            arma_ctrl?.Soltar();
+            armaEnMano = null;
+        }
+        armaEquipada = false;
 
         verticalVelocity = Vector3.zero;
 
@@ -821,11 +861,10 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         ChangeState(PlayerState.IDLE);
 
-        characterController.enabled = true;
-
+        //    characterController.enabled = true;
         StartCoroutine(WaitingChargeMap());
-
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
