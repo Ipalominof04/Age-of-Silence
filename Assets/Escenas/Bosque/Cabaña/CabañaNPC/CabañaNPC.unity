@@ -2509,7 +2509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
-  doorID: spawninteriorcabana_cabananpc
+  doorID: interiorcabana_exterior
   aidenOffset: 1
 --- !u!4 &260386225
 Transform:
@@ -3085,8 +3085,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: "InteriorCaba\xF1a"
-  miDoorID: "caba\xF1anpc_interiorcabana"
-  targetDoorID: "spawncaba\xF1anpc_interiorcabana"
+  miDoorID: 
+  targetDoorID: exteriorcabana_interior
   puzzleRequeridoID: 
 --- !u!65 &331886174
 BoxCollider:
@@ -9967,7 +9967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
-  doorID: spawnexteriortienda_cabananpc
+  doorID: exteriortienda_cabananpc
   aidenOffset: 1
 --- !u!4 &1105842185
 Transform:
@@ -15325,8 +15325,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: ExteriorTienda
-  miDoorID: cabananpc_exteriortienda
-  targetDoorID: spawncabananpc_exteriortienda
+  miDoorID: 
+  targetDoorID: cabananpc_exteriortienda
   puzzleRequeridoID: MisionComidaNPC
 --- !u!65 &1600553196
 BoxCollider:
@@ -15874,8 +15874,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: PuenteBosque
-  miDoorID: cabananpc_puentebosque
-  targetDoorID: spawncabana_bosque
+  miDoorID: 
+  targetDoorID: puentebosque
   puzzleRequeridoID: PuzleNPC
 --- !u!65 &1645687200
 BoxCollider:
