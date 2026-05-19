@@ -320,7 +320,7 @@ public class GameManager : MonoBehaviour
             };
         }
 
-        SaveData data = new SaveData(datos.confianza, datos.PlayerHealth, datos.objetoMano, datos.NameScene, datos.puzzlesResueltos, escenasSave);
+        SaveData data = new SaveData(datos.confianza, datos.PlayerHealth, datos.objetoMano, datos.NameScene, lastDoorID, datos.puzzlesResueltos, escenasSave);
 
         string jsondata = JsonUtility.ToJson(data, true);
         try
@@ -354,6 +354,7 @@ public class GameManager : MonoBehaviour
         datos.confianza = data.confianza;
         confianza = datos.confianza;
         datos.PlayerHealth = data.playerHealth;
+        lastDoorID = data.lastDoorID;
 
         if (datos.objetoMano != null && !string.IsNullOrEmpty(data.objetoMano))
             datos.objetoMano.nombreObjeto = data.objetoMano;
@@ -391,15 +392,17 @@ public class GameManager : MonoBehaviour
         public float playerHealth;
         public string objetoMano;
         public string nameScene;
+        public string lastDoorID;
         public List<string> puzlesCompletados;
         public EscenaData[] escenas;
 
-        public SaveData(float confianza, float playerHealth, ObjetoAgarrado objetoMano, string nameScene, List<string> puzlesCompletados, EscenaData[] escenas)
+        public SaveData(float confianza, float playerHealth, ObjetoAgarrado objetoMano, string nameScene, string lastDoorID, List<string> puzlesCompletados, EscenaData[] escenas)
         {
             this.confianza = confianza;
             this.playerHealth = playerHealth;
             this.objetoMano = objetoMano != null ? objetoMano.nombreObjeto : "";
             this.nameScene = nameScene;
+            this.lastDoorID = lastDoorID;
             this.puzlesCompletados = puzlesCompletados;
             this.escenas = escenas;
         }
