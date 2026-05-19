@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private Vector2 inputMoviment;
     private float gravity = -9.81f;
     private Vector3 verticalVelocity = Vector3.zero;
+    [SerializeField] private float slopeCheckDistance = 0.3f;
 
     [Header("Vida")]
     [SerializeField] private float vidaMaxima;
@@ -207,7 +208,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         characterController.enabled = true;
 
         // ahora espera hasta tocar el suelo físicamente
-        while (!characterController.isGrounded)
+        while (!IsGroundedOrOnSlope())
         {
             verticalVelocity.y = 0f;
             characterController.Move(Vector3.down * 0.05f);
@@ -332,7 +333,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 if (escaleraInRange) ClimbLadder();
                 else Walk();
                 if (inputMoviment.magnitude < 0.01f) ChangeState(PlayerState.IDLE);
-                if (runAction.IsPressed() && characterController.isGrounded) ChangeState(PlayerState.RUN);
+                if (runAction.IsPressed() && IsGroundedOrOnSlope()) ChangeState(PlayerState.RUN);
                 if (crouchAction.IsPressed()) ChangeState(PlayerState.CROUCH);
                 if (objetoLanzableEnMano != null && throwAction.IsPressed())
                     ChangeState(PlayerState.THROW);
@@ -437,6 +438,14 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
     #endregion
+
+    private bool IsGroundedOrOnSlope()
+    {
+        if (characterController.isGrounded) return true;
+        return Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down,
+                               slopeCheckDistance, ~LayerMask.GetMask("Player"));
+    }
+
     private void ActivateRagdoll()
     {
         characterController.enabled = false;
@@ -510,7 +519,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             verticalVelocity.y = 0;
             return;
         }
-        if (characterController.isGrounded)
+        if (IsGroundedOrOnSlope())
             verticalVelocity.y = -2f;
         else
             verticalVelocity.y += gravity * Time.deltaTime;
