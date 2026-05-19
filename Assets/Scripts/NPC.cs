@@ -29,7 +29,7 @@ public class NPC : MonoBehaviour, IPuzle
 
         if (objeto == "ComidaNPC" && GameManager.Instance.PuzzleResuelto("ComidaNPC"))
         {
-            objetoMano.UsarObjeto();
+            objetoMano.ClearObject();
             this.gameObject.SetActive(false);
             if (graphComida != null)
                 DialogueManager.Instance.StartInfo(graphComida);
