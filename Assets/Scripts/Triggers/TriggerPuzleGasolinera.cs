@@ -68,14 +68,14 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
         if (objeto == "Galon")
         {
             meshGalon.SetActive(true);
-            objetoMano.UsarObjeto();
+            objetoMano.ClearObject();
             GameManager.Instance.ResolverPuzzle("GalonUsado");
             emitter.EmitSound(ESound.GASOLINA);
         }
         else if (objeto == "Cerillas")
         {
             meshCerilla.SetActive(true);
-            objetoMano.UsarObjeto();
+            objetoMano.ClearObject();
             emitter.EmitSound(ESound.CERILLAS);
             StartCoroutine(SonarDespuesDeCerillas());
             cameraShake.ShakeContinuo(duracion, fuerza);

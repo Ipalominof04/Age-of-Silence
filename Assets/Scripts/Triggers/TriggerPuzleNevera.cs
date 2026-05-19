@@ -37,7 +37,7 @@ public class TriggerPuzleNevera : MonoBehaviour, IPuzle
         else
             DialogueManager.Instance.StartInfo(graphObjetoIncorrecto);
 
-        objetoMano.UsarObjeto();
+        objetoMano.ClearObject();
     }
 
     private void ResolvePuzzle()
