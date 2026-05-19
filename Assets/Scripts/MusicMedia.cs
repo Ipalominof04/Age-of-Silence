@@ -27,7 +27,6 @@ public class MusicMedia : MonoBehaviour
 
     [Header("Música inicial")]
     [SerializeField] private string startKey;
-    private int chaseCount = 0;
     private ESound currentSound = ESound.NONE;
 
     private bool isChasing = false;
