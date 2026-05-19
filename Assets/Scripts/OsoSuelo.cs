@@ -3,7 +3,9 @@ using UnityEngine;
 public class OsoSuelo : MonoBehaviour
 {
     [SerializeField] GameEvent OntakeBear;
-    [SerializeField] GameObject osoMano;
+    private GameObject osoMano;
+
+
 
     private void Start()
     {
