@@ -5105,6 +5105,88 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4931211907768612, guid: e88b7bb02ae149940a5a0cddf34fe370, type: 3}
   m_PrefabInstance: {fileID: 347485829}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &350544921
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 350544925}
+  - component: {fileID: 350544924}
+  - component: {fileID: 350544923}
+  - component: {fileID: 350544922}
+  m_Layer: 9
+  m_Name: TriggerInfoComida
+  m_TagString: TriggerInfo
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &350544922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350544921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
+  soEscena: {fileID: 11400000, guid: fd20156faab44434687e1963ab9e464d, type: 2}
+  id: TriggerInfoComida
+--- !u!114 &350544923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350544921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d44380ea550f8cb4d966d49b572c4759, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TriggerInfo
+  graphInfo: {fileID: 3965311268370046156, guid: 9367f98d949eb4344a910b6fa71cc79f, type: 3}
+--- !u!65 &350544924
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350544921}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.44203496, y: 0.6008993, z: 5.0781145}
+  m_Center: {x: 0.34950292, y: -0.19955036, z: 0.07853222}
+--- !u!4 &350544925
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350544921}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7.670001, y: 0.5482596, z: -6.022992}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 902810844}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &354601987
 GameObject:
   m_ObjectHideFlags: 0
@@ -8766,11 +8848,11 @@ Transform:
   m_GameObject: {fileID: 710646820}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.1, y: 0.45, z: 0.76036}
+  m_LocalPosition: {x: -4.607, y: -1.61746, z: 14.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1906699629}
+  m_Father: {fileID: 1853797215}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &717994059
 GameObject:
@@ -9684,7 +9766,7 @@ Transform:
   m_GameObject: {fileID: 888780376}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 4.170001, y: 0.054599673, z: -5.703992}
+  m_LocalPosition: {x: 4.9, y: 0.054599673, z: -5.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9995,6 +10077,7 @@ Transform:
   - {fileID: 888780378}
   - {fileID: 1902915822}
   - {fileID: 347162765}
+  - {fileID: 350544925}
   m_Father: {fileID: 1906699629}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &909184683 stripped
@@ -19180,6 +19263,7 @@ Transform:
   - {fileID: 354601988}
   - {fileID: 527696678}
   - {fileID: 1353360281}
+  - {fileID: 710646822}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1858593695
@@ -19942,7 +20026,6 @@ Transform:
   - {fileID: 109433865}
   - {fileID: 440111557}
   - {fileID: 1901851239}
-  - {fileID: 710646822}
   - {fileID: 595031729}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
