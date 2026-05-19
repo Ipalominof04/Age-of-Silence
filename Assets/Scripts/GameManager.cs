@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "MainMenu" || scene.name == "Creditos")
+        if (scene.name == "MainMenu" || scene.name == "Creditos" || scene.name == "Escena1" || scene.name == "EscenaFinal")
         {
             Debug.Log($"[GameManager] Escena cargada: '{scene.name}'");
             if (PlayerController.Instance != null)
@@ -94,7 +94,6 @@ public class GameManager : MonoBehaviour
 
         Debug.Log($"[SPAWN] Vida al entrar escena: {healthAlEntrarEscena} | Vida actual: {datos.PlayerHealth}");
 
-        DamageVignette.Instance?.SetVignetteActive(true);
         float ratio = datos.PlayerHealth > 0 ? datos.PlayerHealth / 6f : 1f;
         DamageVignette.Instance?.UpdateHealthRatio(ratio);
     }
