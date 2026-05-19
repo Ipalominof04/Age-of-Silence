@@ -606,7 +606,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 }
                 else
                 {
-                    objetoMano.GuardarObjeto(objectInRange);
+                    objetoMano.SaveObject(objectInRange);
                     GameManager.Instance.datos.objetoMano = objetoMano;
                     objectInRange.SetActive(false);
                     objectInRange = null;
@@ -743,7 +743,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         GameManager.Instance.datos.confianza = GameManager.Instance.GetConfianzaAlEntrarEscena();
         GameManager.Instance.confianza = GameManager.Instance.GetConfianzaAlEntrarEscena();
         GameManager.Instance.LimpiarSOEscenas();
-        GameManager.Instance.datos.objetoMano = null;
+        // esto es para borrar la referencia
+        GameManager.Instance.datos.objetoMano.ClearObject();
         StartCoroutine(RespawnDelay());
     }
 
@@ -1015,6 +1016,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject == objectInRange)
+            objectInRange = null;
             objectInRange = null;
 
         if (puzleInRange != null && other.GetComponent<IPuzle>() == puzleInRange)

@@ -16,7 +16,7 @@ public class TriggerPuzleComida : MonoBehaviour, IPuzle
     {
        
             meshComida.SetActive(false);
-            objetoMano.GuardarObjeto(this.gameObject);
+            objetoMano.SaveObject(this.gameObject);
             GameManager.Instance.ResolverPuzzle("ComidaNPC");
     }
 

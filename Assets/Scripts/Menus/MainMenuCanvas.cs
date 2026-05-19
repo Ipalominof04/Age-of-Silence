@@ -30,7 +30,8 @@ public class MainMenuCanvas : MonoBehaviour
         GameManager.Instance.confianza = 0;
         GameManager.Instance.datos.confianza = 0;
         GameManager.Instance.IrAScene(menuName.nameScene);
-        GameManager.Instance.datos.objetoMano = null;
+        // esto es para borrar la referencia
+        GameManager.Instance.datos.objetoMano.ClearObject();
         StartCoroutine(OcultarTrasFade());
         
     }
