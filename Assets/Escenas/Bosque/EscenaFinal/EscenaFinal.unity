@@ -17104,7 +17104,6 @@ GameObject:
   - component: {fileID: 931783251}
   - component: {fileID: 931783254}
   - component: {fileID: 931783253}
-  - component: {fileID: 931783255}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -17330,10 +17329,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   currentState: 0
   myInputActionAsset: {fileID: 0}
+  slopeCheckDistance: 0.3
   vidaMaxima: 0
   vidaActual: 0
   luzBarraVida: {fileID: 0}
-  aiden: {fileID: 0}
+  aiden: {fileID: 4509992435940302256}
   interactRange: 0
   playerCollider: {fileID: 1803502227}
   eyePoint: {fileID: 0}
@@ -17467,14 +17467,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!81 &931783255
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 931783242}
-  m_Enabled: 1
 --- !u!1001 &935266455
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27369,7 +27361,7 @@ PlayableDirector:
   - key: {fileID: 6738581050991975158, guid: 5443fa59a308b474897827cc97053cc5, type: 2}
     value: {fileID: 196869344377404090}
   - key: {fileID: -1641250831622550157, guid: 5443fa59a308b474897827cc97053cc5, type: 2}
-    value: {fileID: 1633923781}
+    value: {fileID: 3858195921475630386}
   - key: {fileID: 1264877712346073616, guid: 5443fa59a308b474897827cc97053cc5, type: 2}
     value: {fileID: 1732968899}
   - key: {fileID: -1548241029329487754, guid: 5443fa59a308b474897827cc97053cc5, type: 2}
@@ -39671,7 +39663,7 @@ Transform:
   m_LocalScale: {x: 0.75000006, y: 0.75, z: 0.75000006}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1633923780}
+  - {fileID: 4181924032731845550}
   m_Father: {fileID: 1334244803}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1479510319
@@ -39712,7 +39704,7 @@ MonoBehaviour:
   player: {fileID: 0}
   canvasWorld: {fileID: 0}
   interactText: {fileID: 0}
-  aidenCollider: {fileID: 1633923782}
+  aidenCollider: {fileID: 3056110243002636243}
   OnDialogueStarted: {fileID: 0}
   OnDialogueEnded: {fileID: 0}
   OnAidenStopped: {fileID: 0}
@@ -43929,21 +43921,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec08a826fda66694a935962919dabfd7, type: 3}
---- !u!4 &1633923780 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4181924032213754221, guid: ec08a826fda66694a935962919dabfd7, type: 3}
-  m_PrefabInstance: {fileID: 1633923779}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1633923781 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 3858195921989388273, guid: ec08a826fda66694a935962919dabfd7, type: 3}
-  m_PrefabInstance: {fileID: 1633923779}
-  m_PrefabAsset: {fileID: 0}
---- !u!136 &1633923782 stripped
-CapsuleCollider:
-  m_CorrespondingSourceObject: {fileID: 3056110241414997264, guid: ec08a826fda66694a935962919dabfd7, type: 3}
-  m_PrefabInstance: {fileID: 1633923779}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1637149661
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -66775,10 +66752,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   myInputActionAsset: {fileID: 0}
+  slopeCheckDistance: 0.3
   vidaMaxima: 6
   vidaActual: 0
   luzBarraVida: {fileID: 5794371642019021129}
-  aiden: {fileID: 0}
+  aiden: {fileID: 4509992436425257263}
   interactRange: 2
   playerCollider: {fileID: 1166554516539044054}
   eyePoint: {fileID: 1966297326139164139}
@@ -69295,6 +69273,11 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!136 &3056110243002636243 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 3056110241414997264, guid: ec08a826fda66694a935962919dabfd7, type: 3}
+  m_PrefabInstance: {fileID: 1633923779}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3104771350368634618
 GameObject:
   m_ObjectHideFlags: 0
@@ -71261,6 +71244,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!95 &3858195921475630386 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3858195921989388273, guid: ec08a826fda66694a935962919dabfd7, type: 3}
+  m_PrefabInstance: {fileID: 1633923779}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &3858195922027714989
 Animator:
   serializedVersion: 7
@@ -71704,6 +71692,11 @@ Transform:
   - {fileID: 2853445745419589895}
   m_Father: {fileID: 294506505}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!4 &4181924032731845550 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4181924032213754221, guid: ec08a826fda66694a935962919dabfd7, type: 3}
+  m_PrefabInstance: {fileID: 1633923779}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4205847282184702540
 Transform:
   m_ObjectHideFlags: 0
@@ -72022,6 +72015,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &4509992436425257263 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4509992435902890988, guid: ec08a826fda66694a935962919dabfd7, type: 3}
+  m_PrefabInstance: {fileID: 1633923779}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4510326207126544142
 GameObject:
   m_ObjectHideFlags: 0
@@ -76269,7 +76267,6 @@ GameObject:
   - component: {fileID: 196869344377404090}
   - component: {fileID: 6908890300234478864}
   - component: {fileID: 7462320116602011025}
-  - component: {fileID: 7462320116602011026}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -76384,14 +76381,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54963b24924cef548bf2c749522b6377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundEmitter
---- !u!81 &7462320116602011026
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7366088206546547884}
-  m_Enabled: 1
 --- !u!144 &7463388411663020437
 CharacterJoint:
   m_ObjectHideFlags: 0
