@@ -743,6 +743,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         GameManager.Instance.datos.confianza = GameManager.Instance.GetConfianzaAlEntrarEscena();
         GameManager.Instance.confianza = GameManager.Instance.GetConfianzaAlEntrarEscena();
         GameManager.Instance.LimpiarSOEscenas();
+        GameManager.Instance.datos.objetoMano = null;
         StartCoroutine(RespawnDelay());
     }
 
@@ -866,7 +867,9 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         vidaActual = GameManager.Instance.datos.PlayerHealth;
         onVidaCambiada.Raise(vidaActual / vidaMaxima);
-        DamageVignette.Instance?.UpdateHealthRatio(vidaActual / vidaMaxima);
+
+        DamageVignette.Instance?.SetVignetteActive(true);
+        DamageVignette.Instance?.ResetHealthRatio(vidaActual / vidaMaxima);
 
         ChangeState(PlayerState.IDLE);
 
