@@ -340,7 +340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
-  doorID: spawnexteriortienda_interiortienda
+  doorID: exteriortienda_interiortienda
   aidenOffset: 1
 --- !u!4 &44146173
 Transform:
@@ -11472,8 +11472,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: ExteriorTienda
-  miDoorID: interiortienda_exteriortienda
-  targetDoorID: spawninteriortienda_exteriortienda
+  miDoorID: 
+  targetDoorID: interiortienda_exteriortienda
   puzzleRequeridoID: 
 --- !u!65 &1509763133
 BoxCollider:
@@ -13711,8 +13711,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: Tienda2
-  miDoorID: interiortienda_tienda2
-  targetDoorID: spawninteriortienda_tienda2
+  miDoorID: 
+  targetDoorID: interiortienda_tienda2
   puzzleRequeridoID: 
 --- !u!65 &1792274083
 BoxCollider:
@@ -14271,7 +14271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
-  doorID: spawntienda2_interiortienda
+  doorID: tienda2_interiortienda
   aidenOffset: 1
 --- !u!1 &1945290100
 GameObject:
