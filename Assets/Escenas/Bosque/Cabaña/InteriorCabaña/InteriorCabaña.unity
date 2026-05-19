@@ -486,7 +486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db672c1e985f73b42bfdd446c1336419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
-  doorID: spawncabananpc_interiorcabana
+  doorID: exteriorcabana_interior
   aidenOffset: 1
 --- !u!4 &158458891
 Transform:
@@ -767,8 +767,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: "Caba\xF1aNPC"
-  miDoorID: interiorcabana_cabananpc
-  targetDoorID: spawninteriorcabana_cabananpc
+  miDoorID: 
+  targetDoorID: interiorcabana_exterior
   puzzleRequeridoID: 
 --- !u!65 &323090842
 BoxCollider:
@@ -5190,7 +5190,7 @@ PrefabInstance:
     - target: {fileID: 5459872135671498636, guid: f71041fd118fbb34aa9d2dd6a1d96fce, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9100000, guid: 5f2fcc42675f7fa43a2ddc562440f08b, type: 2}
     - target: {fileID: 5466280206600546315, guid: f71041fd118fbb34aa9d2dd6a1d96fce, type: 3}
       propertyPath: m_Layer
       value: 9
