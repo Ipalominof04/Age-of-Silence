@@ -5,12 +5,12 @@ using UnityEngine;
 public class ObjetoAgarrado : ScriptableObject
 {
     public string nombreObjeto;
-    public void GuardarObjeto(GameObject obj)
+    public void SaveObject(GameObject obj)
     {
         nombreObjeto = obj.name;
     }
 
-    public void UsarObjeto()
+    public void ClearObject()
     {
         nombreObjeto = null;
     }
