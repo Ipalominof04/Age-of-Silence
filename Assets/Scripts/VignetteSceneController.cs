@@ -36,8 +36,13 @@ public class VignetteSceneController : MonoBehaviour
             s => s == sceneName
         );
 
-        vignetteObject.SetActive(active);
+        if (DamageVignette.Instance != null)
+            DamageVignette.Instance.SetVignetteActive(active);
+        else
+            vignetteObject.SetActive(active);
 
         Debug.Log($"Viñeta {(active ? "ACTIVA" : "DESACTIVADA")} en {sceneName}");
     }
+
+
 }

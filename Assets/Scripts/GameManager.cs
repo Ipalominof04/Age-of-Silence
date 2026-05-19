@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public string lastDoorID = ""; // guarda la puerta de la que venimos
 
     [Header("Guardado")]
-    public string ruta = "Assets/savegame.json";
+    public string ruta;
     public SOGeneral datos;
 
     public float GetHealthAlEntrarEscena() => healthAlEntrarEscena;
@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        ruta = Path.Combine(Application.persistentDataPath, "savegame.json");
         if (Instance == null)
         {
             Instance = this;
@@ -201,7 +202,7 @@ public class GameManager : MonoBehaviour
         {
             yield return StartCoroutine(ChapterUI.Instance.MostrarCapitulo("ESCAPE", 2f));
         }
-        else if(sceneName == "SalidaMuro")
+        else if (sceneName == "SalidaMuro")
         {
             yield return StartCoroutine(ChapterUI.Instance.MostrarCapitulo("CAPÍTULO 2: EL BOSQUE", 2f));
         }

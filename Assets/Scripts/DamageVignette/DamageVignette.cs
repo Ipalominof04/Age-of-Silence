@@ -89,6 +89,13 @@ public class DamageVignette : MonoBehaviour
         targetBaseAlpha =
             Mathf.Lerp(alphaMinVida, alphaMaxVida, healthRatio);
     }
+    public void ResetHealthRatio(float healthRatio)
+    {
+        targetBaseAlpha = Mathf.Lerp(alphaMinVida, alphaMaxVida, healthRatio);
+        currentBaseAlpha = targetBaseAlpha;
+        flashAlpha = 0f;
+        SetAlpha(Mathf.Clamp01(currentBaseAlpha));
+    }
 
     public void PlayDamageFlash()
     {

@@ -30,6 +30,7 @@ public class MainMenuCanvas : MonoBehaviour
         GameManager.Instance.confianza = 0;
         GameManager.Instance.datos.confianza = 0;
         GameManager.Instance.IrAScene(menuName.nameScene);
+        GameManager.Instance.datos.objetoMano = null;
         StartCoroutine(OcultarTrasFade());
         
     }
