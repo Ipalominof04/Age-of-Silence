@@ -32,19 +32,19 @@ public class TriggerPuzleFusible : MonoBehaviour, IPuzle
         if (fusible == "FusibleVerde")
         {
             meshVerde.SetActive(true);
-            objetoMano.UsarObjeto();
+            objetoMano.ClearObject();
             GameManager.Instance.ResolverPuzzle("FusibleVerde");
         }
         else if (fusible == "FusibleAzul")
         {
             meshAzul.SetActive(true);
-            objetoMano.UsarObjeto();
+            objetoMano.ClearObject();
             GameManager.Instance.ResolverPuzzle("FusibleAzul");
         }
         else if (fusible == "FusibleAmarillo")
         {
             meshAmarillo.SetActive(true);
-            objetoMano.UsarObjeto();
+            objetoMano.ClearObject();
             GameManager.Instance.ResolverPuzzle("FusibleAmarillo");
         }
         else

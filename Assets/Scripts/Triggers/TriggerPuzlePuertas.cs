@@ -40,7 +40,7 @@ public class TriggerPuzlePuertas : MonoBehaviour, IPuzle
         else
             DialogueManager.Instance.StartInfo(graphObjetoIncorrecto);
 
-        objetoMano.UsarObjeto();
+        objetoMano.ClearObject();
     }
 
     public void OnEnterRange()
