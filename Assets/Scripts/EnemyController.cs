@@ -627,6 +627,11 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     }
     public void Die()
     {
+        // parar música de persecución
+        onMusicChange?.Raise("musicStop");
+
+        // detener sonidos del enemigo
+        soundEmitter?.StopSound();
         if (agent != null)
         {
             agent.isStopped = true;

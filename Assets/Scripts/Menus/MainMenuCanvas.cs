@@ -32,6 +32,7 @@ public class MainMenuCanvas : MonoBehaviour
         GameManager.Instance.IrAScene(menuName.nameScene);
         // esto es para borrar la referencia
         GameManager.Instance.datos.objetoMano.ClearObject();
+        AidenController.Instance.ResetUI();
         StartCoroutine(OcultarTrasFade());
         
     }
