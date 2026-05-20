@@ -462,30 +462,29 @@ public class AidenController : MonoBehaviour
 
     public void RespawnReset()
     {
-        // Cancela cualquier corrutina activa (scared, scream...)
         if (scaredCoroutine != null)
         {
             StopCoroutine(scaredCoroutine);
             scaredCoroutine = null;
         }
 
-        // Reinicia flags
         inDialogue = false;
         inDialogueTrigger = false;
         esperarEnDestino = false;
+        scaredNum = -1;
 
-        // Detiene el agente y lo reactiva limpio
         if (agent != null)
         {
             agent.isStopped = false;
+            agent.speed = 3f;
+            agent.stoppingDistance = 1f;
             agent.ResetPath();
         }
 
         SetColliderNormal();
         SetUI(false);
 
-        // Fuerza el estado inicial
-        currentState = AidenState.NONE; // para que ChangeState no lo ignore
+        currentState = AidenState.NONE;
         ChangeState(AidenState.IDLE);
     }
 }

@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     public string ruta;
     public SOGeneral datos;
 
+    public bool IsChangingScene = false;
+
     public float GetHealthAlEntrarEscena() => healthAlEntrarEscena;
     public float GetConfianzaAlEntrarEscena() => confianzaAlEntrarEscena;
 
@@ -71,25 +73,20 @@ public class GameManager : MonoBehaviour
 
         RestaurarEscena();
 
-        // 1. Activa primero para que todos los componentes estén listos
         if (PlayerController.Instance != null)
         {
             PlayerController.Instance.gameObject.SetActive(true);
             AidenController.Instance.gameObject.SetActive(true);
         }
 
-
-        // 2. Recoloca después de activar
         MoverPlayerSpawn();
 
-        healthAlEntrarEscena = datos.PlayerHealth;
-        Debug.Log($"Vida al entrar escena guardada: {healthAlEntrarEscena}");
-        datos.PlayerHealth = healthAlEntrarEscena;
-        confianzaAlEntrarEscena = datos.confianza;
 
+        healthAlEntrarEscena = datos.PlayerHealth;
+        confianzaAlEntrarEscena = datos.confianza;
+        datos.PlayerHealth = healthAlEntrarEscena;
         datos.confianza = confianzaAlEntrarEscena;
 
-        // 3. Resetea al final cuando todo está listo
         PlayerController.Instance?.RespawnReset();
         AidenController.Instance?.RespawnReset();
 
@@ -98,6 +95,7 @@ public class GameManager : MonoBehaviour
         float ratio = datos.PlayerHealth > 0 ? datos.PlayerHealth / 6f : 1f;
         DamageVignette.Instance?.UpdateHealthRatio(ratio);
     }
+
 
     public void SumValor(int amount)
     {
@@ -164,6 +162,7 @@ public class GameManager : MonoBehaviour
     }
     private IEnumerator FadeAndLoadScene(string sceneName)
     {
+        IsChangingScene = true;
         yield return StartCoroutine(FadeOut());
 
         var loadOperation = SceneManager.LoadSceneAsync(sceneName);
@@ -211,6 +210,7 @@ public class GameManager : MonoBehaviour
             yield return StartCoroutine(ChapterUI.Instance.MostrarCapitulo("CAPÍTULO 3: EL DESENLACE", 2f));
         }
         yield return StartCoroutine(FadeIn());
+        IsChangingScene = false;
     }
 
     private IEnumerator FadeOut()
@@ -338,6 +338,11 @@ public class GameManager : MonoBehaviour
         Debug.Log("CargarPartida llamado");
         try
         {
+            if (!File.Exists(ruta))
+            {
+                Debug.LogWarning("[GameManager] No existe fichero de guardado en: " + ruta);
+                return;
+            }
             print("Cargando partida...");
             string jsonData = File.ReadAllText(ruta);
             SaveData data = JsonUtility.FromJson<SaveData>(jsonData);
