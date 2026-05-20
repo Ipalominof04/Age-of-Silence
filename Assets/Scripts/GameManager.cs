@@ -73,6 +73,9 @@ public class GameManager : MonoBehaviour
 
         RestaurarEscena();
 
+        datos.objetoMano?.ClearObject();
+        PlayerController.Instance.ClearObjectoMano();
+
         if (PlayerController.Instance != null)
         {
             PlayerController.Instance.gameObject.SetActive(true);
@@ -92,8 +95,7 @@ public class GameManager : MonoBehaviour
 
         Debug.Log($"[SPAWN] Vida al entrar escena: {healthAlEntrarEscena} | Vida actual: {datos.PlayerHealth}");
 
-        float ratio = datos.PlayerHealth > 0 ? datos.PlayerHealth / 6f : 1f;
-        DamageVignette.Instance?.UpdateHealthRatio(ratio);
+
     }
 
 
@@ -128,6 +130,7 @@ public class GameManager : MonoBehaviour
             datos.NameScene = sceneName;
             GuardarPartida();
         }
+        PlayerController.Instance?.ClearArma();
         StartCoroutine(FadeAndLoadScene(sceneName));
     }
 
@@ -211,6 +214,16 @@ public class GameManager : MonoBehaviour
         }
         yield return StartCoroutine(FadeIn());
         IsChangingScene = false;
+        ActualizarVignetteHealth();
+    }
+
+    private void ActualizarVignetteHealth()
+    {
+        if (DamageVignette.Instance != null && DamageVignette.Instance.IsVignetteActive)
+        {
+            float ratio = datos.PlayerHealth > 0 ? datos.PlayerHealth / 6f : 1f;
+            DamageVignette.Instance.UpdateHealthRatio(ratio);
+        }
     }
 
     private IEnumerator FadeOut()

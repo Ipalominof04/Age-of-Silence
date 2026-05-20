@@ -191,7 +191,17 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         UpdateBrilloBarraVida(scene, mode);
         shootingPoint = GameObject.Find("shooting_point");
+        StartCoroutine(ReasignarCamara());
+    }
+
+    private IEnumerator ReasignarCamara()
+    {
+        while (Camera.main == null)
+            yield return null;
+
         camara = Camera.main;
+
+        Debug.Log("Cámara asignada: " + camara);
     }
 
     private IEnumerator WaitingChargeMap()
@@ -469,10 +479,21 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
     private void ThrowObject()
     {
-        if (objetoLanzableEnMano == null)
+        if (camara == null)
         {
-            ChangeState(previousState);
-            return;
+            camara = Camera.main;
+
+            if (camara == null)
+            {
+                Debug.LogError("No hay cámara disponible");
+                return;
+            }
+
+            if (objetoLanzableEnMano == null)
+            {
+                ChangeState(previousState);
+                return;
+            }
         }
 
         if (throwAction.IsPressed())
@@ -575,6 +596,29 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         if (objectInRange != null)
         {
+            if (objectInRange.CompareTag("Pieza"))
+            {
+                if (vidaActual >= vidaMaxima)
+                {
+                    Debug.Log("Vida al máximo, no necesitas la pieza");
+                    return;
+                }
+                else
+                {
+                    vidaActual += 2f;
+                    vidaActual = Mathf.Clamp(vidaActual, 0f, vidaMaxima);
+                    GameManager.Instance.datos.PlayerHealth = vidaActual;
+                    float ratio = vidaActual / vidaMaxima;
+                    onVidaCambiada.Raise(ratio);
+                    DamageVignette.Instance?.UpdateHealthRatio(ratio);
+
+                    objectInRange.SetActive(false);
+                    objectInRange = null;
+                    soundEmitter.EmitSound(ESound.PICKUP);
+                    return;
+                }
+            }
+            //Sino tienes nada en la mano comprueba el tag del objetoInRange y hace lo que debe ese objeto 
             if (string.IsNullOrEmpty(objetoMano.nombreObjeto))
             {
                 if (objectInRange.CompareTag("Comida"))
@@ -584,28 +628,6 @@ public class PlayerController : MonoBehaviour, IDamageable
                     objectInRange = null;
                     soundEmitter.EmitSound(ESound.PICKUP);
                     return;
-                }
-                else if (objectInRange.CompareTag("Pieza"))
-                {
-                    if (vidaActual >= vidaMaxima)
-                    {
-                        Debug.Log("Vida al máximo, no necesitas la pieza");
-                        return;
-                    }
-                    else
-                    {
-                        vidaActual += 2f;
-                        vidaActual = Mathf.Clamp(vidaActual, 0f, vidaMaxima);
-                        GameManager.Instance.datos.PlayerHealth = vidaActual;
-                        float ratio = vidaActual / vidaMaxima;
-                        onVidaCambiada.Raise(ratio);
-                        DamageVignette.Instance?.UpdateHealthRatio(ratio);
-
-                        objectInRange.SetActive(false);
-                        objectInRange = null;
-                        soundEmitter.EmitSound(ESound.PICKUP);
-                        return;
-                    }
                 }
                 else
                 {
@@ -836,6 +858,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void RespawnReset()
     {
+
         isDying = false;
         escaleraInRange = false;
         objectInRange = null;
@@ -856,6 +879,8 @@ public class PlayerController : MonoBehaviour, IDamageable
             animator.enabled = true;
             animator.Rebind();
             animator.Update(0f);
+            if (!armaEquipada)
+                animator.Play("idle");
         }
 
         // 2. Ahora soltar el arma (hueso ya está en posición correcta)
@@ -873,7 +898,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         vidaActual = GameManager.Instance.datos.PlayerHealth;
         onVidaCambiada.Raise(vidaActual / vidaMaxima);
 
-        DamageVignette.Instance?.SetVignetteActive(true);
+
         DamageVignette.Instance?.ResetHealthRatio(vidaActual / vidaMaxima);
 
         ChangeState(PlayerState.IDLE);
@@ -901,7 +926,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 {
                     puzleInRange = puzle;
                     puzle.OnEnterRange();
-                //    ChangeState(PlayerState.IDLE);
+                    //    ChangeState(PlayerState.IDLE);
                 }
             }
 
@@ -911,7 +936,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 if (info != null)
                 {
                     DialogueManager.Instance.StartInfo(info.graphInfo);
-                //    ChangeState(PlayerState.IDLE);
+                    ChangeState(PlayerState.IDLE);
                 }
             }
 
@@ -1021,7 +1046,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         if (other.gameObject == objectInRange)
             objectInRange = null;
-            objectInRange = null;
+        objectInRange = null;
 
         if (puzleInRange != null && other.GetComponent<IPuzle>() == puzleInRange)
             puzleInRange = null;
@@ -1046,4 +1071,24 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void ClearTriggerPuzle() { puzleInRange = null; }
     public void ClearTriggerAyuda() { ayudaInRange = null; }
+    public void ClearArma()
+    {
+        if (armaEnMano != null)
+        {
+            ArmaController arma_ctrl = armaEnMano.GetComponent<ArmaController>();
+            arma_ctrl?.transform.SetParent(null);
+            arma_ctrl?.Soltar();
+            armaEnMano = null;
+        }
+        armaEquipada = false;
+    }
+    public void ClearObjectoMano()
+    {
+        foreach (Transform child in huesoMano)
+        {
+            Destroy(child.gameObject);
+        }
+
+        objetoLanzableEnMano = null;
+    }
 }
