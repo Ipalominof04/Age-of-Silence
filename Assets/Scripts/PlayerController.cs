@@ -311,8 +311,11 @@ public class PlayerController : MonoBehaviour, IDamageable
                 if (crouchAction.IsPressed()) ChangeState(PlayerState.CROUCH);
                 if (armaEquipada && shootAction.triggered)
                 {
-                    SetWavesSprite(2);
-                    ChangeState(PlayerState.SHOOT);
+                    if (!armaSobrecalentada)
+                    {
+                        SetWavesSprite(2);
+                        ChangeState(PlayerState.SHOOT);
+                    }
                 }
 
                 if (interactAction.triggered && (objectInRange != null || puzleInRange != null))
@@ -398,7 +401,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    private void ChangeState(PlayerState newState)
+    public void ChangeState(PlayerState newState)
     {
         if (newState == currentState) return;
         ExitState();
@@ -709,6 +712,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void TakeDamage(float damage)
     {
         if (isDying) return;
+        if (GameManager.Instance.IsChangingScene) return;
         vidaActual -= damage;
         vidaActual = Mathf.Clamp(vidaActual, 0f, vidaMaxima);
         GameManager.Instance.datos.PlayerHealth = vidaActual;
@@ -897,7 +901,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 {
                     puzleInRange = puzle;
                     puzle.OnEnterRange();
-                    ChangeState(PlayerState.IDLE);
+                //    ChangeState(PlayerState.IDLE);
                 }
             }
 
@@ -907,7 +911,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 if (info != null)
                 {
                     DialogueManager.Instance.StartInfo(info.graphInfo);
-                    ChangeState(PlayerState.IDLE);
+                //    ChangeState(PlayerState.IDLE);
                 }
             }
 

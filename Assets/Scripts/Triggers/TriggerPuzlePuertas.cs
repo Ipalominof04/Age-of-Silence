@@ -50,6 +50,7 @@ public class TriggerPuzlePuertas : MonoBehaviour, IPuzle
             infoMostrada = true;
             DialogueManager.Instance.StartInfo(graphInfo);
             canvasworld.SetActive(false);
+            PlayerController.Instance.ChangeState(PlayerController.PlayerState.IDLE);
         }
     }
     private void ResolvePuzzle()
