@@ -487,4 +487,9 @@ public class AidenController : MonoBehaviour
         currentState = AidenState.NONE;
         ChangeState(AidenState.IDLE);
     }
+    public void ResetUI()
+    {
+        isFirstDialogue = true;
+        interactText.gameObject.SetActive(true);
+    }
 }

@@ -29,6 +29,7 @@ public class DamageVignette : MonoBehaviour
     private float flashAlpha = 0f;
 
     private bool vignetteActive = true;
+    public bool IsVignetteActive => vignetteActive;
     private Coroutine flashCoroutine;
 
     private void Awake()
@@ -64,6 +65,7 @@ public class DamageVignette : MonoBehaviour
 
     public void SetVignetteActive(bool active)
     {
+        Debug.Log($"[DAMAGEVIGNETTE] SetVignetteActive({active})\n{System.Environment.StackTrace}");
         vignetteActive = active;
 
         vignetteImage.gameObject.SetActive(active);
@@ -86,8 +88,8 @@ public class DamageVignette : MonoBehaviour
 
     public void UpdateHealthRatio(float healthRatio)
     {
-        targetBaseAlpha =
-            Mathf.Lerp(alphaMinVida, alphaMaxVida, healthRatio);
+        if (!vignetteActive) return;
+        targetBaseAlpha = Mathf.Lerp(alphaMinVida, alphaMaxVida, healthRatio);
     }
     public void ResetHealthRatio(float healthRatio)
     {

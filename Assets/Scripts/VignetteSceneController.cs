@@ -19,11 +19,6 @@ public class VignetteSceneController : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    private void Start()
-    {
-        UpdateVignette(SceneManager.GetActiveScene().name);
-    }
-
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         UpdateVignette(scene.name);
@@ -35,7 +30,8 @@ public class VignetteSceneController : MonoBehaviour
             scenesWithVignette,
             s => s == sceneName
         );
-
+        Debug.Log($"[VIÑETA] Instance null: {DamageVignette.Instance == null} | active: {active}");
+        Debug.Log("[VIÑETACONTROLLER]" + sceneName + "estat: " +  active);
         if (DamageVignette.Instance != null)
             DamageVignette.Instance.SetVignetteActive(active);
         else
