@@ -481,6 +481,8 @@ public class AidenController : MonoBehaviour
             scaredCoroutine = null;
         }
 
+        emitter.StopSound();
+
         inDialogue = false;
         inDialogueTrigger = false;
         esperarEnDestino = false;
@@ -509,7 +511,7 @@ public class AidenController : MonoBehaviour
     private void OnPlayerDied()
     {
         playerDead = true;
-
+        emitter.StopSound();
         ChangeState(AidenState.IDLE);
 
     }

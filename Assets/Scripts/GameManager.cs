@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour
             datos.NameScene = sceneName;
             GuardarPartida();
         }
-        PlayerController.Instance?.ClearArma();
+        GameManager.Instance.datos.objetoMano.ClearObject();
         StartCoroutine(FadeAndLoadScene(sceneName));
     }
 

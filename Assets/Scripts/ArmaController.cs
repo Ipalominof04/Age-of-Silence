@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class ArmaController : MonoBehaviour
 {
     [SerializeField] GameObject ShootUI;
@@ -12,7 +11,8 @@ public class ArmaController : MonoBehaviour
 
     public void Soltar()
     {
-        ShootUI.SetActive(false);
+        if (ShootUI != null)
+            ShootUI.SetActive(false);
         Destroy(gameObject);
     }
 }
