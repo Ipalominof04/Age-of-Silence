@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
+using static EnemyController;
 
 public class AidenController : MonoBehaviour
 {
@@ -40,6 +41,8 @@ public class AidenController : MonoBehaviour
     private Coroutine scaredCoroutine;
     private Vector3 destino;
     private GameEvent onAyudaCompletada;
+
+    private bool playerDead = false;
 
     #region Unity Callbacks
 
@@ -87,6 +90,7 @@ public class AidenController : MonoBehaviour
     {
         PlayerController.OnPlayerStateChanged += HandlePlayerStateChanged;
         PlayerController.OnPlayerEnteredDialogueTrigger += HandleDialogueTrigger;
+        PlayerController.OnPlayerDied += OnPlayerDied;
         OnDialogueStarted.Subscribe(HandleDialogueStarted);
         OnDialogueEnded.Subscribe(HandleDialogueEnded);
         OnAidenScared.Subscribe(Scared);
@@ -97,6 +101,7 @@ public class AidenController : MonoBehaviour
     {
         PlayerController.OnPlayerStateChanged -= HandlePlayerStateChanged;
         PlayerController.OnPlayerEnteredDialogueTrigger -= HandleDialogueTrigger;
+        PlayerController.OnPlayerDied += OnPlayerDied;
         OnDialogueStarted.Unsubscribe(HandleDialogueStarted);
         OnDialogueEnded.Unsubscribe(HandleDialogueEnded);
         OnAidenScared.Unsubscribe(Scared);
@@ -119,7 +124,7 @@ public class AidenController : MonoBehaviour
         //si el niño esta asustado, que ignore lo que hace el player y no le siga hasta que se indique dependiendo el caso 
         if (currentState == AidenState.SCARED) return;
         // para que ignore los cambios del player y se mueva hasta el waypont
-        if (currentState == AidenState.HELP) return; 
+        if (currentState == AidenState.HELP) return;
         if (esperarEnDestino && currentState == AidenState.IDLE) return;
 
         // para que ignore los cambios del player mientras esta esperando a un dialogo o en el propio dialogo
@@ -310,7 +315,8 @@ public class AidenController : MonoBehaviour
             else
                 print("Aiden no se ha asustado por probabilidad");
 
-        } else if (type == ScareType.Shoot)
+        }
+        else if (type == ScareType.Shoot)
         {
             if (confianza <= 20)
             {
@@ -407,12 +413,13 @@ public class AidenController : MonoBehaviour
 
         agent.isStopped = false;
         SetUI(false);
-        ChangeState(AidenState.CATCH_UP); 
+        ChangeState(AidenState.CATCH_UP);
     }
     #endregion 
     private void FollowPlayer()
     {
         if (inDialogue) return;
+        if (playerDead) return;
 
         agent.stoppingDistance = 1f;
         agent.autoBraking = false;
@@ -462,6 +469,12 @@ public class AidenController : MonoBehaviour
 
     public void RespawnReset()
     {
+        if (animator != null)
+        {
+            animator.Rebind();
+            animator.Update(0f);
+        }
+
         if (scaredCoroutine != null)
         {
             StopCoroutine(scaredCoroutine);
@@ -471,6 +484,7 @@ public class AidenController : MonoBehaviour
         inDialogue = false;
         inDialogueTrigger = false;
         esperarEnDestino = false;
+        playerDead = false;
         scaredNum = -1;
 
         if (agent != null)
@@ -491,5 +505,12 @@ public class AidenController : MonoBehaviour
     {
         isFirstDialogue = true;
         interactText.gameObject.SetActive(true);
+    }
+    private void OnPlayerDied()
+    {
+        playerDead = true;
+
+        ChangeState(AidenState.IDLE);
+
     }
 }
