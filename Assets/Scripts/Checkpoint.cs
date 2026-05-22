@@ -9,6 +9,7 @@ public class Checkpoint : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerCollider"))
         {
             GameManager.Instance.lastDoorID = checkpointID;
+            GameManager.Instance.GuardarPartida();
             Debug.Log("Checkpoint guardado: " + checkpointID);
         }
     }
