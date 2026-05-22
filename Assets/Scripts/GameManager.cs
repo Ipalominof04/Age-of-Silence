@@ -178,6 +178,8 @@ public class GameManager : MonoBehaviour
         StartCoroutine(FadeAndLoadScene(sceneName));
     }
 
+
+
     public void GuardarEscena()
     {
         var objetos = FindObjectsByType<ObjetoGuardable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
