@@ -102,6 +102,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public Transform GetEyePoint() => eyePoint;
     public InputActionAsset GetInputInstance() => inputInstance;
+    public void ForceIdle() => ChangeState(PlayerState.IDLE);
 
     private void Awake()
     {
@@ -240,9 +241,17 @@ public class PlayerController : MonoBehaviour, IDamageable
                 {
                     if (armaEquipada)
                     {
-                        animator.Play("idleArma");
-                        armaEnMano.transform.localPosition = new Vector3(0.0153f, 0.0766f, 0.0142f);
-                        armaEnMano.transform.localRotation = Quaternion.Euler(33.74f, 137.574f, -44.139f);
+                        if (armaEnMano == null)
+                        {
+                            armaEquipada = false;
+                            animator.Play("idle");
+                        }
+                        else
+                        {
+                            animator.Play("idleArma");
+                            armaEnMano.transform.localPosition = new Vector3(0.0153f, 0.0766f, 0.0142f);
+                            armaEnMano.transform.localRotation = Quaternion.Euler(33.74f, 137.574f, -44.139f);
+                        }
                     }
                     else
                         animator.Play("idle");
@@ -411,7 +420,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    public void ChangeState(PlayerState newState)
+    private void ChangeState(PlayerState newState)
     {
         if (newState == currentState) return;
         ExitState();
@@ -668,6 +677,9 @@ public class PlayerController : MonoBehaviour, IDamageable
             meshArma.materials = newMaterials;
             armaEquipada = true;
             arma_ctrl?.Equipar();
+            shootingPoint = arma.transform.Find("shooting_point")?.gameObject;
+            if (shootingPoint == null)
+                shootingPoint = GameObject.Find("shooting_point");
             soundEmitter.EmitSound(ESound.PICKUP);
         }
     }
@@ -699,6 +711,12 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void Shoot()
     {
         if (shootingPoint == null) return;
+        if (!armaEquipada || armaEnMano == null)
+        {
+            armaEquipada = false;
+            ChangeState(PlayerState.IDLE);
+            return;
+        }
 
         if (!armaSobrecalentada)
         {
@@ -769,6 +787,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         GameManager.Instance.datos.confianza = GameManager.Instance.GetConfianzaAlEntrarEscena();
         GameManager.Instance.confianza = GameManager.Instance.GetConfianzaAlEntrarEscena();
         GameManager.Instance.LimpiarSOEscenas();
+        GameManager.Instance.datos.puzzlesResueltos.Clear();
         // esto es para borrar la referencia
         GameManager.Instance.datos.objetoMano.ClearObject();
         StartCoroutine(RespawnDelay());
@@ -870,6 +889,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         InDialogue = false;
         armaSobrecalentada = false;
 
+        ClearArma();
+
         // 1. Primero reactivar ragdoll/animator
         foreach (var rb in ragdollRigidbodies)
             rb.isKinematic = true;
@@ -879,8 +900,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             animator.enabled = true;
             animator.Rebind();
             animator.Update(0f);
-            if (!armaEquipada)
-                animator.Play("idle");
+            animator.Play("idle");
         }
 
         // 2. Ahora soltar el arma (hueso ya está en posición correcta)
