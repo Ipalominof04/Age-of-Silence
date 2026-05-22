@@ -51,7 +51,24 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "MainMenu" || scene.name == "Creditos" || scene.name == "Escena1" || scene.name == "EscenaFinal")
+        if (scene.name == "MainMenu")
+        {
+            if (PlayerController.Instance != null)
+                PlayerController.Instance.gameObject.SetActive(false);
+            if (AidenController.Instance != null)
+                AidenController.Instance.gameObject.SetActive(false);
+
+            // Buscar con Include para encontrarlo aunque esté desactivado
+            MainMenuCanvas menu = FindFirstObjectByType<MainMenuCanvas>(FindObjectsInactive.Include);
+            if (menu != null)
+                menu.mainMenuUI.SetActive(true);
+            else
+                Debug.LogError("[GameManager] No se encontró MainMenuCanvas");
+
+            return; // salimos aquí, nada más que hacer en el menú
+        }
+
+        if (scene.name == "Creditos" || scene.name == "Escena1" || scene.name == "EscenaFinal")
         {
             Debug.Log($"[GameManager] Escena cargada: '{scene.name}'");
             if (PlayerController.Instance != null)
