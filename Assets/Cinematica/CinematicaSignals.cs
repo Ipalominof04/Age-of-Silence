@@ -32,7 +32,6 @@ public class CinematicaSignals : MonoBehaviour
     private Dictionary<string, RuntimeDialogueNode> _nodeLookup = new Dictionary<string, RuntimeDialogueNode>();
     private RuntimeDialogueNode _currentNode;
     private Coroutine _typewriterCoroutine;
-    private bool _isTyping = false;
 
     // dispara el flash del arma, se coloca en el frame exacto del disparo
     public void DispararFlash(int index)
@@ -72,7 +71,6 @@ public class CinematicaSignals : MonoBehaviour
 
         _nodeLookup.Clear();
         _currentNode = null;
-        _isTyping = false;
     }
 
 
@@ -97,7 +95,6 @@ public class CinematicaSignals : MonoBehaviour
     // la formula: (timer / duration) * totalChars = cuantos caracteres mostrar en este momento
     private IEnumerator TypewriterEffect(string fullText, float duration)
     {
-        _isTyping = true;
         dialogueText.SetText("");
         float timer = 0f;
         int totalChars = fullText.Length;
@@ -117,6 +114,5 @@ public class CinematicaSignals : MonoBehaviour
         }
         // asegura que el texto completo queda visible al final
         dialogueText.SetText(fullText);
-        _isTyping = false;
     }
 }
