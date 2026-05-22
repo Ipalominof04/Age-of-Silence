@@ -11,7 +11,7 @@ public class GodMode : MonoBehaviour
     private bool consolaActiva = false;
     private List<string> logs = new List<string>();
     private Vector2 scrollPos;
-    private Rect ventana = new Rect(10, 10, 420, 320);
+    private Rect ventana = new Rect(10, 10, 420, 350);
     private const int MAX_LINEAS = 30;
 
     private void Awake()
@@ -33,11 +33,15 @@ public class GodMode : MonoBehaviour
         godMap = InputManager.Instance.GodModeMap;
 
         godMap.FindAction("Console").performed += _ => ToggleConsole();
-        godMap.FindAction("SubirConfianza").performed += _ => SubirConfianza(50);
-        godMap.FindAction("BajarConfianza").performed += _ => BajarConfianza(50);
+        godMap.FindAction("SubirConfianza").performed += _ => SubirConfianza(25);
+        godMap.FindAction("BajarConfianza").performed += _ => BajarConfianza(25);
         godMap.FindAction("CurarJugador").performed += _ => CurarJugador();
         godMap.FindAction("MatarJugador").performed += _ => MatarJugador();
+        godMap.FindAction("EscenaFinal").performed += _ => EscenaFinal();
+        godMap.FindAction("Escena4").performed += _ => Escena4();
+
     }
+
 
     private void OnDestroy()
     {
@@ -45,8 +49,10 @@ public class GodMode : MonoBehaviour
         godMap.FindAction("Console").performed -= _ => ToggleConsole();
         godMap.FindAction("SubirConfianza").performed -= _ => SubirConfianza(50);
         godMap.FindAction("BajarConfianza").performed -= _ => BajarConfianza(50);
-        godMap.FindAction("CurarJugador").performed -= _ => CurarJugador();
-        godMap.FindAction("MatarJugador").performed -= _ => MatarJugador();
+        godMap.FindAction("EscenaFinal").performed += _ => EscenaFinal();
+        godMap.FindAction("Escena4").performed += _ => Escena4();
+
+
     }
 
     // --- Toggle ---
@@ -99,6 +105,18 @@ public class GodMode : MonoBehaviour
         Log("Jugador eliminado");
     }
 
+    private void EscenaFinal()
+    {
+        GameManager.Instance.ChangeScene("EscenaFinal");
+        Log("Teletransporte a la escena final...");
+    }
+    private void Escena4()
+    {
+        GameManager.Instance.lastDoorID = "escena4";
+        GameManager.Instance.ChangeScene("Escena4");
+        Log("Teletransporte a la escena 4...");
+    }
+
     // --- Log ---
     public void Log(string mensaje)
     {
@@ -135,14 +153,21 @@ public class GodMode : MonoBehaviour
         GUILayout.Space(4);
 
         GUILayout.BeginHorizontal();
-        if (GUILayout.Button("Confianza +50")) SubirConfianza(50);
-        if (GUILayout.Button("Confianza -50")) BajarConfianza(50);
+        if (GUILayout.Button("Confianza +25")) SubirConfianza(50);
+        if (GUILayout.Button("Confianza -25")) BajarConfianza(50);
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Curar")) CurarJugador();
         if (GUILayout.Button("Matar")) MatarJugador();
         GUILayout.EndHorizontal();
+
+        GUILayout.Space(4);
+        if (GUILayout.Button("Ir escena 4")) Escena4();
+
+        GUILayout.Space(4);
+        if (GUILayout.Button("Ir a escena final")) EscenaFinal();
+
 
         GUILayout.Space(4);
         if (GUILayout.Button("Cerrar [F12]")) ToggleConsole();
