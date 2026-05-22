@@ -295,7 +295,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                     ChangeState(EnemyState.ATTACK);
                 // FIX: usamos una distancia "dura" sin raycast para no perder al jugador
                 // por oclusión momentánea; solo pasamos a SEARCHING si está realmente lejos
-                else if (!PlayerInRawRadius(radiusChase))
+                else if (!PlayerInRawRadius(radiusAttack))
                     ChangeState(EnemyState.SEARCHING);
                 break;
 
@@ -304,7 +304,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 Shoot();
                 if (!PlayerInAttackArea())
                 {
-                    if (PlayerInRawRadius(radiusChase))
+                    if (PlayerInRawRadius(radiusAttack))
                         ChangeState(EnemyState.CHASE);
                     else
                         ChangeState(EnemyState.SEARCHING);
