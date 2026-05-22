@@ -56,6 +56,7 @@ public class AidenController : MonoBehaviour
         //que no se activen en las cinematicas pq los players que ahi hay son falsos
         else if (SceneManager.GetActiveScene().name == "Escena1" || SceneManager.GetActiveScene().name == "EscenaFinal")
         {
+            enabled = false;
             return;
         }
         else
@@ -91,21 +92,21 @@ public class AidenController : MonoBehaviour
         PlayerController.OnPlayerStateChanged += HandlePlayerStateChanged;
         PlayerController.OnPlayerEnteredDialogueTrigger += HandleDialogueTrigger;
         PlayerController.OnPlayerDied += OnPlayerDied;
-        OnDialogueStarted.Subscribe(HandleDialogueStarted);
-        OnDialogueEnded.Subscribe(HandleDialogueEnded);
-        OnAidenScared.Subscribe(Scared);
-        OnAidenReanudar.Subscribe(HandleReanudar);
+        OnDialogueStarted?.Subscribe(HandleDialogueStarted);
+        OnDialogueEnded?.Subscribe(HandleDialogueEnded);
+        OnAidenScared?.Subscribe(Scared);
+        OnAidenReanudar?.Subscribe(HandleReanudar);
     }
 
     private void OnDisable()
     {
         PlayerController.OnPlayerStateChanged -= HandlePlayerStateChanged;
         PlayerController.OnPlayerEnteredDialogueTrigger -= HandleDialogueTrigger;
-        PlayerController.OnPlayerDied += OnPlayerDied;
-        OnDialogueStarted.Unsubscribe(HandleDialogueStarted);
-        OnDialogueEnded.Unsubscribe(HandleDialogueEnded);
-        OnAidenScared.Unsubscribe(Scared);
-        OnAidenReanudar.Unsubscribe(HandleReanudar);
+        PlayerController.OnPlayerDied -= OnPlayerDied;
+        OnDialogueStarted?.Unsubscribe(HandleDialogueStarted);
+        OnDialogueEnded?.Unsubscribe(HandleDialogueEnded);
+        OnAidenScared?.Unsubscribe(Scared);
+        OnAidenReanudar?.Unsubscribe(HandleReanudar);
     }
     #endregion
     #region Event Handlers
@@ -191,7 +192,7 @@ public class AidenController : MonoBehaviour
                 break;
             case AidenState.CROUCH:
                 animator.SetFloat("Speed", 0.25f);
-                agent.speed = 1f;
+                agent.speed = 1.5f;
                 aidenCollider.center = new Vector3(0, 0.3f, 0);
                 aidenCollider.radius = 0.2f;
                 aidenCollider.height = 0.6f;
