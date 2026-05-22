@@ -776,6 +776,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void Die()
     {
+        print("SA MUERTO");
         if (isDying) return;
         isDying = true;
         OnPlayerDied?.Invoke();
@@ -797,8 +798,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         GameManager.Instance.datos.puzzlesResueltos.Clear();
         // esto es para borrar la referencia
         GameManager.Instance.datos.objetoMano.ClearObject();
-
-        inputInstance.Disable();
+        InputManager.Instance.PlayerMap.Disable();
         StartCoroutine(RespawnDelay());
     }
 
@@ -886,7 +886,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void RespawnReset()
     {
-        inputInstance.Enable();
+        InputManager.Instance.PlayerMap.Enable();
 
         isDying = false;
         escaleraInRange = false;
@@ -1098,6 +1098,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (other.tag == "TriggerAyuda")
             ayudaInRange = null;
     }
+
 
     public void ClearTriggerPuzle() { puzleInRange = null; }
     public void ClearTriggerAyuda() { ayudaInRange = null; }
