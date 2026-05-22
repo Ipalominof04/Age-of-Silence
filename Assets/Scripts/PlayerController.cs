@@ -101,7 +101,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private float runStepRate = 0.28f;
 
     public Transform GetEyePoint() => eyePoint;
-    public InputActionAsset GetInputInstance() => inputInstance;
     public void ForceIdle() => ChangeState(PlayerState.IDLE);
 
     private void Awake()
@@ -125,14 +124,16 @@ public class PlayerController : MonoBehaviour, IDamageable
         camara = Camera.main;
         soundEmitter = GetComponent<SoundEmitter>();
         animator = GetComponent<Animator>();
-        inputInstance = Instantiate(myInputActionAsset);
-        inputInstance.FindActionMap("Player").Enable();
-        walkAction = inputInstance.FindActionMap("Player").FindAction("Move");
-        runAction = inputInstance.FindActionMap("Player").FindAction("Sprint");
-        interactAction = inputInstance.FindActionMap("Player").FindAction("Interact");
-        crouchAction = inputInstance.FindActionMap("Player").FindAction("Crouch");
-        throwAction = inputInstance.FindActionMap("Player").FindAction("Throw");
-        shootAction = inputInstance.FindActionMap("Player").FindAction("Attack");
+
+        var playerMap = InputManager.Instance.PlayerMap;
+        walkAction = playerMap.FindAction("Move");
+        runAction = playerMap.FindAction("Sprint");
+        interactAction = playerMap.FindAction("Interact");
+        crouchAction = playerMap.FindAction("Crouch");
+        throwAction = playerMap.FindAction("Throw");
+        shootAction = playerMap.FindAction("Attack");
+
+
         SetColliderNormal();
         InitRagdoll();
     }
@@ -614,12 +615,8 @@ public class PlayerController : MonoBehaviour, IDamageable
                 }
                 else
                 {
-                    vidaActual += 2f;
-                    vidaActual = Mathf.Clamp(vidaActual, 0f, vidaMaxima);
-                    GameManager.Instance.datos.PlayerHealth = vidaActual;
-                    float ratio = vidaActual / vidaMaxima;
-                    onVidaCambiada.Raise(ratio);
-                    DamageVignette.Instance?.UpdateHealthRatio(ratio);
+                    Curar(2);
+
 
                     objectInRange.SetActive(false);
                     objectInRange = null;
@@ -682,6 +679,16 @@ public class PlayerController : MonoBehaviour, IDamageable
                 shootingPoint = GameObject.Find("shooting_point");
             soundEmitter.EmitSound(ESound.PICKUP);
         }
+    }
+
+    public void Curar(float cura)
+    {
+        vidaActual += cura;
+        vidaActual = Mathf.Clamp(vidaActual, 0f, vidaMaxima);
+        GameManager.Instance.datos.PlayerHealth = vidaActual;
+        float ratio = vidaActual / vidaMaxima;
+        onVidaCambiada.Raise(ratio);
+        DamageVignette.Instance?.UpdateHealthRatio(ratio);
     }
 
     private void Dialogue()
@@ -790,6 +797,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         GameManager.Instance.datos.puzzlesResueltos.Clear();
         // esto es para borrar la referencia
         GameManager.Instance.datos.objetoMano.ClearObject();
+
+        inputInstance.Disable();
         StartCoroutine(RespawnDelay());
     }
 
@@ -877,6 +886,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void RespawnReset()
     {
+        inputInstance.Enable();
 
         isDying = false;
         escaleraInRange = false;

@@ -90,8 +90,14 @@ public class GameManager : MonoBehaviour
 
         RestaurarEscena();
 
-        datos.objetoMano?.ClearObject();
-        PlayerController.Instance.ClearObjectoMano();
+        string[] objetosDescartables = { "Botella", "Roca", "Arma" };
+        string nombreActual = datos.objetoMano?.nombreObjeto;
+
+        if (!string.IsNullOrEmpty(nombreActual) && System.Array.Exists(objetosDescartables, n => n == nombreActual))
+        {
+            datos.objetoMano.ClearObject();
+            PlayerController.Instance.ClearObjectoMano();
+        }
 
         if (PlayerController.Instance != null)
         {
@@ -147,7 +153,23 @@ public class GameManager : MonoBehaviour
             datos.NameScene = sceneName;
             GuardarPartida();
         }
-        GameManager.Instance.datos.objetoMano.ClearObject();
+
+        string[] objetosDescartables = { "Botella", "Roca", "Arma" };
+        string nombreActual = datos.objetoMano?.nombreObjeto;
+
+        if (!string.IsNullOrEmpty(nombreActual))
+        {
+            foreach (string nombre in objetosDescartables)
+            {
+                if (nombreActual == nombre)
+                {
+                    datos.objetoMano.ClearObject();
+                    PlayerController.Instance.ClearObjectoMano();
+                    break;
+                }
+            }
+        }
+
         StartCoroutine(FadeAndLoadScene(sceneName));
     }
 
