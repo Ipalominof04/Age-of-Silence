@@ -4,28 +4,22 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 public class MenuPause : MonoBehaviour
 {
-    [SerializeField] private InputActionAsset inputActions;
     [SerializeField] private GameObject menuPausaUI;
     [SerializeField] private GameObject menuOpionsUI;
     [SerializeField] private GameObject mainMenuUI;
-    private InputActionMap playerMap;
     private InputAction menuPausaAction;
     private bool isPaused = false;
     private void Start()
     {
-        var input = Instantiate(inputActions);
-        var uiMap = input.FindActionMap("UI");
-        uiMap.Enable();
-        playerMap = input.FindActionMap("Player");
-        playerMap.Enable();
+
+
+        var uiMap = InputManager.Instance.UIMap;
         menuPausaAction = uiMap.FindAction("MenuPausa");
-        menuPausaAction.Enable();
         menuPausaAction.performed += OnMenuPausa;
     }
     private void OnDestroy()
     {
         menuPausaAction.performed -= OnMenuPausa;
-        menuPausaAction.Disable();
     }
     private void OnMenuPausa(InputAction.CallbackContext ctx)
     {
@@ -35,13 +29,13 @@ public class MenuPause : MonoBehaviour
         isPaused = true;
         menuPausaUI.SetActive(true);
         Time.timeScale = 0f;
-        playerMap.Disable();
+        InputManager.Instance.PlayerMap.Disable();
     }
     public void MainMenu()
     {
         isPaused = false;
         Time.timeScale = 1f;
-        playerMap.Enable();
+        InputManager.Instance.PlayerMap.Enable();
         menuPausaUI.SetActive(false);
         GameManager.Instance.IrAScene("MainMenu");
         StartCoroutine(ActivarTrasFade());
@@ -51,7 +45,7 @@ public class MenuPause : MonoBehaviour
         isPaused = false;
         menuPausaUI.SetActive(false);
         Time.timeScale = 1f;
-        playerMap.Enable();
+        InputManager.Instance.PlayerMap.Enable();
     }
 
     private IEnumerator ActivarTrasFade()
