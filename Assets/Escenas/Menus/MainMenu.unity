@@ -600,7 +600,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f67f68bdb3487f48bf767b1230f101d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuPause
-  inputActions: {fileID: -944628639613478452, guid: 35845fe01580c41289b024647b1d1c53, type: 3}
   menuPausaUI: {fileID: 185811787}
   menuOpionsUI: {fileID: 172263924}
   mainMenuUI: {fileID: 5701181}
@@ -2620,6 +2619,7 @@ GameObject:
   m_Component:
   - component: {fileID: 784481821}
   - component: {fileID: 784481820}
+  - component: {fileID: 784481822}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2666,6 +2666,18 @@ Transform:
   - {fileID: 271828429}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &784481822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 784481819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b280db79d179d444878b488f28fd1d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &784651297
 GameObject:
   m_ObjectHideFlags: 0

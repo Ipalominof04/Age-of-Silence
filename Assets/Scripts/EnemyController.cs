@@ -41,6 +41,8 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     [SerializeField] private float radiusAttack;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private LayerMask obstacleLayer;
+
+    // FIX: guardamos siempre el transform raíz del jugador, no el del collider hijo
     private Transform playerTransform;
 
     [Header("Puntos de patrulla")]
@@ -91,14 +93,19 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         if (volume < minDetectionLevel) return;
         if (currentState == EnemyState.CHASE || currentState == EnemyState.ATTACK) return;
 
+        // FIX: comprobamos que el punto de sonido sea alcanzable en el NavMesh antes de ir
+        NavMeshHit navHit;
+        if (!NavMesh.SamplePosition(soundPosition, out navHit, 3f, NavMesh.AllAreas)) return;
+        Vector3 validDestination = navHit.position;
+        /*
         Collider[] enemiesNearSound = Physics.OverlapSphere(soundPosition, 1f, LayerMask.GetMask("Enemies"));
         if (enemiesNearSound.Length > 0) return;
+        */
 
-        agent.SetDestination(soundPosition);
+        agent.SetDestination(validDestination);
 
         if (currentState == EnemyState.SEARCHING)
         {
-            // Al escuchar un sonido mientras esta en search 
             if (searchCoroutine != null) StopCoroutine(searchCoroutine);
             agent.isStopped = false;
             animator.SetBool("onPatrol", true);
@@ -116,22 +123,20 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         return transform.position;
     }
 
-    private void SetUI(bool active, string text = "", string hexColor = "#FFFFFF") //asi se pone un valor por defecto
+    private void SetUI(bool active, string text = "", string hexColor = "#FFFFFF")
     {
         if (canvasWorld != null)
         {
             canvasWorld.SetActive(active);
             if (stateText != null)
             {
-                //solo anima si el texto cambia, si vuelve a ser el mismo simbolo no se hace la animacion
                 if (stateText.text != text)
                 {
                     stateText.GetComponent<Animator>().SetTrigger("Play");
                 }
                 stateText.text = text;
-                //para poder ponerle un color especifico con los colorutility
                 ColorUtility.TryParseHtmlString(hexColor, out Color color);
-                stateText.color = color;   
+                stateText.color = color;
             }
         }
     }
@@ -139,7 +144,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>(); 
+        animator = GetComponent<Animator>();
         rigidbodies = GetComponentsInChildren<Rigidbody>();
         soundEmitter = GetComponent<SoundEmitter>();
     }
@@ -156,10 +161,21 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         UpdateState();
         ApplyGravity();
     }
+
     private void ApplyGravity()
     {
         if (agent == null || !agent.enabled) return;
-        verticalVelocity.y += gravity * Time.deltaTime;
+
+        // FIX: resetear la velocidad vertical cuando el agente está sobre el suelo
+        if (agent.isOnNavMesh && agent.isOnOffMeshLink == false)
+        {
+            verticalVelocity.y = Mathf.Max(verticalVelocity.y + gravity * Time.deltaTime, -2f);
+        }
+        else
+        {
+            verticalVelocity.y = 0f;
+        }
+
         agent.Move(verticalVelocity * Time.deltaTime);
     }
 
@@ -188,11 +204,12 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 {
                     arma.transform.localPosition = new Vector3(0.046f, -0.352f, -0.055f);
                     arma.transform.localRotation = Quaternion.Euler(-107.384f, -72.8330f, 27.522f);
-                } else
+                }
+                else
                 {
                     arma.transform.localPosition = new Vector3(-0.048f, -0.122f, 0.009f);
                     arma.transform.localRotation = Quaternion.Euler(-73.674f, 115.541f, -128.345f);
-                }      
+                }
                 SetUI(false);
                 agent.speed = speedPatrol;
                 agent.stoppingDistance = 0.2f;
@@ -230,7 +247,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 {
                     arma.transform.localPosition = new Vector3(-0.03414f, -0.13247f, -0.007156f);
                     arma.transform.localRotation = Quaternion.Euler(-96.586f, -34.216f, 31.978f);
-                }   
+                }
                 break;
 
             case EnemyState.SEARCHING:
@@ -254,19 +271,14 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     {
         switch (currentState)
         {
+            // FIX: IDLE ahora tiene lógica correcta sin condiciones contradictorias
             case EnemyState.IDLE:
                 if (PlayerInArea(radiusChase))
-                {
                     ChangeState(EnemyState.CHASE);
-                }
-                else if (!PlayerInArea(radiusChase))
-                {
-                    ChangeState(EnemyState.PATROL);
-                }
                 else if (PlayerInArea(radiusLook))
-                {
                     ChangeState(EnemyState.LOOK);
-                }
+                else
+                    ChangeState(EnemyState.PATROL);
                 break;
 
             case EnemyState.PATROL:
@@ -281,16 +293,18 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 ChasePlayer();
                 if (PlayerInAttackArea())
                     ChangeState(EnemyState.ATTACK);
-                else if (!PlayerInArea(radiusChase) && !PlayerInArea(radiusLook))
+                // FIX: usamos una distancia "dura" sin raycast para no perder al jugador
+                // por oclusión momentánea; solo pasamos a SEARCHING si está realmente lejos
+                else if (!PlayerInRawRadius(radiusChase))
                     ChangeState(EnemyState.SEARCHING);
                 break;
 
             case EnemyState.ATTACK:
                 LookToPlayer();
                 Shoot();
-              if (!PlayerInAttackArea())
+                if (!PlayerInAttackArea())
                 {
-                    if (PlayerInArea(radiusChase))
+                    if (PlayerInRawRadius(radiusChase))
                         ChangeState(EnemyState.CHASE);
                     else
                         ChangeState(EnemyState.SEARCHING);
@@ -307,8 +321,9 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 break;
 
             case EnemyState.LOOK:
-
-                if (playerTransform != null) LookToPlayer();
+                // FIX: siempre miramos al jugador si tenemos referencia
+                if (playerTransform != null)
+                    LookToPlayer();
 
                 if (PlayerInAttackArea())
                     ChangeState(EnemyState.ATTACK);
@@ -357,7 +372,6 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
     private IEnumerator SearchRoutine()
     {
-        // Espera hasta que llegue al destino
         while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
             yield return null;
 
@@ -374,20 +388,19 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             arma.transform.localPosition = new Vector3(-0.022f, -0.132f, 0f);
             arma.transform.localRotation = Quaternion.Euler(-93.801f, -29.005f, 22.375f);
         }
-        // Una vez llegado, espera el tiempo de busqueda
-        yield return new WaitForSeconds(searchDuration);
 
+        yield return new WaitForSeconds(searchDuration);
 
         if (currentState == EnemyState.SEARCHING)
             ChangeState(EnemyState.PATROL);
     }
+
     private IEnumerator LookRoutine()
     {
         yield return new WaitForSeconds(searchDuration);
 
         if (currentState == EnemyState.LOOK)
         {
-            //si sigo viendole, perseguir; si no, patrullar
             if (PlayerInArea(radiusLook))
                 ChangeState(EnemyState.CHASE);
             else
@@ -405,34 +418,33 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         soundEmitter.EmitSound(ESound.ENEMY_PATROL);
     }
 
-
+    // FIX: guardamos el transform RAÍZ del jugador (donde está PlayerController),
+    // no el del collider hijo, para que GetComponent<PlayerController> siempre funcione
     private bool PlayerInArea(float radius)
     {
         if (playerDead) return false;
         Collider hit = Physics.OverlapSphere(transform.position, radius, playerLayer).FirstOrDefault();
         if (hit == null) return false;
 
-        // Buscar en el padre si el script no está en el mismo objeto que el collider
         PlayerController player = hit.GetComponentInParent<PlayerController>();
-        Vector3 targetForAngle = player != null ? player.GetEyePoint().position : hit.transform.position;
+        if (player == null) return false;
 
+        Vector3 targetForAngle = player.GetEyePoint().position;
         float angle = Vector3.Angle(transform.forward,
                       (targetForAngle - transform.position).normalized);
 
         if (angle <= 60f)
         {
             Vector3 origin = headTransform != null ? headTransform.position : transform.position + Vector3.up;
-            Vector3 targetPoint = player != null ? player.GetEyePoint().position : hit.bounds.max;
-
-            Vector3 direction = (targetPoint - origin).normalized;
-            float distance = Vector3.Distance(origin, targetPoint);
-
+            Vector3 direction = (targetForAngle - origin).normalized;
+            float distance = Vector3.Distance(origin, targetForAngle);
             bool blocked = Physics.Raycast(origin, direction, distance, obstacleLayer);
             Debug.DrawRay(origin, direction * distance, blocked ? Color.red : Color.green);
 
             if (!blocked)
             {
-                playerTransform = hit.transform;
+                // FIX: guardamos el transform del objeto raíz del jugador
+                playerTransform = player.transform;
                 return true;
             }
         }
@@ -445,20 +457,29 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         Collider hit = Physics.OverlapSphere(transform.position, radiusAttack, playerLayer).FirstOrDefault();
         if (hit == null) return false;
 
-        playerTransform = hit.transform;
+        PlayerController player = hit.GetComponentInParent<PlayerController>();
+        if (player == null) return false;
+
+        // FIX: guardamos el transform raíz
+        playerTransform = player.transform;
 
         Vector3 origin = headTransform != null ? headTransform.position : transform.position + Vector3.up;
-
-        // Buscar en el padre igual que en PlayerInArea
-        PlayerController player = hit.GetComponentInParent<PlayerController>();
-        Vector3 targetPoint = player != null ? player.GetEyePoint().position : hit.bounds.center;
-
+        Vector3 targetPoint = player.GetEyePoint().position;
         Vector3 direction = (targetPoint - origin).normalized;
         float distance = Vector3.Distance(origin, targetPoint);
         bool blocked = Physics.Raycast(origin, direction, distance, obstacleLayer);
 
         Debug.DrawRay(origin, direction * distance, blocked ? Color.red : Color.green);
         return !blocked;
+    }
+
+    // FIX: nueva función que comprueba solo distancia, sin ángulo ni raycast,
+    // para no perder al jugador por oclusión durante la persecución
+    private bool PlayerInRawRadius(float radius)
+    {
+        if (playerDead) return false;
+        Collider hit = Physics.OverlapSphere(transform.position, radius, playerLayer).FirstOrDefault();
+        return hit != null;
     }
 
     private void LookToPlayer()
@@ -478,7 +499,6 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     private void ChasePlayer()
     {
         if (playerTransform == null) return;
-       // agent.stoppingDistance = radiusAttack;
         agent.SetDestination(playerTransform.position);
         soundEmitter.EmitSound(ESound.ENEMY_CHASE);
     }
@@ -486,15 +506,15 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     private void Shoot()
     {
         if (hasShot) return;
-        hasShot = true;
+        // FIX: se elimina el "hasShot = true" duplicado que había aquí;
+        // solo se pone dentro de la corrutina para evitar redundancia
 
         if (shootingPoint != null && bala != null)
         {
-            //calcula dirección hacia el punto de mira del jugador
-            Vector3 shootDirection = transform.forward; //fallback
+            Vector3 shootDirection = transform.forward;
             if (playerTransform != null)
             {
-                PlayerController player = playerTransform.GetComponentInParent<PlayerController>();
+                PlayerController player = playerTransform.GetComponent<PlayerController>();
                 Vector3 targetPoint = player != null
                     ? player.GetEyePoint().position : playerTransform.position;
                 shootDirection = (targetPoint - shootingPoint.transform.position).normalized;
@@ -507,8 +527,10 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                     float spreadAngle = 15f;
                     for (int i = 0; i < perdigones; i++)
                     {
-                        Quaternion spread = Quaternion.Euler(Random.Range(-spreadAngle, spreadAngle), Random.Range(-spreadAngle, spreadAngle),0);
-                        Vector3 direction = spread * shootDirection; //usar shootDirection
+                        Quaternion spread = Quaternion.Euler(
+                            Random.Range(-spreadAngle, spreadAngle),
+                            Random.Range(-spreadAngle, spreadAngle), 0);
+                        Vector3 direction = spread * shootDirection;
                         GameObject go = Instantiate(bala, shootingPoint.transform.position, shootingPoint.transform.rotation);
                         BalaController balaController = go.GetComponent<BalaController>();
                         if (balaController != null) balaController.SetDamage(damageAmount);
@@ -516,10 +538,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                         if (rb != null) rb.linearVelocity = direction * bulleSpeed;
                     }
                     soundEmitter.EmitSound(ESound.ENEMY_SHOOT2);
-
-                    //particula flash arma
-                    if (shootFlash != null)
-                        shootFlash.Play();
+                    if (shootFlash != null) shootFlash.Play();
                     break;
 
                 default:
@@ -527,12 +546,9 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                     BalaController balaDefault = goDefault.GetComponent<BalaController>();
                     if (balaDefault != null) balaDefault.SetDamage(damageAmount);
                     Rigidbody rbDefault = goDefault.GetComponent<Rigidbody>();
-                    if (rbDefault != null) rbDefault.linearVelocity = shootDirection * bulleSpeed; //usar shootDirection
+                    if (rbDefault != null) rbDefault.linearVelocity = shootDirection * bulleSpeed;
                     soundEmitter.EmitSound(ESound.ENEMY_SHOOT);
-
-                    //particula flash arma
-                    if (shootFlash != null)
-                        shootFlash.Play();
+                    if (shootFlash != null) shootFlash.Play();
                     break;
             }
         }
@@ -546,13 +562,13 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     private IEnumerator ShootCooldown()
     {
         hasShot = true;
-        yield return new WaitForSeconds(shootCooldown); //ajusta el tiempo entre disparos
+        yield return new WaitForSeconds(shootCooldown);
         hasShot = false;
     }
+
     private void OnPlayerDied()
     {
         playerDead = true;
-
         ChangeState(EnemyState.PATROL);
     }
 
@@ -563,19 +579,19 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             string tag = collision.gameObject.tag;
             if (tag == "Botella" || tag == "Piedra")
             {
-                //dirección desde la que viene el objeto
                 Vector3 hitDirection = (transform.position - collision.transform.position).normalized;
                 hitDirection.y = 0;
 
                 if (hitDirection != Vector3.zero)
                     transform.rotation = Quaternion.LookRotation(hitDirection);
 
+                // FIX: al entrar en LOOK por colisión no tenemos playerTransform,
+                // pero eso está bien; el LookRoutine esperará y luego patrullará
                 ChangeState(EnemyState.LOOK);
             }
         }
     }
 
-    
     private void OnDrawGizmos()
     {
         Vector3 origin = transform.position;
@@ -610,13 +626,8 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, radiusAttack);
-
-
-        /*
-        Gizmos.color = new Color(1f, 0.5f, 0f, 1f);
-        Gizmos.DrawWireSphere(origin, listenRadius);*/
     }
-    
+
     public void TakeDamage(float damage)
     {
         this.vida -= damage;
@@ -625,13 +636,12 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             Die();
         }
     }
+
     public void Die()
     {
-        // parar música de persecución
         onMusicChange?.Raise("musicStop");
-
-        // detener sonidos del enemigo
         soundEmitter?.StopSound();
+
         if (agent != null)
         {
             agent.isStopped = true;
