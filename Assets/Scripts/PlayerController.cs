@@ -787,6 +787,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         GameManager.Instance.datos.confianza = GameManager.Instance.GetConfianzaAlEntrarEscena();
         GameManager.Instance.confianza = GameManager.Instance.GetConfianzaAlEntrarEscena();
         GameManager.Instance.LimpiarSOEscenas();
+        GameManager.Instance.datos.puzzlesResueltos.Clear();
         // esto es para borrar la referencia
         GameManager.Instance.datos.objetoMano.ClearObject();
         StartCoroutine(RespawnDelay());
