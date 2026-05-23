@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        IsChangingScene = false;
         if (scene.name == "MainMenu")
         {
             if (PlayerController.Instance != null)
@@ -90,21 +91,12 @@ public class GameManager : MonoBehaviour
 
         RestaurarEscena();
 
-        string[] objetosDescartables = { "Botella", "Roca", "Arma" };
-        string nombreActual = datos.objetoMano?.nombreObjeto;
-
-        if (!string.IsNullOrEmpty(nombreActual) && System.Array.Exists(objetosDescartables, n => n == nombreActual))
-        {
-            datos.objetoMano.ClearObject();
-            PlayerController.Instance.ClearObjectoMano();
-        }
-
         if (PlayerController.Instance != null)
         {
             PlayerController.Instance.gameObject.SetActive(true);
             AidenController.Instance.gameObject.SetActive(true);
         }
-
+    
         MoverPlayerSpawn();
 
 
@@ -147,6 +139,7 @@ public class GameManager : MonoBehaviour
     }
     public void ChangeScene(string sceneName)
     {
+        PlayerController.Instance?.ClearObjetoLanzable();
         if (sceneName != "MainMenu" && sceneName != "Creditos")
         {
             GuardarEscena();
@@ -154,21 +147,6 @@ public class GameManager : MonoBehaviour
             GuardarPartida();
         }
 
-        string[] objetosDescartables = { "Botella", "Roca", "Arma" };
-        string nombreActual = datos.objetoMano?.nombreObjeto;
-
-        if (!string.IsNullOrEmpty(nombreActual))
-        {
-            foreach (string nombre in objetosDescartables)
-            {
-                if (nombreActual == nombre)
-                {
-                    datos.objetoMano.ClearObject();
-                    PlayerController.Instance.ClearObjectoMano();
-                    break;
-                }
-            }
-        }
 
         StartCoroutine(FadeAndLoadScene(sceneName));
     }
@@ -208,6 +186,7 @@ public class GameManager : MonoBehaviour
     {
         IsChangingScene = true;
         yield return StartCoroutine(FadeOut());
+
 
         var loadOperation = SceneManager.LoadSceneAsync(sceneName);
         if (loadOperation == null)
