@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(SoundEmitter))]
 public class ObjetoLanzable : MonoBehaviour
@@ -64,6 +65,11 @@ public class ObjetoLanzable : MonoBehaviour
         yaLanzado = true;
         transform.SetParent(null);
 
+        UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(
+            gameObject,
+            UnityEngine.SceneManagement.SceneManager.GetActiveScene()
+        );
+
         // Restaurar escala original al soltar
         transform.localScale = escalaMundialOriginal;
 
@@ -106,6 +112,24 @@ public class ObjetoLanzable : MonoBehaviour
         Physics.IgnoreLayerCollision(layerObjeto, layerPlayerCollider, false);
     }
 
+    public void Soltar()
+    {
+        estaEnMano = false;
+        transform.SetParent(null);
+        transform.localScale = escalaMundialOriginal;
+
+        SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
+
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.linearVelocity = Vector3.zero;
+        }
+
+        objetoCollider.enabled = true;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
@@ -134,7 +158,7 @@ public class ObjetoLanzable : MonoBehaviour
             {
                 if (!yaLanzado) return;
                 if ((capasColision.value & (1 << collision.gameObject.layer)) == 0) return;
-                 emitter.EmitSound(ESound.ROCK);
+                emitter.EmitSound(ESound.ROCK);
             }
         }
     }
