@@ -779,7 +779,10 @@ public class PlayerController : MonoBehaviour, IDamageable
         print("SA MUERTO");
         if (isDying) return;
         isDying = true;
+        soundEmitter.StopSound();
         OnPlayerDied?.Invoke();
+
+        ClearObjetoLanzable();
 
         if (armaEnMano != null)
         {
@@ -1113,13 +1116,11 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
         armaEquipada = false;
     }
-    public void ClearObjectoMano()
+    public void ClearObjetoLanzable()
     {
-        foreach (Transform child in huesoMano)
-        {
-            Destroy(child.gameObject);
-        }
+        if (objetoLanzableEnMano == null) return;
 
+        objetoLanzableEnMano.Soltar();
         objetoLanzableEnMano = null;
     }
 }

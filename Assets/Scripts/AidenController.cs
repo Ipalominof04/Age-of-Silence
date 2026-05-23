@@ -216,6 +216,7 @@ public class AidenController : MonoBehaviour
 
     private void UpdateState()
     {
+        if (playerDead) return;
         switch (currentState)
         {
             case AidenState.IDLE:
@@ -513,7 +514,25 @@ public class AidenController : MonoBehaviour
     {
         playerDead = true;
         emitter.StopSound();
-        ChangeState(AidenState.IDLE);
 
+        if (scaredCoroutine != null)
+        {
+            StopCoroutine(scaredCoroutine);
+            scaredCoroutine = null;
+        }
+
+        if (agent != null)
+        {
+            agent.isStopped = true;
+            agent.ResetPath();
+        }
+
+        if (animator != null)
+        {
+            animator.Rebind();
+            animator.Update(0f);
+        }
+
+        ChangeState(AidenState.IDLE);
     }
 }
