@@ -193,7 +193,14 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         UpdateBrilloBarraVida(scene, mode);
         shootingPoint = GameObject.Find("shooting_point");
-        StartCoroutine(ReasignarCamara());
+        camara = Camera.main;
+        if (camara == null)
+        {
+            // Fallback: busca cualquier cámara activa en la escena
+            camara = FindFirstObjectByType<Camera>();
+        }
+        
+        //StartCoroutine(ReasignarCamara());
     }
 
     private IEnumerator ReasignarCamara()

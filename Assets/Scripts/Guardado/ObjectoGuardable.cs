@@ -33,9 +33,16 @@ public class ObjetoGuardable : MonoBehaviour
     {
         ScenePart parte = soEscena.objetos.FirstOrDefault(p => p.id == id);
 
-        if (parte.id == null) return;
+        Debug.Log($"[Restaurar] {id} | lista count: {soEscena.objetos.Count} | parte.id: '{parte.id}'");
 
-        Debug.Log($"{id}: restaurando active={parte.active}");
+        if (parte.id == null)
+        {
+            Debug.Log($"[Restaurar] {id} ? sin datos, activando por defecto");
+            gameObject.SetActive(true);
+            return;
+        }
+
+        Debug.Log($"[Restaurar] {id} ? active={parte.active}");
         gameObject.SetActive(parte.active);
         transform.position = parte.pos;
         transform.rotation = parte.rot;
