@@ -180,7 +180,10 @@ public class GameManager : MonoBehaviour
     {
         datos.NameScene = "";
         foreach (SOEscena soEscena in datos.escenas)
+        {
+            Debug.Log($"[Limpiar] {soEscena.sceneName} tenía {soEscena.objetos.Count} objetos");
             soEscena.objetos.Clear();
+        }
     }
     private IEnumerator FadeAndLoadScene(string sceneName)
     {
