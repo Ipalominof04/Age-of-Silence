@@ -5,7 +5,7 @@ public class CinematicaSelector : MonoBehaviour
 {
     public PlayableDirector finalMalo;
     public PlayableDirector finalBueno;
-    public float umbralConfianza = 50f;
+    public float umbralConfianza = 55f;
 
     private void Start()
     {

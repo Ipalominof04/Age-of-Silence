@@ -31,7 +31,7 @@ public class TriggerAyuda : MonoBehaviour
 
         if (tipo == PuzleHelpType.DOOR)
         {
-            if (GameManager.Instance.confianza >= 50)
+            if (GameManager.Instance.confianza >= 35)
             {
                 DialogueManager.Instance.StartDialogue(graphSiAyuda);
                 onDialogueEnded.Subscribe(HandleDialogoAcabado);
@@ -44,7 +44,7 @@ public class TriggerAyuda : MonoBehaviour
         }
         else if (tipo == PuzleHelpType.BRIDGE)
         {
-            if (GameManager.Instance.confianza >= 80)
+            if (GameManager.Instance.confianza >= 40)
             {
                 DialogueManager.Instance.StartDialogue(graphSiAyuda);
                 onDialogueEnded.Subscribe(HandleDialogoAcabado);
