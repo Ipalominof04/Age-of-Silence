@@ -18,6 +18,8 @@ public class AidenController : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject canvasWorld;
     [SerializeField] private TextMeshProUGUI interactText;
+    [SerializeField] private TextMeshProUGUI exclamationText;
+    [SerializeField] private GameObject canvasImage;
     private bool isFirstDialogue = true;
 
     [Header("Crouch")]
@@ -79,6 +81,7 @@ public class AidenController : MonoBehaviour
     {
         InitState(AidenState.IDLE);
         SetUI(false);
+       
 
     }
 
@@ -96,6 +99,7 @@ public class AidenController : MonoBehaviour
         OnDialogueEnded?.Subscribe(HandleDialogueEnded);
         OnAidenScared?.Subscribe(Scared);
         OnAidenReanudar?.Subscribe(HandleReanudar);
+        interactText.gameObject.SetActive(isFirstDialogue);
     }
 
     private void OnDisable()
@@ -252,8 +256,18 @@ public class AidenController : MonoBehaviour
                 break;
             case AidenState.CATCH_UP:
                 FollowPlayer();
+                //este caso es diferente a los demas de aiden, es necesario que aiden se vuelva a poner en el estado del player cuando llega a su lado
+                //incluso si el player no cambia de estado y no se lanza el evento pq si no se queda todo el rato en catch up hasta que el player cambia de estado
                 if (!inDialogueTrigger && Vector3.Distance(transform.position, player.position) <= agent.stoppingDistance)
-                    ChangeState(AidenState.IDLE);
+                {
+                    switch (PlayerController.Instance.currentState)
+                    {
+                        case PlayerController.PlayerState.WALK: ChangeState(AidenState.WALK); break;
+                        case PlayerController.PlayerState.RUN: ChangeState(AidenState.RUN); break;
+                        case PlayerController.PlayerState.CROUCH: ChangeState(AidenState.CROUCH); break;
+                        case PlayerController.PlayerState.IDLE: ChangeState(AidenState.IDLE); break;
+                    }
+                }
                 break;
         }
     }
@@ -347,6 +361,8 @@ public class AidenController : MonoBehaviour
             animator.SetTrigger("scaredScream");
             emitter.EmitSound(ESound.A_SCARE);
             SetUI(true);
+            exclamationText.gameObject.SetActive(true);
+            canvasImage.SetActive(false);
             StartCoroutine(ScreamRoutine());
         }
         else if (scaredNum == 1)
@@ -354,6 +370,8 @@ public class AidenController : MonoBehaviour
             animator.SetTrigger("scaredRunning");
             emitter.EmitSound(ESound.A_RUN);
             SetUI(true);
+            exclamationText.gameObject.SetActive(true);
+            canvasImage.SetActive(false);
             Vector3 randomDirection = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)).normalized;
             Vector3 targetPos = transform.position + randomDirection * 7;
 
@@ -380,6 +398,12 @@ public class AidenController : MonoBehaviour
         {
             animator.SetFloat("Speed", 0.75f);
             emitter.StopSound();
+
+            if (scaredNum == 1)
+            {
+                exclamationText.gameObject.SetActive(false);
+                canvasImage.SetActive(true);
+            }
         }
 
         //uso el getkeydown para poder leer el input de forma facil, tambien puede hacerse por evento (por si queremos cambiarlo)
@@ -415,6 +439,8 @@ public class AidenController : MonoBehaviour
 
         agent.isStopped = false;
         SetUI(false);
+        exclamationText.gameObject.SetActive(false);
+        canvasImage.SetActive(true);
         ChangeState(AidenState.CATCH_UP);
     }
     #endregion 
