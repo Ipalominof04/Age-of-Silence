@@ -39,8 +39,10 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     [SerializeField] private float radiusChase;
     [SerializeField] private float radiusLook;
     [SerializeField] private float radiusAttack;
+    [SerializeField] private float radiusLosePlayer;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private LayerMask obstacleLayer;
+    private bool justLostPlayer = false;
 
     // FIX: guardamos siempre el transform raíz del jugador, no el del collider hijo
     private Transform playerTransform;
@@ -183,6 +185,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     {
         if (newState == currentState)
             return;
+        Debug.Log($"[STATE] {currentState} --> {newState}");
         ExitState();
         InitState(newState);
     }
@@ -271,7 +274,6 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     {
         switch (currentState)
         {
-            // FIX: IDLE ahora tiene lógica correcta sin condiciones contradictorias
             case EnemyState.IDLE:
                 if (PlayerInArea(radiusChase))
                     ChangeState(EnemyState.CHASE);
@@ -293,10 +295,13 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 ChasePlayer();
                 if (PlayerInAttackArea())
                     ChangeState(EnemyState.ATTACK);
-                // FIX: usamos una distancia "dura" sin raycast para no perder al jugador
-                // por oclusión momentánea; solo pasamos a SEARCHING si está realmente lejos
-                else if (!PlayerInRawRadius(radiusAttack))
+                // si el jugador sale del raw radius despues de entrar a chase, el enemigo lo pierde y va a searching
+                else if (!PlayerInRawRadius(radiusLosePlayer))
+                {
+                    //bloqueamos redetección inmediata al entrar en SEARCHING
+                    justLostPlayer = true;
                     ChangeState(EnemyState.SEARCHING);
+                }
                 break;
 
             case EnemyState.ATTACK:
@@ -304,7 +309,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 Shoot();
                 if (!PlayerInAttackArea())
                 {
-                    if (PlayerInRawRadius(radiusAttack))
+                    if (PlayerInRawRadius(radiusLosePlayer))
                         ChangeState(EnemyState.CHASE);
                     else
                         ChangeState(EnemyState.SEARCHING);
@@ -314,14 +319,18 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             case EnemyState.SEARCHING:
                 animator.SetBool("onPatrol", !agent.isStopped);
                 animator.SetBool("onSearching", agent.isStopped);
-                if (PlayerInArea(radiusChase))
-                    ChangeState(EnemyState.CHASE);
-                else if (PlayerInArea(radiusLook))
-                    ChangeState(EnemyState.CHASE);
+
+                //solo redetecta cuando haya llegado al último punto conocido
+                if (!justLostPlayer)
+                {
+                    if (PlayerInArea(radiusChase))
+                        ChangeState(EnemyState.CHASE);
+                    else if (PlayerInArea(radiusLook))
+                        ChangeState(EnemyState.CHASE);
+                }
                 break;
 
             case EnemyState.LOOK:
-                // FIX: siempre miramos al jugador si tenemos referencia
                 if (playerTransform != null)
                     LookToPlayer();
 
@@ -375,6 +384,9 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
             yield return null;
 
+        //ha llegado al último punto conocido, ya puede volver a detectar al jugador con los rangos de vision
+        //y volver a entrar al raw cuando el enemigo pase a chase
+        justLostPlayer = false;
         agent.isStopped = true;
         animator.SetBool("onPatrol", false);
         animator.SetBool("onSearching", true);
@@ -418,7 +430,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         soundEmitter.EmitSound(ESound.ENEMY_PATROL);
     }
 
-    // FIX: guardamos el transform RAÍZ del jugador (donde está PlayerController),
+    //guardamos el transform RAÍZ del jugador (donde está PlayerController),
     // no el del collider hijo, para que GetComponent<PlayerController> siempre funcione
     private bool PlayerInArea(float radius)
     {
@@ -443,7 +455,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
             if (!blocked)
             {
-                // FIX: guardamos el transform del objeto raíz del jugador
+                //guardamos el transform del objeto raíz del jugador
                 playerTransform = player.transform;
                 return true;
             }
@@ -473,8 +485,8 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         return !blocked;
     }
 
-    // FIX: nueva función que comprueba solo distancia, sin ángulo ni raycast,
-    // para no perder al jugador por oclusión durante la persecución
+    //solo comprueba distancia, sin ángulo ni raycast
+    //se usa solo cuando el enemigo ya te esta persiguiendo para que no te pierda facilmente al salirte del cono
     private bool PlayerInRawRadius(float radius)
     {
         if (playerDead) return false;
@@ -506,8 +518,6 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     private void Shoot()
     {
         if (hasShot) return;
-        // FIX: se elimina el "hasShot = true" duplicado que había aquí;
-        // solo se pone dentro de la corrutina para evitar redundancia
 
         if (shootingPoint != null && bala != null)
         {
