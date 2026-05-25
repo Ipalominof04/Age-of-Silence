@@ -9,6 +9,7 @@ public class SOGeneral : ScriptableObject
     public float PlayerHealth;
     public ObjetoAgarrado objetoMano;
     private string nameScene;
+    public bool aidenTieneOso;
     public List<string> puzzlesResueltos = new List<string>();
     public SOEscena[] escenas;
     public string NameScene { get { return nameScene; } set
