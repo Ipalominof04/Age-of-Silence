@@ -966,7 +966,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 {
                     puzleInRange = puzle;
                     puzle.OnEnterRange();
-                    //    ChangeState(PlayerState.IDLE);
+                    ChangeState(PlayerState.IDLE);
                 }
             }
 
