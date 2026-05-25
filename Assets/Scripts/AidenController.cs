@@ -407,7 +407,9 @@ public class AidenController : MonoBehaviour
         }
 
         //uso el getkeydown para poder leer el input de forma facil, tambien puede hacerse por evento (por si queremos cambiarlo)
-        if (distancia <= 2f && Input.GetKeyDown(KeyCode.E))
+        //compruebo tambien que aiden haya llegado al destino despues de salir corriendo para no poder interactuar con el mienttras corre
+        //y que solo puedas hacerlo cuando aiden esta esperando a que lo calmes
+        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && distancia <= 2f && Input.GetKeyDown(KeyCode.E))
         {
             //si la corrutina esta activa, parala y ponla a null
             if (scaredCoroutine != null) StopCoroutine(scaredCoroutine);
