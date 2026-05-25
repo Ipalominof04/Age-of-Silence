@@ -46,6 +46,7 @@ public class TriggerPuzleNevera : MonoBehaviour, IPuzle
         if (cadena != null)
             Destroy(cadena);
         DialogueManager.Instance.StartDialogue(graphDialogue);
+        PlayerController.Instance.ClearTriggerPuzle();
     }
 
     public void OnEnterRange()
