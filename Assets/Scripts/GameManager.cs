@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public string ruta;
     public SOGeneral datos;
 
+    private bool escenaGuardada = false;
     public bool IsChangingScene = false;
 
     public float GetHealthAlEntrarEscena() => healthAlEntrarEscena;
@@ -91,6 +92,14 @@ public class GameManager : MonoBehaviour
 
         RestaurarEscena();
 
+        if (!escenaGuardada)
+        {
+            if (datos.objetoMano != null)
+                datos.objetoMano.nombreObjeto = "";
+        }
+
+        escenaGuardada = false;
+
         if (PlayerController.Instance != null)
         {
             PlayerController.Instance.gameObject.SetActive(true);
@@ -146,7 +155,7 @@ public class GameManager : MonoBehaviour
             datos.NameScene = sceneName;
             GuardarPartida();
         }
-
+        escenaGuardada = true;
 
         StartCoroutine(FadeAndLoadScene(sceneName));
     }
@@ -382,6 +391,7 @@ public class GameManager : MonoBehaviour
             print("Cargando partida...");
             string jsonData = File.ReadAllText(ruta);
             SaveData data = JsonUtility.FromJson<SaveData>(jsonData);
+            escenaGuardada = true;
             RestaurarDatos(data);
         }
         catch (Exception ex)
