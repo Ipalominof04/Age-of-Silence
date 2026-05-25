@@ -407,8 +407,12 @@ public class GameManager : MonoBehaviour
         datos.PlayerHealth = data.playerHealth;
         lastDoorID = data.lastDoorID;
 
-        if (datos.objetoMano != null && !string.IsNullOrEmpty(data.objetoMano))
-            datos.objetoMano.nombreObjeto = data.objetoMano;
+        if (datos.objetoMano != null)
+        {
+            datos.objetoMano.ClearObject();
+            if (!string.IsNullOrEmpty(data.objetoMano))
+                datos.objetoMano.nombreObjeto = data.objetoMano;
+        }
 
         datos.puzzlesResueltos = data.puzlesCompletados;
 
