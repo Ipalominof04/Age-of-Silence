@@ -3,19 +3,24 @@ using UnityEngine;
 public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
 {
     public bool infoMostrada = false;
+
     [Header("Dialogos")]
     public RuntimeDialogueGraph graphInfo;
+
     [Header("Meshes")]
     [SerializeField] private GameObject meshGalon;
     [SerializeField] private GameObject meshCerilla;
     [SerializeField] private GameObject triggerCambioEscena;
+
     [Header("Shake")]
     [SerializeField] private CamaraTemblor cameraShake;
     [SerializeField] private float duracion = 3f;
     [SerializeField] private float fuerza = 0.5f;
+
     [Header("Cinematica")]
     [SerializeField] private Transform[] puntos;
     [SerializeField] private float velocidad = 3f;
+
     [Header("Canvas")]
     [SerializeField] GameObject canvasworld;
     private Animator animator;

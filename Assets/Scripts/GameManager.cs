@@ -365,7 +365,7 @@ public class GameManager : MonoBehaviour
             };
         }
 
-        SaveData data = new SaveData(datos.confianza, datos.PlayerHealth, datos.objetoMano, datos.NameScene, lastDoorID, datos.puzzlesResueltos, escenasSave);
+        SaveData data = new SaveData(datos.confianza, datos.PlayerHealth, datos.objetoMano, datos.NameScene, lastDoorID, datos.aidenTieneOso, datos.puzzlesResueltos, escenasSave);
 
         string jsondata = JsonUtility.ToJson(data, true);
         try
@@ -406,6 +406,7 @@ public class GameManager : MonoBehaviour
         confianza = datos.confianza;
         datos.PlayerHealth = data.playerHealth;
         lastDoorID = data.lastDoorID;
+        AidenController.Instance.SetOso(data.aidenTieneOso);
 
         if (datos.objetoMano != null)
         {
@@ -416,7 +417,6 @@ public class GameManager : MonoBehaviour
 
         datos.puzzlesResueltos = data.puzlesCompletados;
 
-        // Rellena los SOEscena con los datos del JSON ANTES de cargar la escena
         if (data.escenas != null)
         {
             foreach (EscenaData escenaGuardada in data.escenas)
@@ -448,16 +448,18 @@ public class GameManager : MonoBehaviour
         public string objetoMano;
         public string nameScene;
         public string lastDoorID;
+        public bool aidenTieneOso;
         public List<string> puzlesCompletados;
         public EscenaData[] escenas;
 
-        public SaveData(float confianza, float playerHealth, ObjetoAgarrado objetoMano, string nameScene, string lastDoorID, List<string> puzlesCompletados, EscenaData[] escenas)
+        public SaveData(float confianza, float playerHealth, ObjetoAgarrado objetoMano, string nameScene, string lastDoorID, bool aidenTieneOso, List<string> puzlesCompletados, EscenaData[] escenas)
         {
             this.confianza = confianza;
             this.playerHealth = playerHealth;
             this.objetoMano = objetoMano != null ? objetoMano.nombreObjeto : "";
             this.nameScene = nameScene;
             this.lastDoorID = lastDoorID;
+            this.aidenTieneOso = aidenTieneOso;
             this.puzlesCompletados = puzlesCompletados;
             this.escenas = escenas;
         }

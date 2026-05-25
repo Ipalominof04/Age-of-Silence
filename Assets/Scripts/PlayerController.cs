@@ -196,21 +196,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         camara = Camera.main;
         if (camara == null)
         {
-            // Fallback: busca cualquier cámara activa en la escena
             camara = FindFirstObjectByType<Camera>();
         }
-        
-        //StartCoroutine(ReasignarCamara());
-    }
-
-    private IEnumerator ReasignarCamara()
-    {
-        while (Camera.main == null)
-            yield return null;
-
-        camara = Camera.main;
-
-        Debug.Log("Cámara asignada: " + camara);
     }
 
     private IEnumerator WaitingChargeMap()
@@ -432,9 +419,23 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void ChangeState(PlayerState newState)
     {
         if (newState == currentState) return;
+
+        PlayerState leavingState = currentState;
         ExitState();
         previousState = currentState;
         InitState(newState);
+
+        // Aquí, después de InitState
+        if (leavingState == PlayerState.CROUCH && newState == PlayerState.THROW)
+        {
+            characterController.center = new Vector3(0, 0.45f, 0);
+            characterController.radius = 0.4f;
+            characterController.height = 0.7f;
+            playerCollider.center = new Vector3(0, 0.55f, 0);
+            playerCollider.radius = 0.6f;
+            playerCollider.height = 0.7f;
+            eyePoint.localPosition = new Vector3(0, eyeHeightCrouch, 0);
+        }
         OnPlayerStateChanged?.Invoke(currentState);
     }
 
