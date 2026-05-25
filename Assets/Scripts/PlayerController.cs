@@ -278,8 +278,6 @@ public class PlayerController : MonoBehaviour, IDamageable
                 SetWavesSprite(-1);
                 if (!escaleraInRange)
                 {
-                    // Ajuste de collider SIEMPRE, independiente del arma
-                    animator.SetBool("isCrouching", true);
                     characterController.center = new Vector3(0, 0.45f, 0);
                     characterController.radius = 0.4f;
                     characterController.height = 0.7f;
@@ -288,20 +286,21 @@ public class PlayerController : MonoBehaviour, IDamageable
                     playerCollider.height = 0.7f;
                     eyePoint.localPosition = new Vector3(0, eyeHeightCrouch, 0);
 
-                    // Animación según si hay arma o no
                     if (armaEquipada)
                         animator.Play("crouch");
                     else
                     {
-                        if (inputMoviment.magnitude > 0.01f)
-                        {
-                            isCrouchWalking = true;
-                            animator.Play("crouchWalking");
-                        }
-                        else
-                        {
-                            isCrouchWalking = false;
-                        }
+                        animator.SetBool("isCrouching", true);
+                    }
+
+                    if (inputMoviment.magnitude > 0.01f)
+                    {
+                        isCrouchWalking = true;
+                        animator.Play("crouchWalking");
+                    }
+                    else
+                    {
+                        isCrouchWalking = false;
                     }
                 }
                 break;
