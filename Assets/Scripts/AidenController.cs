@@ -32,6 +32,9 @@ public class AidenController : MonoBehaviour
     [SerializeField] private GameEventScareType OnAidenScared;
     [SerializeField] private GameEvent OnAidenReanudar;
 
+    [Header("Hueso oso")]
+    [SerializeField] private GameObject OsoAiden;
+
     private NavMeshAgent agent;
     private Animator animator;
     private SoundEmitter emitter;
@@ -537,6 +540,7 @@ public class AidenController : MonoBehaviour
     {
         isFirstDialogue = true;
         interactText.gameObject.SetActive(true);
+        SetOso(false);
     }
     private void OnPlayerDied()
     {
@@ -562,5 +566,13 @@ public class AidenController : MonoBehaviour
         }
 
         ChangeState(AidenState.IDLE);
+    }
+
+    public void SetOso(bool activo)
+    {
+        if(OsoAiden != null)
+        {
+            OsoAiden.SetActive(activo);
+        }
     }
 }

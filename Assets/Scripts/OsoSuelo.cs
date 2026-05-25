@@ -31,5 +31,6 @@ public class OsoSuelo : MonoBehaviour
     {
         this.gameObject.SetActive(false);
         osoMano.SetActive(true);
+        GameManager.Instance.datos.aidenTieneOso = true;
     }
 }
