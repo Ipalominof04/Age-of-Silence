@@ -54,6 +54,7 @@ public class TriggerPuzleFusible : MonoBehaviour, IPuzle
 
     public void OnEnterRange()
     {
+        PlayerController.Instance.ForceIdle();
         if (!infoMostrada && graphInfo != null)
         {
             infoMostrada = true;
