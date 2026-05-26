@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
             PlayerController.Instance.gameObject.SetActive(true);
             AidenController.Instance.gameObject.SetActive(true);
         }
-    
+
         MoverPlayerSpawn();
 
 
@@ -188,12 +188,21 @@ public class GameManager : MonoBehaviour
     public void LimpiarSOEscenas()
     {
         datos.NameScene = "";
+
         foreach (SOEscena soEscena in datos.escenas)
         {
-            Debug.Log($"[Limpiar] {soEscena.sceneName} tenía {soEscena.objetos.Count} objetos");
-            soEscena.objetos.Clear();
+            for (int i = soEscena.objetos.Count - 1; i >= 0; i--)
+            {
+                if (!soEscena.objetos[i].persisteAlMorir)
+                    soEscena.objetos.RemoveAt(i);
+            }
         }
+        /*
+        Debug.Log($"[Limpiar] {soEscena.sceneName} tenía {soEscena.objetos.Count} objetos");
+        soEscena.objetos.Clear();
+        */
     }
+
     private IEnumerator FadeAndLoadScene(string sceneName)
     {
         IsChangingScene = true;
