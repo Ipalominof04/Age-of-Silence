@@ -155,6 +155,10 @@ public class GameManager : MonoBehaviour
             datos.NameScene = sceneName;
             GuardarPartida();
         }
+        else if (sceneName == "MainMenu")
+        {
+            datos.aidenTieneOso = false;
+        }
         escenaGuardada = true;
 
         StartCoroutine(FadeAndLoadScene(sceneName));
@@ -197,10 +201,6 @@ public class GameManager : MonoBehaviour
                     soEscena.objetos.RemoveAt(i);
             }
         }
-        /*
-        Debug.Log($"[Limpiar] {soEscena.sceneName} tenía {soEscena.objetos.Count} objetos");
-        soEscena.objetos.Clear();
-        */
     }
 
     private IEnumerator FadeAndLoadScene(string sceneName)
@@ -415,6 +415,7 @@ public class GameManager : MonoBehaviour
         confianza = datos.confianza;
         datos.PlayerHealth = data.playerHealth;
         lastDoorID = data.lastDoorID;
+        datos.aidenTieneOso = data.aidenTieneOso;
         AidenController.Instance.SetOso(data.aidenTieneOso);
 
         if (datos.objetoMano != null)

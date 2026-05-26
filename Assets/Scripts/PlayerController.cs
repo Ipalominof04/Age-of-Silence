@@ -403,7 +403,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
             case PlayerState.INTERACT:
                 Interact();
-                ChangeState(PlayerState.IDLE);
+                ChangeState(previousState == PlayerState.CROUCH ? PlayerState.CROUCH : PlayerState.IDLE);
                 break;
 
             case PlayerState.DIALOGUE:

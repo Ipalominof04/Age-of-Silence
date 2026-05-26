@@ -536,7 +536,8 @@ public class AidenController : MonoBehaviour
         currentState = AidenState.NONE;
         ChangeState(AidenState.IDLE);
     }
-    public void ResetUI()
+    // Solo se usa para el boton de play del menu
+    public void ResetAidenPlay()
     {
         isFirstDialogue = true;
         interactText.gameObject.SetActive(true);

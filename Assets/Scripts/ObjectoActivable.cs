@@ -5,6 +5,7 @@ public class ObjectoActivable : MonoBehaviour
     [SerializeField] private Renderer[] rends;
     [SerializeField] private Collider col;
     [SerializeField] private Light luz;
+    [SerializeField] private Canvas canvas;
 
     private void Start()
     {
@@ -21,6 +22,7 @@ public class ObjectoActivable : MonoBehaviour
                 if (rend != null) rend.enabled = resuelto;
             if (col != null) col.enabled = resuelto;
             if (luz != null) luz.enabled = resuelto;
+            if(canvas != null) canvas.enabled = resuelto;
         }
         else
         {

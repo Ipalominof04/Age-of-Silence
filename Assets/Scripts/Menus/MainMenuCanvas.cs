@@ -34,7 +34,7 @@ public class MainMenuCanvas : MonoBehaviour
         GameManager.Instance.IrAScene(menuName.nameScene);
         PlayerController.Instance?.ClearArma();
         GameManager.Instance.datos.objetoMano.ClearObject();
-        AidenController.Instance.ResetUI();
+        AidenController.Instance.ResetAidenPlay();
         StartCoroutine(OcultarTrasFade());
         
     }
