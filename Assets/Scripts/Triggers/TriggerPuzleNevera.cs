@@ -19,6 +19,7 @@ public class TriggerPuzleNevera : MonoBehaviour, IPuzle
     [Header("Canvas")]
     [SerializeField] GameObject canvasworld;
 
+
     public void Interact(ObjetoAgarrado objetoMano)
     {
         if (!requiereObjeto)

@@ -2,12 +2,7 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 
-/// <summary>
-/// Hace scroll vertical del texto de créditos (RectTransform sube).
-/// Coloca este script en el GameObject que contiene el TMP_Text de créditos.
-/// El RectTransform de ese objeto debe estar dentro de un panel con Mask o RectMask2D.
-/// Al terminar llama a GameManager.ChangeScene("MainMenu").
-/// </summary>
+
 public class CreditsScroller : MonoBehaviour
 {
     [Header("Referencias")]
@@ -65,10 +60,10 @@ public class CreditsScroller : MonoBehaviour
         if (pos.y >= endY)
         {
             isScrolling = false;
+            if (System.IO.File.Exists(GameManager.Instance.ruta))
+                System.IO.File.Delete(GameManager.Instance.ruta);
             GameManager.Instance.IrAScene("MainMenu");
         }
     }
-
-    /// <summary>Cambia la velocidad en tiempo de ejecución.</summary>
     public void SetSpeed(float newSpeed) => scrollSpeed = newSpeed;
 }
