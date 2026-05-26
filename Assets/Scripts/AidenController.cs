@@ -532,6 +532,8 @@ public class AidenController : MonoBehaviour
 
         SetColliderNormal();
         SetUI(false);
+        exclamationText.gameObject.SetActive(false);
+        canvasImage.SetActive(true);
 
         currentState = AidenState.NONE;
         ChangeState(AidenState.IDLE);
@@ -564,6 +566,7 @@ public class AidenController : MonoBehaviour
             animator.Rebind();
             animator.Update(0f);
         }
+
 
         ChangeState(AidenState.IDLE);
     }
