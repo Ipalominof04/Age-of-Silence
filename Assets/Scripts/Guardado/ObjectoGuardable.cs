@@ -4,7 +4,11 @@ using UnityEngine;
 public class ObjetoGuardable : MonoBehaviour
 {
     public SOEscena soEscena;
-    public string id; 
+    public string id;
+
+    [Header("Persistencia")]
+    [Tooltip("Si true, NO se borra al morir el jugador")]
+    public bool persisteAlMorir = false;
 
     private void Reset()
     {
@@ -20,7 +24,8 @@ public class ObjetoGuardable : MonoBehaviour
             id = id,
             active = gameObject.activeSelf,
             pos = transform.position,
-            rot = transform.rotation
+            rot = transform.rotation,
+            persisteAlMorir = persisteAlMorir
         };
 
         if (idx >= 0)
