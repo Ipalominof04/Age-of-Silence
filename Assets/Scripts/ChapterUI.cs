@@ -31,14 +31,17 @@ public class ChapterUI : MonoBehaviour
     // un texto del cap
     public IEnumerator MostrarCapitulo(string mensaje, float duracion)
     {
+        InputManager.Instance.PlayerMap.Disable();
         canvas.SetActive(true);
         yield return PlayStep(mensaje, duracion);
         canvas.SetActive(false);
+        InputManager.Instance.PlayerMap.Enable();
     }
 
     // secuencia de textos
     public IEnumerator PlaySequence(ChapterStep[] steps)
     {
+        InputManager.Instance.PlayerMap.Disable();
         canvas.SetActive(true);
 
         //recorre todos los textos
@@ -48,6 +51,7 @@ public class ChapterUI : MonoBehaviour
         }
 
         canvas.SetActive(false);
+        InputManager.Instance.PlayerMap.Enable();
     }
 
     private IEnumerator PlayStep(string msg, float duracion)
