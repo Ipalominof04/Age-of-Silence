@@ -315,7 +315,7 @@ public class AidenController : MonoBehaviour
 
         if (type == ScareType.Body)
         {
-            if (confianza <= 20)
+            if (confianza <= 30)
             {
                 //se va a asustar SI o SI porque tiene poca confianza
                 scaredNum = UnityEngine.Random.Range(0, 2);
@@ -418,7 +418,7 @@ public class AidenController : MonoBehaviour
             if (scaredCoroutine != null) StopCoroutine(scaredCoroutine);
             scaredCoroutine = null;
             SetUI(false);
-            GameManager.Instance.SumValor(10);
+            GameManager.Instance.SumValor(5);
             ChangeState(AidenState.CATCH_UP);
         }
     }
@@ -428,7 +428,7 @@ public class AidenController : MonoBehaviour
         yield return new WaitForSeconds(20f);
         scaredCoroutine = null;
         SetUI(false);
-        GameManager.Instance.RestValor(10);
+        GameManager.Instance.RestValor(1);
         ChangeState(AidenState.CATCH_UP);
     }
 
