@@ -11,8 +11,14 @@ public class GodMode : MonoBehaviour
     private bool consolaActiva = false;
     private List<string> logs = new List<string>();
     private Vector2 scrollPos;
-    private Rect ventana = new Rect(10, 10, 420, 350);
+    private Rect ventana = new Rect(10, 10, 420, 0);
     private const int MAX_LINEAS = 30;
+    private bool mostrarObjetos = false;
+    private bool mostrarEscenas = false;
+
+    private readonly string[] nombre_objetos = {
+    "Rama", "Palanca", "Cizallas", "FusibleVerde", "FusibleAzul","FusibleAmarillo", "Galon", "Cerillas","Palet","MaderasPuente","MaderaPequeña"
+    };
 
     private void Awake()
     {
@@ -33,13 +39,10 @@ public class GodMode : MonoBehaviour
         godMap = InputManager.Instance.GodModeMap;
 
         godMap.FindAction("Console").performed += _ => ToggleConsole();
-        godMap.FindAction("SubirConfianza").performed += _ => SubirConfianza(25);
-        godMap.FindAction("BajarConfianza").performed += _ => BajarConfianza(25);
+        godMap.FindAction("SubirConfianza").performed += _ => SubirConfianza(15);
+        godMap.FindAction("BajarConfianza").performed += _ => BajarConfianza(15);
         godMap.FindAction("CurarJugador").performed += _ => CurarJugador();
         godMap.FindAction("MatarJugador").performed += _ => MatarJugador();
-        godMap.FindAction("EscenaFinal").performed += _ => EscenaFinal();
-        godMap.FindAction("Escena4").performed += _ => Escena4();
-
     }
 
 
@@ -47,12 +50,10 @@ public class GodMode : MonoBehaviour
     {
         if (godMap == null) return;
         godMap.FindAction("Console").performed -= _ => ToggleConsole();
-        godMap.FindAction("SubirConfianza").performed -= _ => SubirConfianza(50);
-        godMap.FindAction("BajarConfianza").performed -= _ => BajarConfianza(50);
-        godMap.FindAction("EscenaFinal").performed += _ => EscenaFinal();
-        godMap.FindAction("Escena4").performed += _ => Escena4();
-
-
+        godMap.FindAction("SubirConfianza").performed -= _ => SubirConfianza(15);
+        godMap.FindAction("BajarConfianza").performed -= _ => BajarConfianza(15);
+        godMap.FindAction("CurarJugador").performed -= _ => CurarJugador();
+        godMap.FindAction("MatarJugador").performed -= _ => MatarJugador();
     }
 
     // --- Toggle ---
@@ -74,6 +75,18 @@ public class GodMode : MonoBehaviour
             // reactivamos solo Console para poder volver a abrir
             godMap.FindAction("Console").Enable();
         }
+    }
+
+    private void EquiparObjeto(string nombreObjeto)
+    {
+        var player = PlayerController.Instance;
+        if (player == null) { Log("[ERROR] No hay player"); return; }
+
+        var datos = GameManager.Instance.datos;
+        if (datos.objetoMano == null) { Log("[ERROR] objetoMano es null"); return; }
+
+        datos.objetoMano.nombreObjeto = nombreObjeto;
+        Log($"Objeto '{nombreObjeto}' añadido a la mano");
     }
 
     // --- Comandos ---
@@ -116,6 +129,20 @@ public class GodMode : MonoBehaviour
         GameManager.Instance.ChangeScene("Escena4");
         Log("Teletransporte a la escena 4...");
     }
+    private void EntradaFabrica()
+    {
+        GameManager.Instance.lastDoorID = "entrada";
+        GameManager.Instance.ChangeScene("Entrada");
+        Log("Teletransporte a la entrada de la fabrica...");
+    }
+    private void ExteriorGasolinera()
+    {
+        GameManager.Instance.lastDoorID = "gasolinera";
+        GameManager.Instance.ChangeScene("ExteriorGasolinera");
+        Log("Teletransporte al exterior de la gasolinera...");
+    }
+
+
 
     // --- Log ---
     public void Log(string mensaje)
@@ -131,7 +158,7 @@ public class GodMode : MonoBehaviour
     private void OnGUI()
     {
         if (!consolaActiva) return;
-        ventana = GUI.Window(0, ventana, DibujarVentana, "God Mode Console");
+        ventana = GUILayout.Window(0, ventana, DibujarVentana, "God Mode Console");
     }
 
     private void DibujarVentana(int id)
@@ -153,8 +180,8 @@ public class GodMode : MonoBehaviour
         GUILayout.Space(4);
 
         GUILayout.BeginHorizontal();
-        if (GUILayout.Button("Confianza +25")) SubirConfianza(50);
-        if (GUILayout.Button("Confianza -25")) BajarConfianza(50);
+        if (GUILayout.Button("Confianza +15")) SubirConfianza(15);
+        if (GUILayout.Button("Confianza -15")) BajarConfianza(15);
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
@@ -162,16 +189,42 @@ public class GodMode : MonoBehaviour
         if (GUILayout.Button("Matar")) MatarJugador();
         GUILayout.EndHorizontal();
 
-        GUILayout.Space(4);
-        if (GUILayout.Button("Ir escena 4")) Escena4();
+        if (GUILayout.Button(mostrarEscenas ? "▲ Escenas" : "▼ Escenas"))
+        {
+            mostrarEscenas = !mostrarEscenas;
+            if (!mostrarEscenas) ventana.height = 0;
+        }
+
+        if (mostrarEscenas)
+        {
+            GUILayout.BeginVertical(GUI.skin.box);
+            if (GUILayout.Button("Escena 4")) Escena4();
+            if (GUILayout.Button("Entrada fabrica")) EntradaFabrica();
+            if (GUILayout.Button("Exterior gasolinera")) ExteriorGasolinera();
+            if (GUILayout.Button("Escena Final")) EscenaFinal();
+            // Añade más aquí fácilmente
+            GUILayout.EndVertical();
+        }
 
         GUILayout.Space(4);
-        if (GUILayout.Button("Ir a escena final")) EscenaFinal();
+        if (GUILayout.Button(mostrarObjetos ? "▲ Objetos" : "▼ Objetos"))
+            mostrarObjetos = !mostrarObjetos;
+        ventana.height = 0;
+        if (mostrarObjetos)
+        {
+            GUILayout.BeginVertical(GUI.skin.box);
+            foreach (var obj in nombre_objetos)
+            {
+                if (GUILayout.Button(obj))
+                    EquiparObjeto(obj);
+            }
+            if (GUILayout.Button("[ Vaciar mano ]"))
+            {
+                GameManager.Instance.datos.objetoMano.ClearObject();
+                Log("Mano vaciada");
+            }
+            GUILayout.EndVertical();
+        }
 
-
-        GUILayout.Space(4);
-        if (GUILayout.Button("Cerrar [F12]")) ToggleConsole();
-
-        GUI.DragWindow();
     }
 }

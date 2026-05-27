@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
             AidenController.Instance.gameObject.SetActive(true);
         }
 
-        MoverPlayerSpawn();
+      //  MoverPlayerSpawn();
 
 
         healthAlEntrarEscena = datos.PlayerHealth;
@@ -318,7 +318,7 @@ public class GameManager : MonoBehaviour
         fadeImage.transform.parent.gameObject.SetActive(false);
     }
 
-    private void MoverPlayerSpawn()
+    public void MoverPlayerSpawn()
     {
         Debug.Log($"[SPAWN] lastDoorID: '{lastDoorID}'");
 
