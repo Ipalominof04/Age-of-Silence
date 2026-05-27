@@ -202,6 +202,12 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    public void LimpiarSOEscenasTotal()
+    {
+        datos.NameScene = "";
+        foreach (SOEscena soEscena in datos.escenas)
+            soEscena.objetos.Clear();
+    }
 
     private IEnumerator FadeAndLoadScene(string sceneName)
     {
