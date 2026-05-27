@@ -26683,7 +26683,7 @@ Transform:
   m_GameObject: {fileID: 432548618}
   serializedVersion: 2
   m_LocalRotation: {x: 0.000000031610135, y: 0.7071068, z: -0.000000031610135, w: 0.7071068}
-  m_LocalPosition: {x: -5, y: 0.13, z: 1.988}
+  m_LocalPosition: {x: -5, y: 0.326, z: 1.988}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -38414,90 +38414,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 674774950}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &676001405
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 676001406}
-  - component: {fileID: 676001409}
-  - component: {fileID: 676001407}
-  - component: {fileID: 676001410}
-  m_Layer: 9
-  m_Name: TriggerDialogue
-  m_TagString: TriggerDialogue
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &676001406
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 676001405}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.00000004470348, w: 1}
-  m_LocalPosition: {x: 66.09, y: 0.44, z: -3.72}
-  m_LocalScale: {x: 1, y: 1, z: 6.7023497}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 785176947}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &676001407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 676001405}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
-  soEscena: {fileID: 11400000, guid: 1743f8c9aa8ed434cae01a8659ef81b0, type: 2}
-  id: TriggerInfo2
-  persisteAlMorir: 0
---- !u!65 &676001409
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 676001405}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.57421494, y: 1, z: 1.6209152}
-  m_Center: {x: -0.21289253, y: 0, z: -0.036410756}
---- !u!114 &676001410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 676001405}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01a582e5dea841945809b727d0a3832c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TriggerDialogue
-  graphDialogue: {fileID: 3965311268370046156, guid: ba877954a7ca10d49925fcc5880d7a45, type: 3}
-  onDialogueFinished: {fileID: 11400000, guid: 24d173763f19212419ab012c1f7833f5, type: 2}
 --- !u!1001 &677616092
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41416,7 +41332,6 @@ Transform:
   - {fileID: 1670308380}
   - {fileID: 542401121}
   - {fileID: 1041447359}
-  - {fileID: 676001406}
   m_Father: {fileID: 710832685}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &786415742
@@ -52056,7 +51971,6 @@ GameObject:
   - component: {fileID: 1041447359}
   - component: {fileID: 1041447358}
   - component: {fileID: 1041447357}
-  - component: {fileID: 1041447356}
   m_Layer: 9
   m_Name: TriggerInfo
   m_TagString: TriggerInfo
@@ -52064,21 +51978,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1041447356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1041447355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf69dfc56414fa44188f5c5e2b8e26ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
-  soEscena: {fileID: 11400000, guid: 1743f8c9aa8ed434cae01a8659ef81b0, type: 2}
-  id: TriggerInfo
-  persisteAlMorir: 0
 --- !u!114 &1041447357
 MonoBehaviour:
   m_ObjectHideFlags: 0

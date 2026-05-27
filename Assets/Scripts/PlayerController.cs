@@ -322,31 +322,48 @@ public class PlayerController : MonoBehaviour, IDamageable
         switch (currentState)
         {
             case PlayerState.IDLE:
-                if (inputMoviment.magnitude > 0.01f) ChangeState(PlayerState.WALK);
-                if (crouchAction.IsPressed()) ChangeState(PlayerState.CROUCH);
-                if (armaEquipada && shootAction.triggered)
+                if (interactAction.triggered)
                 {
-                    if (!armaSobrecalentada)
+                    Debug.Log($"[INTERACT] triggered | objectInRange={objectInRange?.name ?? "null"} | puzleInRange={puzleInRange != null} | armaEquipada={armaEquipada} | armaEnMano={armaEnMano?.name ?? "null"}");
+
+                    if (objectInRange != null || puzleInRange != null)
                     {
-                        SetWavesSprite(2);
-                        ChangeState(PlayerState.SHOOT);
+                        Debug.Log("[INTERACT] → INTERACT por objeto/puzle");
+                        ChangeState(PlayerState.INTERACT);
+                    }
+                    else if (armaEnMano != null && !armaEquipada)
+                    {
+                        Debug.Log("[INTERACT] → INTERACT por arma");
+                        ChangeState(PlayerState.INTERACT);
+                    }
+                    else if (canInteract && objectInRange == null)
+                    {
+                        Debug.Log("[INTERACT] → DIALOGUE");
+                        ChangeState(PlayerState.DIALOGUE);
+                    }
+                    else if (objectLanzableInRange != null)
+                    {
+                        Debug.Log("[INTERACT] → THROW");
+                        ChangeState(PlayerState.THROW);
+                    }
+                    else
+                    {
+                        Debug.Log("[INTERACT] → ninguna condición cumplida");
                     }
                 }
+                else if (armaEquipada && shootAction.triggered && !armaSobrecalentada)
+                {
+                    SetWavesSprite(2);
+                    ChangeState(PlayerState.SHOOT);
+                }
 
-                if (interactAction.triggered && (objectInRange != null || puzleInRange != null))
-                    ChangeState(PlayerState.INTERACT);
-                if (interactAction.triggered && armaEnMano != null && !armaEquipada)
-                    ChangeState(PlayerState.INTERACT);
-                if (interactAction.triggered && canInteract && objectInRange == null)
-                    ChangeState(PlayerState.DIALOGUE);
-                if (interactAction.triggered && objectLanzableInRange != null)
-                    ChangeState(PlayerState.THROW);
+                if (inputMoviment.magnitude > 0.01f) ChangeState(PlayerState.WALK);
+                if (crouchAction.IsPressed()) ChangeState(PlayerState.CROUCH);
                 if (objetoLanzableEnMano != null && throwAction.IsPressed())
                     ChangeState(PlayerState.THROW);
                 if (interactAction.triggered && ayudaInRange != null)
                     ayudaInRange.PedirAyuda();
                 break;
-
             case PlayerState.WALK:
                 if (escaleraInRange) ClimbLadder();
                 else Walk();
@@ -613,57 +630,59 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void Interact()
     {
+        Debug.Log($"[Interact()] objectInRange={objectInRange?.name ?? "null"} tag={objectInRange?.tag ?? "—"} | vidaActual={vidaActual} | vidaMaxima={vidaMaxima}");
+
         if (objectInRange != null)
         {
+            Debug.Log($"[Interact()] tag es: {objectInRange.tag}");
             if (objectInRange.CompareTag("Pieza"))
             {
+                Debug.Log($"[Interact()] Es Pieza | vida={vidaActual}/{vidaMaxima}");
                 if (vidaActual >= vidaMaxima)
                 {
                     Debug.Log("Vida al máximo, no necesitas la pieza");
                     return;
                 }
-                else
-                {
-                    Curar(2);
-
-
-                    objectInRange.SetActive(false);
-                    objectInRange = null;
-                    soundEmitter.EmitSound(ESound.PICKUP);
-                    return;
-                }
+                Curar(2);
+                objectInRange.SetActive(false);
+                objectInRange = null;
+                soundEmitter.EmitSound(ESound.PICKUP);
+                return; // ← sale aquí, nunca llega al check de objetoMano
             }
-            //Sino tienes nada en la mano comprueba el tag del objetoInRange y hace lo que debe ese objeto 
+
+            if (objectInRange.CompareTag("Comida"))
+            {
+                GameManager.Instance.SumValor(3);
+                objectInRange.SetActive(false);
+                objectInRange = null;
+                soundEmitter.EmitSound(ESound.PICKUP);
+                return; // ← igual
+            }
+
+            // Solo objetos normales necesitan mano libre
             if (string.IsNullOrEmpty(objetoMano.nombreObjeto))
             {
-                if (objectInRange.CompareTag("Comida"))
-                {
-                    GameManager.Instance.SumValor(3);
-                    objectInRange.SetActive(false);
-                    objectInRange = null;
-                    soundEmitter.EmitSound(ESound.PICKUP);
-                    return;
-                }
-                else
-                {
-                    objetoMano.SaveObject(objectInRange);
-                    GameManager.Instance.datos.objetoMano = objetoMano;
-                    objectInRange.SetActive(false);
-                    objectInRange = null;
-                    Debug.Log("Objeto recogido: " + objetoMano.nombreObjeto);
-                    soundEmitter.EmitSound(ESound.PICKUP);
-                }
+                objetoMano.SaveObject(objectInRange);
+                GameManager.Instance.datos.objetoMano = objetoMano;
+                objectInRange.SetActive(false);
+                objectInRange = null;
+                Debug.Log("Objeto recogido: " + objetoMano.nombreObjeto);
+                soundEmitter.EmitSound(ESound.PICKUP);
             }
             else
             {
                 Debug.Log("Mano ocupada");
             }
+            return;
         }
-        else if (puzleInRange != null)
+
+        if (puzleInRange != null)
         {
             puzleInRange.Interact(objetoMano);
+            return;
         }
-        else if (armaEnMano != null)
+
+        if (armaEnMano != null && !armaEquipada)
         {
             GameObject arma = armaEnMano;
             arma.transform.SetParent(huesoMano.transform);
@@ -791,6 +810,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         soundEmitter.StopSound();
         OnPlayerDied?.Invoke();
 
+        SetWavesSprite(-1);
         ClearObjetoLanzable();
 
         if (armaEnMano != null)
@@ -945,7 +965,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         ChangeState(PlayerState.IDLE);
 
-        //    characterController.enabled = true;
+        GameManager.Instance.MoverPlayerSpawn();
         StartCoroutine(WaitingChargeMap());
     }
 
