@@ -61,7 +61,7 @@ public class SoundEmitter : MonoBehaviour
     {
         return sound == ESound.WALK || sound == ESound.RUN || sound == ESound.LLUVIA || sound == ESound.FUEGO || sound == ESound.BOSQUE || sound == ESound.RIO || sound == ESound.RIO2 ||
             sound == ESound.A_RUN || sound == ESound.ENEMY_PATROL || sound == ESound.ENEMY_CHASE | sound == ESound.ALARMA ||
-            sound == ESound.MUSICAMENU || sound == ESound.MUSICACHASE || sound == ESound.MUSICAAMBIENTE || sound == ESound.MUSICAAMBIENTE2 || sound == ESound.MUSICAMURO;
+            sound == ESound.MUSICAMENU || sound == ESound.MUSICACHASE || sound == ESound.MUSICAAMBIENTE || sound == ESound.MUSICAAMBIENTE2 || sound == ESound.MUSICAMURO || sound == ESound.MUSICACREDITOS;
     }
     public float EmitSound(ESound sound, bool shouldEmmit = true, float volume = -1)
     {

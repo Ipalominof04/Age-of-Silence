@@ -356,7 +356,6 @@ public class GameManager : MonoBehaviour
                         aiden.transform.rotation = Quaternion.Euler(0f, spawn.transform.eulerAngles.y, 0f);
                     }
                 }
-                Debug.LogWarning($"[SPAWN] No se encontró SpawnPoint con doorID '{lastDoorID}' en escena '{SceneManager.GetActiveScene().name}'");
                 return;
             }
         }
