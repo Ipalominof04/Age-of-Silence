@@ -15,15 +15,10 @@ public class TriggerPuzleFusible : MonoBehaviour, IPuzle
     [Header("Canvas")]
     [SerializeField] GameObject canvasworld;
 
-    /*  [Header("Dialogos")]
-      [SerializeField] private RuntimeDialogueGraph graphOrdenIncorrecto;
-      [SerializeField] private RuntimeDialogueGraph graphNoFusible; */
-
     public void Interact(ObjetoAgarrado objetoMano)
     {
         if (string.IsNullOrEmpty(objetoMano.nombreObjeto))
         {
-            print("no tienes fusible gilipollas");
             return;
         }
 
@@ -47,9 +42,6 @@ public class TriggerPuzleFusible : MonoBehaviour, IPuzle
             objetoMano.ClearObject();
             GameManager.Instance.ResolverPuzzle("FusibleAmarillo");
         }
-        else
-            //  DialogueManager.Instance.StartInfo(graphOrdenIncorrecto);
-            print("orden incorrecto");
     }
 
     public void OnEnterRange()
