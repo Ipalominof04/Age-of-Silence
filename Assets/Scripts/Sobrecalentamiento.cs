@@ -17,7 +17,7 @@ public class Sobrecalentamiento : MonoBehaviour
     [SerializeField] private float tiempoEsperaSobrecalentada = 2f;
 
     private float tiempoUltimoDisparo;
-    private bool enEsperaSobrecalentada = false; // Está en el delay de 2s, no se enfría
+    private bool enEsperaSobrecalentada = false; // Estï¿½ en el delay de 2s, no se enfrï¿½a
 
     [Header("Eventos")]
     [SerializeField] GameEvent onShoot;
@@ -29,7 +29,7 @@ public class Sobrecalentamiento : MonoBehaviour
     {
         tiempoUltimoDisparo += Time.deltaTime;
 
-        // Solo enfría si: pasó el tiempo de espera normal, hay calor, y NO está en el delay de sobrecalentamiento
+        // Solo enfrï¿½a si: pasï¿½ el tiempo de espera normal, hay calor, y NO estï¿½ en el delay de sobrecalentamiento
         if (!enEsperaSobrecalentada &&
             tiempoUltimoDisparo >= tiempoEsperaEnfriado &&
             calorActual > 0f)
@@ -59,7 +59,7 @@ public class Sobrecalentamiento : MonoBehaviour
 
     private void CalentarArma()
     {
-        // Bloquear disparos si está sobrecalentada
+        // Bloquear disparos si estï¿½ sobrecalentada
         if (sobrecalentada) return;
 
         calorActual += calorDisparo;
