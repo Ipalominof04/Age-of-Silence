@@ -22,7 +22,7 @@ public class MainMenuCanvas : MonoBehaviour
         if (System.IO.File.Exists(ruta))
             System.IO.File.Delete(ruta);
 
-        GameManager.Instance.LimpiarSOEscenas();
+        GameManager.Instance.LimpiarSOEscenasTotal();
 
         GameManager.Instance.datos.NameScene = menuName.nameScene;
         GameManager.Instance.datos.PlayerHealth = 6f;
