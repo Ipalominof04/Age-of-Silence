@@ -10981,7 +10981,7 @@ Transform:
   m_GameObject: {fileID: 731761686}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -5.87, y: -0.58976, z: -4.92}
+  m_LocalPosition: {x: -5.87, y: -0.663, z: -4.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17899,7 +17899,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4276324180339636, guid: 1aad01ae01d836647b215e40f1f4c1a7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.12
+      value: 0.043
       objectReference: {fileID: 0}
     - target: {fileID: 4276324180339636, guid: 1aad01ae01d836647b215e40f1f4c1a7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -18136,6 +18136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
   soEscena: {fileID: 11400000, guid: 63d4600426ea831478c3b849463893d7, type: 2}
   id: TriggerMaderasPuzle
+  persisteAlMorir: 0
 --- !u!1001 &1345752656
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25111,7 +25112,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4acf82a54dde76a459ee43d44cfb99d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CanvasLookAtCamera
-  camara: {fileID: 0}
 --- !u!114 &1882935599
 MonoBehaviour:
   m_ObjectHideFlags: 0
