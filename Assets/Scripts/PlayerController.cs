@@ -786,6 +786,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
+        if (GodMode.Instance.Invencible) return;
         if (isDying) return;
         if (GameManager.Instance.IsChangingScene) return;
         vidaActual -= damage;
