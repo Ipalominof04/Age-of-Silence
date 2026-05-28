@@ -2283,55 +2283,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!1 &252008114
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 252008116}
-  - component: {fileID: 252008115}
-  m_Layer: 0
-  m_Name: Sky and Fog Volume
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &252008115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 252008114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IsGlobal: 1
-  priority: 0
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: f630c8308b443254b8685b696b792723, type: 2}
---- !u!4 &252008116
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 252008114}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &253930354
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4945,6 +4896,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
   soEscena: {fileID: 11400000, guid: cee8496fe43e5d94a85532876a99f435, type: 2}
   id: TriggerDialogo
+  persisteAlMorir: 0
 --- !u!1001 &543601180
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18877,6 +18829,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
   soEscena: {fileID: 11400000, guid: cee8496fe43e5d94a85532876a99f435, type: 2}
   id: TriggerInfo
+  persisteAlMorir: 0
 --- !u!1001 &2052248870
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19909,7 +19862,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 398743932}
-  - {fileID: 252008116}
   - {fileID: 1452638429}
-  - {fileID: 1254842504}
   - {fileID: 342632155}
+  - {fileID: 1254842504}
