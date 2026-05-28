@@ -78,8 +78,7 @@ public class DialogueGraphImporter : ScriptedImporter
                 ChoiceText = GetPortValue<string>(textPort),
                 DestinationNodeID = outputPort.firstConnectedPort != null ? nodeIDMap[outputPort.firstConnectedPort.GetNode()] : null,
                 ValueChange = GetPortValue<int>(node.GetInputPortByName($"Choice Value {index}")),
-                OnChoiceSelected = GetPortValue<GameEvent>(node.GetInputPortByName($"Choice Event {index}")) // <-- nuevo
-
+                OnChoiceSelected = GetPortValue<GameEvent>(node.GetInputPortByName($"Choice Event {index}")) 
             };
 
             runtimeNode.Choices.Add(choiceData);

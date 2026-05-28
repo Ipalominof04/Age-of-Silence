@@ -185,7 +185,6 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     {
         if (newState == currentState)
             return;
-        Debug.Log($"[STATE] {currentState} --> {newState}");
         ExitState();
         InitState(newState);
     }

@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
-using static EnemyController;
 
 public class AidenController : MonoBehaviour
 {
@@ -154,6 +153,7 @@ public class AidenController : MonoBehaviour
         agent.isStopped = true;
         ChangeState(AidenState.IDLE);
         SetUI(true);
+        canvasImage.SetActive(true);
         OnAidenStopped.Raise();
     }
 
@@ -317,22 +317,19 @@ public class AidenController : MonoBehaviour
         {
             if (confianza <= 30)
             {
-                //se va a asustar SI o SI porque tiene poca confianza
                 scaredNum = UnityEngine.Random.Range(0, 2);
             }
-            else if (confianza <= 60)
+            else if (confianza > 30 && confianza <= 45)
             {
                 scaredNum = UnityEngine.Random.Range(0, 10);
             }
-            else
+            else if (confianza > 45)
             {
                 scaredNum = UnityEngine.Random.Range(0, 20);
             }
 
             if (scaredNum == 0 || scaredNum == 1)
                 ChangeState(AidenState.SCARED);
-            else
-                print("Aiden no se ha asustado por probabilidad");
 
         }
         else if (type == ScareType.Shoot)
@@ -341,19 +338,17 @@ public class AidenController : MonoBehaviour
             {
                 scaredNum = UnityEngine.Random.Range(0, 10);
             }
-            else if (confianza <= 60)
+            else if (confianza > 20 && confianza <= 45)
             {
                 scaredNum = UnityEngine.Random.Range(0, 20);
             }
-            else
+            else if (confianza > 45)
             {
                 scaredNum = UnityEngine.Random.Range(0, 40);
             }
 
             if (scaredNum == 0 || scaredNum == 1)
                 ChangeState(AidenState.SCARED);
-            else
-                print("Aiden no se ha asustado por probabilidad");
         }
     }
 
@@ -363,18 +358,19 @@ public class AidenController : MonoBehaviour
         {
             animator.SetTrigger("scaredScream");
             emitter.EmitSound(ESound.A_SCARE);
-            SetUI(true);
             exclamationText.gameObject.SetActive(true);
             canvasImage.SetActive(false);
-            StartCoroutine(ScreamRoutine());
+            SetUI(true);
+            scaredCoroutine = StartCoroutine(ScreamRoutine());
         }
         else if (scaredNum == 1)
         {
             animator.SetTrigger("scaredRunning");
             emitter.EmitSound(ESound.A_RUN);
-            SetUI(true);
+
             exclamationText.gameObject.SetActive(true);
             canvasImage.SetActive(false);
+            SetUI(true);
             Vector3 randomDirection = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)).normalized;
             Vector3 targetPos = transform.position + randomDirection * 7;
 
@@ -387,13 +383,13 @@ public class AidenController : MonoBehaviour
             }
 
             //si ya hay una corrutina que no se empiece otra, para q no haya bugs
-            if (scaredCoroutine != null) StopCoroutine(scaredCoroutine);
             scaredCoroutine = StartCoroutine(scaredRunRoutine());
         }
     }
 
     private void UpdateScared()
     {
+        
         float distancia = Vector3.Distance(transform.position, player.position);
 
         //cuando llegue al destination que salte la otra animacion
@@ -406,6 +402,7 @@ public class AidenController : MonoBehaviour
             {
                 exclamationText.gameObject.SetActive(false);
                 canvasImage.SetActive(true);
+             
             }
         }
 
@@ -425,6 +422,7 @@ public class AidenController : MonoBehaviour
 
     private IEnumerator scaredRunRoutine()
     {
+ 
         yield return new WaitForSeconds(20f);
         scaredCoroutine = null;
         SetUI(false);
@@ -443,9 +441,9 @@ public class AidenController : MonoBehaviour
             animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
 
         agent.isStopped = false;
-        SetUI(false);
+        scaredCoroutine = null;
         exclamationText.gameObject.SetActive(false);
-        canvasImage.SetActive(true);
+        SetUI(false);
         ChangeState(AidenState.CATCH_UP);
     }
     #endregion 
