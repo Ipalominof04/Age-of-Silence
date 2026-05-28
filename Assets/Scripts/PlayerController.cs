@@ -786,6 +786,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
+        if (GodMode.Instance.Invencible) return;
         if (isDying) return;
         if (GameManager.Instance.IsChangingScene) return;
         vidaActual -= damage;
@@ -850,47 +851,66 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         switch (scene.name)
         {
-            case "Escena1":
+            case "Escena2":
+                luz.intensity = 1f;
+                luz.range = 1f;
+                break;
+            case "Escena4":
+                luz.intensity = 1.5f;
+                luz.range = 1f;
+                break;
+            case "Entrada":
                 luz.intensity = 1f;
                 luz.range = 1f;
                 break;
             case "SalidaFabrica":
-                luz.intensity = 2f;
+                luz.intensity = 4f;
                 luz.range = 1f;
                 break;
-            case "SalidaSigilo":
-                luz.intensity = 35f;
+            case "SigiloSalida":
+                luz.intensity = 55f;
                 luz.range = 1f;
                 break;
-            case "PuenteLevadizo":
-                luz.intensity = 40f;
-                luz.range = 1f;
-                break;
-            case "SalidaMuro":
-                luz.intensity = 60f;
-                luz.range = 1f;
-                break;
-            case "ExteriorTienda":
+            case "ExteriorGasolinera":
                 luz.intensity = 100f;
                 luz.range = 1f;
                 break;
+            case "InteriorGasolinera":
+                luz.intensity = 12f;
+                luz.range = 1f;
+                break;
+            case "Muro":
+                luz.intensity = 65f;
+                luz.range = 1f;
+                break;
+            case "SalidaMuro":
+                luz.intensity = 175f;
+                luz.range = 1f;
+                break;
+            case "ExteriorTienda":
+                luz.intensity = 250f;
+                luz.range = 1f;
+                break;
             case "InteriorTienda":
-                luz.intensity = 35f;
+                luz.intensity = 45f;
+                luz.range = 1f;
+                break;
+            case "Tienda2":
+                luz.intensity = 0.15f;
                 luz.range = 1f;
                 break;
             case "CabañaNPC":
-                luz.intensity = 400f;
+                luz.intensity = 500f;
                 luz.range = 1f;
                 break;
             case "InteriorCabaña":
-                luz.intensity = 0.3f;
+                luz.intensity = 0.5f;
                 luz.range = 1f;
                 break;
-            case "PuenteBosque":
-                luz.intensity = 800f;
+            case "MaderaBosque":
+                luz.intensity = 150f;
                 luz.range = 1f;
                 break;
-
         }
     }
     private void SetWavesSprite(int index)
@@ -1108,7 +1128,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         if (other.gameObject == objectInRange)
             objectInRange = null;
-    //    objectInRange = null;
 
         if (puzleInRange != null && other.GetComponent<IPuzle>() == puzleInRange)
             puzleInRange = null;

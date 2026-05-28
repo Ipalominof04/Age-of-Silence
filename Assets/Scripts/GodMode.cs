@@ -15,6 +15,7 @@ public class GodMode : MonoBehaviour
     private const int MAX_LINEAS = 30;
     private bool mostrarObjetos = false;
     private bool mostrarEscenas = false;
+    public bool Invencible = false;
 
     private readonly string[] nombre_objetos = {
     "Rama", "Palanca", "Cizallas", "FusibleVerde", "FusibleAzul","FusibleAmarillo", "Galon", "Cerillas","Palet","MaderasPuente","MaderaPequeña"
@@ -37,12 +38,7 @@ public class GodMode : MonoBehaviour
     void Start()
     {
         godMap = InputManager.Instance.GodModeMap;
-
         godMap.FindAction("Console").performed += _ => ToggleConsole();
-        godMap.FindAction("SubirConfianza").performed += _ => SubirConfianza(15);
-        godMap.FindAction("BajarConfianza").performed += _ => BajarConfianza(15);
-        godMap.FindAction("CurarJugador").performed += _ => CurarJugador();
-        godMap.FindAction("MatarJugador").performed += _ => MatarJugador();
     }
 
 
@@ -50,10 +46,6 @@ public class GodMode : MonoBehaviour
     {
         if (godMap == null) return;
         godMap.FindAction("Console").performed -= _ => ToggleConsole();
-        godMap.FindAction("SubirConfianza").performed -= _ => SubirConfianza(15);
-        godMap.FindAction("BajarConfianza").performed -= _ => BajarConfianza(15);
-        godMap.FindAction("CurarJugador").performed -= _ => CurarJugador();
-        godMap.FindAction("MatarJugador").performed -= _ => MatarJugador();
     }
 
     // --- Toggle ---
@@ -184,10 +176,14 @@ public class GodMode : MonoBehaviour
 
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Curar")) CurarJugador();
+        if (GUILayout.Button(Invencible ? "Invencible: <color='green'>ON</color>" : "Invencible: <color='red'>OFF</color>"))
+        {
+            Invencible = !Invencible;
+            Log($"Invencibilidad {(Invencible ? "<color='green'>activada</color>" : "<color='red'>desactivada</color>")}");
+        }
         if (GUILayout.Button("Matar")) MatarJugador();
         GUILayout.EndHorizontal();
 
-        // ✅ Solo resetea height al hacer clic
         if (GUILayout.Button(mostrarEscenas ? "▲ Escenas" : "▼ Escenas"))
         {
             mostrarEscenas = !mostrarEscenas;
@@ -206,7 +202,6 @@ public class GodMode : MonoBehaviour
 
         GUILayout.Space(4);
 
-        // ✅ Solo resetea height al hacer clic
         if (GUILayout.Button(mostrarObjetos ? "▲ Objetos" : "▼ Objetos"))
         {
             mostrarObjetos = !mostrarObjetos;
