@@ -497,7 +497,7 @@ Transform:
   m_GameObject: {fileID: 158458889}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -2.16646, y: 0.13400003, z: -13.04669}
+  m_LocalPosition: {x: -2.16646, y: 0.111, z: -13.04669}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2843,6 +2843,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
   soEscena: {fileID: 11400000, guid: 220400bd4d41d9e44b85ec62708d75ca, type: 2}
   id: NPC
+  persisteAlMorir: 0
 --- !u!135 &981605490
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2897,6 +2898,7 @@ MonoBehaviour:
   rends: []
   col: {fileID: 981605490}
   luz: {fileID: 0}
+  canvas: {fileID: 0}
 --- !u!1 &1054818355
 GameObject:
   m_ObjectHideFlags: 0
@@ -4542,6 +4544,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
   soEscena: {fileID: 11400000, guid: 220400bd4d41d9e44b85ec62708d75ca, type: 2}
   id: TriggerDialoguePuerta
+  persisteAlMorir: 0
 --- !u!1001 &1489912893
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5646,6 +5649,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
   soEscena: {fileID: 11400000, guid: 220400bd4d41d9e44b85ec62708d75ca, type: 2}
   id: TriggerDialogueInicial
+  persisteAlMorir: 0
 --- !u!1001 &1742419860
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -21,7 +21,7 @@ public class BalaController : MonoBehaviour
         if (yaImpacto) return;
         yaImpacto = true;
 
-        IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
+        IDamageable damageable = collision.collider.GetComponentInParent<IDamageable>();
         if (damageable != null)
             damageable.TakeDamage(damage);
 

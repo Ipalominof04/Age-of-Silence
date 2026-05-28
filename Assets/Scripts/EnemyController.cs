@@ -380,7 +380,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
     private IEnumerator SearchRoutine()
     {
-        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
+        while (agent != null && agent.enabled && agent.isOnNavMesh && (agent.pathPending || agent.remainingDistance > agent.stoppingDistance))
             yield return null;
 
         //ha llegado al último punto conocido, ya puede volver a detectar al jugador con los rangos de vision
@@ -650,6 +650,12 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     {
         onMusicChange?.Raise("musicStop");
         soundEmitter?.StopSound();
+
+        if (searchCoroutine != null)
+            StopCoroutine(searchCoroutine);
+
+        if (lookCoroutine != null)
+            StopCoroutine(lookCoroutine);
 
         if (agent != null)
         {

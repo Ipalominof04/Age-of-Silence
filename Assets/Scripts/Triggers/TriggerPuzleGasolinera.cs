@@ -40,6 +40,7 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
     private void IniciarCinematica()
     {
         activo = true;
+        InputManager.Instance.PlayerMap.Disable();
     }
     void Update()
     {
@@ -51,6 +52,7 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
             playerTransform.rotation = Quaternion.LookRotation(direccion);
         playerTransform.position = Vector3.MoveTowards(playerTransform.position, objetivo.position, velocidad * Time.deltaTime);
         animator.Play("run");
+        
         if (Vector3.Distance(playerTransform.position, objetivo.position) < 0.1f)
         {
             puntoActual++;
@@ -58,6 +60,7 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
             {
                 animator.Play("idle");
                 activo = false;
+                InputManager.Instance.PlayerMap.Enable();
             }
         }
     }
@@ -106,7 +109,7 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
         foreach (var s in sources)
             s.spatialBlend = 0f;
         emitter.EmitSound(ESound.FUEGO);
-
+        
         yield return new WaitForSeconds(5f);
         print("exploto");
         emitter.EmitSound(ESound.EXPLOSION);
