@@ -2635,7 +2635,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4acf82a54dde76a459ee43d44cfb99d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CanvasLookAtCamera
-  camara: {fileID: 0}
 --- !u!114 &521028816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3042,7 +3041,7 @@ Transform:
   m_GameObject: {fileID: 662099032}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.801, y: -1.4742199, z: -2.382}
+  m_LocalPosition: {x: -0.801, y: -1.551, z: -2.315}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3167,8 +3166,8 @@ Transform:
   m_GameObject: {fileID: 690078063}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.0530319, y: -1.60817, z: -2.87913}
-  m_LocalScale: {x: 2.13269, y: 0.033999998, z: 1.99752}
+  m_LocalPosition: {x: -1.157, y: -1.6082, z: -2.8881}
+  m_LocalScale: {x: 2.13269, y: 0.033999998, z: 1.9859238}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 170619403}
@@ -4151,8 +4150,8 @@ Transform:
   m_GameObject: {fileID: 935299462}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.96338654, y: -1.60817, z: -2.87913}
-  m_LocalScale: {x: 2.13269, y: 0.033999998, z: 1.99752}
+  m_LocalPosition: {x: 0.96338654, y: -1.6082, z: -2.8812}
+  m_LocalScale: {x: 2.13269, y: 0.033999998, z: 1.9933252}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 170619403}
@@ -6939,6 +6938,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
   soEscena: {fileID: 11400000, guid: 3a5484ccc47170f4cab117155ba72482, type: 2}
   id: FusibleAzul
+  persisteAlMorir: 0
 --- !u!1 &1480940571
 GameObject:
   m_ObjectHideFlags: 0
@@ -7523,6 +7523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
   soEscena: {fileID: 11400000, guid: 3a5484ccc47170f4cab117155ba72482, type: 2}
   id: FusibleAmarillo
+  persisteAlMorir: 0
 --- !u!1001 &1585724120
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8337,6 +8338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjetoGuardable
   soEscena: {fileID: 11400000, guid: 3a5484ccc47170f4cab117155ba72482, type: 2}
   id: FusibleVerde
+  persisteAlMorir: 0
 --- !u!1 &1794788452
 GameObject:
   m_ObjectHideFlags: 0
