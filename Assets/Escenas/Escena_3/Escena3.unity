@@ -41332,6 +41332,7 @@ Transform:
   - {fileID: 1670308380}
   - {fileID: 542401121}
   - {fileID: 1041447359}
+  - {fileID: 1136527181}
   m_Father: {fileID: 710832685}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &786415742
@@ -63699,6 +63700,74 @@ MonoBehaviour:
   emitter: {fileID: 1133675708}
   minDistance: 0
   maxDistance: 5
+--- !u!1 &1136527180
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1136527181}
+  - component: {fileID: 1136527183}
+  - component: {fileID: 1136527182}
+  m_Layer: 9
+  m_Name: MusicTrigger
+  m_TagString: TriggerMusic
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1136527181
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136527180}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0.00000004470348, w: 1}
+  m_LocalPosition: {x: 53.31, y: 0.48, z: -2.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 785176947}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1136527182
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136527180}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.8463994, z: 10.878721}
+  m_Center: {x: 0, y: 0.4231997, z: -0.94756985}
+--- !u!114 &1136527183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136527180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c667237fff5db064ea62dbb96aa186f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  musicEvent: {fileID: 11400000, guid: 7b9c0b9ce3dc2ff4d89b536d076cc4eb, type: 2}
+  musicName: musicCapitulo
 --- !u!4 &1147770723 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a9419a14ac8782141bb7f0b4a51a327b, type: 3}
@@ -103597,6 +103666,8 @@ MonoBehaviour:
     sound: 0
   - key: musicChase
     sound: 24
+  - key: musicCapitulo
+    sound: 25
   canPlay: 1
   startKey: 
 --- !u!4 &1863420311
