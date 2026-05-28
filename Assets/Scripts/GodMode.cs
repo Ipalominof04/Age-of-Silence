@@ -69,10 +69,8 @@ public class GodMode : MonoBehaviour
         else
         {
             Log("God Mode desactivado");
-            // pequeño delay para que el log se vea antes de cerrar
             consolaActiva = false;
             godMap.Disable();
-            // reactivamos solo Console para poder volver a abrir
             godMap.FindAction("Console").Enable();
         }
     }
@@ -189,10 +187,11 @@ public class GodMode : MonoBehaviour
         if (GUILayout.Button("Matar")) MatarJugador();
         GUILayout.EndHorizontal();
 
+        // ✅ Solo resetea height al hacer clic
         if (GUILayout.Button(mostrarEscenas ? "▲ Escenas" : "▼ Escenas"))
         {
             mostrarEscenas = !mostrarEscenas;
-            if (!mostrarEscenas) ventana.height = 0;
+            ventana.height = 0;
         }
 
         if (mostrarEscenas)
@@ -202,14 +201,18 @@ public class GodMode : MonoBehaviour
             if (GUILayout.Button("Entrada fabrica")) EntradaFabrica();
             if (GUILayout.Button("Exterior gasolinera")) ExteriorGasolinera();
             if (GUILayout.Button("Escena Final")) EscenaFinal();
-            // Añade más aquí fácilmente
             GUILayout.EndVertical();
         }
 
         GUILayout.Space(4);
+
+        // ✅ Solo resetea height al hacer clic
         if (GUILayout.Button(mostrarObjetos ? "▲ Objetos" : "▼ Objetos"))
+        {
             mostrarObjetos = !mostrarObjetos;
-        ventana.height = 0;
+            ventana.height = 0;
+        }
+
         if (mostrarObjetos)
         {
             GUILayout.BeginVertical(GUI.skin.box);
@@ -225,6 +228,5 @@ public class GodMode : MonoBehaviour
             }
             GUILayout.EndVertical();
         }
-
     }
 }
