@@ -324,7 +324,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             case PlayerState.IDLE:
                 if (interactAction.triggered)
                 {
-                    Debug.Log($"[INTERACT] triggered | objectInRange={objectInRange?.name ?? "null"} | puzleInRange={puzleInRange != null} | armaEquipada={armaEquipada} | armaEnMano={armaEnMano?.name ?? "null"}");
+                //    Debug.Log($"[INTERACT] triggered | objectInRange={objectInRange?.name ?? "null"} | puzleInRange={puzleInRange != null} | armaEquipada={armaEquipada} | armaEnMano={armaEnMano?.name ?? "null"}");
 
                     if (objectInRange != null || puzleInRange != null)
                     {
@@ -1108,7 +1108,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         if (other.gameObject == objectInRange)
             objectInRange = null;
-        objectInRange = null;
+    //    objectInRange = null;
 
         if (puzleInRange != null && other.GetComponent<IPuzle>() == puzleInRange)
             puzleInRange = null;
