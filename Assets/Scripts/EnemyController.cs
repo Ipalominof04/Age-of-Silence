@@ -8,12 +8,15 @@ using UnityEngine.SceneManagement;
 
 public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 {
+    private NavMeshAgent agent;
+    private Animator animator;
+    private SoundEmitter soundEmitter;
+    private Transform playerTransform;
     public enum EnemyState { NONE, IDLE, PATROL, CHASE, ATTACK, SEARCHING, LOOK };
     public enum EnemyType { NORMAL, FUERTE, VELOZ, VISIONS }
 
     [Header("Maquina de estados")]
     [SerializeField] private EnemyState currentState;
-    private NavMeshAgent agent;
 
     [Header("Config de valores")]
     [SerializeField] float vida;
@@ -29,6 +32,8 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     [SerializeField] public float bulleSpeed = 20f;
     [SerializeField] public float shootCooldown = 1f;
     [SerializeField] private ParticleSystem shootFlash;
+    private bool hasShot = false;
+    private bool playerDead = false;
 
     [Header("Eventos")]
     [SerializeField] private GameEventScareType OnAidenScared;
@@ -43,9 +48,9 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private LayerMask obstacleLayer;
     private bool justLostPlayer = false;
-
-    // FIX: guardamos siempre el transform raíz del jugador, no el del collider hijo
-    private Transform playerTransform;
+    private Coroutine lookCoroutine;
+    private Coroutine searchCoroutine;
+    private float searchDuration = 5f;
 
     [Header("Puntos de patrulla")]
     [SerializeField] private Transform[] destination;
@@ -66,17 +71,11 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     private float gravity = -9.81f;
     private Vector3 verticalVelocity = Vector3.zero;
 
+    // -
+
+    //implementacio de la interficie ISoundListener
     public float GetListenRadius() => listenRadius;
     public float GetMinDetectionLevel() => minDetectionLevel;
-
-    private float searchDuration = 5f;
-    private bool hasShot = false;
-    private bool playerDead = false;
-    private Coroutine lookCoroutine;
-    private Coroutine searchCoroutine;
-
-    private Animator animator;
-    private SoundEmitter soundEmitter;
 
     private void OnEnable()
     {
@@ -89,23 +88,20 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         SoundManager.Instance.Unsubscribe(this);
         PlayerController.OnPlayerDied -= OnPlayerDied;
     }
-
+    //implementacio de la interficie ISoundListener s'executa quan l'enemic sent un so proper
     public void OnHearSound(Vector3 soundPosition, float volume)
     {
         if (volume < minDetectionLevel) return;
         if (currentState == EnemyState.CHASE || currentState == EnemyState.ATTACK) return;
 
-        // FIX: comprobamos que el punto de sonido sea alcanzable en el NavMesh antes de ir
+        //comprova que el punt de so sigui accessible al NavMesh abans de moure-s'hi
         NavMeshHit navHit;
         if (!NavMesh.SamplePosition(soundPosition, out navHit, 3f, NavMesh.AllAreas)) return;
         Vector3 validDestination = navHit.position;
-        /*
-        Collider[] enemiesNearSound = Physics.OverlapSphere(soundPosition, 1f, LayerMask.GetMask("Enemies"));
-        if (enemiesNearSound.Length > 0) return;
-        */
 
         agent.SetDestination(validDestination);
 
+        //si ja estava buscant, redirigeix sense reiniciar la corrutina des de zero
         if (currentState == EnemyState.SEARCHING)
         {
             if (searchCoroutine != null) StopCoroutine(searchCoroutine);
@@ -119,12 +115,12 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             ChangeState(EnemyState.SEARCHING);
         }
     }
-
+    //retorna la posició de l'enemic (implementat per ISoundListener)
     public Vector3 GetPosition()
     {
         return transform.position;
     }
-
+    //mostra o amaga la UI d'estat de l'enemic amb text i color personalitzables
     private void SetUI(bool active, string text = "", string hexColor = "#FFFFFF")
     {
         if (canvasWorld != null)
@@ -132,6 +128,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             canvasWorld.SetActive(active);
             if (stateText != null)
             {
+                //llanca l'animació del text nomes si el contingut canvia
                 if (stateText.text != text)
                 {
                     stateText.GetComponent<Animator>().SetTrigger("Play");
@@ -143,6 +140,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         }
     }
 
+    //asignar els components del enemic
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -153,6 +151,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
     void Start()
     {
+        //el enemic comenca en patrol
         InitState(EnemyState.PATROL);
         ActivateKinematic(true);
         SetUI(false);
@@ -164,11 +163,12 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         ApplyGravity();
     }
 
+    //aplica gravetat manual al agent
     private void ApplyGravity()
     {
         if (agent == null || !agent.enabled) return;
 
-        // FIX: resetear la velocidad vertical cuando el agente está sobre el suelo
+        //aumula velocitat cap avall, es reinicia quan l'agent es sobre el navmesh
         if (agent.isOnNavMesh && agent.isOnOffMeshLink == false)
         {
             verticalVelocity.y = Mathf.Max(verticalVelocity.y + gravity * Time.deltaTime, -2f);
@@ -177,7 +177,6 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         {
             verticalVelocity.y = 0f;
         }
-
         agent.Move(verticalVelocity * Time.deltaTime);
     }
 
@@ -202,6 +201,8 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             case EnemyState.PATROL:
                 agent.isStopped = false;
                 animator.SetBool("onPatrol", true);
+
+                //posicio de l'arma diferent segons el tipus d'enemic
                 if (enemyType == EnemyType.FUERTE)
                 {
                     arma.transform.localPosition = new Vector3(0.046f, -0.352f, -0.055f);
@@ -216,12 +217,14 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 agent.speed = speedPatrol;
                 agent.stoppingDistance = 0.2f;
                 agent.SetDestination(destination[currentIndex].position);
+                //atura la musica de persecucio
                 onMusicChange.Raise("musicStop");
                 break;
 
             case EnemyState.CHASE:
                 agent.isStopped = false;
                 animator.SetBool("onChase", true);
+                //posicio de l'arma diferent segons el tipus d'enemic
                 if (enemyType == EnemyType.FUERTE)
                 {
                     arma.transform.localPosition = new Vector3(0.033f, -0.348f, -0.074f);
@@ -232,6 +235,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                     arma.transform.localPosition = new Vector3(-0.05697f, -0.131036f, -0.00457f);
                     arma.transform.localRotation = Quaternion.Euler(-100.667f, -73.7940f, 71.358f);
                 }
+                //activa la musica de persecucio
                 onMusicChange.Raise("musicChase");
                 SetUI(true, "!", "#F11200");
                 agent.speed = speedChase;
@@ -240,6 +244,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
             case EnemyState.ATTACK:
                 animator.SetBool("onShoot", true);
+                //posicio de l'arma diferent segons el tipus d'enemic
                 if (enemyType == EnemyType.FUERTE)
                 {
                     arma.transform.localPosition = new Vector3(0.052f, -0.324f, -0.061f);
@@ -283,6 +288,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 break;
 
             case EnemyState.PATROL:
+                //avanca al seguent waypoint
                 Patrol();
                 if (PlayerInArea(radiusChase))
                     ChangeState(EnemyState.CHASE);
@@ -291,21 +297,25 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 break;
 
             case EnemyState.CHASE:
+                //segueix el jugador
                 ChasePlayer();
                 if (PlayerInAttackArea())
                     ChangeState(EnemyState.ATTACK);
-                // si el jugador sale del raw radius despues de entrar a chase, el enemigo lo pierde y va a searching
+                //si el jugador surt del raw radius despres de entrar a chase, l'enemic ho perd i va a searching
                 else if (!PlayerInRawRadius(radiusLosePlayer))
                 {
-                    //bloqueamos redetección inmediata al entrar en SEARCHING
+                    //bloquejem la redeteccio inmediata al entrar a SEARCHING per evitar el bug de bucle entre SEARCHING i CHASE
                     justLostPlayer = true;
                     ChangeState(EnemyState.SEARCHING);
                 }
                 break;
 
             case EnemyState.ATTACK:
+                //mira sempre al jugador mentres esta disparant per no perdre'l al segon
                 LookToPlayer();
+                //dispara
                 Shoot();
+                //el jugador ha sortit del radi d'atac: torna a perseguir o a buscar
                 if (!PlayerInAttackArea())
                 {
                     if (PlayerInRawRadius(radiusLosePlayer))
@@ -316,10 +326,11 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 break;
 
             case EnemyState.SEARCHING:
+                //desactiva el bool del animator de onPatrol i activa el de onSearching
                 animator.SetBool("onPatrol", !agent.isStopped);
                 animator.SetBool("onSearching", agent.isStopped);
 
-                //solo redetecta cuando haya llegado al último punto conocido
+                //nomes torna a detectar quan l'enemic hagui arribat al ultim punt conegut del player
                 if (!justLostPlayer)
                 {
                     if (PlayerInArea(radiusChase))
@@ -330,17 +341,19 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 break;
 
             case EnemyState.LOOK:
+                //mira cap on va veure el jugador
                 if (playerTransform != null)
                     LookToPlayer();
-
+                //si el player entra directament en el rang d'attack pasa a ATTACK
                 if (PlayerInAttackArea())
                     ChangeState(EnemyState.ATTACK);
+                //si el player entra directament en el rang de chase pasa a CHASE
                 else if (PlayerInArea(radiusChase))
                     ChangeState(EnemyState.CHASE);
                 break;
         }
     }
-
+    //Neteja animacions i corrutines en sortir d'un estat
     private void ExitState()
     {
         switch (currentState)
@@ -368,27 +381,30 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 break;
         }
     }
-
+    //ragdoll de l'enemic
     private void ActivateKinematic(bool activate)
     {
         foreach (var rb in rigidbodies)
         {
             rb.isKinematic = activate;
         }
-        animator.enabled = activate;
+        //quan el ragdoll deixa caure a l'enemic, l'animator es desactiva per evitar bugs
+        animator.enabled = activate; 
     }
-
+    //corrutina de search: l'enemic va a l'ultima posicio coneguda del jugador, espera i si no veu al jugador torna a patrullar
     private IEnumerator SearchRoutine()
     {
         while (agent != null && agent.enabled && agent.isOnNavMesh && (agent.pathPending || agent.remainingDistance > agent.stoppingDistance))
             yield return null;
 
-        //ha llegado al último punto conocido, ya puede volver a detectar al jugador con los rangos de vision
-        //y volver a entrar al raw cuando el enemigo pase a chase
+        //l'enemic ha arribat a l'ultim punt conegut del player i ja pot tornar a detectar al jugador amb els rangs de visio
+        //i tornar a entrar a raw quan l'enemic pasi a chase
         justLostPlayer = false;
         agent.isStopped = true;
         animator.SetBool("onPatrol", false);
         animator.SetBool("onSearching", true);
+
+        //asignar la posicio de l'arma tan per l'enemic fort com per a la resta
         if (enemyType == EnemyType.FUERTE)
         {
             arma.transform.localPosition = new Vector3(0.083f, -0.315f, -0.06f);
@@ -402,16 +418,19 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
         yield return new WaitForSeconds(searchDuration);
 
+        //si no ha detectat res torna a patrol
         if (currentState == EnemyState.SEARCHING)
             ChangeState(EnemyState.PATROL);
     }
-
+    //corrutina de look: l'enemic s'atura uns segons despres de que el jugador entri en el rang de look, si el player continua
+    //a l'area quan s'acabi la corrutina, l'enemic el detecta
     private IEnumerator LookRoutine()
     {
         yield return new WaitForSeconds(searchDuration);
 
         if (currentState == EnemyState.LOOK)
         {
+            //si el detecta va a CHASE, si no el detecta torna a PATROL
             if (PlayerInArea(radiusLook))
                 ChangeState(EnemyState.CHASE);
             else
@@ -419,6 +438,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         }
     }
 
+    //avanca de waypoint a waypoint, aquests waypoints estan asignats a l'inspector
     private void Patrol()
     {
         if (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
@@ -429,8 +449,8 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         soundEmitter.EmitSound(ESound.ENEMY_PATROL);
     }
 
-    //guardamos el transform RAÍZ del jugador (donde está PlayerController),
-    // no el del collider hijo, para que GetComponent<PlayerController> siempre funcione
+    //comprova si el jugador es dins del con de visió (angle + raycast que comproba si hi ha obstacles entre l'enemic i el player)
+    //guarda el transform arrel del jugador (on hi ha PlayerController), no el del collider fill
     private bool PlayerInArea(float radius)
     {
         if (playerDead) return false;
@@ -444,8 +464,10 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         float angle = Vector3.Angle(transform.forward,
                       (targetForAngle - transform.position).normalized);
 
+        //con de visio de 120 (60 a cada costat a partir del forward de l'enemic)
         if (angle <= 60f)
         {
+            //llença un raycast per comprobar si hi ha algun obstacle entre l'enemic i el jugador, si hi ha algun obstacle l'enemic no veu al jugador
             Vector3 origin = headTransform != null ? headTransform.position : transform.position + Vector3.up;
             Vector3 direction = (targetForAngle - origin).normalized;
             float distance = Vector3.Distance(origin, targetForAngle);
@@ -454,14 +476,14 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
             if (!blocked)
             {
-                //guardamos el transform del objeto raíz del jugador
+                //guarda el transform per usar-lo a ChasePlayer
                 playerTransform = player.transform;
                 return true;
             }
         }
         return false;
     }
-
+    //comprova si el jugador es dins del radi d'atac, sense con de visio (aquest radi es un cercle)
     private bool PlayerInAttackArea()
     {
         if (playerDead) return false;
@@ -471,9 +493,10 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         PlayerController player = hit.GetComponentInParent<PlayerController>();
         if (player == null) return false;
 
-        // FIX: guardamos el transform raíz
+        //actualitza sempre el transform en atac
         playerTransform = player.transform;
 
+        //apunta sempre al cap del player, per a poder disparar correctament independentment de si el player esta de peu o ajupit
         Vector3 origin = headTransform != null ? headTransform.position : transform.position + Vector3.up;
         Vector3 targetPoint = player.GetEyePoint().position;
         Vector3 direction = (targetPoint - origin).normalized;
@@ -484,15 +507,16 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         return !blocked;
     }
 
-    //solo comprueba distancia, sin ángulo ni raycast
-    //se usa solo cuando el enemigo ya te esta persiguiendo para que no te pierda facilmente al salirte del cono
+    //nomes comproba a distancia, sense angle i sense raycast
+    //s'utiliza nomes quan l'enemic ja esta perseguint al player en CHASE, aixo es fa per a que l'enemic no perdi
+    //tan facilment al player, sense aixo et perd nomes sortir del con de visio
     private bool PlayerInRawRadius(float radius)
     {
         if (playerDead) return false;
         Collider hit = Physics.OverlapSphere(transform.position, radius, playerLayer).FirstOrDefault();
         return hit != null;
     }
-
+    //rota a l'enemic cap al jugador per a que pugui disparar constantment al jugador i no el perdi estan en rang d'attack
     private void LookToPlayer()
     {
         if (playerTransform == null) return;
@@ -506,18 +530,21 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
         transform.rotation = Quaternion.LookRotation(direction);
     }
-
+    //envia a l'agent cap a la posicio del jugador
     private void ChasePlayer()
     {
         if (playerTransform == null) return;
         agent.SetDestination(playerTransform.position);
         soundEmitter.EmitSound(ESound.ENEMY_CHASE);
     }
-
+    //gestiona el dispar distingint entre l'enemic fort (que te un comportament diferent perque te una escopeta en comptes d'un rigle) i la resta
     private void Shoot()
     {
+        //bloqueja el shoot durant el cooldown que te l'enemic
         if (hasShot) return;
 
+        //calcula la direccio cap al punt dels ulls del jugador (cap al cap del jugador)
+        //per poder dispara-li independement de estar ajupit o de peu
         if (shootingPoint != null && bala != null)
         {
             Vector3 shootDirection = transform.forward;
@@ -532,6 +559,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             switch (enemyType)
             {
                 case EnemyType.FUERTE:
+                    //escopeta: dispara 3 perdigons amb dispersio
                     int perdigones = 3;
                     float spreadAngle = 15f;
                     for (int i = 0; i < perdigones; i++)
@@ -551,6 +579,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                     break;
 
                 default:
+                    //rifle: dispara una sola bala en linea recta
                     GameObject goDefault = Instantiate(bala, shootingPoint.transform.position, shootingPoint.transform.rotation);
                     BalaController balaDefault = goDefault.GetComponent<BalaController>();
                     if (balaDefault != null) balaDefault.SetDamage(damageAmount);
@@ -562,12 +591,14 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             }
         }
 
+        //es llanca l'event de shoot per a que aiden s'espanti cada vegada que es dispara (excepte en escena2 perque no s'introdueix fins l'escena3)
         if (SceneManager.GetActiveScene().name != "Escena2")
             OnAidenScared?.Raise(ScareType.Shoot);
 
         StartCoroutine(ShootCooldown());
     }
 
+    //corrutina de cooldown per al dispar: bloqueja el dispar durant el temps indicat (canvia depenent del tipus d'enemic)
     private IEnumerator ShootCooldown()
     {
         hasShot = true;
@@ -580,7 +611,8 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         playerDead = true;
         ChangeState(EnemyState.PATROL);
     }
-
+    //quan l'enemic collisiona amb una ampolla o una pedra (el player se la llanca), es gira cap al impacte i entra en LOOK
+    //(aixo es nomes en cas de que l'objecte llencable impacte contra l'enemic, si impacta contra el terra i l'enemic l'escolta, es dirigira cap al so)
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Objetos"))
@@ -591,16 +623,18 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
                 Vector3 hitDirection = (transform.position - collision.transform.position).normalized;
                 hitDirection.y = 0;
 
+                //rotar a l'enemic en la direccio de la colisio
                 if (hitDirection != Vector3.zero)
                     transform.rotation = Quaternion.LookRotation(hitDirection);
 
-                // FIX: al entrar en LOOK por colisión no tenemos playerTransform,
-                // pero eso está bien; el LookRoutine esperará y luego patrullará
+                //en entrar a LOOK per collisio no hi ha playerTransform, pero LookRoutine
+                //esperara el tems de LOOK i despres tornara a patrullar sense problemes
                 ChangeState(EnemyState.LOOK);
             }
         }
     }
 
+    //gizmo amb els cons de visio de l'enemic (nomes visible al Scene View)
     private void OnDrawGizmos()
     {
         Vector3 origin = transform.position;
@@ -636,7 +670,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, radiusAttack);
     }
-
+    //implementacio de IDamageable: resta vida i mata a l'enemic si arriba a 0
     public void TakeDamage(float damage)
     {
         this.vida -= damage;
@@ -645,7 +679,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
             Die();
         }
     }
-
+    //gestiona la mort de l'enemic, atura tot
     public void Die()
     {
         onMusicChange?.Raise("musicStop");
@@ -665,6 +699,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         }
 
         if (animator != null) animator.enabled = false;
+        //activa el ragdoll (desactiva kinematic)
         ActivateKinematic(false);
         CapsuleCollider col = GetComponent<CapsuleCollider>();
         if (col != null) col.enabled = false;
