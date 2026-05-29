@@ -82,9 +82,6 @@ public class AidenController : MonoBehaviour
         //asignar collider de peu
         SetColliderNormal();
 
-        //com el player i l'aiden es carreguen desde el menu i quan le dones a play apareixen al menu, es posen en false perque ahi no fan falta
-        this.gameObject.SetActive(false);
-
     }
     void Start()
     {
@@ -411,17 +408,18 @@ public class AidenController : MonoBehaviour
                 agent.SetDestination(hit.position);
             }
 
-            //si ya hi ha una corrutina que no es comenci una altre per a que no hagui bugs
+            //si ja hi ha una corrutina que no es comenci una altre per a que no hagui bugs
             scaredCoroutine = StartCoroutine(scaredRunRoutine());
         }
     }
 
+    //update del scared, principalment del cas de fugida
     private void UpdateScared()
     {
         
         float distancia = Vector3.Distance(transform.position, player.position);
 
-        //cuando llegue al destination que salte la otra animacion
+        //quan arribi al desti, que salti l'altre animacio
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
             animator.SetFloat("Speed", 0.75f);
@@ -430,35 +428,37 @@ public class AidenController : MonoBehaviour
             if (scaredNum == 1)
             {
                 exclamationText.gameObject.SetActive(false);
-                canvasImage.SetActive(true);
-             
+                canvasImage.SetActive(true); 
             }
         }
-
-        //uso el getkeydown para poder leer el input de forma facil, tambien puede hacerse por evento (por si queremos cambiarlo)
-        //compruebo tambien que aiden haya llegado al destino despues de salir corriendo para no poder interactuar con el mienttras corre
-        //y que solo puedas hacerlo cuando aiden esta esperando a que lo calmes
+        //utilitzo el getkeydown per poder lleguir l'input de forma facil, tambe podria fer-se per event
+        //comprobo tambe que aiden hagi arribat al desti despres de sortir corrents per no poder interatuar amb ell mentres esta corrent
+        //i que nomes puguis fer-ho quan l'aiden estigui esperant al desti
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && distancia <= 2f && Input.GetKeyDown(KeyCode.E))
         {
-            //si la corrutina esta activa, parala y ponla a null
             if (scaredCoroutine != null) StopCoroutine(scaredCoroutine);
             scaredCoroutine = null;
             SetUI(false);
+            //si el calmes, sumes 5 de confianca
             GameManager.Instance.SumValor(5);
             ChangeState(AidenState.CATCH_UP);
         }
     }
 
+    //corutina de fugida: despres de 20 segons (el jugador no l'ha calmat), repren el seguiment del jugador ir esta confianca
     private IEnumerator scaredRunRoutine()
     {
  
         yield return new WaitForSeconds(20f);
         scaredCoroutine = null;
         SetUI(false);
+        //baixa la confianca si el player no interactua amb l'aiden
         GameManager.Instance.RestValor(1);
         ChangeState(AidenState.CATCH_UP);
     }
 
+    //corrutina de crit: espera a que s'acabi la animacio per a que aiden reprengui el moviment
+    //aqui el jugador no te opcio de pujar o baixar confianca
     private IEnumerator ScreamRoutine()
     {
         agent.isStopped = true;
@@ -476,6 +476,8 @@ public class AidenController : MonoBehaviour
         ChangeState(AidenState.CATCH_UP);
     }
     #endregion 
+
+    //fa que l'aiden segueixi al player 
     private void FollowPlayer()
     {
         if (inDialogue) return;
@@ -485,13 +487,13 @@ public class AidenController : MonoBehaviour
         agent.autoBraking = false;
         agent.SetDestination(player.transform.position);
 
-        // Rotar hacia el player cuando está cerca y el agente está parado
+        //rotar cap al player quan este a prop i el agent estigui parat
         if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
         {
             RotarHaciaPlayer();
         }
     }
-
+    //rotar cap al player (la funcio es crida a followplayer)
     private void RotarHaciaPlayer()
     {
         Vector3 direccion = player.position - transform.position;
@@ -502,7 +504,7 @@ public class AidenController : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rotacionObjetivo, 180f * Time.deltaTime);
         }
     }
-
+    //envia l'Aiden a una posicio concreta (per a missions d'ajuda), amb event de callback en arribar
     public void Help(Vector3 nuevoDest, GameEvent onLlego, bool esperar = false)
     {
         destino = nuevoDest;
@@ -510,13 +512,14 @@ public class AidenController : MonoBehaviour
         esperarEnDestino = esperar;
         ChangeState(AidenState.HELP);
     }
-
+    //funcio per activar i desactivar la ui
     private void SetUI(bool active)
     {
         if (canvasWorld != null)
             canvasWorld.SetActive(active);
     }
 
+    //restaurar el collider amb les mesures de peu
     private void SetColliderNormal()
     {
         aidenCollider.center = new Vector3(0, 0.5f, 0);
@@ -527,6 +530,8 @@ public class AidenController : MonoBehaviour
         agent.baseOffset = -0.07f;
     }
 
+    //reiniciar i netejar les variables de l'aiden quan es cambia d'escena o es reinicia l'escena (quan el player mor)
+    //(funciona igual que el player, la funcio es crida desde el gm)
     public void RespawnReset()
     {
         if (animator != null)
@@ -565,13 +570,17 @@ public class AidenController : MonoBehaviour
         currentState = AidenState.NONE;
         ChangeState(AidenState.IDLE);
     }
-    // Solo se usa para el boton de play del menu
+
+    //aixo nomes resetea valors quan es comenca partida nova (es crida desde el mainmenu, al Play)
     public void ResetAidenPlay()
     {
         isFirstDialogue = true;
         interactText.gameObject.SetActive(true);
         SetOso(false);
     }
+
+    //aquesta funcio es crida quan el player mor, per a que aiden es quedi quiet en indle i no es quedi buguejat en l'ultim estat
+    //ni els seus sons ni animacions
     private void OnPlayerDied()
     {
         playerDead = true;
@@ -599,6 +608,7 @@ public class AidenController : MonoBehaviour
         ChangeState(AidenState.IDLE);
     }
 
+    //posa l'os de peluix a la ma de l'aideb
     public void SetOso(bool activo)
     {
         if(OsoAiden != null)
