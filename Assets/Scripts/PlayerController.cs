@@ -191,6 +191,12 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        objectInRange = null;
+        objectLanzableInRange = null;
+        puzleInRange = null;
+        ayudaInRange = null;
+        dialogueActivo = null;
+
         UpdateBrilloBarraVida(scene, mode);
         shootingPoint = GameObject.Find("shooting_point");
         camara = Camera.main;

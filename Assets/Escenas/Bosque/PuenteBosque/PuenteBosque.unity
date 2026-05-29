@@ -5495,6 +5495,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2036290455}
+  - {fileID: 929168850}
   - {fileID: 1673040673}
   - {fileID: 1142449352}
   - {fileID: 1665697139}
@@ -12802,6 +12803,59 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4508691648621678, guid: a25996a7d0674de40a8273b54b50aa7b, type: 3}
   m_PrefabInstance: {fileID: 1450553475}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &929168849
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 929168850}
+  - component: {fileID: 929168851}
+  m_Layer: 3
+  m_Name: BarrierPuente
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &929168850
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929168849}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -19.236, y: 0.56746006, z: -60.64324}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 342537431}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &929168851
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929168849}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5481415, y: 2.9352956, z: 4.0676193}
+  m_Center: {x: 45.984024, y: 0.7502818, z: 56.077137}
 --- !u!1001 &930463264
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18101,6 +18155,7 @@ MonoBehaviour:
   graphObjetoIncorrecto: {fileID: 3965311268370046156, guid: f6265653a4f9cde4d83477e5222b8e1a, type: 3}
   maderas: {fileID: 368087692}
   canvasworld: {fileID: 1882935596}
+  bloqueoPuente: {fileID: 929168849}
 --- !u!65 &1342201626
 BoxCollider:
   m_ObjectHideFlags: 0
