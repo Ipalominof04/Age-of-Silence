@@ -7,7 +7,14 @@ using UnityEngine.SceneManagement;
 
 public class AidenController : MonoBehaviour
 {
+    //instancia
     public static AidenController Instance;
+
+    private NavMeshAgent agent;
+    private Animator animator;
+    private SoundEmitter emitter;
+
+    //posibles estats de l'aiden
     public enum AidenState { NONE, IDLE, WALK, RUN, CROUCH, SCARED, HELP, CATCH_UP }
 
     [Header("Máquina de estados")]
@@ -34,22 +41,21 @@ public class AidenController : MonoBehaviour
     [Header("Hueso oso")]
     [SerializeField] private GameObject OsoAiden;
 
-    private NavMeshAgent agent;
-    private Animator animator;
-    private SoundEmitter emitter;
-
     private bool inDialogue;
     private bool inDialogueTrigger;
+
     private bool esperarEnDestino;
-    private int scaredNum;
-    private Coroutine scaredCoroutine;
     private Vector3 destino;
     private GameEvent onAyudaCompletada;
+
+    private int scaredNum;
+    private Coroutine scaredCoroutine;
 
     private bool playerDead = false;
 
     #region Unity Callbacks
 
+    //inialitzacio de la instancia i dels seus components
     private void Awake()
     {
         if (Instance == null)
@@ -57,7 +63,7 @@ public class AidenController : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
-        //que no se activen en las cinematicas pq los players que ahi hay son falsos
+        //cas especial en les cinematiques, en aquestes escenes hi ha un Aiden fals que no s'ha de desactivar
         else if (SceneManager.GetActiveScene().name == "Escena1" || SceneManager.GetActiveScene().name == "EscenaFinal")
         {
             enabled = false;
@@ -68,25 +74,24 @@ public class AidenController : MonoBehaviour
             Destroy(this.gameObject);
         }
 
+        //asignar components
         agent = GetComponent<NavMeshAgent>();
         emitter = GetComponent<SoundEmitter>();
         animator = GetComponent<Animator>();
+
+        //asignar collider de peu
         SetColliderNormal();
 
-        //como se cargan desde el menu y cuando le das a play apareces en el menu para poder iniciar en cualquier escena para testear etc,
-        //ponerlos en false en el menu pq ahi no hacen falta
+        //com el player i l'aiden es carreguen desde el menu i quan le dones a play apareixen al menu, es posen en false perque ahi no fan falta
         this.gameObject.SetActive(false);
 
     }
-
     void Start()
     {
+        //aiden s'inicia en idle i amb la ui desactivada
         InitState(AidenState.IDLE);
         SetUI(false);
-       
-
     }
-
     void Update()
     {
         UpdateState();
@@ -116,6 +121,8 @@ public class AidenController : MonoBehaviour
     }
     #endregion
     #region Event Handlers
+
+    //event per a que aiden reprengui el moviment en el puzle de BRIDGE on aiden pot ajudar
     private void HandleReanudar()
     {
         esperarEnDestino = false;
@@ -123,21 +130,23 @@ public class AidenController : MonoBehaviour
             ChangeState(AidenState.RUN);
     }
 
+    //event que sincronitza l'estat de aiden amb el del player
     private void HandlePlayerStateChanged(PlayerController.PlayerState playerState)
     {
         if (!gameObject.activeInHierarchy) return;
-        // para que ignore los cambios del player hasta que el niño llegue al player
+        
+        //per a que ignori els canvis del player fins que el nen arribi al player
         if (currentState == AidenState.CATCH_UP) return;
-        //si el niño esta asustado, que ignore lo que hace el player y no le siga hasta que se indique dependiendo el caso 
+        //si aiden esta asustat, que ignori el que fa el player
         if (currentState == AidenState.SCARED) return;
-        // para que ignore los cambios del player y se mueva hasta el waypont
+        //per a que ignori els canvis del player i es mogui fins al waypoint
         if (currentState == AidenState.HELP) return;
         if (esperarEnDestino && currentState == AidenState.IDLE) return;
-
-        // para que ignore los cambios del player mientras esta esperando a un dialogo o en el propio dialogo
+        //per a que ignori els canvis del player mentres esta esperant a un dialeg o en el propi dialeg
         if (inDialogue) return;
         if (inDialogueTrigger) return;
 
+        //canvia l'estat de l'aiden per igualar el del jugador gracies a l'event
         switch (playerState)
         {
             case PlayerController.PlayerState.WALK: ChangeState(AidenState.WALK); break;
@@ -147,6 +156,7 @@ public class AidenController : MonoBehaviour
         }
     }
 
+    //quan el jugador entra a un TriggerDialogue, aiden es para i mostra la ui
     private void HandleDialogueTrigger()
     {
         inDialogueTrigger = true;
@@ -154,9 +164,10 @@ public class AidenController : MonoBehaviour
         ChangeState(AidenState.IDLE);
         SetUI(true);
         canvasImage.SetActive(true);
+        //notifica que l'aiden s'ha parat
         OnAidenStopped.Raise();
     }
-
+    //quan el jugador comença el dialeg
     private void HandleDialogueStarted()
     {
         inDialogue = true;
@@ -164,7 +175,7 @@ public class AidenController : MonoBehaviour
         agent.isStopped = true;
         ChangeState(AidenState.IDLE);
     }
-
+    //quan s'acaba el dialeg aiden repren el moviment
     private void HandleDialogueEnded()
     {
         if (agent == null) return;
@@ -200,6 +211,7 @@ public class AidenController : MonoBehaviour
             case AidenState.CROUCH:
                 animator.SetFloat("Speed", 0.25f);
                 agent.speed = 1.5f;
+                //ajusta el collider al tamany d'aiden ajupit
                 aidenCollider.center = new Vector3(0, 0.3f, 0);
                 aidenCollider.radius = 0.2f;
                 aidenCollider.height = 0.6f;
@@ -211,6 +223,7 @@ public class AidenController : MonoBehaviour
                 break;
             case AidenState.HELP:
                 animator.SetFloat("Speed", 1f);
+                //stopping distance 0 per a help perque ha d'arriba exactament a sobre del waypoint
                 agent.stoppingDistance = 0f;
                 agent.SetDestination(destino);
                 break;
@@ -223,10 +236,13 @@ public class AidenController : MonoBehaviour
 
     private void UpdateState()
     {
+        //no fa res si el player ha mort
         if (playerDead) return;
+
         switch (currentState)
         {
             case AidenState.IDLE:
+                //si el jugador s'allunya massa, aiden entra en catch up per anar a buscar-lo (aquest if esta possat a cada estat)
                 if (!inDialogueTrigger && !esperarEnDestino && Vector3.Distance(transform.position, player.position) > 4f)
                     ChangeState(AidenState.CATCH_UP);
                 break;
@@ -243,7 +259,7 @@ public class AidenController : MonoBehaviour
             case AidenState.CROUCH:
                 if (!inDialogueTrigger && Vector3.Distance(transform.position, player.position) > 4f)
                     ChangeState(AidenState.CATCH_UP);
-                //si el agente se esta moviendo, animación de crouch walking (0.35), si no, crouch idle (0.25)
+                //si l'aiden se esta movent, animació de crouch walking (0.35), si no, crouch idle (0.25)
                 animator.SetFloat("Speed", agent.velocity.magnitude > 0.1f ? 0.35f : 0.25f);
                 FollowPlayer();
                 break;
@@ -251,6 +267,8 @@ public class AidenController : MonoBehaviour
                 UpdateScared();
                 break;
             case AidenState.HELP:
+                //quan arriba al waypoint on ha de fer la seva accio d'ajuda (simbolica perque realment no fa res, nomes arriba al waypoint)
+                //llanca l'event i canvia d'estat
                 if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
                 {
                     onAyudaCompletada?.Raise();
@@ -259,8 +277,9 @@ public class AidenController : MonoBehaviour
                 break;
             case AidenState.CATCH_UP:
                 FollowPlayer();
-                //este caso es diferente a los demas de aiden, es necesario que aiden se vuelva a poner en el estado del player cuando llega a su lado
-                //incluso si el player no cambia de estado y no se lanza el evento pq si no se queda todo el rato en catch up hasta que el player cambia de estado
+                //aquest cas es diferent als demes de l'aiden, es necessari que aiden es torni a posar en l'estat del player quant arriba al seu costat
+                //inclos si el player no canvia d'estat i no en llenca l'event perque si no es queda tota l'estona en catch up fins que el player canvia d'estat
+                //llavors aqui es necesari comprovar de forma continua l'estat del player quan aiden esta en catch up, en comptes de només comprobar-ho quan es llanca l'event
                 if (!inDialogueTrigger && Vector3.Distance(transform.position, player.position) <= agent.stoppingDistance)
                 {
                     switch (PlayerController.Instance.currentState)
@@ -293,6 +312,7 @@ public class AidenController : MonoBehaviour
             case AidenState.RUN:
                 break;
             case AidenState.CROUCH:
+                //restaura el collider al collider normal de peu
                 SetColliderNormal();
                 break;
             case AidenState.SCARED:
@@ -306,15 +326,17 @@ public class AidenController : MonoBehaviour
     }
     #endregion
     #region Scared
+    //determina si l'aiden s'asusta, els percentatges de probabilitat que te d'asustar-se
     private void Scared(ScareType type)
     {
-        //si se ha asustado y a huido, que no se vuelva a asustar mientras esta esperando a que el player vaya a consolarlo
+        //si s'ha asustat i a fugit, que no torni a asustar-se mentres esta esperant a que el player el consoli
         if (scaredCoroutine != null) return;
 
         float confianza = GameManager.Instance.confianza;
 
         if (type == ScareType.Body)
         {
+            //com menys confianca, mes probable que aiden s'asusti
             if (confianza <= 30)
             {
                 scaredNum = UnityEngine.Random.Range(0, 2);
@@ -328,12 +350,14 @@ public class AidenController : MonoBehaviour
                 scaredNum = UnityEngine.Random.Range(0, 20);
             }
 
+            //si en el random surt els numeros 0 o 1, canvia a estat de SCARED
             if (scaredNum == 0 || scaredNum == 1)
                 ChangeState(AidenState.SCARED);
 
         }
         else if (type == ScareType.Shoot)
         {
+            //com menys confianca, mes probable que aiden s'asusti
             if (confianza <= 20)
             {
                 scaredNum = UnityEngine.Random.Range(0, 10);
@@ -347,15 +371,18 @@ public class AidenController : MonoBehaviour
                 scaredNum = UnityEngine.Random.Range(0, 40);
             }
 
+            //si en el random surt els numeros 0 o 1, canvia a estat de SCARED
             if (scaredNum == 0 || scaredNum == 1)
                 ChangeState(AidenState.SCARED);
         }
     }
 
+    //inicialitza la reaccio del enseurt: crit (0) o fugida (1)
     private void InitScared()
     {
         if (scaredNum == 0)
         {
+            //reaccio de crit: es queda quiet durant el que dura l'animacio (uns 2 o 3 segons aprox) i crida
             animator.SetTrigger("scaredScream");
             emitter.EmitSound(ESound.A_SCARE);
             exclamationText.gameObject.SetActive(true);
@@ -365,6 +392,8 @@ public class AidenController : MonoBehaviour
         }
         else if (scaredNum == 1)
         {
+            //reaccio de fugida: surt corrents en una direccio aleatoria dins del navmesh, es para i espera 20 segons a que el player el consoli i sumi confianca
+            //si el player no interacciona amb l'aiden resta confianca
             animator.SetTrigger("scaredRunning");
             emitter.EmitSound(ESound.A_RUN);
 
@@ -374,7 +403,7 @@ public class AidenController : MonoBehaviour
             Vector3 randomDirection = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)).normalized;
             Vector3 targetPos = transform.position + randomDirection * 7;
 
-            //primero limitar que solamente pueda salir corriendo a zonas dentro del navmesh
+            //primer limitar que nomes pugui sortir corrent a zones dins del namesh
             if (NavMesh.SamplePosition(targetPos, out NavMeshHit hit, 5f, NavMesh.AllAreas))
             {
                 agent.speed = 2.5f;
@@ -382,7 +411,7 @@ public class AidenController : MonoBehaviour
                 agent.SetDestination(hit.position);
             }
 
-            //si ya hay una corrutina que no se empiece otra, para q no haya bugs
+            //si ya hi ha una corrutina que no es comenci una altre per a que no hagui bugs
             scaredCoroutine = StartCoroutine(scaredRunRoutine());
         }
     }
