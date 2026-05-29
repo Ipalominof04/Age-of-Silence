@@ -6,18 +6,25 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
+    //singleton
     public static PlayerController Instance;
+
     private CharacterController characterController;
     private SoundEmitter soundEmitter;
+    private Animator animator;
 
+    //estados del player
     public enum PlayerState { NONE, IDLE, WALK, RUN, CROUCH, SHOOT, INTERACT, DIALOGUE, THROW }
 
     [Header("Maquina de estados")]
     [SerializeField] public PlayerState currentState;
+    private PlayerState previousState;
 
     [Header("Movimiento")]
     [SerializeField] private InputActionAsset myInputActionAsset;
-    private InputActionAsset inputInstance;
+    [SerializeField] private float slopeCheckDistance = 0.3f;
+    [SerializeField] private float walkStepRate = 0.45f;
+    [SerializeField] private float runStepRate = 0.28f;
     private InputAction walkAction;
     private InputAction runAction;
     private InputAction interactAction;
@@ -26,16 +33,21 @@ public class PlayerController : MonoBehaviour, IDamageable
     private Vector2 inputMoviment;
     private float gravity = -9.81f;
     private Vector3 verticalVelocity = Vector3.zero;
-    [SerializeField] private float slopeCheckDistance = 0.3f;
+    private bool escaleraInRange = false;
+    private Vector3 direccionEscalera;
+    private bool isCrouchWalking = false;
+    private float nextStepTime = 0f;
 
     [Header("Vida")]
     [SerializeField] private float vidaMaxima;
-    public float vidaActual;
     [SerializeField] private GameObject luzBarraVida;
+    public float vidaActual;
 
     [Header("Aiden")]
     [SerializeField] private GameObject aiden;
     [SerializeField] private float interactRange;
+    private bool InDialogue;
+    private TriggerDialogue dialogueActivo = null;
 
     [Header("Crouch")]
     [SerializeField] private CapsuleCollider playerCollider;
@@ -45,6 +57,8 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     [Header("Objetos")]
     [SerializeField] private ObjetoAgarrado objetoMano;
+    private GameObject objectInRange = null;
+    private bool canInteract = false;
 
     [Header("Eventos")]
     [SerializeField] private GameEvent OnDialogueStarted;
@@ -66,11 +80,15 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private Camera camara;
     private ObjetoLanzable objetoLanzableEnMano;
     private InputAction throwAction;
+    private GameObject objectLanzableInRange = null;
 
     [Header("Disparo")]
     [SerializeField] private GameObject bala;
     [SerializeField] private GameObject shootingPoint;
     private bool armaSobrecalentada;
+    private bool armaEquipada = false;
+    private bool isAiming = false;
+    private GameObject armaEnMano = null;
 
     [Header("Ragdoll")]
     [SerializeField] private Transform ragdollRoot;
@@ -79,30 +97,16 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Header("Sound Waves")]
     [SerializeField] private MeshRenderer wavesRenderer;
 
-    private bool InDialogue;
-    private bool canInteract = false;
-    private GameObject objectInRange = null;
-    private GameObject armaEnMano = null;
-    private bool armaEquipada = false;
-    private GameObject objectLanzableInRange = null;
-    private TriggerDialogue dialogueActivo = null;
-    private bool escaleraInRange = false;
-    private TriggerAyuda ayudaInRange = null;
-    private Vector3 direccionEscalera;
-    private bool isDying = false;
-    private bool isCrouchWalking = false;
-    private bool isAiming = false;
     private IPuzle puzleInRange = null;
-    private Animator animator;
-    private PlayerState previousState;
+    private TriggerAyuda ayudaInRange = null;
 
-    private float nextStepTime = 0f;
-    [SerializeField] private float walkStepRate = 0.45f;
-    [SerializeField] private float runStepRate = 0.28f;
-
+    private bool isDying = false;
+ 
+    // -
     public Transform GetEyePoint() => eyePoint;
     public void ForceIdle() => ChangeState(PlayerState.IDLE);
 
+    //inicialització del Singleton i dels components del player
     private void Awake()
     {
         if (Instance == null)
@@ -110,6 +114,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
+        //cas especial en les escenes de cinematiques, en aquestes escenes hi ha un player fals que no s'ha de reemplaçar
         else if (SceneManager.GetActiveScene().name == "Escena1" || SceneManager.GetActiveScene().name == "EscenaFinal")
         {
             return;
@@ -119,12 +124,13 @@ public class PlayerController : MonoBehaviour, IDamageable
             Destroy(this.gameObject);
         }
 
-
+        //asignar components
         characterController = GetComponent<CharacterController>();
         camara = Camera.main;
         soundEmitter = GetComponent<SoundEmitter>();
         animator = GetComponent<Animator>();
 
+        //obtenir totes les accions del input
         var playerMap = InputManager.Instance.PlayerMap;
         walkAction = playerMap.FindAction("Move");
         runAction = playerMap.FindAction("Sprint");
@@ -132,31 +138,42 @@ public class PlayerController : MonoBehaviour, IDamageable
         crouchAction = playerMap.FindAction("Crouch");
         throwAction = playerMap.FindAction("Throw");
         shootAction = playerMap.FindAction("Attack");
-
-
+        
+        //inicialitzar al player amb el collider gran (collider de peu, en comptes del de crouch)
         SetColliderNormal();
+        //init del ragdoll
         InitRagdoll();
     }
 
     void Start()
     {
         isDying = false;
+
+        //forçar a buscar el shooting_point i la camara en la primera escena on neix el player
         shootingPoint = GameObject.Find("shooting_point");
-        camara = Camera.main;
         if (shootingPoint == null)
             Debug.Log("No hay arma en la escena");
+        camara = Camera.main;
 
+        //el player s'inicia en idle
         InitState(PlayerState.IDLE);
 
+        //recuperar la vida guardada, en cas de que no existeixi vida guardada asignar la vida maxima
         float vidaGuardada = GameManager.Instance.datos.PlayerHealth;
         vidaActual = vidaGuardada > 0f ? vidaGuardada : vidaMaxima;
         onVidaCambiada.Raise(vidaActual / vidaMaxima);
         float ratio = vidaActual / vidaMaxima;
         DamageVignette.Instance?.UpdateHealthRatio(ratio);
 
+        //forçar el update del brillantor de la barra de vida, el sceneloaded no es dispara en la escena que neix el player
+        Scene escenaInicial = SceneManager.GetActiveScene();
+        UpdateBrilloBarraVida(escenaInicial, LoadSceneMode.Single);
+
+        //esperar a que el mapa carregui abans de activar el charactercontroller per a que el player no es que caigui al apareixer
         StartCoroutine(WaitingChargeMap());
     }
 
+    //llegeix l'input i l'actualitza cada frame, també aplica gravetat
     void Update()
     {
         if (isDying) return;
@@ -189,8 +206,11 @@ public class PlayerController : MonoBehaviour, IDamageable
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+    //aquesta funcio es crida cada vegada que es carrega una escena nova
+    //neteja les referencies de l'escena anterior per evitar bugs i actualiza els components del player als de l'escena
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        //netejar referencies que apunten a l'escena anterior
         objectInRange = null;
         objectLanzableInRange = null;
         puzleInRange = null;
@@ -198,7 +218,9 @@ public class PlayerController : MonoBehaviour, IDamageable
         dialogueActivo = null;
 
         UpdateBrilloBarraVida(scene, mode);
+
         shootingPoint = GameObject.Find("shooting_point");
+
         camara = Camera.main;
         if (camara == null)
         {
@@ -206,12 +228,14 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
+    //corrutina que espera a que el navmesh i el mapa hagin carregat per activar el charactercontroller
+    //evitant que el player es caigui a sota del mapa
     private IEnumerator WaitingChargeMap()
     {
         characterController.enabled = false;
         verticalVelocity = Vector3.zero;
 
-        // espera hasta que haya NavMesh bajo el player
+        //espera hasta que haya NavMesh bajo el player
         while (!UnityEngine.AI.NavMesh.SamplePosition(transform.position, out _, 2f, UnityEngine.AI.NavMesh.AllAreas))
         {
             yield return null;
@@ -219,7 +243,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         characterController.enabled = true;
 
-        // ahora espera hasta tocar el suelo físicamente
+        //ahora espera hasta tocar el suelo físicamente
         while (!IsGroundedOrOnSlope())
         {
             verticalVelocity.y = 0f;
@@ -237,40 +261,51 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             case PlayerState.IDLE:
                 if (previousState != PlayerState.SHOOT)
+                    //ocultar ones de so al estar en idle, a no ser que l'estat anterior sigui SHOOT,
+                    //en aquest cas, deixar que acabi l'animacio de les ones
                     SetWavesSprite(-1);
                 if (!escaleraInRange)
                 {
+                    //idle amb arma
                     if (armaEquipada)
                     {
+                        //si no hi ha arma
                         if (armaEnMano == null)
                         {
                             armaEquipada = false;
                             animator.Play("idle");
                         }
+                        //si hi ha arma
                         else
                         {
                             animator.Play("idleArma");
+                            //ajustar la posició de l'arma a la mà del player
                             armaEnMano.transform.localPosition = new Vector3(0.0153f, 0.0766f, 0.0142f);
                             armaEnMano.transform.localRotation = Quaternion.Euler(33.74f, 137.574f, -44.139f);
                         }
                     }
+                    //idle normal
                     else
                         animator.Play("idle");
                 }
                 break;
             case PlayerState.WALK:
+                //cambiar les ones a les ones de WALK
                 SetWavesSprite(0);
                 if (!escaleraInRange)
                     animator.Play("walk");
                 break;
             case PlayerState.RUN:
+                //cambiar les ones a les ones de RUN
                 SetWavesSprite(1);
                 animator.Play("run");
                 break;
             case PlayerState.CROUCH:
+                //sense ones al estar en crouch perque no s'emet soroll
                 SetWavesSprite(-1);
                 if (!escaleraInRange)
                 {
+                    //fer el collider més petit quan esta en CROUCH per a no ser visible pels enemics
                     characterController.center = new Vector3(0, 0.45f, 0);
                     characterController.radius = 0.4f;
                     characterController.height = 0.7f;
@@ -285,7 +320,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                     {
                         animator.SetBool("isCrouching", true);
                     }
-
+                    //si el player es mou mentre esta en crouch activar crouchwalking
                     if (inputMoviment.magnitude > 0.01f)
                     {
                         isCrouchWalking = true;
@@ -298,13 +333,14 @@ public class PlayerController : MonoBehaviour, IDamageable
                 }
                 break;
             case PlayerState.SHOOT:
-                // SetWavesSprite(2);
                 break;
             case PlayerState.INTERACT:
                 break;
             case PlayerState.THROW:
+                //si no te cap objecte a la ma (ma fisica del player)
                 if (objetoLanzableEnMano == null)
                 {
+                    //i si hi ha un objecte llençable en range, asignar el objecte a la ma 
                     if (objectLanzableInRange != null)
                     {
                         objetoLanzableEnMano = objectLanzableInRange.GetComponent<ObjetoLanzable>();
@@ -323,39 +359,32 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void UpdateState()
     {
+        //si esta en dialogue, bloquejar l'input per a que no es pugui moure
         if (InDialogue) return;
 
         switch (currentState)
         {
             case PlayerState.IDLE:
+                //si es pulsa el botó d'interact es cambia a determinat estat depenent del cas
                 if (interactAction.triggered)
                 {
-                //    Debug.Log($"[INTERACT] triggered | objectInRange={objectInRange?.name ?? "null"} | puzleInRange={puzleInRange != null} | armaEquipada={armaEquipada} | armaEnMano={armaEnMano?.name ?? "null"}");
-
+            
                     if (objectInRange != null || puzleInRange != null)
                     {
-                        Debug.Log("[INTERACT] → INTERACT por objeto/puzle");
                         ChangeState(PlayerState.INTERACT);
                     }
                     else if (armaEnMano != null && !armaEquipada)
                     {
-                        Debug.Log("[INTERACT] → INTERACT por arma");
                         ChangeState(PlayerState.INTERACT);
                     }
                     else if (canInteract && objectInRange == null)
                     {
-                        Debug.Log("[INTERACT] → DIALOGUE");
                         ChangeState(PlayerState.DIALOGUE);
                     }
                     else if (objectLanzableInRange != null)
                     {
-                        Debug.Log("[INTERACT] → THROW");
                         ChangeState(PlayerState.THROW);
-                    }
-                    else
-                    {
-                        Debug.Log("[INTERACT] → ninguna condición cumplida");
-                    }
+                    }     
                 }
                 else if (armaEquipada && shootAction.triggered && !armaSobrecalentada)
                 {
@@ -448,7 +477,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         previousState = currentState;
         InitState(newState);
 
-        // Aquí, después de InitState
         if (leavingState == PlayerState.CROUCH && newState == PlayerState.THROW)
         {
             characterController.center = new Vector3(0, 0.45f, 0);
@@ -527,7 +555,6 @@ public class PlayerController : MonoBehaviour, IDamageable
 
             if (camara == null)
             {
-                Debug.LogError("No hay cámara disponible");
                 return;
             }
 
@@ -635,34 +662,29 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
 
     private void Interact()
-    {
-        Debug.Log($"[Interact()] objectInRange={objectInRange?.name ?? "null"} tag={objectInRange?.tag ?? "—"} | vidaActual={vidaActual} | vidaMaxima={vidaMaxima}");
-
+    {       
         if (objectInRange != null)
-        {
-            Debug.Log($"[Interact()] tag es: {objectInRange.tag}");
+        {          
             if (objectInRange.CompareTag("Pieza"))
-            {
-                Debug.Log($"[Interact()] Es Pieza | vida={vidaActual}/{vidaMaxima}");
+            {                
                 if (vidaActual >= vidaMaxima)
-                {
-                    Debug.Log("Vida al máximo, no necesitas la pieza");
+                {                  
                     return;
                 }
                 Curar(2);
                 objectInRange.SetActive(false);
                 objectInRange = null;
                 soundEmitter.EmitSound(ESound.PICKUP);
-                return; // ← sale aquí, nunca llega al check de objetoMano
+                return; 
             }
 
             if (objectInRange.CompareTag("Comida"))
             {
-                GameManager.Instance.SumValor(3);
+                GameManager.Instance.SumValor(5);
                 objectInRange.SetActive(false);
                 objectInRange = null;
                 soundEmitter.EmitSound(ESound.PICKUP);
-                return; // ← igual
+                return; 
             }
 
             // Solo objetos normales necesitan mano libre
@@ -671,8 +693,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 objetoMano.SaveObject(objectInRange);
                 GameManager.Instance.datos.objetoMano = objetoMano;
                 objectInRange.SetActive(false);
-                objectInRange = null;
-                Debug.Log("Objeto recogido: " + objetoMano.nombreObjeto);
+                objectInRange = null;             
                 soundEmitter.EmitSound(ESound.PICKUP);
             }
             else
@@ -729,7 +750,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         if (aiden == null)
         {
-            Debug.LogError("Aiden no está asignado en el Inspector");
             ChangeState(PlayerState.IDLE);
             return;
         }
@@ -737,15 +757,9 @@ public class PlayerController : MonoBehaviour, IDamageable
         float distance = Vector3.Distance(transform.position, aiden.transform.position);
         if (distance <= interactRange)
         {
-            Debug.Log("Empieza diálogo");
             DialogueManager.Instance.StartDialogue(dialogueActivo.graphDialogue);
         }
-        else
-        {
-            Debug.Log("Muy lejos de Aiden");
-        }
-
-
+      
         ChangeState(PlayerState.IDLE);
     }
 
@@ -811,7 +825,6 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void Die()
     {
-        print("SA MUERTO");
         if (isDying) return;
         isDying = true;
         soundEmitter.StopSound();
@@ -835,7 +848,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         GameManager.Instance.confianza = GameManager.Instance.GetConfianzaAlEntrarEscena();
         GameManager.Instance.LimpiarSOEscenas();
         GameManager.Instance.datos.puzzlesResueltos.Clear();
-        // esto es para borrar la referencia
         GameManager.Instance.datos.objetoMano.ClearObject();
         InputManager.Instance.PlayerMap.Disable();
         StartCoroutine(RespawnDelay());
@@ -843,7 +855,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private IEnumerator RespawnDelay()
     {
-        yield return new WaitForSeconds(2f); // ajusta el tiempo a tu gusto
+        yield return new WaitForSeconds(2f);
         DamageVignette.Instance?.SetVignetteActive(false);
         GameManager.Instance.IrAScene(SceneManager.GetActiveScene().name);
     }
@@ -857,66 +869,23 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         switch (scene.name)
         {
-            case "Escena2":
-                luz.intensity = 1f;
-                luz.range = 1f;
-                break;
-            case "Escena4":
-                luz.intensity = 1.5f;
-                luz.range = 1f;
-                break;
-            case "Entrada":
-                luz.intensity = 1f;
-                luz.range = 1f;
-                break;
-            case "SalidaFabrica":
-                luz.intensity = 4f;
-                luz.range = 1f;
-                break;
-            case "SigiloSalida":
-                luz.intensity = 55f;
-                luz.range = 1f;
-                break;
-            case "ExteriorGasolinera":
-                luz.intensity = 100f;
-                luz.range = 1f;
-                break;
-            case "InteriorGasolinera":
-                luz.intensity = 12f;
-                luz.range = 1f;
-                break;
-            case "Muro":
-                luz.intensity = 65f;
-                luz.range = 1f;
-                break;
-            case "SalidaMuro":
-                luz.intensity = 175f;
-                luz.range = 1f;
-                break;
-            case "ExteriorTienda":
-                luz.intensity = 250f;
-                luz.range = 1f;
-                break;
-            case "InteriorTienda":
-                luz.intensity = 45f;
-                luz.range = 1f;
-                break;
-            case "Tienda2":
-                luz.intensity = 0.15f;
-                luz.range = 1f;
-                break;
-            case "CabañaNPC":
-                luz.intensity = 500f;
-                luz.range = 1f;
-                break;
-            case "InteriorCabaña":
-                luz.intensity = 0.5f;
-                luz.range = 1f;
-                break;
-            case "MaderaBosque":
-                luz.intensity = 150f;
-                luz.range = 1f;
-                break;
+            case "Escena2": luz.intensity = 1f; luz.range = 1f; break;
+            case "Escena4": luz.intensity = 1.5f; luz.range = 1f; break;
+            case "Entrada": luz.intensity = 0.5f; luz.range = 1f; break;
+            case "SalidaFabrica": luz.intensity = 4f; luz.range = 1f; break;
+            case "SigiloSalida": luz.intensity = 55f; luz.range = 1f; break;
+            case "ExteriorGasolinera": luz.intensity = 100f; luz.range = 1f; break;
+            case "InteriorGasolinera": luz.intensity = 12f; luz.range = 1f; break;
+            case "Muro": luz.intensity = 65f; luz.range = 1f; break;
+            case "SalidaMuro": luz.intensity = 175f; luz.range = 1f; break;
+            case "ExteriorTienda": luz.intensity = 250f; luz.range = 1f; break;
+            case "InteriorTienda": luz.intensity = 45f; luz.range = 1f; break;
+            case "Tienda2": luz.intensity = 0.15f; luz.range = 1f; break;
+            case "CabañaNPC": luz.intensity = 500f; luz.range = 1f; break;
+            case "InteriorCabaña": luz.intensity = 0.5f; luz.range = 1f; break;
+            case "PuenteBosque": luz.intensity = 500f; luz.range = 1f; break;
+            case "MaderaBosque": luz.intensity = 150f; luz.range = 1f; break;
+            //si la escena no está listada no hace nada
         }
     }
     private void SetWavesSprite(int index)
@@ -959,7 +928,6 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         ClearArma();
 
-        // 1. Primero reactivar ragdoll/animator
         foreach (var rb in ragdollRigidbodies)
             rb.isKinematic = true;
 
@@ -971,7 +939,6 @@ public class PlayerController : MonoBehaviour, IDamageable
             animator.Play("idle");
         }
 
-        // 2. Ahora soltar el arma (hueso ya está en posición correcta)
         if (armaEnMano != null)
         {
             ArmaController arma_ctrl = armaEnMano.GetComponent<ArmaController>();
@@ -1054,7 +1021,6 @@ public class PlayerController : MonoBehaviour, IDamageable
                 if (objectInRange == null)
                 {
                     objectInRange = other.gameObject;
-                    print("objeto " + other.gameObject.name + " en rango");
                 }
             }
 
@@ -1063,7 +1029,6 @@ public class PlayerController : MonoBehaviour, IDamageable
                 if (objectLanzableInRange == null)
                 {
                     objectLanzableInRange = other.gameObject;
-                    print("objeto " + other.gameObject.name + " en rango");
                 }
             }
 
@@ -1072,7 +1037,6 @@ public class PlayerController : MonoBehaviour, IDamageable
                 if (armaEnMano == null)
                 {
                     armaEnMano = other.gameObject;
-                    print("objeto " + other.gameObject.name + " en rango");
                 }
             }
 
@@ -1081,7 +1045,6 @@ public class PlayerController : MonoBehaviour, IDamageable
                 if (objectInRange == null)
                 {
                     objectInRange = other.gameObject;
-                    print("objeto " + other.gameObject.name + " en rango");
                 }
             }
 
@@ -1090,7 +1053,6 @@ public class PlayerController : MonoBehaviour, IDamageable
                 if (objectInRange == null)
                 {
                     objectInRange = other.gameObject;
-                    print("objeto " + other.gameObject.name + " en rango");
                 }
             }
 
@@ -1099,7 +1061,6 @@ public class PlayerController : MonoBehaviour, IDamageable
                 if (objectInRange == null)
                 {
                     objectInRange = other.gameObject;
-                    print("objeto " + other.gameObject.name + " en rango");
                 }
             }
 
@@ -1108,7 +1069,6 @@ public class PlayerController : MonoBehaviour, IDamageable
                 if (objectInRange == null)
                 {
                     objectInRange = other.gameObject;
-                    print("objeto " + other.gameObject.name + " en rango");
                 }
             }
             if (other.tag == "PaletPuente")
@@ -1116,7 +1076,6 @@ public class PlayerController : MonoBehaviour, IDamageable
                 if (objectInRange == null)
                 {
                     objectInRange = other.gameObject;
-                    print("objeto " + other.gameObject.name + " en rango");
                 }
             }
             if (other.tag == "MaderaPequeñaPuente")
@@ -1124,7 +1083,6 @@ public class PlayerController : MonoBehaviour, IDamageable
                 if (objectInRange == null)
                 {
                     objectInRange = other.gameObject;
-                    print("objeto " + other.gameObject.name + " en rango");
                 }
             }
         }
