@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
-
 // L'ESound es un enum que llista tots els sons del joc agrupats per categoria (jugador, Aiden, enemics, ambient i musica)
 public enum ESound
 {
