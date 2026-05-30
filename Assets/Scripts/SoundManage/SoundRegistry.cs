@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
 
-// L'ESound és un enum que llista tots els sons del joc agrupats per categoria (jugador, Aiden, enemics, ambient i música)
+// L'ESound es un enum que llista tots els sons del joc agrupats per categoria (jugador, Aiden, enemics, ambient i musica)
 public enum ESound
 {
     // Sorolls PLAYER
@@ -17,7 +17,7 @@ public enum ESound
     // Sorolls MUSICA
     MUSICAMENU, MUSICACHASE, MUSICACAPITULO, MUSICAAMBIENTE, MUSICAAMBIENTE2, MUSICACREDITOS
 }
-// El SoundData és una struct serialitzable que agrupa tota la informació d'un so: el clip, els volums i si és música
+// El SoundData es una struct serialitzable que agrupa tota la informacio d'un so: el clip, els volums i si es musica
 [Serializable]
 public struct SoundData
 {
@@ -27,7 +27,7 @@ public struct SoundData
     public float soundVolume;
     public bool isMusic;
 }
-// El SoundRegistry és un ScriptableObject que actua com a base de dades de tots els sons del joc
+// El SoundRegistry es un ScriptableObject que actua com a base de dades de tots els sons del joc
 [CreateAssetMenu(menuName = "Add Sound registry", fileName = "SoundRegistry")]
 public class SoundRegistry : ScriptableObject
 {

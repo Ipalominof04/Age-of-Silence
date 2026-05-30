@@ -36,19 +36,19 @@ public class SoundManager : MonoBehaviour
         ApplyMusicVolume();
         ApplyMasterVolume();
     }
-    // El Subscribe afegeix un listener a la llista si encara no hi és
+    // El Subscribe afegeix un listener a la llista si encara no hi es
     public void Subscribe(ISoundListener listener)
     {
         if (!listeners.Contains(listener))
             listeners.Add(listener);
     }
-    // L'Unsubscribe elimina un listener de la llista si hi és
+    // L'Unsubscribe elimina un listener de la llista si hi es
     public void Unsubscribe(ISoundListener listener)
     {
         if (listeners.Contains(listener))
             listeners.Remove(listener);
     }
-    // L'EmitSound notifica tots els listeners que estiguin dins del radi del so, amb el volum atenuat segons la distància
+    // L'EmitSound notifica tots els listeners que estiguin dins del radi del so, amb el volum atenuat segons la distancia
     public void EmitSound(Vector3 position, float volume, bool shouldEmmit = true)
     {
         if (!shouldEmmit) return;
@@ -79,14 +79,14 @@ public class SoundManager : MonoBehaviour
             : -80f;
         audioMixer.SetFloat("SoundVolume", db);
     }
-    // El SetMusicVolume guarda el nou volum de la música al PlayerPrefs i l'aplica a l'AudioMixer
+    // El SetMusicVolume guarda el nou volum de la mï¿½sica al PlayerPrefs i l'aplica a l'AudioMixer
     public void SetMusicVolume(float value)
     {
         musicVolumeMultiplier = Mathf.Clamp01(value);
         PlayerPrefs.SetFloat("musicVolume", musicVolumeMultiplier);
         ApplyMusicVolume();
     }
-    // L'ApplyMusicVolume converteix el volum de la música a decibels i l'envia a l'AudioMixer
+    // L'ApplyMusicVolume converteix el volum de la mï¿½sica a decibels i l'envia a l'AudioMixer
     private void ApplyMusicVolume()
     {
         float db = musicVolumeMultiplier > 0
