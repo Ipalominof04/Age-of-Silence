@@ -35,7 +35,7 @@ public class SoundEmitter : MonoBehaviour
         audioSourceOneShot.minDistance = 1f;
         audioSourceOneShot.rolloffMode = AudioRolloffMode.Logarithmic;
     }
-    // El SetRange canvia les distàncies mínima i màxima d'ambdós AudioSource i regenera la corba si el loop ja està sonant
+    // El SetRange canvia les distancies mínima i maxima d'ambdos AudioSource i regenera la corba si el loop ja esta sonant
     public void SetRange(float minDistance, float maxDistance)
     {
         audioSourceLoop.minDistance = minDistance;
@@ -57,14 +57,14 @@ public class SoundEmitter : MonoBehaviour
         audioSourceLoop.Stop();
         audioSourceLoop.clip = null;
     }
-    // L'IsReplaceable indica si un so ha de reproduir-se en loop (sons continus com caminar, música, pluja, etc.)
+    // L'IsReplaceable indica si un so ha de reproduir-se en loop (sons continus com caminar, musica, pluja, etc.)
     private bool IsReplaceable(ESound sound)
     {
         return sound == ESound.WALK || sound == ESound.RUN || sound == ESound.LLUVIA || sound == ESound.FUEGO || sound == ESound.BOSQUE || sound == ESound.RIO || sound == ESound.RIO2 ||
             sound == ESound.A_RUN || sound == ESound.ENEMY_PATROL || sound == ESound.ENEMY_CHASE | sound == ESound.ALARMA ||
             sound == ESound.MUSICAMENU || sound == ESound.MUSICACHASE || sound == ESound.MUSICAAMBIENTE || sound == ESound.MUSICAAMBIENTE2 || sound == ESound.MUSICACAPITULO || sound == ESound.MUSICACREDITOS;
     }
-    // L'EmitSound reprodueix un so en loop o en oneshot segons el tipus, aplica el volum i notifica el SoundManager de la posició
+    // L'EmitSound reprodueix un so en loop o en oneshot segons el tipus, aplica el volum i notifica el SoundManager de la posicio
     public float EmitSound(ESound sound, bool shouldEmmit = true, float volume = -1)
     {
         if (!shouldEmmit) return 0f;
