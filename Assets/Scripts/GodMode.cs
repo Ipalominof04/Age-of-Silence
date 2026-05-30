@@ -36,7 +36,7 @@ public class GodMode : MonoBehaviour
         }
     }
 
-    // L'Start obté el mapa d'input del GodMode i assigna la tecla per obrir/tancar la consola
+    // L'Start obte el mapa d'input del GodMode i assigna la tecla per obrir/tancar la consola
     void Start()
     {
         godMap = InputManager.Instance.GodModeMap;
@@ -69,7 +69,7 @@ public class GodMode : MonoBehaviour
         }
     }
 
-    // L'EquiparObjeto posa un objecte a la mà del jugador pel seu nom
+    // L'EquiparObjeto posa un objecte a la ma del jugador pel seu nom
     private void EquiparObjeto(string nombreObjeto)
     {
         var player = PlayerController.Instance;
@@ -82,21 +82,21 @@ public class GodMode : MonoBehaviour
         Log($"Objeto '{nombreObjeto}' añadido a la mano");
     }
 
-    // El SubirConfianza suma la quantitat indicada a la confiança i ho registra al log
+    // El SubirConfianza suma la quantitat indicada a la confianca i ho registra al log
     private void SubirConfianza(int cantidad)
     {
         GameManager.Instance.SumValor(cantidad);
         Log($"Confianza +{cantidad} → {GameManager.Instance.confianza}");
     }
 
-    // El BajarConfianza resta la quantitat indicada a la confiança i ho registra al log
+    // El BajarConfianza resta la quantitat indicada a la confianca i ho registra al log
     private void BajarConfianza(int cantidad)
     {
         GameManager.Instance.RestValor(cantidad);
         Log($"Confianza -{cantidad} → {GameManager.Instance.confianza}");
     }
 
-    // El CurarJugador restaura la vida del jugador al màxim
+    // El CurarJugador restaura la vida del jugador al maxim
     private void CurarJugador()
     {
         var player = PlayerController.Instance;
@@ -105,7 +105,7 @@ public class GodMode : MonoBehaviour
         Log($"Jugador curado → {player.vidaActual} HP");
     }
 
-    // El MatarJugador mata el jugador instantàniament aplicant un dany molt elevat
+    // El MatarJugador mata el jugador instantaniament aplicant un dany molt elevat
     private void MatarJugador()
     {
         var player = PlayerController.Instance;
@@ -129,7 +129,7 @@ public class GodMode : MonoBehaviour
         Log("Teletransporte a la escena 4...");
     }
 
-    // L'EntradaFabrica teletransporta a l'entrada de la fàbrica
+    // L'EntradaFabrica teletransporta a l'entrada de la fabrica
     private void EntradaFabrica()
     {
         GameManager.Instance.lastDoorID = "entrada";
@@ -155,18 +155,19 @@ public class GodMode : MonoBehaviour
         Debug.Log($"[GodMode] {mensaje}");
     }
 
-    // L'OnGUI mostra la finestra de la consola per pantalla quan està activa
+    // L'OnGUI mostra la finestra de la consola per pantalla quan esta activa
     private void OnGUI()
     {
         if (!consolaActiva) return;
         ventana = GUILayout.Window(0, ventana, DibujarVentana, "God Mode Console");
     }
 
-    // El DibujarVentana renderitza tota la interfície de la consola amb botons, logs i panells desplegables d'escenes i objectes
+    // El DibujarVentana renderitza tota la interficie de la consola amb botons, logs i panells desplegables d'escenes i objectes
     private void DibujarVentana(int id)
     {
         var player = PlayerController.Instance;
 
+        // mostrem la confianca i la vida del jugador a la part superior de la finestra
         GUILayout.BeginHorizontal();
         GUILayout.Label($"Confianza: {GameManager.Instance.confianza}");
         GUILayout.Label($"Vida: {(player != null ? player.vidaActual.ToString("F1") : "—")}");
@@ -174,6 +175,7 @@ public class GodMode : MonoBehaviour
 
         GUILayout.Space(4);
 
+        // mostrem els logs en un scroll per poder veure els missatges anteriors
         scrollPos = GUILayout.BeginScrollView(scrollPos, GUILayout.Height(160));
         foreach (var linea in logs)
             GUILayout.Label(linea);
@@ -181,11 +183,14 @@ public class GodMode : MonoBehaviour
 
         GUILayout.Space(4);
 
+        // botons per pujar i baixar la confianca de 15 en 15
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Confianza +15")) SubirConfianza(15);
         if (GUILayout.Button("Confianza -15")) BajarConfianza(15);
         GUILayout.EndHorizontal();
 
+        // botons per curar, activar invencibilitat i matar el jugador
+        // el boto d'invencibilitat canvia de color segons si esta activat o no
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Curar")) CurarJugador();
         if (GUILayout.Button(Invencible ? "Invencible: <color='green'>ON</color>" : "Invencible: <color='red'>OFF</color>"))
@@ -196,12 +201,15 @@ public class GodMode : MonoBehaviour
         if (GUILayout.Button("Matar")) MatarJugador();
         GUILayout.EndHorizontal();
 
+        // boto desplegable que mostra o amaga el panell de teletransport d'escenes
         if (GUILayout.Button(mostrarEscenas ? "▲ Escenas" : "▼ Escenas"))
         {
             mostrarEscenas = !mostrarEscenas;
+            // resetegem l'alcada de la finestra perque es recalculi automaticament
             ventana.height = 0;
         }
 
+        // si el panell d'escenes esta obert, mostrem els botons de teletransport
         if (mostrarEscenas)
         {
             GUILayout.BeginVertical(GUI.skin.box);
@@ -214,12 +222,15 @@ public class GodMode : MonoBehaviour
 
         GUILayout.Space(4);
 
+        // boto desplegable que mostra o amaga el panell d'equipar objectes
         if (GUILayout.Button(mostrarObjetos ? "▲ Objetos" : "▼ Objetos"))
         {
             mostrarObjetos = !mostrarObjetos;
+            // resetegem l'alcada de la finestra perque es recalculi automaticament
             ventana.height = 0;
         }
 
+        // si el panell d'objectes esta obert, mostrem un boto per cada objecte i un per buidar la ma
         if (mostrarObjetos)
         {
             GUILayout.BeginVertical(GUI.skin.box);
