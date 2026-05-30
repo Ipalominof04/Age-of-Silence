@@ -79,14 +79,14 @@ public class SoundManager : MonoBehaviour
             : -80f;
         audioMixer.SetFloat("SoundVolume", db);
     }
-    // El SetMusicVolume guarda el nou volum de la m�sica al PlayerPrefs i l'aplica a l'AudioMixer
+    // El SetMusicVolume guarda el nou volum de la musica al PlayerPrefs i l'aplica a l'AudioMixer
     public void SetMusicVolume(float value)
     {
         musicVolumeMultiplier = Mathf.Clamp01(value);
         PlayerPrefs.SetFloat("musicVolume", musicVolumeMultiplier);
         ApplyMusicVolume();
     }
-    // L'ApplyMusicVolume converteix el volum de la m�sica a decibels i l'envia a l'AudioMixer
+    // L'ApplyMusicVolume converteix el volum de la musica a decibels i l'envia a l'AudioMixer
     private void ApplyMusicVolume()
     {
         float db = musicVolumeMultiplier > 0

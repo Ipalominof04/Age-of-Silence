@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     public float GetHealthAlEntrarEscena() => healthAlEntrarEscena;
     public float GetConfianzaAlEntrarEscena() => confianzaAlEntrarEscena;
 
-    // En el awake del game Manager fem la instancia i guardardem la ruta del .json de les dades
+    // En el Awake fem la instancia del singleton i guardem la ruta del fitxer .json on s'emmagatzemaran les dades
     private void Awake()
     {
         ruta = Path.Combine(Application.persistentDataPath, "savegame.json");
@@ -49,10 +49,13 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    // Aquesta funcio es truca cada vegada que es carrega quant es cambia d'escena, s'encarrega de d'esactivar als personatges en les escenes de menu i restaurar dades
+
+    // L'OnSceneLoaded es truca automaticament cada vegada que es carrega una escena nova
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         IsChangingScene = false;
+
+        // si estem al menu principal desactivem el player i l'Aiden i activem la UI del menu
         if (scene.name == "MainMenu")
         {
             if (PlayerController.Instance != null)
@@ -60,14 +63,13 @@ public class GameManager : MonoBehaviour
             if (AidenController.Instance != null)
                 AidenController.Instance.gameObject.SetActive(false);
 
-            // Quan anem a la escena de 'MainMenu' busquem el canvas de MainMenu i l'activem.
             MainMenuCanvas menu = FindFirstObjectByType<MainMenuCanvas>(FindObjectsInactive.Include);
             if (menu != null)
                 menu.mainMenuUI.SetActive(true);
-            return; 
+            return;
         }
 
-        // Depenent de quina sigui l'escena objectiu ens conve no tenir el player actiu, com per exemple en les cinematiques
+        // en escenes de cinematica o credits tampoc volem el player actiu
         if (scene.name == "Creditos" || scene.name == "Escena1" || scene.name == "EscenaFinal")
         {
             if (PlayerController.Instance != null)
@@ -77,10 +79,11 @@ public class GameManager : MonoBehaviour
                 return;
             }
         }
-        // Truquem a la funcio de RestaurarEscena per posar les dades a l'escena
+
+        // restaurem l'estat de tots els objectes guardables de l'escena
         RestaurarEscena();
 
-
+        // si la partida no estava guardada, buidem l'objecte a la ma del jugador
         if (!escenaGuardada)
         {
             if (datos.objetoMano != null)
@@ -89,50 +92,52 @@ public class GameManager : MonoBehaviour
 
         escenaGuardada = false;
 
+        // activem el player i l'Aiden un cop l'escena esta llesta
         if (PlayerController.Instance != null)
         {
             PlayerController.Instance.gameObject.SetActive(true);
             AidenController.Instance.gameObject.SetActive(true);
         }
 
-        // guardem les dades el SO de dades a les variables corresponents
+        // guardem un snapshot de la salut i la confianca al entrar a l'escena per si cal restaurar-los
         healthAlEntrarEscena = datos.PlayerHealth;
         confianzaAlEntrarEscena = datos.confianza;
         datos.PlayerHealth = healthAlEntrarEscena;
         datos.confianza = confianzaAlEntrarEscena;
 
-        // truquem a les funcions de respawn del player i l'aiden
+        // fem el respawn del player i l'Aiden a la posicio correcta
         PlayerController.Instance?.RespawnReset();
         AidenController.Instance?.RespawnReset();
-
     }
 
-    // Aquesta funcio serveix per augmentar el valor de la confianca amb l'Aiden
+    // El SumValor augmenta la confianca i sincronitza el valor al SO de dades
     public void SumValor(int amount)
     {
         confianza += amount;
         datos.confianza = confianza;
     }
-    // Aquesta funcio serveix per restar el valor de la confianca amb l'Aiden
+
+    // El RestValor resta la confianca i sincronitza el valor al SO de dades
     public void RestValor(int amount)
     {
         confianza -= amount;
         datos.confianza = confianza;
     }
 
-    // Comprovem si la llista de puzzles conte el puzzle que volem resoldre i si no esta l'insserim
+    // El ResolverPuzzle afegeix un puzzle a la llista de completats si encara no hi era
     public void ResolverPuzzle(string puzzleID)
     {
         if (!PuzzleResuelto(puzzleID))
             datos.puzzlesResueltos.Add(puzzleID);
     }
-    // Comprovem si la llista conte el puzzle que volem.
+
+    // El PuzzleResuelto comprova si un puzzle ja ha estat completat
     public bool PuzzleResuelto(string puzzleID)
     {
         return datos.puzzlesResueltos.Contains(puzzleID);
     }
 
-    // Amb aquesta funcio controlem en quines escenas volem guardar o no, i aixi, no caure en loops de carrega
+    // El ChangeScene guarda l'estat actual, actualitza l'escena objectiu i inicia el canvi amb fade
     public void ChangeScene(string sceneName)
     {
         PlayerController.Instance?.ClearObjetoLanzable();
@@ -147,17 +152,16 @@ public class GameManager : MonoBehaviour
             datos.aidenTieneOso = false;
         }
         escenaGuardada = true;
-
         StartCoroutine(FadeAndLoadScene(sceneName));
     }
-    // Aquesta funcío s'utilitza per cambiar d'escena pero sense guardar res.
+
+    // L'IrAScene canvia d'escena directament sense guardar res
     public void IrAScene(string sceneName)
     {
         StartCoroutine(FadeAndLoadScene(sceneName));
     }
 
-
-    // Aquesta es una de les escenes importants per el sistema de guardat i carrega, comprova si hi han objectes per guardar i si hi ha truca a la funcio interna de guardar.
+    // El GuardarEscena busca tots els objectes guardables de l'escena i els demana que guardin el seu estat
     public void GuardarEscena()
     {
         var objetos = FindObjectsByType<ObjetoGuardable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
@@ -167,17 +171,18 @@ public class GameManager : MonoBehaviour
             obj.Guardar();
         }
     }
-    // Aqui el que fem es una vegada que l'escena a carregat truquem a Restaurar() per els valors dels objectes
+
+    // El RestaurarEscena busca tots els objectes guardables i els restaura al seu estat guardat
     public void RestaurarEscena()
     {
         foreach (var obj in FindObjectsByType<ObjetoGuardable>(FindObjectsInactive.Include, FindObjectsSortMode.None))
             obj.Restaurar();
     }
-    // Amb aquesta funcio borrem les dades dels SOEScena exceptuan els que tenim controlats amb el bool
+
+    // El LimpiarSOEscenas neteja les dades dels SOEscena pero respecta els objectes marcats com a persistents
     public void LimpiarSOEscenas()
     {
         datos.NameScene = "";
-
         foreach (SOEscena soEscena in datos.escenas)
         {
             for (int i = soEscena.objetos.Count - 1; i >= 0; i--)
@@ -187,26 +192,26 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    // Aquesta funcio borra totes les dades dels SOEscena
+
+    // El LimpiarSOEscenasTotal esborra absolutament totes les dades de tots els SOEscena sense excepcions
     public void LimpiarSOEscenasTotal()
     {
         datos.NameScene = "";
         foreach (SOEscena soEscena in datos.escenas)
             soEscena.objetos.Clear();
     }
-    // Aquesta funcio es la que activa el fade quan cambiem d'escena, a mes tambe s'encarrega de presentar el nom del capitols quan toca.
+
+    // El FadeAndLoadScene gestiona tot el proces de canvi d'escena: fa el fade out, carrega l'escena, mostra el titol del capitol si cal i fa el fade in
     private IEnumerator FadeAndLoadScene(string sceneName)
     {
         IsChangingScene = true;
         yield return StartCoroutine(FadeOut());
 
-
+        // iniciem la carrega de l'escena sense activar-la encara
         var loadOperation = SceneManager.LoadSceneAsync(sceneName);
-        if (loadOperation == null)
-        {
-            yield break;
-        }
+        if (loadOperation == null) { yield break; }
 
+        // esperem que la carrega arribi al 90% abans d'activar l'escena
         loadOperation.allowSceneActivation = false;
         while (loadOperation.progress < 0.9f) yield return null;
         loadOperation.allowSceneActivation = true;
@@ -215,10 +220,11 @@ public class GameManager : MonoBehaviour
         while (!loadOperation.isDone) yield return null;
         Debug.Log($"{sceneName} is loaded at 100%");
 
+        // establim la nova escena com a activa
         var newScene = SceneManager.GetSceneByName(sceneName);
         if (newScene.IsValid() && newScene.isLoaded) SceneManager.SetActiveScene(newScene);
 
-
+        // mostrem el titol del capitol corresponent a cada escena
         if (sceneName == "Escena2")
         {
             ChapterUI.ChapterStep[] steps = new ChapterUI.ChapterStep[]
@@ -229,26 +235,20 @@ public class GameManager : MonoBehaviour
             yield return StartCoroutine(ChapterUI.Instance.PlaySequence(steps));
         }
         else if (sceneName == "Escena4")
-        {
             yield return StartCoroutine(ChapterUI.Instance.MostrarCapitulo("LA FABRICA", 2f));
-        }
         else if (sceneName == "SalidaFabrica")
-        {
             yield return StartCoroutine(ChapterUI.Instance.MostrarCapitulo("ESCAPE", 2f));
-        }
         else if (sceneName == "SalidaMuro")
-        {
             yield return StartCoroutine(ChapterUI.Instance.MostrarCapitulo("CAPÍTULO 2: EL BOSQUE", 2f));
-        }
         else if (sceneName == "EscenaFinal")
-        {
             yield return StartCoroutine(ChapterUI.Instance.MostrarCapitulo("CAPÍTULO 3: EL DESENLACE", 2f));
-        }
+
         yield return StartCoroutine(FadeIn());
         IsChangingScene = false;
         ActualizarVignetteHealth();
     }
-    // Aquesta funcio la fem servir per actualitzar la vinyeta de dany utilitzant la referencia de la vida del player
+
+    // L'ActualizarVignetteHealth actualitza la vinyeta de dany de la pantalla amb la salut actual del jugador
     private void ActualizarVignetteHealth()
     {
         if (DamageVignette.Instance != null && DamageVignette.Instance.IsVignetteActive)
@@ -257,17 +257,15 @@ public class GameManager : MonoBehaviour
             DamageVignette.Instance.UpdateHealthRatio(ratio);
         }
     }
-    // Aquesta funcio es truca cuant l'escena objectiu carrega, el que fa es desactivar l'imatge donant l'efecte de fade out
+
+    // El FadeOut va augmentant progressivament l'opacitat de la imatge negra fins a tapar tota la pantalla
     private IEnumerator FadeOut()
     {
         if (fadeImage == null) yield break;
-
         float t = 0f;
         Color c = fadeImage.color;
-
         fadeImage.gameObject.SetActive(true);
         fadeImage.transform.parent.gameObject.SetActive(true);
-
         while (t < fadeDuration)
         {
             t += Time.deltaTime;
@@ -275,20 +273,17 @@ public class GameManager : MonoBehaviour
             fadeImage.color = c;
             yield return null;
         }
-
         c.a = 1f;
         fadeImage.color = c;
     }
-    // Aquesta funcio fa el mateix casi que l'anterior, pero aquesta es truca abans de cambiar.
+
+    // El FadeIn fa el contrari que el FadeOut, va reduint l'opacitat fins a deixar la pantalla visible i desactiva la imatge
     private IEnumerator FadeIn()
     {
         if (fadeImage == null) yield break;
-
         float t = 0f;
         Color c = fadeImage.color;
-
         fadeImage.gameObject.SetActive(true);
-
         while (t < fadeDuration)
         {
             t += Time.deltaTime;
@@ -296,28 +291,22 @@ public class GameManager : MonoBehaviour
             fadeImage.color = c;
             yield return null;
         }
-
         c.a = 0f;
         fadeImage.color = c;
         fadeImage.gameObject.SetActive(false);
         fadeImage.transform.parent.gameObject.SetActive(false);
     }
-    // Aquesta funcio serveix per moure al player al doorID de l'escena corresponent,
+
+    // El MoverPlayerSpawn busca el SpawnPoint que coincideix amb el lastDoorID i col·loca el player i l'Aiden a la seva posicio
     public void MoverPlayerSpawn()
     {
-
-
         if (string.IsNullOrEmpty(lastDoorID)) return;
 
         SpawnPoint[] spawnPoints = FindObjectsByType<SpawnPoint>(FindObjectsSortMode.None);
-
-
         foreach (SpawnPoint spawn in spawnPoints)
         {
-
             if (spawn.GetDoorID() == lastDoorID)
             {
-
                 GameObject player = PlayerController.Instance.gameObject;
                 GameObject aiden = AidenController.Instance.gameObject;
 
@@ -334,8 +323,7 @@ public class GameManager : MonoBehaviour
 
                     if (agent != null)
                     {
-                        //desactivar navmesh antes de mover a Aiden para q no lo coloque en el nodo mas cercano a la pos anterior
-                        // y poder colocar a Aiden donde quiero
+                        // desactivem el NavMesh abans de moure l'Aiden per evitar que el NavMesh el relocatzi al node mes proper
                         agent.enabled = false;
                         aiden.transform.position = targetPos;
                         aiden.transform.rotation = Quaternion.Euler(0f, spawn.transform.eulerAngles.y, 0f);
@@ -351,9 +339,11 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    // Aquesta es altra funcio molt important per el sistema de guardar, en aquesta funcio guardem al json els SOEscena
+
+    // El GuardarPartida converteix totes les dades importants del joc a JSON i les escriu al fitxer de guardada
     public void GuardarPartida()
     {
+        // construim un array amb les dades de totes les escenes per serialitzar-les
         EscenaData[] escenasSave = new EscenaData[datos.escenas.Length];
         for (int i = 0; i < datos.escenas.Length; i++)
         {
@@ -363,9 +353,8 @@ public class GameManager : MonoBehaviour
                 objetos = datos.escenas[i].objetos.ToArray()
             };
         }
-        // Usem el constructor per enmagatzemar les dades
+        // creem el struct de SaveData amb totes les dades i el convertim a JSON
         SaveData data = new SaveData(datos.confianza, datos.PlayerHealth, datos.objetoMano, datos.NameScene, lastDoorID, datos.aidenTieneOso, datos.puzzlesResueltos, escenasSave);
-
         string jsondata = JsonUtility.ToJson(data, true);
         try
         {
@@ -376,15 +365,13 @@ public class GameManager : MonoBehaviour
             print("Error al guardar: " + ex.Message);
         }
     }
-    // Amb aquest funcio llegim el json i truquem a RestaurarDatos() que es la funcio que s'encarregara de restaurar dades als objectes.
+
+    // El CargarPartida llegeix el fitxer JSON, el deserialitza i crida RestaurarDatos per aplicar les dades al joc
     public void CargarPartida()
     {
         try
         {
-            if (!File.Exists(ruta))
-            {
-                return;
-            }
+            if (!File.Exists(ruta)) { return; }
             string jsonData = File.ReadAllText(ruta);
             SaveData data = JsonUtility.FromJson<SaveData>(jsonData);
             escenaGuardada = true;
@@ -395,16 +382,23 @@ public class GameManager : MonoBehaviour
             print("Error al cargar la partida: " + ex.Message);
         }
     }
-    // La funcio de RestaurarDatos() reb un SaveData que es un struct de dades, quan es truca asigna les dades del struct a les variables corresponents.
+
+    // El RestaurarDatos rep un SaveData i distribueix cada valor guardat a la variable correcta del joc
     private void RestaurarDatos(SaveData data)
     {
+        // restaurem la confianca tant a la variable local com al SO de dades
         datos.confianza = data.confianza;
         confianza = datos.confianza;
+
+        // restaurem la salut del jugador i el lastDoorID per saber on fer el spawn
         datos.PlayerHealth = data.playerHealth;
         lastDoorID = data.lastDoorID;
+
+        // restaurem si l'Aiden porta l'oso i l'apliquem al controlador
         datos.aidenTieneOso = data.aidenTieneOso;
         AidenController.Instance.SetOso(data.aidenTieneOso);
 
+        // restaurem l'objecte que tenia el jugador a la ma
         if (datos.objetoMano != null)
         {
             datos.objetoMano.ClearObject();
@@ -412,8 +406,10 @@ public class GameManager : MonoBehaviour
                 datos.objetoMano.nombreObjeto = data.objetoMano;
         }
 
+        // restaurem la llista de puzzles completats
         datos.puzzlesResueltos = data.puzlesCompletados;
 
+        // restaurem l'estat de cada objecte de cada escena buscant la coincidencia pel nom de l'escena
         if (data.escenas != null)
         {
             foreach (EscenaData escenaGuardada in data.escenas)
@@ -422,6 +418,7 @@ public class GameManager : MonoBehaviour
                 {
                     if (soEscena.sceneName == escenaGuardada.sceneName)
                     {
+                        // buidem la llista actual i la reomplim amb les dades guardades
                         soEscena.objetos.Clear();
                         foreach (var obj in escenaGuardada.objetos)
                             soEscena.objetos.Add(obj);
@@ -431,11 +428,12 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        // finalment anem a l'escena on estava el jugador quan va guardar
         datos.NameScene = data.nameScene;
         IrAScene(data.nameScene);
     }
 
-    // Aquest es el struct del SOGeneral, aqui guardaem totes les variables importants que volem que es guardin del nostre joc
+    // El SaveData es el struct principal de guardada, conté totes les variables importants que necessitem persistir entre sessions
     [Serializable]
     public struct SaveData
     {
@@ -459,9 +457,9 @@ public class GameManager : MonoBehaviour
             this.puzlesCompletados = puzlesCompletados;
             this.escenas = escenas;
         }
-
     }
-    // Aquest struct es per crear els SOEscena o te el no de l'escena y els diferents objectes d'aquesta
+
+    // L'EscenaData es un struct auxiliar que emmagatzema el nom d'una escena i tots els seus objectes guardables
     [Serializable]
     public struct EscenaData
     {
@@ -469,5 +467,3 @@ public class GameManager : MonoBehaviour
         public ScenePart[] objetos;
     }
 }
-
-
