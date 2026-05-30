@@ -698,7 +698,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             //menjar: suma valor de confiança 
             if (objectInRange.CompareTag("Comida"))
             {
-                GameManager.Instance.SumValor(5);
+                GameManager.Instance.SumValor(6);
                 objectInRange.SetActive(false);
                 objectInRange = null;
                 soundEmitter.EmitSound(ESound.PICKUP);
