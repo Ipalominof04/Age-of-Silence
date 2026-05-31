@@ -12,11 +12,11 @@ public class MainMenuCanvas : MonoBehaviour
     [SerializeField] public GameObject menuOptionsUI;
     [SerializeField] public GameObject mainMenuUI;
 
+    // La funcio de play borra el fitxer de json si es que hi ha algun i reseteja les variables per poder fer una nova partida
     public void Play()
     {
         PlayerPrefs.DeleteAll();
-        PlayerPrefs.Save();
-        Debug.Log("PlayerPrefs borrados. Tiene 'playerVolume': " + PlayerPrefs.HasKey("playerVolume"));
+        PlayerPrefs.Save(); 
 
         string ruta = GameManager.Instance.ruta;
         if (System.IO.File.Exists(ruta))
@@ -38,22 +38,25 @@ public class MainMenuCanvas : MonoBehaviour
         StartCoroutine(OcultarTrasFade());
         
     }
+    // La funcio del continue crida a la funcio de CargarPartida i inicia el fade d'ocultar el menu
     public void Continue()
     {
         GameManager.Instance.CargarPartida();
         StartCoroutine(OcultarTrasFade());
     }
+    // La funcio de opcions activa el menu de opcions
     public void Opciones()
     {
         menuOptionsUI.SetActive(true);
     }
+    // aquesta funcio serveix per tancar el joc
     public void Exit()
     {
         //para cerrarlo en la build
         Application.Quit();
         Debug.Log("Cerrando el juego...");
     }
-
+    // Aquesta funcio posa el menu en desactivat despres de x temps.
     private IEnumerator OcultarTrasFade()
     {
         yield return new WaitForSeconds(GameManager.Instance.fadeDuration);

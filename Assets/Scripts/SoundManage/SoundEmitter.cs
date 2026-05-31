@@ -1,12 +1,13 @@
-// SoundEmitter.cs
 using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class SoundEmitter : MonoBehaviour
 {
     private AudioSource audioSourceLoop;
     private AudioSource audioSourceOneShot;
+    // L'Awake inicialitza els dos AudioSource (loop i oneshot) i els configura amb l'espai 3D, distancies i el grup de l'AudioMixer
     private void Awake()
     {
+        // Afegim 2 audioSources
         AudioSource[] sources = GetComponents<AudioSource>();
         if (sources.Length >= 2)
         {
@@ -23,6 +24,8 @@ public class SoundEmitter : MonoBehaviour
             audioSourceLoop = gameObject.AddComponent<AudioSource>();
             audioSourceOneShot = gameObject.AddComponent<AudioSource>();
         }
+        // afegim els audioSources al grup de master i l'hi afegim valors per defecte a la corva de dificultat
+        // a mes afegim una configuracio per defecte a cadascun dels audioSource
         audioSourceLoop.outputAudioMixerGroup = SoundManager.Instance.GetMasterGroup();
         audioSourceOneShot.outputAudioMixerGroup = SoundManager.Instance.GetMasterGroup();
         audioSourceLoop.spatialBlend = 1f;
@@ -30,21 +33,22 @@ public class SoundEmitter : MonoBehaviour
         audioSourceOneShot.spatialBlend = 1f;
         audioSourceLoop.maxDistance = 8f;
         audioSourceLoop.minDistance = 1f;
+        // aqui afegim al rolloffMode el tipus Logarithmic per poder configurar-la
         audioSourceLoop.rolloffMode = AudioRolloffMode.Logarithmic;
         audioSourceOneShot.maxDistance = 8f;
         audioSourceOneShot.minDistance = 1f;
         audioSourceOneShot.rolloffMode = AudioRolloffMode.Logarithmic;
     }
+    // El SetRange canvia les distancies minima i maxima d'ambdos AudioSource i regenera la corba si el loop ja esta sonant
     public void SetRange(float minDistance, float maxDistance)
     {
         audioSourceLoop.minDistance = minDistance;
         audioSourceLoop.maxDistance = maxDistance;
         audioSourceOneShot.minDistance = minDistance;
         audioSourceOneShot.maxDistance = maxDistance;
-
-        // Regenerar curva si ya est� activo
         if (audioSourceLoop.isPlaying)
         {
+            // aqui configurem la corva d'atenuacio de so per fer-lo natural
             audioSourceLoop.rolloffMode = AudioRolloffMode.Custom;
             audioSourceLoop.SetCustomCurve(
                 AudioSourceCurveType.CustomRolloff,
@@ -52,31 +56,38 @@ public class SoundEmitter : MonoBehaviour
             );
         }
     }
+    // El StopSound atura el loop i neteja el clip per deixar l'AudioSource buit
     public void StopSound()
     {
         audioSourceLoop.Stop();
         audioSourceLoop.clip = null;
     }
+    // L'IsReplaceable indica si un so ha de reproduir-se en loop (sons continus com caminar, musica, pluja, etc.)
     private bool IsReplaceable(ESound sound)
     {
         return sound == ESound.WALK || sound == ESound.RUN || sound == ESound.LLUVIA || sound == ESound.FUEGO || sound == ESound.BOSQUE || sound == ESound.RIO || sound == ESound.RIO2 ||
             sound == ESound.A_RUN || sound == ESound.ENEMY_PATROL || sound == ESound.ENEMY_CHASE | sound == ESound.ALARMA ||
             sound == ESound.MUSICAMENU || sound == ESound.MUSICACHASE || sound == ESound.MUSICAAMBIENTE || sound == ESound.MUSICAAMBIENTE2 || sound == ESound.MUSICACAPITULO || sound == ESound.MUSICACREDITOS;
     }
+    // L'EmitSound reprodueix un so en loop o en oneshot segons el tipus, aplica el volum i notifica el SoundManager de la posicio
     public float EmitSound(ESound sound, bool shouldEmmit = true, float volume = -1)
     {
+        // si shouldEmmit es false, no fem res
         if (!shouldEmmit) return 0f;
         var soundToEmmit = SoundManager.Instance.soundRegistry.GetSound(sound);
+        // si el clip es null, no fem res
         if (soundToEmmit.clip == null) return 0f;
-
+        // calculem el volum final del jugador multiplicant el volum del so pel multiplicador global
         float playerVolumeToPlay = (volume != -1 ? volume : soundToEmmit.soundVolume) * SoundManager.Instance.playerVolumeMultiplier;
+        // aquest es el volum que sentiran els enemics
         float gameVolumeToEmit = soundToEmmit.enemyRangeVolume;
-
         if (IsReplaceable(sound))
         {
+            // si el clip es diferent o no esta sonant, el canviem i el reproduim
             if (audioSourceLoop.clip != soundToEmmit.clip || !audioSourceLoop.isPlaying)
             {
                 audioSourceLoop.clip = soundToEmmit.clip;
+                // configurem la corva d'atenuacio perque el so soni natural
                 audioSourceLoop.rolloffMode = AudioRolloffMode.Custom;
                 audioSourceLoop.SetCustomCurve(
                     AudioSourceCurveType.CustomRolloff,
@@ -84,8 +95,9 @@ public class SoundEmitter : MonoBehaviour
                 );
                 audioSourceLoop.Play();
             }
+            // si es musica el posem en 2D, si no en 3D
             audioSourceLoop.spatialBlend = soundToEmmit.isMusic ? 0f : 1f;
-
+            // assignem el grup de l'AudioMixer segons si es musica o efecte de so
             audioSourceLoop.outputAudioMixerGroup = soundToEmmit.isMusic
             ? SoundManager.Instance.GetMusicGroup()
             : SoundManager.Instance.GetSoundsGroup();
@@ -93,6 +105,7 @@ public class SoundEmitter : MonoBehaviour
         }
         else
         {
+            // els sons que no son en loop els reproduim amb PlayOneShot per no tallar altres sons
             audioSourceOneShot.rolloffMode = AudioRolloffMode.Custom;
             audioSourceOneShot.SetCustomCurve(
                 AudioSourceCurveType.CustomRolloff,
@@ -100,7 +113,7 @@ public class SoundEmitter : MonoBehaviour
             );
             audioSourceOneShot.PlayOneShot(soundToEmmit.clip, playerVolumeToPlay);
         }
-
+        // notifiquem al SoundManager la posicio i el volum del so perque els enemics el puguin escoltar
         SoundManager.Instance.EmitSound(transform.position, gameVolumeToEmit, shouldEmmit);
         return gameVolumeToEmit;
     }

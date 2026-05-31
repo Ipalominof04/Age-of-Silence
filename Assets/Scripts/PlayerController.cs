@@ -103,6 +103,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     private bool isDying = false;
  
     // -
+
+    //aquesta funcio serveix per a que l'enemic detecti al cap del player independenment de que estigui ajupit o de peu
     public Transform GetEyePoint() => eyePoint;
     public void ForceIdle() => ChangeState(PlayerState.IDLE);
 
@@ -696,7 +698,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             //menjar: suma valor de confiança 
             if (objectInRange.CompareTag("Comida"))
             {
-                GameManager.Instance.SumValor(5);
+                GameManager.Instance.SumValor(6);
                 objectInRange.SetActive(false);
                 objectInRange = null;
                 soundEmitter.EmitSound(ESound.PICKUP);
@@ -875,12 +877,15 @@ public class PlayerController : MonoBehaviour, IDamageable
         GameManager.Instance.datos.objetoMano.ClearObject();
         InputManager.Instance.PlayerMap.Disable();
         StartCoroutine(RespawnDelay());
+        StartCoroutine(RespawnDelay());
     }
     //espera uns segons abans de reiniciar la escena per donar-li temps al ragdoll
     private IEnumerator RespawnDelay()
     {
         yield return new WaitForSeconds(2f);
         DamageVignette.Instance?.SetVignetteActive(false);
+        //el respawndelay crida a changescene del gm, el qual es el que crida a ResetRespawn()
+        //aixi que morir tambie neteja variables
         GameManager.Instance.IrAScene(SceneManager.GetActiveScene().name);
     }
     //ajusta la brillantor de la barra de vida segons l'escena

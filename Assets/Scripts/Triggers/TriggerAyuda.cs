@@ -6,78 +6,90 @@ using UnityEngine.UIElements;
 public class TriggerAyuda : MonoBehaviour
 {
     [Header("Que puzle es")]
-    [SerializeField] private PuzleHelpType tipo; // enum identifica a que puzzle pertenece este trigger
+    [SerializeField] private PuzleHelpType tipo; 
     [Header("Dialogos")]
-    [SerializeField] private RuntimeDialogueGraph graphSiAyuda; // dialogo cuando Aiden acepta ayudar
-    [SerializeField] private RuntimeDialogueGraph graphNoAyuda; // dialogo cuando Aiden se niega
+    [SerializeField] private RuntimeDialogueGraph graphSiAyuda; 
+    [SerializeField] private RuntimeDialogueGraph graphNoAyuda; 
     [Header("Ayuda")]
-    [SerializeField] private Transform puntoDestino; // pos a la que Aiden se desplaza para ayudar
-    [SerializeField] private GameEvent onAyudaCompletada; // evento que se lanza cuando el player toca la otra placa
-    [SerializeField] private GameEvent onDialogueEnded; // evento que se lanza cuando el dialogo de aceptacion termina
+    [SerializeField] private Transform puntoDestino; 
+    [SerializeField] private GameEvent onAyudaCompletada; 
+    [SerializeField] private GameEvent onDialogueEnded; 
     [Header("Canvas")]
     [SerializeField] GameObject canvasworld;  
-    [SerializeField] TextMeshProUGUI texto; // texto flotante sobre el trigger
-    [SerializeField] Animator textoAnimator; // animator del texto cuando muestra "!"
-    [SerializeField] private float fontSizeExclamacion; // tamano del texto en estado idle "!"
-    [SerializeField] private float fontSizeInteract; // tamano del texto al estar en rango "pulsa E"
+    [SerializeField] TextMeshProUGUI texto;
+    [SerializeField] Animator textoAnimator; 
+    [SerializeField] private float fontSizeExclamacion; 
+    [SerializeField] private float fontSizeInteract; 
 
     private void Awake()
     {
-        // estado inicial: muestra "!" animado para indicar que hay algo de interes
+        //estat inicial: mostra "!" animat per a indicar que hi ha una interaccio disponible
         SetUI("!", fontSizeExclamacion, true);
     }
 
-    // Llamado desde PlayerController cuando el player pulsa E estando en rango
+    //es crida desde PlayerControlles quan el player interacciona dins del rang d'ajuda
     public void PedirAyuda()
     {
-        // desregistra este trigger del PlayerController para q no se pueda volver a interactuar
+        //fa un clear del trigger al PlayerController per a que no pugui tornar a interactuar i no es buguegi per no netejar la referencia
         PlayerController.Instance.ClearTriggerAyuda();
 
+        //tipos de puzle d'ajuda DOOR
         if (tipo == PuzleHelpType.DOOR)
         {
+            //si el jugador te mes de 25 de confianca aiden acceptara
             if (GameManager.Instance.confianza >= 25)
             {
-                // lanza el dialogo de aceptacion y espera a que termine
+                //llanca el dialeg de acceptacio i espera a que s'acabi
                 DialogueManager.Instance.StartDialogue(graphSiAyuda);
-                onDialogueEnded.Subscribe(HandleDialogoAcabado); // se suscribe para saber cuando acaba el dialogo 
+                //es suscriu per saber quan s'acaba el dialeg
+                onDialogueEnded.Subscribe(HandleDialogoAcabado); 
             }
             else
             {
-                // Aiden se niega y se registra que el puzzle fue rechazado
+                //aiden es nega i es registra el puzle de AidenNiega per poder actiar un objecte necessari per a completar
+                //completar el puzle sense l'ajuda d'aiden
                 DialogueManager.Instance.StartInfo(graphNoAyuda);
                 GameManager.Instance.ResolverPuzzle("AidenNiega");
             }
         }
+
+        //tipus de puzzle d'ajuda BRIDGE
         else if (tipo == PuzleHelpType.BRIDGE)
         {
+            //si el player te mes de 40 de confianca aiden acceptara
             if (GameManager.Instance.confianza >= 40)
             {
+                //llanca el dialeg de acceptacio i espera a que s'acabi
                 DialogueManager.Instance.StartDialogue(graphSiAyuda);
+                //es suscriu per saber quan s'acaba el dialeg
                 onDialogueEnded.Subscribe(HandleDialogoAcabado);
             }
             else
             {
-                // en el puente no hay consecuencia de puzzle al negarse, solo dialogo
+                //en BRIDGE no es necessari cap puzle registrar si aiden es nega a ajudar
                 DialogueManager.Instance.StartInfo(graphNoAyuda);
             }
         }
-        // desactiva el trigger en todos los casos para q no sea interactuable
+
+        //desactivar el trigger en tots els casos per a que no torni a ser interactuable una vegada ja s'ha interactuat amb ell
         this.gameObject.SetActive(false);
     }
 
-    // Callback que se ejecuta cuando el dialogo de aceptacion termina
+    //s'executa quan el dialeg d'acceptacio termina
     private void HandleDialogoAcabado()
     {
-        // Se desuscribe para evitar que se llame mas veces en el futuro
+        //es desuscriu de l'event per evitar que es cridi mes vegades sense voler
         onDialogueEnded.Unsubscribe(HandleDialogoAcabado);
-        // el puente requiere que Aiden espere en el destino hasta que el player cruce
-        // La puerta no, Aiden solo va, actua y sigue
+
+        //en BRIDGE es requereix que Aiden esperi en el desti fins a que el player arribi a un punt concret
+        //en DOOR aixo no es necessari, nomes actua i torna amb el jugador
         bool esperarEnDestino = (tipo == PuzleHelpType.BRIDGE);
-        // ordena a Aiden que se mueva al punto de destino y ejecute la ayuda
+
+        //ordena a aiden que es mogui al punt de desti i executi l'ajuda
         AidenController.Instance.Help(puntoDestino.position, onAyudaCompletada, esperarEnDestino);
     }
 
-    // Metodo reutilizable para cambiar el estado visual del canvas flotante
+    //s'utilitza per a cambiar l'estat de la UI que apareix a sobre del triggerAyuda per informa de que hi ha una interaccio
     private void SetUI(string texto, float size, bool animar)
     {
         if (canvasworld != null)
@@ -88,7 +100,7 @@ public class TriggerAyuda : MonoBehaviour
         }
     }
 
-    // cuando player entra en rango cambia el texto para indicar q puede interactuar
+    //quan el player entra en el rang del trigger, el text canvia per indicar al player que pot interactuar
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerCollider"))
@@ -96,7 +108,8 @@ public class TriggerAyuda : MonoBehaviour
             SetUI("Pulsa E para pedir ayuda a Aiden", fontSizeInteract, false);
         }
     }
-    // cuando el player sale del rango vuelve al estado idle con la "!" animada
+
+    //quan el player surt del rang es torna a posar el "!" a sobre del trigger per informar de que hi ha una interaccio disponible
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerCollider"))
