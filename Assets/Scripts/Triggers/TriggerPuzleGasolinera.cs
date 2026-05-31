@@ -31,10 +31,20 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
     private void Awake()
     {
         emitter = GetComponent<SoundEmitter>();
+        triggerCambioEscena.SetActive(false);
+    }
+
+    private void Start()
+    {
         GameObject player = GameObject.FindWithTag("Player");
+
+        if (player == null)
+        {
+            return;
+        }
+
         animator = player.GetComponent<Animator>();
         playerTransform = player.transform;
-        triggerCambioEscena.SetActive(false);
     }
     // CINEMATICA
     private void IniciarCinematica()
@@ -69,7 +79,6 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
     {
         if (string.IsNullOrEmpty(objetoMano.nombreObjeto))
         {
-            print("no tienes nada en la mano");
             return;
         }
         string objeto = objetoMano.nombreObjeto;
@@ -111,13 +120,10 @@ public class TriggerPuzleGasolinera : MonoBehaviour, IPuzle
         emitter.EmitSound(ESound.FUEGO);
         
         yield return new WaitForSeconds(5f);
-        print("exploto");
         emitter.EmitSound(ESound.EXPLOSION);
 
         var exploData = SoundManager.Instance.soundRegistry.GetSound(ESound.EXPLOSION);
         float duracionExplo = exploData.clip != null ? exploData.clip.length : 1f;
         yield return new WaitForSeconds(duracionExplo);
-
-    //    this.gameObject.SetActive(false);
     }
 }
