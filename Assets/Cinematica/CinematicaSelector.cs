@@ -5,11 +5,10 @@ public class CinematicaSelector : MonoBehaviour
 {
     public PlayableDirector finalMalo;
     public PlayableDirector finalBueno;
-    public float umbralConfianza = 55f;
+    public float umbralConfianza = 40f;
 
     private void Start()
     {
-        Debug.Log($"Confianza al elegir cinematica: {GameManager.Instance.confianza}");
         finalMalo.gameObject.SetActive(false);
         finalBueno.gameObject.SetActive(false);
         ReproducirCinematica();

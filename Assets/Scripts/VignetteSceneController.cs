@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class VignetteSceneController : MonoBehaviour
 {
-    [Header("Objeto de la viñeta")]
+    [Header("Objeto de la vineta")]
     [SerializeField] private GameObject vignetteObject;
 
     [Header("Escenas donde se muestra")]
@@ -30,14 +30,10 @@ public class VignetteSceneController : MonoBehaviour
             scenesWithVignette,
             s => s == sceneName
         );
-        Debug.Log($"[VIÑETA] Instance null: {DamageVignette.Instance == null} | active: {active}");
-        Debug.Log("[VIÑETACONTROLLER]" + sceneName + "estat: " +  active);
         if (DamageVignette.Instance != null)
             DamageVignette.Instance.SetVignetteActive(active);
         else
             vignetteObject.SetActive(active);
-
-        Debug.Log($"Viñeta {(active ? "ACTIVA" : "DESACTIVADA")} en {sceneName}");
     }
 
 
