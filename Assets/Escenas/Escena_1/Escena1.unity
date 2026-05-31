@@ -47768,7 +47768,7 @@ Transform:
   m_GameObject: {fileID: 1129482997}
   serializedVersion: 2
   m_LocalRotation: {x: 0.057389736, y: 0, z: 0, w: 0.9983519}
-  m_LocalPosition: {x: -2.3899994, y: 1.7543107, z: -13.112387}
+  m_LocalPosition: {x: -2.3899994, y: 1.7543106, z: -13.112387}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -55754,6 +55754,18 @@ PlayableDirector:
     value: {fileID: 1004515892}
   - key: {fileID: -2503323384951859514, guid: d9bb896fa626d1c40915d440576df0c2, type: 2}
     value: {fileID: 222355935}
+  - key: {fileID: -4874131555580337926, guid: d9bb896fa626d1c40915d440576df0c2, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 3791480520783194546, guid: d9bb896fa626d1c40915d440576df0c2, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -4800607093583177701, guid: d9bb896fa626d1c40915d440576df0c2, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -7706427532143484212, guid: d9bb896fa626d1c40915d440576df0c2, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -1270571303230806460, guid: d9bb896fa626d1c40915d440576df0c2, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 726194604988110382, guid: d9bb896fa626d1c40915d440576df0c2, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References:
     - eadec3f9218522a4cad40e367fc13f3f: {fileID: 1129483002}
@@ -56159,6 +56171,10 @@ PrefabInstance:
     - target: {fileID: 944715813647473681, guid: 4d44efa3c65ac17418fef14f408843b2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 126.235
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132522816905472237, guid: 4d44efa3c65ac17418fef14f408843b2, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5320796398418102917, guid: 4d44efa3c65ac17418fef14f408843b2, type: 3}
       propertyPath: m_Name
@@ -56575,9 +56591,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1802766763830005924, guid: 4d44efa3c65ac17418fef14f408843b2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4343539289893378624, guid: 4d44efa3c65ac17418fef14f408843b2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132522816905472237, guid: 4d44efa3c65ac17418fef14f408843b2, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5320796398418102917, guid: 4d44efa3c65ac17418fef14f408843b2, type: 3}
       propertyPath: m_Name
       value: Arma
+      objectReference: {fileID: 0}
+    - target: {fileID: 5405280542471781451, guid: 4d44efa3c65ac17418fef14f408843b2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8039686364568154628, guid: 4d44efa3c65ac17418fef14f408843b2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -86687,9 +86723,11 @@ MonoBehaviour:
   currentState: 0
   myInputActionAsset: {fileID: -944628639613478452, guid: 35845fe01580c41289b024647b1d1c53, type: 3}
   slopeCheckDistance: 0.3
+  walkStepRate: 0.45
+  runStepRate: 0.28
   vidaMaxima: 6
-  vidaActual: 0
   luzBarraVida: {fileID: 5794371640751409547}
+  vidaActual: 0
   aiden: {fileID: 0}
   interactRange: 2
   playerCollider: {fileID: 1166554515271202836}
@@ -86713,8 +86751,6 @@ MonoBehaviour:
   shootingPoint: {fileID: 0}
   ragdollRoot: {fileID: 3624242301781454315}
   wavesRenderer: {fileID: 0}
-  walkStepRate: 0.45
-  runStepRate: 0.28
 --- !u!1 &1349223864895400163
 GameObject:
   m_ObjectHideFlags: 0
