@@ -38,7 +38,7 @@ public class MainMenuCanvas : MonoBehaviour
         StartCoroutine(OcultarTrasFade());
         
     }
-    // La funcio del continue no fa res que que una corrutina que truca a carregarPartida y desactiva el menu
+    // La funcio del continue crida a la funcio de CargarPartida i inicia el fade d'ocultar el menu
     public void Continue()
     {
         GameManager.Instance.CargarPartida();
