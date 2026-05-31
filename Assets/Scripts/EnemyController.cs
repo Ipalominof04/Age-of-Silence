@@ -70,8 +70,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
 
     private float gravity = -9.81f;
     private Vector3 verticalVelocity = Vector3.zero;
-
-    // -
+    private bool isDead = false;
 
     //implementacio de la interficie ISoundListener
     public float GetListenRadius() => listenRadius;
@@ -166,7 +165,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     //aplica gravetat manual al agent
     private void ApplyGravity()
     {
-        if (agent == null || !agent.enabled) return;
+        if (agent == null || !agent.enabled || !agent.isOnNavMesh) return;
 
         //aumula velocitat cap avall, es reinicia quan l'agent es sobre el navmesh
         if (agent.isOnNavMesh && agent.isOnOffMeshLink == false)
@@ -673,6 +672,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     //implementacio de IDamageable: resta vida i mata a l'enemic si arriba a 0
     public void TakeDamage(float damage)
     {
+        if (isDead) return;
         this.vida -= damage;
         if (this.vida <= 0)
         {
@@ -682,6 +682,8 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
     //gestiona la mort de l'enemic, atura tot
     public void Die()
     {
+        if (isDead) return;
+        isDead = true; 
         onMusicChange?.Raise("musicStop");
         soundEmitter?.StopSound();
 
@@ -691,7 +693,7 @@ public class EnemyController : MonoBehaviour, ISoundListener, IDamageable
         if (lookCoroutine != null)
             StopCoroutine(lookCoroutine);
 
-        if (agent != null)
+        if (agent != null && agent.isOnNavMesh)
         {
             agent.isStopped = true;
             agent.ResetPath();
