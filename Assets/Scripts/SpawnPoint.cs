@@ -2,32 +2,18 @@ using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour
 {
+    // id unic del trigger associat a aquest punt on apareix
     [SerializeField] private string doorID;
+    // distancia q es desplaca Aiden respecte al punt on apareix
     [SerializeField] private float aidenOffset = 1f;
 
     public string GetDoorID()
     {
-        return doorID;
+        return doorID; // retorna id del spawn
     }
 
     public float AidenOffset
     {
-        get { return aidenOffset; }
+        get { return aidenOffset; } // propietat de lectura per obtenir el offset
     }
-
-    //private void Start()
-    //{
-    //    if (GameManager.Instance.lastDoorID == doorID)
-    //    {
-    //        GameObject player = GameObject.FindGameObjectWithTag("Player");
-    //        GameObject aiden = GameObject.FindGameObjectWithTag("Aiden");
-    //        if (player != null && aiden != null)
-    //        {
-    //            player.transform.position = transform.position;
-    //            player.transform.rotation = Quaternion.Euler(0f, transform.eulerAngles.y, 0f);
-    //            aiden.transform.position = transform.position + (-transform.right * aidenOffset);
-    //            aiden.transform.rotation = Quaternion.Euler(0f, transform.eulerAngles.y, 0f);
-    //        }  
-    //    }
-    //}
 }
