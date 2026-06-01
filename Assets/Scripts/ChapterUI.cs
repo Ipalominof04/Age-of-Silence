@@ -2,97 +2,83 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class ChapterUI : MonoBehaviour
 {
     public static ChapterUI Instance;
-
     [Header("Referencias")]
-    [SerializeField] private GameObject canvas; //canvas q contiene el texto del cap
-    [SerializeField] private TextMeshProUGUI texto; // texto donde se muestra el cap
-
+    [SerializeField] private GameObject canvas; // canvas que conte el text del capitol
+    [SerializeField] private TextMeshProUGUI texto; // text on es mostra el capitol
     [Header("Fade")]
-    [SerializeField] private float fadeTime = 1f; //duracion de cada fade in/out
-
-    //para que otros scripts sepan si este canvas esta visible
+    [SerializeField] private float fadeTime = 1f; // duracio de cada fade in/out
+    // perque altres scripts sapiguen si aquest canvas esta visible
     public bool IsVisible => canvas.activeSelf;
-
+    // L'Awake inicialitza el singleton, fa que persisteixi entre escenes i amaga el canvas fins que calgui
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // persiste entre escenas
-            canvas.SetActive(false); // empieza oculto hasta q se necesite
+            DontDestroyOnLoad(gameObject); // persisteix entre escenes
+            canvas.SetActive(false); // comenca amagat fins que es necessiti
         }
         else
         {
             Destroy(gameObject);
         }
     }
-
-    // muestra un unico texto del cap, espera y lo oculta
+    // El MostrarCapitulo bloqueja l'input, mostra un unic text de capitol amb fade i el torna a amagar
     public IEnumerator MostrarCapitulo(string mensaje, float duracion)
     {
-        InputManager.Instance.PlayerMap.Disable(); // bloquea input para q el player no pueda moverse
+        InputManager.Instance.PlayerMap.Disable(); // bloqueja l'input perque el player no es pugui moure
         canvas.SetActive(true);
         yield return PlayStep(mensaje, duracion); // fade in, espera, fade out
         canvas.SetActive(false);
-        InputManager.Instance.PlayerMap.Enable(); // devuelve control al player
+        InputManager.Instance.PlayerMap.Enable(); // retorna el control al player
     }
-
-    // muestra una secuencia de textos uno tras otro (intro de capitulo con varios mensajes)
+    // El PlaySequence mostra una sequencia de textos un darrere l'altre (intro de capitol amb diversos missatges)
     public IEnumerator PlaySequence(ChapterStep[] steps)
     {
         InputManager.Instance.PlayerMap.Disable();
         canvas.SetActive(true);
-
-        // ejecuta cada step en orden, esperando a que cada uno complete su fade in/out
+        // executa cada step en ordre, esperant que cada un completi el seu fade in/out
         foreach (var step in steps)
         {
             yield return PlayStep(step.texto, step.duracion);
         }
-
         canvas.SetActive(false);
         InputManager.Instance.PlayerMap.Enable();
     }
-
-    // logica interna de un step individual: asigna el texto y ejecuta fade in, espera, fade out
+    // El PlayStep assigna el text i executa el fade in, l'espera i el fade out d'un step individual
     private IEnumerator PlayStep(string msg, float duracion)
     {
         texto.text = msg;
-
         yield return Fade(0f, 1f); // fade in
-        yield return new WaitForSeconds(duracion); // el texto permanece visible esos segundos
+        yield return new WaitForSeconds(duracion); // el text roman visible aquests segons
         yield return Fade(1f, 0f); // fade out
     }
-
-    //Interpola el alpha del texto entre dos valores a lo largo de fadeTime segundos
+    // El Fade interpola l'alpha del text entre dos valors al llarg de fadeTime segons
     private IEnumerator Fade(float from, float to)
     {
         float t = 0f;
         Color c = texto.color;
-
         while (t < fadeTime)
         {
             t += Time.deltaTime;
-            c.a = Mathf.Lerp(from, to, t / fadeTime); // calcula el alpha proporcional al tiempo transcurrido
+            c.a = Mathf.Lerp(from, to, t / fadeTime); // calcula l'alpha proporcional al temps transcorregut
             texto.color = c;
             yield return null;
         }
-        // fuerza el valor final exacto para evitar imprecisiones de floating point
+        // forca el valor final exacte per evitar imprecisions de floating point
         c.a = to;
         texto.color = c;
     }
-
-    // Struct serializable que representa un texto con su duracion dentro de una secuencia
-    // Al ser serializable aparece editable en el Inspector de Unity
+    // El ChapterStep es un struct serialitzable que representa un text amb la seva duracio dins d'una sequencia
+    // En ser serialitzable apareix editable a l'Inspector de Unity
     [System.Serializable]
     public struct ChapterStep
     {
-        public string texto;   // mensaje a mostrar en este step
-        public float duracion;  // segundos que permanece visible antes del fade out
-
+        public string texto;   // missatge a mostrar en aquest step
+        public float duracion;  // segons que roman visible abans del fade out
         public ChapterStep(string texto, float duracion)
         {
             this.texto = texto;

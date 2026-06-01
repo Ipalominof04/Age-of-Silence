@@ -1,39 +1,30 @@
 using UnityEngine;
 using UnityEngine.Events;
-
 public class TriggerPuzlePuente : MonoBehaviour, IPuzle
 {
-    [SerializeField] private string objetoRequerido; // obj q hay q colocar para resolver el puzle
-    
-    public bool infoMostrada = false; //evita que el dialogo de info se muestre mas de una vez
+    [SerializeField] private string objetoRequerido; // objecte que cal col·locar per resoldre el puzzle
 
+    public bool infoMostrada = false; // evita que el dialeg d'info es mostri mes d'una vegada
     [Header("Dialogos")]
     public RuntimeDialogueGraph graphInfo;
     public RuntimeDialogueGraph grapSinObjeto;
     public RuntimeDialogueGraph graphObjetoIncorrecto;
-
     [Header("Meshes")]
-    [SerializeField] GameObject maderas; // mesh de las maderas oculto
-
+    [SerializeField] GameObject maderas; // mesh de les fustes amagat
     [Header("Canvas")]
-    [SerializeField] GameObject canvasworld; //icono flotante q desaparece al recibir el dialogo
-
+    [SerializeField] GameObject canvasworld; // icona flotant que desapareix en rebre el dialeg
     [Header("Bloqueo puente")]
-    [SerializeField] private GameObject bloqueoPuente; // collider invisible q impide el paso hasta resolver el puzle
-
+    [SerializeField] private GameObject bloqueoPuente; // collider invisible que impedeix el pas fins resoldre el puzzle
     private PlayerController player;
-
-
+    // L'Start busca el player a l'escena per poder cridar a ClearTriggerPuzle despres
     private void Start()
     {
-        // Busca el player en la escena para poder llamar a ClearTriggerPuzle despues
         player = FindAnyObjectByType<PlayerController>();
     }
-
-    // Se llama desde PlayerController cuando el player pulsa interactuar estando en rango
+    // L'Interact es crida des del PlayerController quan el player prem interactuar estant en rang
     public void Interact(ObjetoAgarrado objetoMano)
     {
-        // Si el player no lleva ningun objeto, avisa y corta
+        // si el player no porta cap objecte, avisa i talla
         if (string.IsNullOrEmpty(objetoMano.nombreObjeto))
         {
             DialogueManager.Instance.StartInfo(grapSinObjeto);
@@ -41,28 +32,26 @@ public class TriggerPuzlePuente : MonoBehaviour, IPuzle
         }
         if (objetoMano.nombreObjeto == objetoRequerido)
         {
-            // Puzzle resuelto
-            bloqueoPuente.SetActive(false); //quita el collider del bloqueo para q el player pueda pasar
-            gameObject.SetActive(false); // desactiva el trigger para q no se pueda volver a interactuar
-            maderas.SetActive(true); // muestra el mesh de las tablas
-            player.ClearTriggerPuzle(); // le dice al script del player q no hay puzzle activo en rango
-
+            // puzzle resolt
+            bloqueoPuente.SetActive(false); // treu el collider del bloqueig perque el player pugui passar
+            gameObject.SetActive(false); // desactiva el trigger perque no es pugui tornar a interactuar
+            maderas.SetActive(true); // mostra el mesh de les fustes
+            player.ClearTriggerPuzle(); // li diu al script del player que no hi ha puzzle actiu en rang
         }
         else
-            DialogueManager.Instance.StartInfo(graphObjetoIncorrecto); // El objeto existe pero no es el correcto
-        // En cualquier caso vacia la mano del player tras interaccionar
+            DialogueManager.Instance.StartInfo(graphObjetoIncorrecto); // l'objecte existeix pero no es el correcte
+        // en qualsevol cas buida la ma del player despres d'interaccionar
         objetoMano.ClearObject();
     }
-
-    // se llama desde PlayerController cuando el player entra en el rango del trigger
+    // L'OnEnterRange es crida des del PlayerController quan el player entra en el rang del trigger
     public void OnEnterRange()
     {
-        // solo muestra el dialogo informativo la primera vez que el player se acerca
+        // nomes mostra el dialeg informatiu la primera vegada que el player s'acosta
         if (!infoMostrada && graphInfo != null)
         {
             infoMostrada = true;
-            DialogueManager.Instance.StartInfo(graphInfo); // lanza el dialogo explicativo
-            canvasworld.SetActive(false); // oculta el icono flotante una vez mostrado el dialogo
+            DialogueManager.Instance.StartInfo(graphInfo); // llanca el dialeg explicatiu
+            canvasworld.SetActive(false); // amaga la icona flotant un cop mostrat el dialeg
         }
     }
 }
