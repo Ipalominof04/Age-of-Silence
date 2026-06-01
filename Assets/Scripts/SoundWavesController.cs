@@ -5,12 +5,12 @@ public class SoundWavesController : MonoBehaviour
 {
     [SerializeField] private MeshRenderer meshRenderer;
 
-    //arrays de texturas para cada estado
+    //arrays de textures per a cada estat
     [SerializeField] private Texture2D[] walkTextures;
     [SerializeField] private Texture2D[] runTextures;
     [SerializeField] private Texture2D[] shootTextures;
 
-    //velocidad de animación para cada estado
+    //velocitat animaci per a cada estat
     [SerializeField] private float walkFrameRate;
     [SerializeField] private float runFrameRate;
     [SerializeField] private float shootFrameRate;
@@ -22,45 +22,45 @@ public class SoundWavesController : MonoBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
     }
 
-    //se llama desde PlayerController con: 0 = andar, 1 = correr, 2 = disparar, -1 nada
+    //es crida desde PlayerController amb: 0 = andar, 1 = correr, 2 = disparar, -1 nada
     public void SetWaveState(int index)
     {
-        //parar la animacion anterior antes de iniciar la nueva
+        //parar la animacio anterior abans d'iniciar la nova
         if (animCoroutine != null)
             StopCoroutine(animCoroutine);
 
         switch (index)
         {
-            //walk: animacion en bucle
+            //walk: animacio en bucle
             case 0: animCoroutine = StartCoroutine(Animate(walkTextures, walkFrameRate, true)); break;
-            //run: animacion en bucle
+            //run: animacio en bucle
             case 1: animCoroutine = StartCoroutine(Animate(runTextures, runFrameRate, true)); break;
-            //shoot: animacion una sola vez y se desactiva
+            //shoot: animacio una sola vegada i es desactiva
             case 2: animCoroutine = StartCoroutine(Animate(shootTextures, shootFrameRate, false)); break;
         }
     }
 
-    //recorre los frames cambiando la textura del material que tiene el sprite renderer del quad para que cambie la textura de la onda
-    //si loop es true se repite infinitamente, si es false se reproduce una sola vez y desactiva el quad
+    // recorre els frames cambiant la textura del material q te el sprite renderer del quad perque canvii la textura de l'ona
+    // si loop es true es repeteix infinitament, si es false es reprodueix una sola vegada i desactiva el quad
     private IEnumerator Animate(Texture2D[] frames, float frameRate, bool loop)
     {
         while (true)
         {
-            //recorre todos los frames de la animacion
+            //recorre tots els frames de l'animacio
             foreach (Texture2D frame in frames)
             {
                 //aplicar la textura al material del quad
                 meshRenderer.material.SetTexture("_UnlitColorMap", frame);
                 meshRenderer.material.SetTexture("_EmissiveColorMap", frame);
-                //esperar el tiempo entre frames dependiendo del estado
+                //esperar el temps entre frames depenent de l'estat
                 yield return new WaitForSeconds(frameRate);
             }
 
-            //si no es bucle salimos del while
+            //si no es bucle sortim del while
             if (!loop) break;
         }
 
-        //desactivar el quad cuando acaba el shoot (pq en walk y run nunca llega aqui y se desactiva directamente desde el player cuando le envia el -1)
+        //desactivar el quad quan acaba el shoot (pq en walk i run mai arriba aqui i es desactiva directament des del player quan envia el -1)
         gameObject.SetActive(false);
     }
 

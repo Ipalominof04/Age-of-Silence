@@ -16,25 +16,28 @@ public class CamaraTemblor : MonoBehaviour
         impulseSource.GenerateImpulse(fuerza);
     }
 
+    // inicia un shake continuo durant un temps determinat
     public void ShakeContinuo(float duracion, float fuerza)
     {
         StartCoroutine(ShakeLoop(duracion, fuerza));
     }
 
+    //corrutina que genera petits impulsos aleatoris
     IEnumerator ShakeLoop(float duracion, float fuerza)
     {
         float t = 0f;
         while (t < duracion)
         {
-            // Dirección aleatoria en X e Y en cada impulso
+            // calcula una direccio aleatoria als eixos X i Y
             Vector3 direccionAleatoria = new Vector3(
                 Random.Range(-0.1f, 0.1f),
                 Random.Range(-0.1f, 0.1f),
                 0f
             );
+            // genera un impuls en la direccio aleatoria calculada
             impulseSource.GenerateImpulseWithVelocity(direccionAleatoria * fuerza);
-            t += Time.deltaTime;
-            yield return null;
+            t += Time.deltaTime; // actualitza el temps transcorregut
+            yield return null; // espera al seguent fotograma abans de generar un altre impuls
         }
     }
 }

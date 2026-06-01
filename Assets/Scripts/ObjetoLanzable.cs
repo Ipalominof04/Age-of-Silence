@@ -5,19 +5,19 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(SoundEmitter))]
 public class ObjetoLanzable : MonoBehaviour
 {
-    public GameObject hand;
+    public GameObject hand; // referencia a la ma del player on agafa l'objecte
 
     [Header("Colisión")]
-    [SerializeField] private LayerMask capasColision;
-    [SerializeField] private ParticleSystem particulas;
+    [SerializeField] private LayerMask capasColision; // capes obj pot colisionar
+    [SerializeField] private ParticleSystem particulas; // particules es reprodueixen en impacte
 
     private SphereCollider objetoCollider;
     private SoundEmitter emitter;
-    private bool yaLanzado = false;
-    private Vector3 velocidadPendiente;
-    private bool lanzarEnFixedUpdate = false;
-    private bool estaEnMano = false;
-    private Vector3 escalaMundialOriginal; // se guarda UNA sola vez en Awake
+    private bool yaLanzado = false; // evitar q objecte es processi multiples vegades despres de ser llancat
+    private Vector3 velocidadPendiente; // velocitat guardada per aplicar en FixedUpdate
+    private bool lanzarEnFixedUpdate = false; // controla quan aplicar el llancament fisic
+    private bool estaEnMano = false; // indica si objecte esta agafat
+    private Vector3 escalaMundialOriginal; // es guarda UNA vegada al awake la escala original del objecte
 
     private void Awake()
     {
@@ -36,13 +36,16 @@ public class ObjetoLanzable : MonoBehaviour
         transform.rotation = hand.transform.rotation;
 
         estaEnMano = true;
+        // ajusta escala perque no es deformi amb el parent
         AplicarEscala();
 
+        // desactiva fisica mentre esta agafat
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
             rb.isKinematic = true;
     }
 
+    // ajusta escala tenit en compte escala del parent
     private void AplicarEscala()
     {
         Vector3 parentScale = hand.transform.lossyScale;
@@ -53,38 +56,45 @@ public class ObjetoLanzable : MonoBehaviour
         );
     }
 
+    // mante escala correcta mentre esta a la ma
     private void LateUpdate()
     {
         if (!estaEnMano || hand == null) return;
         AplicarEscala();
     }
-
+    
     public void Lanzar(Vector3 velocidadInicial, Collider colliderJugador)
     {
         estaEnMano = false;
         yaLanzado = true;
+        // desparenta objecte de la ma
         transform.SetParent(null);
 
+        // el teu a escena actual per evitar problemes de jerarquia
         UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(
             gameObject,
             UnityEngine.SceneManagement.SceneManager.GetActiveScene()
         );
 
-        // Restaurar escala original al soltar
+        // Restaura escala original al soltar
         transform.localScale = escalaMundialOriginal;
 
+        // desactiva collider temporalment per evitar problemes al moment de llancament
         objetoCollider.enabled = false;
 
+        //
         int layerObjeto = gameObject.layer;
         int layerPlayer = LayerMask.NameToLayer("Player");
         int layerPlayerCollider = LayerMask.NameToLayer("PlayerCollider");
         Physics.IgnoreLayerCollision(layerObjeto, layerPlayer, true);
         Physics.IgnoreLayerCollision(layerObjeto, layerPlayerCollider, true);
 
+        // guarda velocitat 
         velocidadPendiente = velocidadInicial;
         lanzarEnFixedUpdate = true;
     }
 
+    //aplica fisica llancament al moment correcte
     private void FixedUpdate()
     {
         if (!lanzarEnFixedUpdate) return;
@@ -95,9 +105,9 @@ public class ObjetoLanzable : MonoBehaviour
         if (rb != null)
         {
             rb.isKinematic = false;
-            rb.linearVelocity = velocidadPendiente;
+            rb.linearVelocity = velocidadPendiente; // aplica vel inicial
         }
-
+        // reactiva colisions amb el jugador despres d'un temps
         StartCoroutine(ReactivarColision());
     }
 
@@ -111,7 +121,7 @@ public class ObjetoLanzable : MonoBehaviour
         Physics.IgnoreLayerCollision(layerObjeto, layerPlayer, false);
         Physics.IgnoreLayerCollision(layerObjeto, layerPlayerCollider, false);
     }
-
+    // deixa caure objecte sense forca
     public void Soltar()
     {
         estaEnMano = false;
@@ -130,6 +140,7 @@ public class ObjetoLanzable : MonoBehaviour
         objetoCollider.enabled = true;
     }
 
+    // detecta colisions amb el terra i executa efectes de particules i so
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
@@ -149,10 +160,10 @@ public class ObjetoLanzable : MonoBehaviour
                     Destroy(particulas.gameObject, 2f);
                 }
 
-                // Ocultar la botella visualmente pero dejar el audio sonar
+                // Ocultar ampolla visualment pero mante el so
                 GetComponent<MeshRenderer>().enabled = false;
                 objetoCollider.enabled = false;
-                Destroy(gameObject, 0.5f); // <-- delay para que el sonido termine
+                Destroy(gameObject, 0.5f); // es destrueix despres del so
             }
             if (this.gameObject.tag == "Roca")
             {

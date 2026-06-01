@@ -23,26 +23,27 @@ public class CinematicaSignals : MonoBehaviour
     [Header("Cambio de Escena")]
     public string nombreEscena;
 
-    public void CambiarEscena() //para la cinematica en la q el player se muere
+    public void CambiarEscena() //par a la cinematica en la q el player es mor
     {
         GameManager.Instance.ChangeScene(nombreEscena);
     }
 
-    // diccionario para buscar nodos por ID rapidamente
+    // diccionari per cercar nodes per id de manera rapida
     private Dictionary<string, RuntimeDialogueNode> _nodeLookup = new Dictionary<string, RuntimeDialogueNode>();
     private RuntimeDialogueNode _currentNode;
-    private Coroutine _typewriterCoroutine;
+    private Coroutine _typewriterCoroutine; // referencia a corrutina activa per poder-la aturar
 
-    // dispara el flash del arma, se coloca en el frame exacto del disparo
+    // dispara les particules de flash de arma i sang a les cinematiques al frame exacte
     public void DispararFlash(int index)
     {
         if (index < 0 || index >= shootFlashes.Length) return;
+        // neteja les particules anteriors per evitar solapament visuals
         shootFlashes[index].Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         shootFlashes[index].Play();
     }
 
     // primer signal de la cinematica
-    // carga todos los nodos del graph y muestra el primero
+    // carga tots els nodes del graf en el diccionari i mostra el node de entrada
     public void IniciarDialogo()
     {
         _nodeIndex = 0;
@@ -54,7 +55,7 @@ public class CinematicaSignals : MonoBehaviour
             ShowNode(cinematicaGraph.EntryNodeID);
     }
 
-    // signal que se repite por cada linea de dialogo
+    // signal q es crida una vegada per cada linea de dialeg
     public void SiguienteLinea()
     {
         if (_currentNode == null) return;
@@ -63,7 +64,7 @@ public class CinematicaSignals : MonoBehaviour
             ShowNode(_currentNode.NextNodeID);
     }
 
-    // ultimo signal de la cinematica, limpia todo
+    // ultim signal de la cinematica. atura la corrutina i allibera la memoria
     public void TerminarDialogo()
     {
         if (_typewriterCoroutine != null)
@@ -74,14 +75,14 @@ public class CinematicaSignals : MonoBehaviour
     }
 
 
-    // busca el nodo por ID y arranca el typewriter con su duracion
+    // cerca el node per id, actualitza el text i envia el typewriter
     private void ShowNode(string nodeID)
     {
         if (!_nodeLookup.ContainsKey(nodeID)) return;
         _currentNode = _nodeLookup[nodeID];
         speakerText.SetText(_currentNode.SpeakerName);
 
-        // coge la duracion del array si existe, si no usa 3s por defecto
+        // agafa la durada de l'array si existeix
         float duration = (_nodeIndex < nodeDurations.Length) ? nodeDurations[_nodeIndex] : 3f;
         _nodeIndex++;
 
@@ -89,10 +90,10 @@ public class CinematicaSignals : MonoBehaviour
             StopCoroutine(_typewriterCoroutine);
         _typewriterCoroutine = StartCoroutine(TypewriterEffect(_currentNode.DialogueText, duration));
     }
+    //mostra el text progressivament al llarg de duration segons
+    //s'utilitza Time.deltaTime perque sigui independent del framerate, funciona igual en cada maquina
 
-    // muestra el texto progresivamente usando Time.deltaTime
-    // asi es independiente del framerate, funciona igual en cualquier ordenador
-    // la formula: (timer / duration) * totalChars = cuantos caracteres mostrar en este momento
+    // la formula: (timer / duration) * totalChars = caracter a mostrar ara
     private IEnumerator TypewriterEffect(string fullText, float duration)
     {
         dialogueText.SetText("");
@@ -102,17 +103,17 @@ public class CinematicaSignals : MonoBehaviour
         while(timer < duration)
         {
             timer+= Time.deltaTime;
-            // porcentaje de progreso * total de caracteres = caracteres a mostrar
+            // percentatge de progres * total de caracters = caracters a mostrar
             int charsToShow =Mathf.FloorToInt((timer/duration) * totalChars);
-            // clamp para asegurarse de no salirse del rango
+            // clamp per garantir que l'index es mante dins del rang valid
             charsToShow = Mathf.Clamp(charsToShow, 0, totalChars);
             dialogueText.SetText(fullText.Substring(0, charsToShow));
 
-            // si ya mostro todos los caracteres no hace falta seguir esperando
+            // si ja s'ha mostrat tots els caracters no cal seguir esperant
             if (charsToShow >= totalChars) break;
             yield return null; // espera al siguiente frame
         }
-        // asegura que el texto completo queda visible al final
+        // asegura que el text complet quedi visible en acabar
         dialogueText.SetText(fullText);
     }
 }
