@@ -51,7 +51,7 @@ public class TriggerPuzleNevera : MonoBehaviour, IPuzle
         gameObject.SetActive(false);
 
         if (cadena != null)
-            Destroy(cadena);
+            cadena.SetActive(false);
 
         // Iniciem el dialeg associat al puzle resolt.
         DialogueManager.Instance.StartDialogue(graphDialogue);

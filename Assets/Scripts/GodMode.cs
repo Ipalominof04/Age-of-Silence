@@ -121,6 +121,21 @@ public class GodMode : MonoBehaviour
         Log("Teletransporte a la escena final...");
     }
 
+    // L'Escena2 teletransporta a l'escena 2 amb el punt d'entrada corresponent
+    private void Escena2()
+    {
+        GameManager.Instance.lastDoorID = "spawnescena1_escena2";
+        GameManager.Instance.ChangeScene("Escena2");
+        Log("Teletransporte a la escena 2...");
+    }
+    // L'Escena3 teletransporta a l'escena 3 amb el punt d'entrada corresponent
+    private void Escena3()
+    {
+        GameManager.Instance.lastDoorID = "escena3";
+        GameManager.Instance.ChangeScene("Escena3");
+        Log("Teletransporte a la escena 3...");
+    }
+
     // L'Escena4 teletransporta a l'escena 4 amb el punt d'entrada corresponent
     private void Escena4()
     {
@@ -143,6 +158,14 @@ public class GodMode : MonoBehaviour
         GameManager.Instance.lastDoorID = "gasolinera";
         GameManager.Instance.ChangeScene("ExteriorGasolinera");
         Log("Teletransporte al exterior de la gasolinera...");
+    }
+
+    // SalidaMuro teletransporta a l'escena amb el punt d'entrada corresponent
+    private void SalidaMuro()
+    {
+        GameManager.Instance.lastDoorID = "salidamuro";
+        GameManager.Instance.ChangeScene("SalidaMuro");
+        Log("Teletransporte a salida muro...");
     }
 
     // El Log afegeix un missatge amb marca de temps a la llista de logs i el mostra per consola
@@ -213,9 +236,12 @@ public class GodMode : MonoBehaviour
         if (mostrarEscenas)
         {
             GUILayout.BeginVertical(GUI.skin.box);
+            if (GUILayout.Button("Escena 2")) Escena2();
+            if (GUILayout.Button("Escena 3")) Escena3();
             if (GUILayout.Button("Escena 4")) Escena4();
             if (GUILayout.Button("Entrada fabrica")) EntradaFabrica();
             if (GUILayout.Button("Exterior gasolinera")) ExteriorGasolinera();
+            if (GUILayout.Button("Salida muro")) SalidaMuro();
             if (GUILayout.Button("Escena Final")) EscenaFinal();
             GUILayout.EndVertical();
         }
