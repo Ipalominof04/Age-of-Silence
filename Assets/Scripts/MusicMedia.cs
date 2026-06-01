@@ -64,25 +64,25 @@ public class MusicMedia : MonoBehaviour
         if (soundEmitter == null) return;
         if (key == "musicChase")
         {
-            print("bool de chase" + isChasing);
             if (!isChasing)
             {
                 isChasing = true;
-                print("musica de chase");
                 soundEmitter.EmitSound(musicDictionary["musicChase"]);
             }
             return;
         }
         if (key == "musicStop")
         {
-            isChasing = false;
-            soundEmitter.StopSound();
-            soundEmitter.EmitSound(currentSound);
+            if (isChasing)
+            {
+                isChasing = false;
+                soundEmitter.StopSound();
+                soundEmitter.EmitSound(currentSound);
+            }
             return;
         }
         if (!musicDictionary.TryGetValue(key, out ESound sound))
         {
-            Debug.LogWarning($"MusicMedia: clave '{key}' no encontrada.");
             return;
         }
         soundEmitter.StopSound();

@@ -2,21 +2,26 @@ using UnityEngine;
 
 public class TriggerRemoveMaterial : MonoBehaviour
 {
-    public GameObject objetoObjetivo; // objeto al que se le quitará el material
+    public GameObject objetoObjetivo;
 
     Renderer rend;
     Material[] materialesOriginales;
 
     void Start()
     {
+        // Obtenim el Renderer de l'objecte objectiu.
         rend = objetoObjetivo.GetComponent<Renderer>();
-        materialesOriginales = rend.materials; // guardamos los materiales originales
+
+        // Guardem els materials actuals per poder restaurar-los mes endavant.
+        materialesOriginales = rend.materials;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        // Restauramos los materiales originales
+        // Recuperem els materials originals de l'objecte.
         rend.materials = materialesOriginales;
+
+        // Eliminem aquest trigger un cop s'ha activat.
         Destroy(this.gameObject);
     }
 }
