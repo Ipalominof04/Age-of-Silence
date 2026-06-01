@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -5,57 +6,69 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(LineRenderer))]
 public class ParabolaRenderer : MonoBehaviour
 {
+    // requereix de un line renderer per dibuixar la trajectoria
     [Header("Simulación")]
     [SerializeField] private float distanciaMaxima;
     [SerializeField] private float altura = 3f;
+    //increment de temps per cada pas de la simulacio (precisio de trajectoria)
     [SerializeField] private float paso = 0.02f;
     [SerializeField] private LayerMask capasColision;
+    //quantitat de fregament del moviment de l'objecte
     [SerializeField] private float dragObjeto = 0f;
 
     [Header("Indicador de caída")]
     [SerializeField] private int segmentosCirculo = 32;
     [SerializeField] private float radioCirculo = 0.4f;
 
-    private LineRenderer lineRenderer;
-    private LineRenderer circuloRenderer;
-    private GameObject circuloObj;
+    private LineRenderer lineRenderer; // dibuixa la trajectoria de la parabola
+    private LineRenderer circuloRenderer;// dibuixa el cercle al punt de caiguda
+    private GameObject circuloObj; // gameobject q conte el LineRenderer del cercle
 
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.enabled = false;
+        lineRenderer.enabled = false; // es desactiva pq nomes es mostri quan es dibuxi la trajectoria
 
-        circuloObj = new GameObject("IndicadorCaida");
+        circuloObj = new GameObject("IndicadorCaida"); // obj buit q dibuixara el cercle de caiguda
         circuloObj.transform.SetParent(transform);
         circuloRenderer = circuloObj.AddComponent<LineRenderer>();
-        circuloRenderer.material = lineRenderer.material;
+        circuloRenderer.material = lineRenderer.material; // assigna el mateix mat q el de la parabola
+        // defineix gruix de la linea del cercle
         circuloRenderer.startWidth = 0.05f;
         circuloRenderer.endWidth = 0.05f;
+        // fa que el LineRenderer tanqui la forma connectant ultim punt amb el primer (cercle)
         circuloRenderer.loop = true;
+        // indica que les coordenades són en espai mundial(no local)
         circuloRenderer.useWorldSpace = true;
         circuloRenderer.enabled = false;
     }
 
+    // calcula el punt objectiu cap on apunta el ratoli dins un pla horitzontal
     public Vector3 ObtenerPuntoObjetivo(Vector3 origen, Camera camara)
     {
+        // crea un ray desde el punt de la camara fins a la posicio del ratoli
         Ray ray = camara.ScreenPointToRay(Mouse.current.position.ReadValue());
+        // pla horitzonatl a l'altura del origen
         Plane suelo = new Plane(Vector3.up, new Vector3(0, origen.y, 0));
 
         Vector3 puntoObjetivo;
+        // calcula intersseccio del raig amb  el pla
         if (suelo.Raycast(ray, out float distancia))
             puntoObjetivo = ray.GetPoint(distancia);
         else
             puntoObjetivo = origen + Vector3.forward * distanciaMaxima;
 
+        // limita la distancia max horitzontal
         Vector3 direccionHorizontal = puntoObjetivo - origen;
         direccionHorizontal.y = 0;
         if (direccionHorizontal.magnitude > distanciaMaxima)
             puntoObjetivo = origen + direccionHorizontal.normalized * distanciaMaxima;
-
+        // mante la mateixa altura q l'origen
         puntoObjetivo.y = origen.y;
         return puntoObjetivo;
     }
 
+    // calcula la velocitat inicial necessaria pq el projectil arribi al desti
     public Vector3 CalcularVelocidadInicial(Vector3 origen, Vector3 destino)
     {
         float gravedad = Mathf.Abs(Physics.gravity.y);
@@ -63,6 +76,7 @@ public class ParabolaRenderer : MonoBehaviour
         Vector3 desplazamientoHorizontal = new Vector3(desplazamiento.x, 0, desplazamiento.z);
         float distanciaHorizontal = desplazamientoHorizontal.magnitude;
 
+        // si esta massa a prop no hi ha moviment
         if (distanciaHorizontal < 0.01f)
             return Vector3.zero;
 
@@ -78,6 +92,7 @@ public class ParabolaRenderer : MonoBehaviour
         return velocidadHorizontal + Vector3.up * velocidadVertical;
     }
 
+    // dibuixa la parabola completa i detecta colisions
     public void MostrarParabola(Vector3 origen, Vector3 destino)
     {
         Vector3 velocidadInicial = CalcularVelocidadInicial(origen, destino);
@@ -91,7 +106,7 @@ public class ParabolaRenderer : MonoBehaviour
         Vector3 velocidad = velocidadInicial;
         Vector3 posicion = origen;
         float t = 0;
-
+        // simulacio pas a pas del moviment del projectil
         while (t < 10f)
         {
             t += paso;
@@ -100,7 +115,7 @@ public class ParabolaRenderer : MonoBehaviour
             velocidad += Physics.gravity * paso;
             velocidad *= Mathf.Clamp01(1f - dragObjeto * paso);
 
-            // Límite de distancia horizontal
+            // limit distancia horitzontal
             float distanciaHorizontal = Vector3.Distance(
                 new Vector3(posicion.x, 0, posicion.z),
                 new Vector3(origen.x, 0, origen.z));
@@ -108,7 +123,7 @@ public class ParabolaRenderer : MonoBehaviour
             if (distanciaHorizontal >= distanciaMaxima)
                 break;
 
-            // Colisión con obstáculos
+            // colisio obstacles
             Vector3 direccion = posicion - puntoAnterior;
             float distSegmento = direccion.magnitude;
 
@@ -126,20 +141,22 @@ public class ParabolaRenderer : MonoBehaviour
             ultimoPunto = posicion;
             puntoAnterior = posicion;
 
+            // evita simulacions infinites cap avall
             if (posicion.y < origen.y - 50f)
                 break;
         }
 
+        // assigna punts al LineRenderer
         lineRenderer.positionCount = posiciones.Count;
         lineRenderer.SetPositions(posiciones.ToArray());
 
-        // Raycast hacia abajo desde el último punto para encontrar el suelo real
+        // detecta el punt real de contacte amb el terra
         if (Physics.Raycast(ultimoPunto + Vector3.up * 0.5f, Vector3.down, out RaycastHit hitSuelo, 100f, capasColision))
             MostrarCirculo(hitSuelo.point);
         else
             MostrarCirculo(ultimoPunto);
     }
-
+    // dibuixa el cercle al punt de caiguda
     private void MostrarCirculo(Vector3 centro)
     {
         circuloRenderer.enabled = true;
@@ -147,6 +164,7 @@ public class ParabolaRenderer : MonoBehaviour
 
         Vector3 centroElevado = centro + Vector3.up * 0.05f;
 
+        // genera punts en forma de cercle
         for (int i = 0; i < segmentosCirculo; i++)
         {
             float angulo = 2f * Mathf.PI * i / segmentosCirculo;

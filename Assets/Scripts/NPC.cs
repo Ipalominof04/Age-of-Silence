@@ -22,11 +22,14 @@ public class NPC : MonoBehaviour, IPuzle
         amenazaNPC.Unsubscribe(AnadirPuzleAmenaza);
         misionComidaNPC.Unsubscribe(AnadirPuzleComida);
     }
+    // interaccio del jugador amb el npc
     public void Interact(ObjetoAgarrado objetoMano)
     {
+        // si jugador no te el menjar no passa res
         if (string.IsNullOrEmpty(objetoMano.nombreObjeto)) return;
         string objeto = objetoMano.nombreObjeto;
 
+        // si porta el objecte correcte i ha agafat
         if (objeto == "ComidaNPC" && GameManager.Instance.PuzzleResuelto("ComidaNPC"))
         {
             objetoMano.ClearObject();

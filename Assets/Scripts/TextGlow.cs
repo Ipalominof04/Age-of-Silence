@@ -5,7 +5,7 @@ using TMPro;
 public class TextGlow : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private TextMeshProUGUI texto;
-    private Material mat;
+    private Material mat;// material duplicat per modificar el glow sense afectar altres textos
     public float velocidad = 5f;
     private float glowObjetivo;
 
@@ -13,15 +13,18 @@ public class TextGlow : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     void Start()
     {
         texto = GetComponent<TextMeshProUGUI>();
-        // Crea una instancia del material para no afectar otros textos
+        // crea una copia del mat per evitar modificar el material compartit
         mat = new Material(texto.fontMaterial);
-        texto.fontMaterial = mat;
+        texto.fontMaterial = mat; // assigna el mat duplicat al text
     }
 
     void Update()
     {
+        // llegeix el valor actual del glow del material
         float glowActual = mat.GetFloat(ShaderUtilities.ID_GlowPower);
+        // interpola suavement cap al valor objectiu
         float nuevoGlow = Mathf.Lerp(glowActual, glowObjetivo, Time.unscaledDeltaTime * velocidad);
+        // aplica el now valor del glow al material
         mat.SetFloat(ShaderUtilities.ID_GlowPower, nuevoGlow);
     }
 
