@@ -22087,7 +22087,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: Muro
-  miDoorID: 
   targetDoorID: muro
   puzzleRequeridoID: 
 --- !u!1001 &571837082
@@ -46018,7 +46017,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerCambioEscena
   nombreEscena: InteriorGasolinera
-  miDoorID: exterior_gas
   targetDoorID: spawnexterior_gas
   puzzleRequeridoID: 
 --- !u!65 &930359755
@@ -50272,7 +50270,7 @@ MonoBehaviour:
     DefaultMode: 2
   DefaultBlend:
     Style: 1
-    Time: 2
+    Time: 5
     CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -100913,7 +100911,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CamaraShiftZone
   normalCam: {fileID: 2087370029}
   shiftedCam: {fileID: 1217681546}
-  timeBeforeReturn: 3
+  timeBeforeReturn: 7
 --- !u!4 &2066911179 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a9419a14ac8782141bb7f0b4a51a327b, type: 3}
