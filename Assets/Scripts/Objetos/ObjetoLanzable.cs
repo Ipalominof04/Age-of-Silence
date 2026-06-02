@@ -11,6 +11,7 @@ public class ObjetoLanzable : MonoBehaviour
     [SerializeField] private LayerMask capasColision; // capes obj pot colisionar
     [SerializeField] private ParticleSystem particulas; // particules es reprodueixen en impacte
 
+    private bool yaColisiono = false;
     private SphereCollider objetoCollider;
     private SoundEmitter emitter;
     private bool yaLanzado = false; // evitar q objecte es processi multiples vegades despres de ser llancat
@@ -148,8 +149,10 @@ public class ObjetoLanzable : MonoBehaviour
             if (this.gameObject.tag == "Botella")
             {
                 if (!yaLanzado) return;
+                if (yaColisiono) return;
                 if ((capasColision.value & (1 << collision.gameObject.layer)) == 0) return;
 
+                yaColisiono = true;
                 emitter.EmitSound(ESound.BOTTLE);
 
                 if (particulas != null)
