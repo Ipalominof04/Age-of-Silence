@@ -65,7 +65,6 @@ public class DamageVignette : MonoBehaviour
 
     public void SetVignetteActive(bool active)
     {
-        Debug.Log($"[DAMAGEVIGNETTE] SetVignetteActive({active})\n{System.Environment.StackTrace}");
         vignetteActive = active;
 
         vignetteImage.gameObject.SetActive(active);
