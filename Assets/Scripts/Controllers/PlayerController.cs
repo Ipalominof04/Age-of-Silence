@@ -167,10 +167,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         float ratio = vidaActual / vidaMaxima;
         DamageVignette.Instance?.UpdateHealthRatio(ratio);
 
-        //forcar el update del brillantor de la barra de vida, el sceneloaded no es dispara en la escena que neix el player
-        Scene escenaInicial = SceneManager.GetActiveScene();
-        UpdateBrilloBarraVida(escenaInicial, LoadSceneMode.Single);
-
         //esperar a que el mapa carregui abans de activar el charactercontroller per a que el player no es que caigui al apareixer
         StartCoroutine(WaitingChargeMap());
     }
@@ -194,6 +190,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         onArmaSobrecalentada.Subscribe(() => armaSobrecalentada = true);
         onArmaEnfriada.Subscribe(() => armaSobrecalentada = false);
         SceneManager.sceneLoaded += OnSceneLoaded;
+        UpdateBrilloBarraVida(SceneManager.GetActiveScene(), LoadSceneMode.Single);
     }
 
     private void OnDisable()
