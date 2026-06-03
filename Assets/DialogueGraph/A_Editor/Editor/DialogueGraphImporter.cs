@@ -54,7 +54,7 @@ public class DialogueGraphImporter : ScriptedImporter
         ctx.AddObjectToAsset("RuntimeData", runtimeGraph);
         ctx.SetMainObject(runtimeGraph);
     }
-    //processa un DialogueNode extraient el text, el nomb del personatge i l'ID del node seguent
+    //processa un DialogueNode extraient el text, el nom del personatge i l'ID del node seguent
     private void ProcessDialogueNode(DialogueNode node, RuntimeDialogueNode runtimeNode, Dictionary<INode, string> nodeIDMap)
     {
         runtimeNode.SpeakerName = GetPortValue<string>(node.GetInputPortByName("Speaker"));
