@@ -24,7 +24,6 @@ public class CreditsScroller : MonoBehaviour
     {
         if (creditsRect == null)
         {
-            Debug.LogError("[CreditsScroller] Asigna el RectTransform del TMP en el Inspector.");
             return;
         }
 
