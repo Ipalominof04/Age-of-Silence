@@ -21,6 +21,5 @@ public class MusicaFondo : MonoBehaviour
             if (s.clip != null && s.isPlaying)
                 s.spatialBlend = 0f;
         }
-        print("suena");
     }
 }
