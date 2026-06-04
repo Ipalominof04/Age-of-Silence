@@ -235,7 +235,7 @@ public class GameManager : MonoBehaviour
             yield return StartCoroutine(ChapterUI.Instance.PlaySequence(steps));
         }
         else if (sceneName == "Escena4")
-            yield return StartCoroutine(ChapterUI.Instance.MostrarCapitulo("LA FABRICA", 2f));
+            yield return StartCoroutine(ChapterUI.Instance.MostrarCapitulo("LA FÁBRICA", 2f));
         else if (sceneName == "SalidaFabrica")
             yield return StartCoroutine(ChapterUI.Instance.MostrarCapitulo("ESCAPE", 2f));
         else if (sceneName == "SalidaMuro")
